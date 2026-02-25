@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recap Ejecutivo — Modelo TPO Tradicional</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-cream:   #FDFBF7;
+  --bg-warm:    #F8F5F0;
+  --bg-card:    #FFFFFF;
+  --text-primary:   #3D3A36;
+  --text-secondary: #4a4a5a;
+  --text-muted:     #7a7a8a;
+  --coral:      #E85D4C;
+  --coral-dark: #C94A3A;
+  --coral-light:#FFF0EE;
+  --teal:       #2D9C9C;
+  --teal-dark:  #238080;
+  --teal-light: #E8F6F6;
+  --gold:       #D4A853;
+  --gold-dark:  #C4983F;
+  --gold-light: #FDF8EC;
+  --border:     #E8E4DD;
+  --shadow-sm:  0 2px 6px rgba(26,26,46,.07);
+  --shadow-md:  0 5px 18px rgba(26,26,46,.12);
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box }
+html { background:#f0ede8 }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-cream);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ═══ HERO ═══════════════════════════════════════ */
+.hero {
+  background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
+  padding: 24px 48px 20px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; bottom:-40px; right:60px;
+  width:200px; height:200px;
+  background: radial-gradient(circle, var(--coral-light) 0%, transparent 70%);
+  border-radius:50%; pointer-events:none;
+}
+.hero::after {
+  content:'';
+  position:absolute; top:-30px; right:350px;
+  width:160px; height:160px;
+  background: radial-gradient(circle, var(--teal-light) 0%, transparent 70%);
+  border-radius:50%; pointer-events:none;
+}
+.hero-inner {
+  position:relative; z-index:1;
+  display:flex; align-items:flex-end;
+  justify-content:space-between; flex-wrap:wrap; gap:14px;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 3px 11px;
+  border-radius: 100px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px; font-weight:700;
+  color: var(--coral);
+  text-transform:uppercase; letter-spacing:.5px;
+  margin-bottom:10px;
+}
+.badge-dot {
+  width:6px; height:6px;
+  background:var(--coral); border-radius:50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(20px,2.8vw,30px);
+  font-weight:700; line-height:1.15;
+  color: var(--text-primary); margin-bottom:4px;
+}
+.hero h1 .hl { color:var(--coral) }
+.hero p { font-size:11.5px; color:var(--text-muted) }
+
+.hero-stats { display:flex; gap:20px; flex-wrap:wrap }
+.stat .stat-num {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:18px; font-weight:700;
+  color:var(--text-primary); line-height:1;
+}
+.stat .stat-label { font-size:9px; color:var(--text-muted); margin-top:2px }
+
+/* ═══ CONTEXT BAR ═════════════════════════════════ */
+.context-bar {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 48px;
+  background:var(--gold-light);
+  border-bottom:1px solid rgba(212,168,83,.25);
+  font-size:10px; color:var(--gold-dark);
+}
+.context-bar strong {
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700; letter-spacing:.3px;
+}
+
+/* ═══ COLUMN HEADERS ══════════════════════════════ */
+.col-headers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 980px;
+  margin: 20px auto 0;
+  padding: 0 24px;
+}
+.col-header {
+  display:flex; align-items:center; gap:8px;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:9px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.8px;
+  padding:6px 12px;
+  border-radius:6px 6px 0 0;
+}
+.col-header.teal  { background:var(--teal);  color:#fff }
+.col-header.coral { background:var(--coral); color:#fff }
+
+/* ═══ MAIN GRID ═══════════════════════════════════ */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 980px;
+  margin: 0 auto 32px;
+  padding: 0 24px;
+}
+
+/* ═══ CARD ════════════════════════════════════════ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s, transform .2s;
+  position:relative;
+  overflow:hidden;
+}
+.card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px) }
+
+/* left accent stripe */
+.card::before {
+  content:'';
+  position:absolute; left:0; top:8px; bottom:8px;
+  width:3px; border-radius:0 3px 3px 0;
+}
+.card.c-teal::before  { background:var(--teal) }
+.card.c-coral::before { background:var(--coral) }
+.card.c-gold::before  { background:var(--gold) }
+
+.card-title {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:11px; font-weight:700;
+  color:var(--text-primary);
+  margin-bottom:12px;
+  display:flex; align-items:center; gap:6px;
+}
+.card-title .pill {
+  font-size:7.5px; font-weight:700;
+  letter-spacing:.7px; text-transform:uppercase;
+  padding:2px 8px; border-radius:100px;
+}
+.pill-teal  { background:var(--teal-light);  color:var(--teal-dark) }
+.pill-coral { background:var(--coral-light); color:var(--coral-dark) }
+.pill-gold  { background:var(--gold-light);  color:var(--gold-dark) }
+
+.card p {
+  font-size:10px; color:var(--text-secondary); line-height:1.5;
+}
+.divider {
+  border:none; border-top:1px solid var(--border); margin:11px 0;
+}
+
+/* ═══ FLOW (elasticity) ═══════════════════════════ */
+.flow {
+  display:flex; align-items:center;
+  gap:6px; margin:12px 0;
+}
+.flow-step {
+  flex:1; text-align:center;
+  background:var(--teal-light);
+  border:1px solid rgba(45,156,156,.2);
+  border-radius:8px; padding:10px 6px;
+}
+.flow-step .fs-icon { font-size:1.4rem; display:block; margin-bottom:4px }
+.flow-step .fs-lbl {
+  font-size:8px; color:var(--teal-dark);
+  font-family:'Space Grotesk',sans-serif; font-weight:600;
+  line-height:1.3;
+}
+.flow-arr {
+  font-size:1rem; color:var(--teal); flex-shrink:0;
+}
+
+/* ═══ METRICS (bodegas) ════════════════════════════ */
+.metrics-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:10px; margin:12px 0;
+}
+.mbox {
+  border-radius:8px; padding:12px 10px; text-align:center;
+}
+.mbox.teal  { background:var(--teal-light);  border:1px solid rgba(45,156,156,.2) }
+.mbox.coral { background:var(--coral-light); border:1px solid rgba(232,93,76,.2) }
+.mbox .mb-val {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.45rem; font-weight:700; line-height:1;
+  display:block;
+}
+.mbox.teal  .mb-val { color:var(--teal-dark) }
+.mbox.coral .mb-val { color:var(--coral-dark) }
+.mbox .mb-lbl {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:7.5px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.7px;
+  color:var(--text-muted); margin-top:3px; display:block;
+}
+.mbox .mb-subs { margin-top:8px; display:flex; flex-direction:column; gap:3px }
+.mbox .mb-sub {
+  font-size:9px; color:var(--text-secondary);
+  background:rgba(255,255,255,.6);
+  border-radius:5px; padding:2px 6px;
+  display:flex; align-items:center; gap:4px;
+}
+.mbox .mb-sub strong {
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+}
+
+/* ═══ TANDAS ══════════════════════════════════════ */
+.tandas-note {
+  font-size:8.5px; color:var(--text-muted);
+  font-style:italic; text-align:center; margin-bottom:8px;
+}
+.tandas {
+  display:flex; gap:5px; margin:8px 0;
+}
+.tanda {
+  flex:1; text-align:center;
+  padding:8px 3px;
+  border-radius:7px;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:8px; font-weight:700;
+  border:1.5px solid transparent;
+}
+.tanda .t-name { display:block }
+.tanda .t-week {
+  display:block; margin-top:2px;
+  font-family:'DM Sans',sans-serif;
+  font-weight:400; font-size:7px;
+  color:var(--text-muted);
+}
+.tanda .t-icon { display:block; font-size:10px; margin-top:2px }
+.tanda.ok {
+  background:var(--teal-light);
+  border-color:rgba(45,156,156,.4);
+  color:var(--teal-dark);
+}
+.tanda.no {
+  background:var(--coral-light);
+  border-color:rgba(232,93,76,.3);
+  color:var(--coral-dark);
+}
+
+/* ═══ MARGIN KPIs ═════════════════════════════════ */
+.mkpi-row {
+  display:flex; gap:8px; margin:12px 0; align-items:stretch;
+}
+.mkpi {
+  flex:1; border-radius:8px;
+  padding:12px 8px; text-align:center;
+  border:1px solid transparent;
+  position:relative; overflow:hidden;
+}
+.mkpi::after {
+  content:''; position:absolute;
+  bottom:0; left:0; right:0; height:2.5px;
+}
+.mkpi.teal  { background:var(--teal-light);  border-color:rgba(45,156,156,.2) }
+.mkpi.teal::after  { background:var(--teal) }
+.mkpi.coral { background:var(--coral-light); border-color:rgba(232,93,76,.2) }
+.mkpi.coral::after { background:var(--coral) }
+.mkpi.gold  { background:var(--gold-light);  border-color:rgba(212,168,83,.25) }
+.mkpi.gold::after  { background:var(--gold) }
+.mkpi .mk-icon { font-size:1.2rem; display:block; margin-bottom:4px }
+.mkpi .mk-val {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.2rem; font-weight:700; line-height:1;
+}
+.mkpi.teal  .mk-val { color:var(--teal-dark) }
+.mkpi.coral .mk-val { color:var(--coral-dark) }
+.mkpi.gold  .mk-val { color:var(--gold-dark) }
+.mkpi .mk-lbl {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:7px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.6px;
+  color:var(--text-muted); margin-top:3px; display:block;
+}
+.mkpi .mk-trend {
+  font-size:8px; font-weight:600;
+  margin-top:5px; display:block;
+}
+.mkpi.teal  .mk-trend { color:var(--teal-dark) }
+.mkpi.coral .mk-trend { color:var(--coral-dark) }
+.mkpi.gold  .mk-trend { color:var(--gold-dark) }
+
+/* ═══ FILTER (restricciones) ══════════════════════ */
+.filter-wrap { margin:12px 0; display:flex; gap:10px; align-items:flex-start }
+.filter-funnel { font-size:1.8rem; flex-shrink:0; margin-top:4px }
+.filter-steps  { flex:1; display:flex; flex-direction:column; gap:4px }
+.fstep {
+  display:flex; align-items:center; gap:7px;
+  padding:5px 9px; border-radius:6px;
+  font-size:9px; color:var(--text-secondary);
+}
+.fstep.f1 { background:var(--teal-light) }
+.fstep.f2 { background:var(--gold-light) }
+.fstep.f3 { background:var(--coral-light) }
+.fstep .pct {
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700; font-size:9px; min-width:28px; text-align:right;
+}
+.fstep.f1 .pct { color:var(--teal-dark) }
+.fstep.f2 .pct { color:var(--gold-dark) }
+.fstep.f3 .pct { color:var(--coral-dark) }
+.fstep strong { font-weight:700 }
+
+.filter-out { display:flex; flex-direction:column; gap:5px; padding-top:4px }
+.fout-badge {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:7.5px; font-weight:700;
+  letter-spacing:.5px; text-transform:uppercase;
+  padding:3px 9px; border-radius:100px;
+  white-space:nowrap;
+}
+.fb-teal  { background:var(--teal-light);  color:var(--teal-dark) }
+.fb-gold  { background:var(--gold-light);  color:var(--gold-dark) }
+
+/* ═══ RISK BOX ════════════════════════════════════ */
+.risk-box {
+  background:var(--coral-light);
+  border:1px dashed rgba(232,93,76,.35);
+  border-radius:8px; padding:12px 14px;
+  margin-top:10px;
+  display:flex; gap:10px; align-items:flex-start;
+}
+.risk-icon { font-size:1.6rem; flex-shrink:0 }
+.risk-title {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:9px; font-weight:700;
+  color:var(--coral-dark); margin-bottom:4px;
+  letter-spacing:.3px;
+}
+
+/* ═══ FOOTER ══════════════════════════════════════ */
+footer {
+  padding:14px 48px;
+  border-top:1px solid var(--border);
+  display:flex; justify-content:space-between;
+  align-items:center; flex-wrap:wrap; gap:8px;
+  font-size:10px; color:var(--text-muted);
+  background:var(--bg-card);
+}
+.footer-brand {
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700; font-size:10px;
+  color:var(--coral); letter-spacing:.5px;
+}
+
+@media(max-width:640px){
+  .col-headers, .main-grid { grid-template-columns:1fr; padding:0 14px }
+  .hero { padding:18px 16px 16px }
+  .context-bar, footer { padding:9px 16px }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge"><span class="badge-dot"></span>Alicorp · AA · TPO Tradicional</div>
+      <h1>Recap Ejecutivo: Modelo <span class="hl">TPO</span> Tradicional</h1>
+      <p>Resumen de funcionamiento, lógica técnica y resultados de impacto.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Tandas semanales</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:var(--teal)">+22%</div>
+        <div class="stat-label">Venta Total BO</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:var(--coral)">+21%</div>
+        <div class="stat-label">Util. Bruta Pareto</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONTEXT BAR ═══════════════════════════════ -->
+<div class="context-bar">
+  📌 <strong>Contexto:</strong>&nbsp;Utiliza análisis de elasticidad y reglas de negocio, validado por <em>'Diferencias en Diferencias' (DiD)</em> para asegurar causalidad.
+</div>
+
+<!-- ═══ COLUMN HEADERS ═════════════════════════════ -->
+<div class="col-headers">
+  <div class="col-header teal">📊 Lógica y Funcionamiento del Modelo</div>
+  <div class="col-header coral">🏆 Hallazgos, Fortalezas y Limitaciones</div>
+</div>
+
+<!-- ═══ MAIN GRID ══════════════════════════════════ -->
+<div class="main-grid">
+
+  <!-- ① Elasticidad -->
+  <div class="card c-teal">
+    <div class="card-title">
+      📈 Optimización basada en Elasticidad
+      <span class="pill pill-teal">Lógica núcleo</span>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <span class="fs-icon">🗄️</span>
+        <span class="fs-lbl">Datos Transaccionales<br>& Precios Efectivos</span>
+      </div>
+      <span class="flow-arr">→</span>
+      <div class="flow-step">
+        <span class="fs-icon">📉</span>
+        <span class="fs-lbl">Curvas de<br>Elasticidad</span>
+      </div>
+      <span class="flow-arr">→</span>
+      <div class="flow-step">
+        <span class="fs-icon">🏷️</span>
+        <span class="fs-lbl">Promociones<br>por SKU</span>
+      </div>
+    </div>
+    <hr class="divider">
+    <p>Genera promociones por SKU usando datos transaccionales, precios efectivos y curvas de elasticidad.</p>
+  </div>
+
+  <!-- ② Bodegas -->
+  <div class="card c-coral">
+    <div class="card-title">
+      🏪 Impacto Positivo en Bodegas (BO)
+      <span class="pill pill-coral">Resultados validados</span>
+    </div>
+    <div class="metrics-grid">
+      <div class="mbox teal">
+        <span class="mb-val">+13–22%</span>
+        <span class="mb-lbl">Venta Total</span>
+        <div class="mb-subs">
+          <div class="mb-sub">🎟 Ticket Prom. <strong>+15%</strong></div>
+          <div class="mb-sub">💰 Util. Bruta <strong>+15%</strong></div>
+        </div>
+      </div>
+      <div class="mbox coral">
+        <span class="mb-val">+20%</span>
+        <span class="mb-lbl">Pareto Core</span>
+        <div class="mb-subs">
+          <div class="mb-sub">🎟 Ticket Prom. <strong>+9%</strong></div>
+          <div class="mb-sub">💰 Util. Bruta <strong>+21%</strong></div>
+        </div>
+      </div>
+    </div>
+    <p>Incremento en ventas del 13% al 22%, especialmente en clientes <strong>Pareto Core</strong>.</p>
+  </div>
+
+  <!-- ③ Tandas -->
+  <div class="card c-gold">
+    <div class="card-title">
+      🗓️ Control de Ejecución en 5 Tandas
+      <span class="pill pill-gold">Semanales</span>
+    </div>
+    <p class="tandas-note">Cada tanda = 1 semana · No se repite el mismo descuento en semanas consecutivas</p>
+    <div class="tandas">
+      <div class="tanda ok">
+        <span class="t-name">Tanda 1</span>
+        <span class="t-week">Semana 1</span>
+        <span class="t-icon">✅</span>
+      </div>
+      <div class="tanda ok">
+        <span class="t-name">Tanda 2</span>
+        <span class="t-week">Semana 2</span>
+        <span class="t-icon">✅</span>
+      </div>
+      <div class="tanda no">
+        <span class="t-name">Tanda 3</span>
+        <span class="t-week">Semana 3</span>
+        <span class="t-icon">🚫</span>
+      </div>
+      <div class="tanda ok">
+        <span class="t-name">Tanda 4</span>
+        <span class="t-week">Semana 4</span>
+        <span class="t-icon">✅</span>
+      </div>
+      <div class="tanda no">
+        <span class="t-name">Tanda 5</span>
+        <span class="t-week">Semana 5</span>
+        <span class="t-icon">🚫</span>
+      </div>
+    </div>
+    <hr class="divider">
+    <p>Distribuye el presupuesto en bloques semanales, <strong>prohibiendo descuentos iguales en tandas consecutivas</strong> para evitar saturación y canibalización.</p>
+  </div>
+
+  <!-- ④ Mejora del Margen -->
+  <div class="card c-teal">
+    <div class="card-title">
+      📊 Mejora del Margen y Utilidad
+      <span class="pill pill-teal">Proporcional</span>
+    </div>
+    <div class="mkpi-row">
+      <div class="mkpi teal">
+        <span class="mk-icon">🛒</span>
+        <span class="mk-val">+13–22%</span>
+        <span class="mk-lbl">Venta Total</span>
+        <span class="mk-trend">▲ crecimiento sostenido</span>
+      </div>
+      <div class="mkpi gold">
+        <span class="mk-icon">🎟️</span>
+        <span class="mk-val">+15%</span>
+        <span class="mk-lbl">Ticket Promedio</span>
+        <span class="mk-trend">▲ por cliente</span>
+      </div>
+      <div class="mkpi coral">
+        <span class="mk-icon">💰</span>
+        <span class="mk-val">+15–21%</span>
+        <span class="mk-lbl">Utilidad Bruta</span>
+        <span class="mk-trend">▲ margen real</span>
+      </div>
+    </div>
+    <hr class="divider">
+    <p>La utilidad bruta crece <strong>proporcionalmente</strong> a las ventas, revelando una mejora real del margen sin canibalización.</p>
+  </div>
+
+  <!-- ⑤ Restricciones -->
+  <div class="card c-gold">
+    <div class="card-title">
+      🔒 Restricciones de Negocio Clave
+      <span class="pill pill-gold">Reglas de ejecución</span>
+    </div>
+    <div class="filter-wrap">
+      <div class="filter-funnel">🔺</div>
+      <div class="filter-steps">
+        <div class="fstep f1">
+          <span class="pct">Entrada</span>
+          SKUs candidatos iniciales del universo
+        </div>
+        <div class="fstep f2">
+          <span class="pct">Filtro 1</span>
+          Solo SKUs con <strong>ROI &gt; 0</strong>
+        </div>
+        <div class="fstep f3">
+          <span class="pct">Filtro 2</span>
+          Descuentos entre <strong>2% y 8%</strong>
+        </div>
+      </div>
+      <div class="filter-out">
+        <span class="fout-badge fb-teal">✅ ROI &gt; 0</span>
+        <span class="fout-badge fb-gold">📉 Desc. 2–8%</span>
+      </div>
+    </div>
+    <hr class="divider">
+    <p>Solo se ejecutan promociones con <strong>ROI &gt; 0</strong> y descuentos entre <strong>2% y 8%</strong>, garantizando rentabilidad en cada acción.</p>
+  </div>
+
+  <!-- ⑥ Riesgos -->
+  <div class="card c-coral">
+    <div class="card-title">
+      ⚠️ Riesgos y Limitaciones en PDM
+      <span class="pill pill-coral">Área de mejora</span>
+    </div>
+    <p>Principales limitaciones identificadas en el canal <strong>PDM</strong>:</p>
+    <div class="risk-box">
+      <div class="risk-icon">🔬</div>
+      <div>
+        <div class="risk-title">Muestras Pequeñas · Alta Variabilidad</div>
+        <p style="font-size:9px; color:var(--text-secondary);">Falta de significancia estadística por <strong>muestras pequeñas</strong> y alta variabilidad en el comportamiento de compra, lo que dificulta conclusiones robustas por segmento.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ FOOTER ══════════════════════════════════════ -->
+<footer>
+  <span class="footer-brand">▸ ALICORP · AA</span>
+  <span>Modelo Promociones Tradicional · Feb 2026</span>
+</footer>
+
+</body>
+</html>
