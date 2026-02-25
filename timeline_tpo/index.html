@@ -45,6 +45,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
 .stat .stat-num{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text-primary);line-height:1}
 .stat .stat-label{font-size:9px;color:var(--text-muted);margin-top:2px}
 
+/* ═══ AREA LOGO ══════════════════════════════════ */
+.area-logo{
+  position:absolute;top:18px;right:48px;
+  display:flex;align-items:center;gap:9px;
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(8px);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:6px 14px 6px 8px;
+  box-shadow:var(--shadow-sm);
+  z-index:2;
+}
+.area-logo svg{width:26px;height:26px;flex-shrink:0}
+.area-logo-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:10.5px;font-weight:700;
+  color:var(--text-primary);line-height:1.2;
+}
+.area-logo-sub{
+  font-size:8.5px;color:var(--text-muted);
+  letter-spacing:.4px;
+}
+
 /* ═══ LEGEND ═════════════════════════════════════ */
 .legend-bar{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;padding:10px 48px;border-bottom:1px solid var(--border);background:var(--bg-card)}
 .leg{display:flex;align-items:center;gap:6px;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;color:var(--text-secondary)}
@@ -58,7 +81,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
 @keyframes sh{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
 
 /* ═══ STAGE ══════════════════════════════════════ */
-/* wrapper handles horizontal scroll without clipping vertical */
 .tl-stage{overflow-x:auto;overflow-y:visible;padding:0 48px 20px;cursor:grab;-webkit-overflow-scrolling:touch;padding-top:8px}
 .tl-stage:active{cursor:grabbing}
 .tl-stage::-webkit-scrollbar{height:4px}
@@ -120,7 +142,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
 .grp-card.below::after{bottom:100%;height:22px}
 .grp-card::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;border-radius:0 2px 2px 0;background:currentColor;opacity:.35}
 
-/* individual item dentro del grupo */
 .grp-item{display:flex;flex-direction:column;padding:4px 0;position:relative}
 .grp-item:not(:last-child){border-bottom:1px dashed var(--border);margin-bottom:3px;padding-bottom:6px}
 .grp-item .gi-date{font-family:'Space Grotesk',sans-serif;font-size:7px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;margin-bottom:1px}
@@ -133,15 +154,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
 .grp-connector{width:1px;flex:0 0 22px;background:currentColor;opacity:.2}
 
 /* ═══ COLOR SCHEMES ══════════════════════════════ */
-/* destacados */
 .dc-coral .dest-card::before{background:var(--coral)}.dc-coral .dest-card{color:var(--coral)}.dc-coral .dc-date{color:var(--coral)}.dc-coral .dc-pill{background:var(--coral-light);color:var(--coral)}.dc-coral .dest-node{border-color:var(--coral);color:var(--coral)}.dc-coral .dest-connector{background:var(--coral)}.dc-coral .dest-card::after{background:var(--coral)}
 .dc-teal .dest-card::before{background:var(--teal)}.dc-teal .dest-card{color:var(--teal)}.dc-teal .dc-date{color:var(--teal)}.dc-teal .dc-pill{background:var(--teal-light);color:var(--teal-dark)}.dc-teal .dest-node{border-color:var(--teal);color:var(--teal)}.dc-teal .dest-connector{background:var(--teal)}.dc-teal .dest-card::after{background:var(--teal)}
 .dc-gold .dest-card::before{background:var(--gold)}.dc-gold .dest-card{color:var(--gold-dark)}.dc-gold .dc-date{color:var(--gold-dark)}.dc-gold .dc-pill{background:var(--gold-light);color:var(--gold-dark)}.dc-gold .dest-node{border-color:var(--gold);color:var(--gold)}.dc-gold .dest-connector{background:var(--gold)}.dc-gold .dest-card::after{background:var(--gold)}
-/* pequeños */
 .pc-coral .pc-date{color:var(--coral)}.pc-coral .peq-node{border-color:var(--coral);color:var(--coral)}.pc-coral .peq-connector{background:var(--coral)}.pc-coral .peq-card::after{background:var(--coral)}
 .pc-teal .pc-date{color:var(--teal)}.pc-teal .peq-node{border-color:var(--teal);color:var(--teal)}.pc-teal .peq-connector{background:var(--teal)}.pc-teal .peq-card::after{background:var(--teal)}
 .pc-gold .pc-date{color:var(--gold-dark)}.pc-gold .peq-node{border-color:var(--gold);color:var(--gold)}.pc-gold .peq-connector{background:var(--gold)}.pc-gold .peq-card::after{background:var(--gold)}
-/* grupos */
 .gc-coral .grp-card{color:var(--coral)}.gc-coral .gi-date{color:var(--coral)}.gc-coral .grp-card::before{background:var(--coral)}.gc-coral .grp-node{border-color:var(--coral);color:var(--coral)}.gc-coral .grp-connector{background:var(--coral)}.gc-coral .grp-card::after{background:var(--coral)}
 .gc-teal .grp-card{color:var(--teal)}.gc-teal .gi-date{color:var(--teal)}.gc-teal .grp-card::before{background:var(--teal)}.gc-teal .grp-node{border-color:var(--teal);color:var(--teal)}.gc-teal .grp-connector{background:var(--teal)}.gc-teal .grp-card::after{background:var(--teal)}
 .gc-gold .grp-card{color:var(--gold-dark)}.gc-gold .gi-date{color:var(--gold-dark)}.gc-gold .grp-card::before{background:var(--gold)}.gc-gold .grp-node{border-color:var(--gold);color:var(--gold)}.gc-gold .grp-connector{background:var(--gold)}.gc-gold .grp-card::after{background:var(--gold)}
@@ -160,13 +178,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
 .metrics-tbl td.val-good{color:var(--teal-dark);font-weight:700;font-family:'Space Grotesk',sans-serif}
 .metrics-tbl td.val-mape{color:var(--coral);font-weight:700;font-family:'Space Grotesk',sans-serif}
 .metrics-divider{height:1px;background:var(--border);margin:7px 0}
-/* summary badges for final card */
 .sum-badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
 .sum-badge{background:var(--teal-light);border:1px solid rgba(45,156,156,.2);border-radius:6px;padding:4px 8px;font-family:'Space Grotesk',sans-serif;text-align:center}
 .sum-badge .sb-lbl{font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:1px}
 .sum-badge .sb-val{font-size:11px;font-weight:700;color:var(--teal-dark)}
-
-/* improvement list */
 .improve-list{display:flex;flex-direction:column;gap:5px;margin-top:4px}
 .imp-item{display:flex;align-items:flex-start;gap:6px;padding:4px 0}
 .imp-item:not(:last-child){border-bottom:1px dashed var(--border)}
@@ -177,12 +192,40 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
 /* ═══ FOOTER ═════════════════════════════════════ */
 footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:10px;color:var(--text-muted);background:var(--bg-card)}
 .footer-brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:10px;color:var(--coral);letter-spacing:.5px}
+.footer-logo{display:flex;align-items:center;gap:7px}
+.footer-logo svg{width:22px;height:22px}
+.footer-logo-name{font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;color:var(--text-primary)}
+
 </style>
 </head>
 <body>
 
 <!-- HERO -->
 <div class="hero">
+
+  <!-- Logo COE AA -->
+  <div class="area-logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <rect width="40" height="40" rx="10" fill="url(#lgHero1)"/>
+      <circle cx="12" cy="15" r="3" fill="white"/>
+      <circle cx="12" cy="20" r="3" fill="white"/>
+      <circle cx="12" cy="25" r="3" fill="white"/>
+      <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+      <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+      <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+      <defs>
+        <linearGradient id="lgHero1" x1="0" y1="0" x2="40" y2="40">
+          <stop stop-color="#E85D4C"/>
+          <stop offset="1" stop-color="#C94A3A"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div>
+      <div class="area-logo-name">COE Advanced Analytics</div>
+      
+    </div>
+  </div>
+
   <div class="hero-inner">
     <div>
       <div class="hero-badge"><span class="badge-dot"></span>Alicorp · AA · TPO v1 → v2</div>
@@ -252,7 +295,7 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   </div>
   <div class="tl-col gap"></div>
 
-  <!-- ③ GRUPO: May 6 + May 30 · ABOVE -->
+  <!-- ③ GRUPO: May 6 · ABOVE -->
   <div class="tl-col grp gc-teal" style="animation-delay:.12s">
     <div class="grp-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
       <div class="grp-card above">
@@ -285,7 +328,7 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   </div>
   <div class="tl-col gap"></div>
 
-  <!-- ③b May 30 · peq · ABOVE -->
+  <!-- May 30 · peq · ABOVE -->
   <div class="tl-col peq pc-teal" style="animation-delay:.20s">
     <div class="peq-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
       <div class="peq-card above"><div class="pc-date">30 May 2025</div><div class="pc-title">Fin POC · Alicorp ↔ Linnda</div></div>
@@ -322,18 +365,9 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
       <div class="metrics-wrap">
         <div class="metrics-label">Mejoras incluidas</div>
         <div class="improve-list">
-          <div class="imp-item">
-            <span class="imp-icon">📅</span>
-            <div><span class="imp-title">Variables temporales</span><span class="imp-desc">Feriados, lags, diffs, rollings de serie temporal</span></div>
-          </div>
-          <div class="imp-item">
-            <span class="imp-icon">📈</span>
-            <div><span class="imp-title">Variables macroeconómicas</span><span class="imp-desc">Precio del dólar (diario/mensual) · Máx, mín, media</span></div>
-          </div>
-          <div class="imp-item">
-            <span class="imp-icon">⚡</span>
-            <div><span class="imp-title">Optimización del modelo</span><span class="imp-desc">Reducción de tiempos de ejecución</span></div>
-          </div>
+          <div class="imp-item"><span class="imp-icon">📅</span><div><span class="imp-title">Variables temporales</span><span class="imp-desc">Feriados, lags, diffs, rollings de serie temporal</span></div></div>
+          <div class="imp-item"><span class="imp-icon">📈</span><div><span class="imp-title">Variables macroeconómicas</span><span class="imp-desc">Precio del dólar (diario/mensual) · Máx, mín, media</span></div></div>
+          <div class="imp-item"><span class="imp-icon">⚡</span><div><span class="imp-title">Optimización del modelo</span><span class="imp-desc">Reducción de tiempos de ejecución</span></div></div>
         </div>
         <div class="metrics-divider"></div>
         <div class="metrics-label">Actualidad</div>
@@ -354,14 +388,8 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   <div class="tl-col grp gc-gold" style="animation-delay:.31s">
     <div class="grp-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
       <div class="grp-card above">
-        <div class="grp-item">
-          <div class="gi-date">22 Jul 2025</div>
-          <div class="gi-title">Inicio acercamiento Canal Moderno — D. Osorio</div>
-        </div>
-        <div class="grp-item">
-          <div class="gi-date">08 Ago 2025</div>
-          <div class="gi-title">1ª Reunión revisión estructura — Raúl, D.Osorio & AA</div>
-        </div>
+        <div class="grp-item"><div class="gi-date">22 Jul 2025</div><div class="gi-title">Inicio acercamiento Canal Moderno — D. Osorio</div></div>
+        <div class="grp-item"><div class="gi-date">08 Ago 2025</div><div class="gi-title">1ª Reunión revisión estructura — Raúl, D.Osorio & AA</div></div>
       </div>
     </div>
     <div class="grp-connector"></div><div class="grp-node"></div>
@@ -387,22 +415,10 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   <div class="tl-col grp gc-mix" style="animation-delay:.40s">
     <div class="grp-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
       <div class="grp-card above">
-        <div class="grp-item">
-          <div class="gi-date" style="color:var(--teal)">01 Oct 2025</div>
-          <div class="gi-title">1ª Entrega Modelo Moderno — Salsas & Pastas</div>
-        </div>
-        <div class="grp-item">
-          <div class="gi-date" style="color:var(--coral)">13 Oct 2025</div>
-          <div class="gi-title">1ª Respuesta Daniel — 1er Review</div>
-        </div>
-        <div class="grp-item">
-          <div class="gi-date" style="color:var(--teal)">16 Oct 2025</div>
-          <div class="gi-title">2ª Entrega con Feedback levantado</div>
-        </div>
-        <div class="grp-item">
-          <div class="gi-date" style="color:var(--gold-dark)">01 Nov 2025</div>
-          <div class="gi-title">Ingresa David al equipo</div>
-        </div>
+        <div class="grp-item"><div class="gi-date" style="color:var(--teal)">01 Oct 2025</div><div class="gi-title">1ª Entrega Modelo Moderno — Salsas & Pastas</div></div>
+        <div class="grp-item"><div class="gi-date" style="color:var(--coral)">13 Oct 2025</div><div class="gi-title">1ª Respuesta Daniel — 1er Review</div></div>
+        <div class="grp-item"><div class="gi-date" style="color:var(--teal)">16 Oct 2025</div><div class="gi-title">2ª Entrega con Feedback levantado</div></div>
+        <div class="grp-item"><div class="gi-date" style="color:var(--gold-dark)">01 Nov 2025</div><div class="gi-title">Ingresa David al equipo</div></div>
       </div>
     </div>
     <div class="grp-connector"></div><div class="grp-node"></div>
@@ -429,22 +445,10 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   <div class="tl-col grp gc-gold" style="animation-delay:.50s">
     <div class="grp-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
       <div class="grp-card above">
-        <div class="grp-item">
-          <div class="gi-date" style="color:var(--teal)">06 Nov 2025</div>
-          <div class="gi-title">Última entrega del mes — Nov 2025</div>
-        </div>
-        <div class="grp-item">
-          <div class="gi-date" style="color:var(--gold-dark)">02 Dic 2025</div>
-          <div class="gi-title">Inicio trabajos actualización modelo Ene 2026</div>
-        </div>
-        <div class="grp-item">
-          <div class="gi-date" style="color:var(--gold-dark)">19 Ene 2026</div>
-          <div class="gi-title">Reunión Negocio + Trade — Feedback modelo</div>
-        </div>
-        <div class="grp-item">
-          <div class="gi-date" style="color:var(--teal)">21 Ene 2026</div>
-          <div class="gi-title">1ª Reunión de ROI — Jose Silva</div>
-        </div>
+        <div class="grp-item"><div class="gi-date" style="color:var(--teal)">06 Nov 2025</div><div class="gi-title">Última entrega del mes — Nov 2025</div></div>
+        <div class="grp-item"><div class="gi-date" style="color:var(--gold-dark)">02 Dic 2025</div><div class="gi-title">Inicio trabajos actualización modelo Ene 2026</div></div>
+        <div class="grp-item"><div class="gi-date" style="color:var(--gold-dark)">19 Ene 2026</div><div class="gi-title">Reunión Negocio + Trade — Feedback modelo</div></div>
+        <div class="grp-item"><div class="gi-date" style="color:var(--teal)">21 Ene 2026</div><div class="gi-title">1ª Reunión de ROI — Jose Silva</div></div>
       </div>
     </div>
     <div class="grp-connector"></div><div class="grp-node"></div>
@@ -470,14 +474,8 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   <div class="tl-col grp gc-teal" style="animation-delay:.60s">
     <div class="grp-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
       <div class="grp-card above">
-        <div class="grp-item">
-          <div class="gi-date">22 Ene 2026</div>
-          <div class="gi-title">1ª Entrega 2026 — David · Obs. de consistencia</div>
-        </div>
-        <div class="grp-item">
-          <div class="gi-date">16 Feb 2026</div>
-          <div class="gi-title">Última revisión ROI — Jose Silva. Comparativa modelo</div>
-        </div>
+        <div class="grp-item"><div class="gi-date">22 Ene 2026</div><div class="gi-title">1ª Entrega 2026 — David · Obs. de consistencia</div></div>
+        <div class="grp-item"><div class="gi-date">16 Feb 2026</div><div class="gi-title">Última revisión ROI — Jose Silva. Comparativa modelo</div></div>
       </div>
     </div>
     <div class="grp-connector"></div><div class="grp-node"></div>
@@ -507,14 +505,8 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
         <div class="metrics-label">Métricas</div>
       </div>
       <div class="sum-badges">
-        <div class="sum-badge">
-          <span class="sb-lbl">MAPE Mediana</span>
-          <span class="sb-val" style="color:var(--coral)">11.5%</span>
-        </div>
-        <div class="sum-badge">
-          <span class="sb-lbl">R² Media</span>
-          <span class="sb-val">85.4%</span>
-        </div>
+        <div class="sum-badge"><span class="sb-lbl">MAPE Mediana</span><span class="sb-val" style="color:var(--coral)">11.5%</span></div>
+        <div class="sum-badge"><span class="sb-lbl">R² Media</span><span class="sb-val">85.4%</span></div>
       </div>
     </div>
     <div class="dest-spacer-below" style="min-height:0"></div>
@@ -526,6 +518,27 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
 
 <footer>
   <span class="footer-brand">▸ ALICORP · AA</span>
+  <div class="footer-logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <rect width="40" height="40" rx="10" fill="url(#lgFoot1)"/>
+      <circle cx="12" cy="15" r="3" fill="white"/>
+      <circle cx="12" cy="20" r="3" fill="white"/>
+      <circle cx="12" cy="25" r="3" fill="white"/>
+      <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+      <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+      <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+      <defs>
+        <linearGradient id="lgFoot1" x1="0" y1="0" x2="40" y2="40">
+          <stop stop-color="#E85D4C"/>
+          <stop offset="1" stop-color="#C94A3A"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div>
+      <div class="footer-logo-name">COE Advanced Analytics</div>
+      
+    </div>
+  </div>
   <span>Modelo Promociones Tradicional · Feb 2026</span>
 </footer>
 
