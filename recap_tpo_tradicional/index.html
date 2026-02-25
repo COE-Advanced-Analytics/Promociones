@@ -40,7 +40,7 @@ body {
 /* ═══ HERO ═══════════════════════════════════════ */
 .hero {
   background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
-  padding: 24px 48px 20px;
+  padding: 24px 28px 20px;
   border-bottom: 1px solid var(--border);
   position: relative;
   overflow: hidden;
@@ -103,7 +103,7 @@ body {
 /* ═══ CONTEXT BAR ═════════════════════════════════ */
 .context-bar {
   display:flex; align-items:center; gap:10px;
-  padding:10px 48px;
+  padding:10px 28px;
   background:var(--gold-light);
   border-bottom:1px solid rgba(212,168,83,.25);
   font-size:13px; color:var(--gold-dark);
@@ -115,9 +115,11 @@ body {
 
 /* ═══ SECTION HEADER ══════════════════════════════ */
 .section-header {
-  max-width: 760px;
-  margin: 28px auto 0;
-  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 22px 0 0;
+  padding: 0 28px;
 }
 .sec-label {
   display:flex; align-items:center; gap:8px;
@@ -125,7 +127,7 @@ body {
   font-size:11px; font-weight:700;
   text-transform:uppercase; letter-spacing:.8px;
   padding:8px 16px;
-  border-radius:7px;
+  border-radius:7px 7px 0 0;
 }
 .sec-label.teal  { background:var(--teal);  color:#fff }
 .sec-label.coral { background:var(--coral); color:#fff }
@@ -133,12 +135,11 @@ body {
 
 /* ═══ MAIN GRID ═══════════════════════════════════ */
 .main-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 760px;
-  margin: 0 auto 32px;
-  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 0 0 24px;
+  padding: 0 28px;
 }
 
 /* ═══ CARD ════════════════════════════════════════ */
@@ -273,9 +274,9 @@ body {
   color:var(--teal-dark);
 }
 .tanda.no {
-  background:var(--coral-light);
-  border-color:rgba(232,93,76,.3);
-  color:var(--coral-dark);
+  background:var(--teal-light);
+  border-color:rgba(45,156,156,.4);
+  color:var(--teal-dark);
 }
 
 /* ═══ MARGIN KPIs ═════════════════════════════════ */
@@ -352,7 +353,116 @@ body {
 .fb-teal  { background:var(--teal-light);  color:var(--teal-dark) }
 .fb-gold  { background:var(--gold-light);  color:var(--gold-dark) }
 
-/* ═══ RISK BOX ════════════════════════════════════ */
+/* ═══ MARGIN CHART ════════════════════════════════ */
+/* ═══ CHART (crecimiento proporcional) ═══════════ */
+.growth-chart {
+  margin: 14px 0 8px;
+  position: relative;
+  background: linear-gradient(180deg, var(--teal-light) 0%, rgba(232,246,246,0) 100%);
+  border-radius: 10px;
+  padding: 14px 14px 0;
+  overflow: hidden;
+}
+.growth-chart-inner {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 120px;
+  position: relative;
+  z-index: 2;
+}
+/* trend arrow SVG overlay */
+.growth-chart::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 120' preserveAspectRatio='none'%3E%3Cpolyline points='20,100 80,75 140,55 200,30 270,8' fill='none' stroke='%232D9C9C' stroke-width='2.5' stroke-dasharray='5,3' opacity='0.5'/%3E%3C/svg%3E") no-repeat center/100% 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.g-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  position: relative;
+}
+.g-bar {
+  width: 100%;
+  max-width: 42px;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  transition: height .5s ease;
+}
+.g-bar-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+.g-bar.ventas   { background: linear-gradient(180deg, var(--teal) 0%, var(--teal-dark) 100%); }
+.g-bar.ventas .g-bar-val { color: #fff; }
+.g-bar.utilidad { background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); }
+.g-bar.utilidad .g-bar-val { color: #fff; }
+.g-bar.pareto-v { background: linear-gradient(180deg, var(--coral) 0%, var(--coral-dark) 100%); }
+.g-bar.pareto-v .g-bar-val { color: #fff; }
+.g-bar.pareto-u { background: linear-gradient(180deg, #e8936a 0%, var(--coral-dark) 100%); }
+.g-bar.pareto-u .g-bar-val { color: #fff; }
+
+.g-icon {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.g-lbl {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 5px 0 8px;
+  white-space: nowrap;
+}
+.g-lbl.pareto { color: var(--coral-dark); }
+
+/* arrow up decorative */
+.trend-arrow {
+  position: absolute;
+  top: 8px; right: 10px;
+  font-size: 1.6rem;
+  z-index: 3;
+  filter: drop-shadow(0 2px 4px rgba(45,156,156,.3));
+}
+.g-coin {
+  position: absolute;
+  font-size: 13px;
+  z-index: 3;
+}
+
+.chart-legend {
+  display:flex; gap:12px; flex-wrap:wrap;
+  margin-top:2px;
+}
+.leg-item {
+  display:flex; align-items:center; gap:5px;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:9px; font-weight:600; color:var(--text-secondary);
+}
+.leg-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+.growth-chart {
+  margin: 10px 0 4px;
+  background: linear-gradient(to bottom, var(--teal-light), #fff);
+  border-radius: 10px;
+  padding: 8px 6px 2px;
+  border: 1px solid rgba(45,156,156,.15);
+}
 .risk-box {
   background:var(--coral-light);
   border:1px dashed rgba(232,93,76,.35);
@@ -370,7 +480,7 @@ body {
 
 /* ═══ FOOTER ══════════════════════════════════════ */
 footer {
-  padding:14px 48px;
+  padding:14px 28px;
   border-top:1px solid var(--border);
   display:flex; justify-content:space-between;
   align-items:center; flex-wrap:wrap; gap:8px;
@@ -384,10 +494,9 @@ footer {
 }
 
 @media(max-width:640px){
-  .main-grid { padding:0 14px }
-  .section-header { padding:0 14px }
-  .hero { padding:18px 16px 16px }
-  .context-bar, footer { padding:9px 16px }
+  .main-grid, .section-header { grid-template-columns:1fr; padding:0 14px }
+  .hero { padding:18px 14px 16px }
+  .context-bar, footer { padding:9px 14px }
 }
 </style>
 </head>
@@ -423,12 +532,14 @@ footer {
   📌 <strong>Contexto:</strong>&nbsp;Utiliza análisis de elasticidad y reglas de negocio, validado por <em>'Diferencias en Diferencias' (DiD)</em> para asegurar causalidad.
 </div>
 
-<!-- ═══ SECTION: LÓGICA ═══════════════════════════ -->
+<!-- ═══ SECTION HEADERS ══════════════════════════ -->
 <div class="section-header">
   <div class="sec-label teal">📊 Lógica y Funcionamiento del Modelo</div>
+  <div class="sec-label coral">🏆 Hallazgos, Fortalezas y Limitaciones</div>
 </div>
 
-<div class="main-grid" style="margin-top:12px">
+<!-- ═══ MAIN GRID ══════════════════════════════════ -->
+<div class="main-grid" style="margin-top:0">
 
   <!-- ① Elasticidad -->
   <div class="card c-teal">
@@ -456,89 +567,11 @@ footer {
     <p>Genera promociones por SKU usando datos transaccionales, precios efectivos y curvas de elasticidad.</p>
   </div>
 
-  <!-- ③ Tandas -->
-  <div class="card c-gold">
-    <div class="card-title">
-      🗓️ Control de Ejecución en 5 Tandas
-      <span class="pill pill-gold">Semanales</span>
-    </div>
-    <p class="tandas-note">Cada tanda = 1 semana · No se repite el mismo descuento en semanas consecutivas</p>
-    <div class="tandas">
-      <div class="tanda ok">
-        <span class="t-name">Tanda 1</span>
-        <span class="t-week">Semana 1</span>
-        <span class="t-icon">✅</span>
-      </div>
-      <div class="tanda ok">
-        <span class="t-name">Tanda 2</span>
-        <span class="t-week">Semana 2</span>
-        <span class="t-icon">✅</span>
-      </div>
-      <div class="tanda no">
-        <span class="t-name">Tanda 3</span>
-        <span class="t-week">Semana 3</span>
-        <span class="t-icon">🚫</span>
-      </div>
-      <div class="tanda ok">
-        <span class="t-name">Tanda 4</span>
-        <span class="t-week">Semana 4</span>
-        <span class="t-icon">✅</span>
-      </div>
-      <div class="tanda no">
-        <span class="t-name">Tanda 5</span>
-        <span class="t-week">Semana 5</span>
-        <span class="t-icon">🚫</span>
-      </div>
-    </div>
-    <hr class="divider">
-    <p>Distribuye el presupuesto en bloques semanales, <strong>prohibiendo descuentos iguales en tandas consecutivas</strong> para evitar saturación y canibalización.</p>
-  </div>
-
-  <!-- ⑤ Restricciones -->
-  <div class="card c-gold">
-    <div class="card-title">
-      🔒 Restricciones de Negocio Clave
-      <span class="pill pill-gold">Reglas de ejecución</span>
-    </div>
-    <div class="filter-wrap">
-      <div class="filter-funnel">🔺</div>
-      <div class="filter-steps">
-        <div class="fstep f1">
-          <span class="pct">Entrada</span>
-          SKUs candidatos iniciales del universo
-        </div>
-        <div class="fstep f2">
-          <span class="pct">Filtro 1</span>
-          Solo SKUs con <strong>ROI &gt; 0</strong>
-        </div>
-        <div class="fstep f3">
-          <span class="pct">Filtro 2</span>
-          Descuentos entre <strong>2% y 8%</strong>
-        </div>
-      </div>
-      <div class="filter-out">
-        <span class="fout-badge fb-teal">✅ ROI &gt; 0</span>
-        <span class="fout-badge fb-gold">📉 Desc. 2–8%</span>
-      </div>
-    </div>
-    <hr class="divider">
-    <p>Solo se ejecutan promociones con <strong>ROI &gt; 0</strong> y descuentos entre <strong>2% y 8%</strong>, garantizando rentabilidad en cada acción.</p>
-  </div>
-
-</div>
-
-<!-- ═══ SECTION: HALLAZGOS ════════════════════════ -->
-<div class="section-header">
-  <div class="sec-label coral">🏆 Hallazgos, Fortalezas y Limitaciones</div>
-</div>
-
-<div class="main-grid" style="margin-top:12px">
-
   <!-- ② Bodegas -->
   <div class="card c-coral">
     <div class="card-title">
       🏪 Impacto Positivo en Bodegas (BO)
-      <span class="pill pill-coral">Resultados validados</span>
+      <span class="pill pill-coral">Resultados piloto</span>
     </div>
     <div class="metrics-grid">
       <div class="mbox teal">
@@ -559,6 +592,24 @@ footer {
       </div>
     </div>
     <p>Incremento en ventas del 13% al 22%, especialmente en clientes <strong>Pareto Core</strong>.</p>
+  </div>
+
+  <!-- ③ Tandas -->
+  <div class="card c-gold">
+    <div class="card-title">
+      🗓️ Control de Ejecución en 5 Tandas
+      <span class="pill pill-gold">Semanales</span>
+    </div>
+    <p class="tandas-note">Cada tanda = 1 semana · No se repite el mismo descuento en semanas consecutivas</p>
+    <div class="tandas">
+      <div class="tanda ok"><span class="t-name">Tanda 1</span><span class="t-week">Semana 1</span><span class="t-icon">✅</span></div>
+      <div class="tanda ok"><span class="t-name">Tanda 2</span><span class="t-week">Semana 2</span><span class="t-icon">✅</span></div>
+      <div class="tanda no"><span class="t-name">Tanda 3</span><span class="t-week">Semana 3</span><span class="t-icon">🚫</span></div>
+      <div class="tanda ok"><span class="t-name">Tanda 4</span><span class="t-week">Semana 4</span><span class="t-icon">✅</span></div>
+      <div class="tanda no"><span class="t-name">Tanda 5</span><span class="t-week">Semana 5</span><span class="t-icon">🚫</span></div>
+    </div>
+    <hr class="divider">
+    <p>Distribuye el presupuesto en bloques semanales, <strong>prohibiendo descuentos iguales en tandas consecutivas</strong> para evitar saturación y canibalización.</p>
   </div>
 
   <!-- ④ Mejora del Margen -->
@@ -589,6 +640,28 @@ footer {
     </div>
     <hr class="divider">
     <p>La utilidad bruta crece <strong>proporcionalmente</strong> a las ventas, revelando una mejora real del margen sin canibalización.</p>
+  </div>
+
+  <!-- ⑤ Restricciones -->
+  <div class="card c-gold">
+    <div class="card-title">
+      🔒 Restricciones de Negocio Clave
+      <span class="pill pill-gold">Reglas de ejecución</span>
+    </div>
+    <div class="filter-wrap">
+      <div class="filter-funnel">🔺</div>
+      <div class="filter-steps">
+        <div class="fstep f1"><span class="pct">Entrada</span> SKUs candidatos iniciales del universo</div>
+        <div class="fstep f2"><span class="pct">Filtro 1</span> Solo SKUs con <strong>ROI &gt; 0</strong></div>
+        <div class="fstep f3"><span class="pct">Filtro 2</span> Descuentos entre <strong>2% y 8%</strong></div>
+      </div>
+      <div class="filter-out">
+        <span class="fout-badge fb-teal">✅ ROI &gt; 0</span>
+        <span class="fout-badge fb-gold">📉 Desc. 2–8%</span>
+      </div>
+    </div>
+    <hr class="divider">
+    <p>Solo se ejecutan promociones con <strong>ROI &gt; 0</strong> y descuentos entre <strong>2% y 8%</strong>, garantizando rentabilidad en cada acción.</p>
   </div>
 
   <!-- ⑥ Riesgos -->
