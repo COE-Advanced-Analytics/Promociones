@@ -85,60 +85,58 @@ body {
 
 .hero h1 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(20px,2.8vw,30px);
+  font-size: clamp(24px,3.2vw,36px);
   font-weight:700; line-height:1.15;
-  color: var(--text-primary); margin-bottom:4px;
+  color: var(--text-primary); margin-bottom:6px;
 }
 .hero h1 .hl { color:var(--coral) }
-.hero p { font-size:11.5px; color:var(--text-muted) }
+.hero p { font-size:13.5px; color:var(--text-muted) }
 
-.hero-stats { display:flex; gap:20px; flex-wrap:wrap }
+.hero-stats { display:flex; gap:24px; flex-wrap:wrap }
 .stat .stat-num {
   font-family:'Space Grotesk',sans-serif;
-  font-size:18px; font-weight:700;
+  font-size:22px; font-weight:700;
   color:var(--text-primary); line-height:1;
 }
-.stat .stat-label { font-size:9px; color:var(--text-muted); margin-top:2px }
+.stat .stat-label { font-size:11px; color:var(--text-muted); margin-top:3px }
 
 /* ═══ CONTEXT BAR ═════════════════════════════════ */
 .context-bar {
   display:flex; align-items:center; gap:10px;
-  padding:9px 48px;
+  padding:10px 48px;
   background:var(--gold-light);
   border-bottom:1px solid rgba(212,168,83,.25);
-  font-size:10px; color:var(--gold-dark);
+  font-size:13px; color:var(--gold-dark);
 }
 .context-bar strong {
   font-family:'Space Grotesk',sans-serif;
   font-weight:700; letter-spacing:.3px;
 }
 
-/* ═══ COLUMN HEADERS ══════════════════════════════ */
-.col-headers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  max-width: 980px;
-  margin: 20px auto 0;
+/* ═══ SECTION HEADER ══════════════════════════════ */
+.section-header {
+  max-width: 760px;
+  margin: 28px auto 0;
   padding: 0 24px;
 }
-.col-header {
+.sec-label {
   display:flex; align-items:center; gap:8px;
   font-family:'Space Grotesk',sans-serif;
-  font-size:9px; font-weight:700;
+  font-size:11px; font-weight:700;
   text-transform:uppercase; letter-spacing:.8px;
-  padding:6px 12px;
-  border-radius:6px 6px 0 0;
+  padding:8px 16px;
+  border-radius:7px;
 }
-.col-header.teal  { background:var(--teal);  color:#fff }
-.col-header.coral { background:var(--coral); color:#fff }
+.sec-label.teal  { background:var(--teal);  color:#fff }
+.sec-label.coral { background:var(--coral); color:#fff }
+.sec-label.gold  { background:var(--gold);  color:#fff }
 
 /* ═══ MAIN GRID ═══════════════════════════════════ */
 .main-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
-  max-width: 980px;
+  max-width: 760px;
   margin: 0 auto 32px;
   padding: 0 24px;
 }
@@ -168,22 +166,22 @@ body {
 
 .card-title {
   font-family:'Space Grotesk',sans-serif;
-  font-size:11px; font-weight:700;
+  font-size:14px; font-weight:700;
   color:var(--text-primary);
-  margin-bottom:12px;
-  display:flex; align-items:center; gap:6px;
+  margin-bottom:14px;
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
 }
 .card-title .pill {
-  font-size:7.5px; font-weight:700;
+  font-size:9px; font-weight:700;
   letter-spacing:.7px; text-transform:uppercase;
-  padding:2px 8px; border-radius:100px;
+  padding:3px 10px; border-radius:100px;
 }
 .pill-teal  { background:var(--teal-light);  color:var(--teal-dark) }
 .pill-coral { background:var(--coral-light); color:var(--coral-dark) }
 .pill-gold  { background:var(--gold-light);  color:var(--gold-dark) }
 
 .card p {
-  font-size:10px; color:var(--text-secondary); line-height:1.5;
+  font-size:13px; color:var(--text-secondary); line-height:1.6;
 }
 .divider {
   border:none; border-top:1px solid var(--border); margin:11px 0;
@@ -200,14 +198,14 @@ body {
   border:1px solid rgba(45,156,156,.2);
   border-radius:8px; padding:10px 6px;
 }
-.flow-step .fs-icon { font-size:1.4rem; display:block; margin-bottom:4px }
+.flow-step .fs-icon { font-size:1.8rem; display:block; margin-bottom:6px }
 .flow-step .fs-lbl {
-  font-size:8px; color:var(--teal-dark);
+  font-size:10.5px; color:var(--teal-dark);
   font-family:'Space Grotesk',sans-serif; font-weight:600;
   line-height:1.3;
 }
 .flow-arr {
-  font-size:1rem; color:var(--teal); flex-shrink:0;
+  font-size:1.3rem; color:var(--teal); flex-shrink:0;
 }
 
 /* ═══ METRICS (bodegas) ════════════════════════════ */
@@ -222,23 +220,23 @@ body {
 .mbox.coral { background:var(--coral-light); border:1px solid rgba(232,93,76,.2) }
 .mbox .mb-val {
   font-family:'Space Grotesk',sans-serif;
-  font-size:1.45rem; font-weight:700; line-height:1;
+  font-size:1.9rem; font-weight:700; line-height:1;
   display:block;
 }
 .mbox.teal  .mb-val { color:var(--teal-dark) }
 .mbox.coral .mb-val { color:var(--coral-dark) }
 .mbox .mb-lbl {
   font-family:'Space Grotesk',sans-serif;
-  font-size:7.5px; font-weight:700;
+  font-size:10px; font-weight:700;
   text-transform:uppercase; letter-spacing:.7px;
-  color:var(--text-muted); margin-top:3px; display:block;
+  color:var(--text-muted); margin-top:5px; display:block;
 }
-.mbox .mb-subs { margin-top:8px; display:flex; flex-direction:column; gap:3px }
+.mbox .mb-subs { margin-top:10px; display:flex; flex-direction:column; gap:4px }
 .mbox .mb-sub {
-  font-size:9px; color:var(--text-secondary);
+  font-size:11.5px; color:var(--text-secondary);
   background:rgba(255,255,255,.6);
-  border-radius:5px; padding:2px 6px;
-  display:flex; align-items:center; gap:4px;
+  border-radius:5px; padding:3px 8px;
+  display:flex; align-items:center; gap:5px;
 }
 .mbox .mb-sub strong {
   font-family:'Space Grotesk',sans-serif;
@@ -247,28 +245,28 @@ body {
 
 /* ═══ TANDAS ══════════════════════════════════════ */
 .tandas-note {
-  font-size:8.5px; color:var(--text-muted);
-  font-style:italic; text-align:center; margin-bottom:8px;
+  font-size:11px; color:var(--text-muted);
+  font-style:italic; text-align:center; margin-bottom:10px;
 }
 .tandas {
-  display:flex; gap:5px; margin:8px 0;
+  display:flex; gap:6px; margin:10px 0;
 }
 .tanda {
   flex:1; text-align:center;
-  padding:8px 3px;
-  border-radius:7px;
+  padding:10px 4px;
+  border-radius:8px;
   font-family:'Space Grotesk',sans-serif;
-  font-size:8px; font-weight:700;
+  font-size:10px; font-weight:700;
   border:1.5px solid transparent;
 }
 .tanda .t-name { display:block }
 .tanda .t-week {
-  display:block; margin-top:2px;
+  display:block; margin-top:3px;
   font-family:'DM Sans',sans-serif;
-  font-weight:400; font-size:7px;
+  font-weight:400; font-size:9px;
   color:var(--text-muted);
 }
-.tanda .t-icon { display:block; font-size:10px; margin-top:2px }
+.tanda .t-icon { display:block; font-size:13px; margin-top:3px }
 .tanda.ok {
   background:var(--teal-light);
   border-color:rgba(45,156,156,.4);
@@ -300,55 +298,55 @@ body {
 .mkpi.coral::after { background:var(--coral) }
 .mkpi.gold  { background:var(--gold-light);  border-color:rgba(212,168,83,.25) }
 .mkpi.gold::after  { background:var(--gold) }
-.mkpi .mk-icon { font-size:1.2rem; display:block; margin-bottom:4px }
+.mkpi .mk-icon { font-size:1.6rem; display:block; margin-bottom:5px }
 .mkpi .mk-val {
   font-family:'Space Grotesk',sans-serif;
-  font-size:1.2rem; font-weight:700; line-height:1;
+  font-size:1.5rem; font-weight:700; line-height:1;
 }
 .mkpi.teal  .mk-val { color:var(--teal-dark) }
 .mkpi.coral .mk-val { color:var(--coral-dark) }
 .mkpi.gold  .mk-val { color:var(--gold-dark) }
 .mkpi .mk-lbl {
   font-family:'Space Grotesk',sans-serif;
-  font-size:7px; font-weight:700;
+  font-size:9px; font-weight:700;
   text-transform:uppercase; letter-spacing:.6px;
-  color:var(--text-muted); margin-top:3px; display:block;
+  color:var(--text-muted); margin-top:4px; display:block;
 }
 .mkpi .mk-trend {
-  font-size:8px; font-weight:600;
-  margin-top:5px; display:block;
+  font-size:10px; font-weight:600;
+  margin-top:6px; display:block;
 }
 .mkpi.teal  .mk-trend { color:var(--teal-dark) }
 .mkpi.coral .mk-trend { color:var(--coral-dark) }
 .mkpi.gold  .mk-trend { color:var(--gold-dark) }
 
 /* ═══ FILTER (restricciones) ══════════════════════ */
-.filter-wrap { margin:12px 0; display:flex; gap:10px; align-items:flex-start }
-.filter-funnel { font-size:1.8rem; flex-shrink:0; margin-top:4px }
-.filter-steps  { flex:1; display:flex; flex-direction:column; gap:4px }
+.filter-wrap { margin:12px 0; display:flex; gap:12px; align-items:flex-start }
+.filter-funnel { font-size:2.2rem; flex-shrink:0; margin-top:4px }
+.filter-steps  { flex:1; display:flex; flex-direction:column; gap:6px }
 .fstep {
-  display:flex; align-items:center; gap:7px;
-  padding:5px 9px; border-radius:6px;
-  font-size:9px; color:var(--text-secondary);
+  display:flex; align-items:center; gap:8px;
+  padding:7px 11px; border-radius:7px;
+  font-size:12px; color:var(--text-secondary);
 }
 .fstep.f1 { background:var(--teal-light) }
 .fstep.f2 { background:var(--gold-light) }
 .fstep.f3 { background:var(--coral-light) }
 .fstep .pct {
   font-family:'Space Grotesk',sans-serif;
-  font-weight:700; font-size:9px; min-width:28px; text-align:right;
+  font-weight:700; font-size:11px; min-width:52px;
 }
 .fstep.f1 .pct { color:var(--teal-dark) }
 .fstep.f2 .pct { color:var(--gold-dark) }
 .fstep.f3 .pct { color:var(--coral-dark) }
 .fstep strong { font-weight:700 }
 
-.filter-out { display:flex; flex-direction:column; gap:5px; padding-top:4px }
+.filter-out { display:flex; flex-direction:column; gap:6px; padding-top:4px }
 .fout-badge {
   font-family:'Space Grotesk',sans-serif;
-  font-size:7.5px; font-weight:700;
+  font-size:9px; font-weight:700;
   letter-spacing:.5px; text-transform:uppercase;
-  padding:3px 9px; border-radius:100px;
+  padding:5px 11px; border-radius:100px;
   white-space:nowrap;
 }
 .fb-teal  { background:var(--teal-light);  color:var(--teal-dark) }
@@ -362,11 +360,11 @@ body {
   margin-top:10px;
   display:flex; gap:10px; align-items:flex-start;
 }
-.risk-icon { font-size:1.6rem; flex-shrink:0 }
+.risk-icon { font-size:2rem; flex-shrink:0 }
 .risk-title {
   font-family:'Space Grotesk',sans-serif;
-  font-size:9px; font-weight:700;
-  color:var(--coral-dark); margin-bottom:4px;
+  font-size:12px; font-weight:700;
+  color:var(--coral-dark); margin-bottom:5px;
   letter-spacing:.3px;
 }
 
@@ -386,7 +384,8 @@ footer {
 }
 
 @media(max-width:640px){
-  .col-headers, .main-grid { grid-template-columns:1fr; padding:0 14px }
+  .main-grid { padding:0 14px }
+  .section-header { padding:0 14px }
   .hero { padding:18px 16px 16px }
   .context-bar, footer { padding:9px 16px }
 }
@@ -424,14 +423,12 @@ footer {
   📌 <strong>Contexto:</strong>&nbsp;Utiliza análisis de elasticidad y reglas de negocio, validado por <em>'Diferencias en Diferencias' (DiD)</em> para asegurar causalidad.
 </div>
 
-<!-- ═══ COLUMN HEADERS ═════════════════════════════ -->
-<div class="col-headers">
-  <div class="col-header teal">📊 Lógica y Funcionamiento del Modelo</div>
-  <div class="col-header coral">🏆 Hallazgos, Fortalezas y Limitaciones</div>
+<!-- ═══ SECTION: LÓGICA ═══════════════════════════ -->
+<div class="section-header">
+  <div class="sec-label teal">📊 Lógica y Funcionamiento del Modelo</div>
 </div>
 
-<!-- ═══ MAIN GRID ══════════════════════════════════ -->
-<div class="main-grid">
+<div class="main-grid" style="margin-top:12px">
 
   <!-- ① Elasticidad -->
   <div class="card c-teal">
@@ -457,33 +454,6 @@ footer {
     </div>
     <hr class="divider">
     <p>Genera promociones por SKU usando datos transaccionales, precios efectivos y curvas de elasticidad.</p>
-  </div>
-
-  <!-- ② Bodegas -->
-  <div class="card c-coral">
-    <div class="card-title">
-      🏪 Impacto Positivo en Bodegas (BO)
-      <span class="pill pill-coral">Resultados validados</span>
-    </div>
-    <div class="metrics-grid">
-      <div class="mbox teal">
-        <span class="mb-val">+13–22%</span>
-        <span class="mb-lbl">Venta Total</span>
-        <div class="mb-subs">
-          <div class="mb-sub">🎟 Ticket Prom. <strong>+15%</strong></div>
-          <div class="mb-sub">💰 Util. Bruta <strong>+15%</strong></div>
-        </div>
-      </div>
-      <div class="mbox coral">
-        <span class="mb-val">+20%</span>
-        <span class="mb-lbl">Pareto Core</span>
-        <div class="mb-subs">
-          <div class="mb-sub">🎟 Ticket Prom. <strong>+9%</strong></div>
-          <div class="mb-sub">💰 Util. Bruta <strong>+21%</strong></div>
-        </div>
-      </div>
-    </div>
-    <p>Incremento en ventas del 13% al 22%, especialmente en clientes <strong>Pareto Core</strong>.</p>
   </div>
 
   <!-- ③ Tandas -->
@@ -524,36 +494,6 @@ footer {
     <p>Distribuye el presupuesto en bloques semanales, <strong>prohibiendo descuentos iguales en tandas consecutivas</strong> para evitar saturación y canibalización.</p>
   </div>
 
-  <!-- ④ Mejora del Margen -->
-  <div class="card c-teal">
-    <div class="card-title">
-      📊 Mejora del Margen y Utilidad
-      <span class="pill pill-teal">Proporcional</span>
-    </div>
-    <div class="mkpi-row">
-      <div class="mkpi teal">
-        <span class="mk-icon">🛒</span>
-        <span class="mk-val">+13–22%</span>
-        <span class="mk-lbl">Venta Total</span>
-        <span class="mk-trend">▲ crecimiento sostenido</span>
-      </div>
-      <div class="mkpi gold">
-        <span class="mk-icon">🎟️</span>
-        <span class="mk-val">+15%</span>
-        <span class="mk-lbl">Ticket Promedio</span>
-        <span class="mk-trend">▲ por cliente</span>
-      </div>
-      <div class="mkpi coral">
-        <span class="mk-icon">💰</span>
-        <span class="mk-val">+15–21%</span>
-        <span class="mk-lbl">Utilidad Bruta</span>
-        <span class="mk-trend">▲ margen real</span>
-      </div>
-    </div>
-    <hr class="divider">
-    <p>La utilidad bruta crece <strong>proporcionalmente</strong> a las ventas, revelando una mejora real del margen sin canibalización.</p>
-  </div>
-
   <!-- ⑤ Restricciones -->
   <div class="card c-gold">
     <div class="card-title">
@@ -585,6 +525,72 @@ footer {
     <p>Solo se ejecutan promociones con <strong>ROI &gt; 0</strong> y descuentos entre <strong>2% y 8%</strong>, garantizando rentabilidad en cada acción.</p>
   </div>
 
+</div>
+
+<!-- ═══ SECTION: HALLAZGOS ════════════════════════ -->
+<div class="section-header">
+  <div class="sec-label coral">🏆 Hallazgos, Fortalezas y Limitaciones</div>
+</div>
+
+<div class="main-grid" style="margin-top:12px">
+
+  <!-- ② Bodegas -->
+  <div class="card c-coral">
+    <div class="card-title">
+      🏪 Impacto Positivo en Bodegas (BO)
+      <span class="pill pill-coral">Resultados validados</span>
+    </div>
+    <div class="metrics-grid">
+      <div class="mbox teal">
+        <span class="mb-val">+13–22%</span>
+        <span class="mb-lbl">Venta Total</span>
+        <div class="mb-subs">
+          <div class="mb-sub">🎟 Ticket Prom. <strong>+15%</strong></div>
+          <div class="mb-sub">💰 Util. Bruta <strong>+15%</strong></div>
+        </div>
+      </div>
+      <div class="mbox coral">
+        <span class="mb-val">+20%</span>
+        <span class="mb-lbl">Pareto Core</span>
+        <div class="mb-subs">
+          <div class="mb-sub">🎟 Ticket Prom. <strong>+9%</strong></div>
+          <div class="mb-sub">💰 Util. Bruta <strong>+21%</strong></div>
+        </div>
+      </div>
+    </div>
+    <p>Incremento en ventas del 13% al 22%, especialmente en clientes <strong>Pareto Core</strong>.</p>
+  </div>
+
+  <!-- ④ Mejora del Margen -->
+  <div class="card c-teal">
+    <div class="card-title">
+      📊 Mejora del Margen y Utilidad
+      <span class="pill pill-teal">Proporcional</span>
+    </div>
+    <div class="mkpi-row">
+      <div class="mkpi teal">
+        <span class="mk-icon">🛒</span>
+        <span class="mk-val">+13–22%</span>
+        <span class="mk-lbl">Venta Total</span>
+        <span class="mk-trend">▲ crecimiento sostenido</span>
+      </div>
+      <div class="mkpi gold">
+        <span class="mk-icon">🎟️</span>
+        <span class="mk-val">+15%</span>
+        <span class="mk-lbl">Ticket Promedio</span>
+        <span class="mk-trend">▲ por cliente</span>
+      </div>
+      <div class="mkpi coral">
+        <span class="mk-icon">💰</span>
+        <span class="mk-val">+15–21%</span>
+        <span class="mk-lbl">Utilidad Bruta</span>
+        <span class="mk-trend">▲ margen real</span>
+      </div>
+    </div>
+    <hr class="divider">
+    <p>La utilidad bruta crece <strong>proporcionalmente</strong> a las ventas, revelando una mejora real del margen sin canibalización.</p>
+  </div>
+
   <!-- ⑥ Riesgos -->
   <div class="card c-coral">
     <div class="card-title">
@@ -596,7 +602,7 @@ footer {
       <div class="risk-icon">🔬</div>
       <div>
         <div class="risk-title">Muestras Pequeñas · Alta Variabilidad</div>
-        <p style="font-size:9px; color:var(--text-secondary);">Falta de significancia estadística por <strong>muestras pequeñas</strong> y alta variabilidad en el comportamiento de compra, lo que dificulta conclusiones robustas por segmento.</p>
+        <p style="font-size:12px; color:var(--text-secondary);">Falta de significancia estadística por <strong>muestras pequeñas</strong> y alta variabilidad en el comportamiento de compra, lo que dificulta conclusiones robustas por segmento.</p>
       </div>
     </div>
   </div>
