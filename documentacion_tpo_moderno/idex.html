@@ -1,0 +1,2352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TPO — Documentación Técnica v2.0 | Playbook Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-cream: #FDFBF7;
+  --bg-warm: #F8F5F0;
+  --bg-card: #FFFFFF;
+  --text-primary: #3D3A36;
+  --text-secondary: #4a4a5a;
+  --text-muted: #7a7a8a;
+  --accent-coral: #E85D4C;
+  --accent-coral-dark: #C94A3A;
+  --accent-coral-light: #FFF0EE;
+  --accent-teal: #2D9C9C;
+  --accent-teal-dark: #238080;
+  --accent-teal-light: #E8F6F6;
+  --accent-gold: #D4A853;
+  --accent-gold-dark: #C4983F;
+  --accent-gold-light: #FDF8EC;
+  --dark-warm: #3D3A36;
+  --border-light: #E8E4DD;
+  --shadow-sm: 0 2px 8px rgba(26,26,46,0.06);
+  --shadow-md: 0 4px 16px rgba(26,26,46,0.10);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#f0ede8}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--text-primary);line-height:1.6}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:100vh;max-width:1400px;margin:0 auto}
+
+/* ── SIDEBAR ── */
+.sidebar{width:260px;flex-shrink:0;background:var(--bg-card);border-right:1px solid var(--border-light);position:sticky;top:0;height:100vh;overflow-y:auto;box-shadow:2px 0 12px rgba(0,0,0,0.04)}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:2px}
+
+.sidebar-logo{padding:20px 18px 16px;border-bottom:1px solid var(--border-light)}
+.logo-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;color:var(--accent-coral);letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:5px}
+.sidebar-logo h1{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:var(--text-primary);line-height:1.2}
+.sidebar-logo p{font-size:10px;color:var(--text-muted);margin-top:4px}
+
+.nav-group{padding:10px 0 4px}
+.nav-group-label{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);padding:6px 18px 3px;display:block}
+.nav-link{display:flex;align-items:center;gap:8px;padding:5px 18px;text-decoration:none;color:var(--text-muted);font-size:11.5px;font-weight:500;transition:all .15s;border-left:2px solid transparent;cursor:pointer}
+.nav-link:hover{color:var(--text-primary);background:var(--bg-warm)}
+.nav-link.active{color:var(--accent-coral);border-left-color:var(--accent-coral);background:var(--accent-coral-light)}
+.nav-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+/* ── MAIN ── */
+.main{flex:1;padding:0 48px 80px;overflow:hidden}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--bg-warm) 0%,var(--bg-cream) 100%);border-radius:0 0 20px 20px;padding:36px 48px 32px;margin:0 -48px 32px;border-bottom:1px solid var(--border-light);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;bottom:-60px;right:-30px;width:300px;height:300px;background:radial-gradient(circle,var(--accent-coral-light) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero::after{content:'';position:absolute;top:-40px;left:30%;width:200px;height:200px;background:radial-gradient(circle,var(--accent-teal-light) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero-inner{position:relative;z-index:1;display:flex;align-items:center;gap:28px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--border-light);padding:4px 12px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--accent-coral);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.hero-badge-dot{width:6px;height:6px;background:var(--accent-coral);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:var(--text-primary);margin-bottom:10px}
+.hero h1 .hl{color:var(--accent-coral)}
+.hero p{font-size:13px;color:var(--text-muted);max-width:500px;line-height:1.7}
+.hero-stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:var(--text-primary);line-height:1}
+.stat-label{font-size:10px;color:var(--text-muted);margin-top:2px}
+
+/* ── SECTION ── */
+.section{padding-top:52px;border-bottom:1px solid var(--border-light);padding-bottom:44px}
+.section:last-child{border-bottom:none}
+.section-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px}
+.section-num{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted);padding-top:6px;min-width:24px;flex-shrink:0}
+.section-tag{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.section h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary);line-height:1.25}
+.section h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--text-primary);margin:30px 0 12px}
+.section h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-secondary);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+.section p{font-size:12.5px;color:var(--text-secondary);margin-bottom:12px;max-width:820px;line-height:1.8}
+.section p strong{color:var(--text-primary)}
+
+/* ── PILLS ── */
+.pill{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;margin-left:6px;vertical-align:middle;position:relative;top:-1px}
+.pill-bug{background:var(--accent-coral-light);color:var(--accent-coral);border:1px solid rgba(232,93,76,.25)}
+.pill-new{background:var(--accent-teal-light);color:var(--accent-teal)}
+.pill-warn{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.pill-info{background:var(--accent-teal-light);color:var(--accent-teal)}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:16px 0}
+.card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:14px;padding:16px;box-shadow:var(--shadow-sm);transition:box-shadow .2s}
+.card:hover{box-shadow:var(--shadow-md)}
+.card-icon{font-size:18px;margin-bottom:9px}
+.card h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-primary);margin:0 0 6px}
+.card p{font-size:11px;color:var(--text-muted);margin:0;line-height:1.55}
+.card-file{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;margin-top:10px;padding:3px 8px;border-radius:100px;display:inline-block}
+.cf-coral{background:var(--accent-coral-light);color:var(--accent-coral)}
+.cf-teal{background:var(--accent-teal-light);color:var(--accent-teal)}
+.cf-gold{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+
+/* ── ALERTS ── */
+.alert{display:flex;gap:12px;padding:12px 16px;border-radius:10px;margin:14px 0;max-width:820px}
+.alert-icon{font-size:15px;flex-shrink:0;padding-top:1px}
+.alert p{margin:0;font-size:12px;line-height:1.7}
+.alert-bug{background:var(--accent-coral-light);border:1px solid rgba(232,93,76,.25)}
+.alert-bug p{color:var(--accent-coral-dark)}
+.alert-warn{background:var(--accent-gold-light);border:1px solid rgba(212,168,83,.3)}
+.alert-warn p{color:#8a6520}
+.alert-info{background:var(--accent-teal-light);border:1px solid rgba(45,156,156,.25)}
+.alert-info p{color:var(--accent-teal-dark)}
+.alert-tip{background:var(--accent-gold-light);border-top:2px solid var(--accent-gold);border-radius:0 0 10px 10px;border-left:none;border-right:none;border-bottom:none}
+.alert-tip p{color:var(--text-secondary)}
+.alert-tip p strong{color:var(--accent-gold-dark)}
+
+/* ── CODE ── */
+pre{background:var(--dark-warm);border-radius:10px;padding:16px 20px;overflow-x:auto;margin:12px 0 20px;font-family:'Space Grotesk',monospace;font-size:11px;line-height:1.75;color:#f0ede8;position:relative}
+pre .file-label{display:block;color:rgba(255,255,255,.35);margin-bottom:10px;font-size:8.5px;letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:8px}
+.kw{color:#E85D4C}.fn{color:#D4A853}.str{color:#7dd3c4}.cm{color:rgba(255,255,255,.35);font-style:italic}.num{color:#a5d6a7}.cls{color:#f4a261}
+.bug-line{background:rgba(232,93,76,.18);display:block;margin:0 -20px;padding:0 20px;border-left:3px solid var(--accent-coral)}
+.fix-line{background:rgba(45,156,156,.15);display:block;margin:0 -20px;padding:0 20px;border-left:3px solid var(--accent-teal)}
+code{font-family:'Space Grotesk',monospace;font-size:11px;background:var(--accent-coral-light);padding:2px 6px;border-radius:4px;color:var(--accent-coral-dark)}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;margin:12px 0 24px;border-radius:12px;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;font-size:12px;background:var(--bg-card)}
+th{font-family:'Space Grotesk',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border-light);background:var(--bg-warm);white-space:nowrap}
+td{padding:9px 14px;border-bottom:1px solid rgba(232,228,221,.5);color:var(--text-secondary);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-warm)}
+.badge{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:.3px;white-space:nowrap}
+.bg{background:var(--accent-teal-light);color:var(--accent-teal-dark)}
+.bb{background:var(--accent-teal-light);color:var(--accent-teal-dark)}
+.bo{background:var(--accent-coral-light);color:var(--accent-coral)}
+.bp{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.by{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.br{background:var(--accent-coral-light);color:var(--accent-coral)}
+.col-key td:first-child{font-weight:700;color:var(--text-primary)}
+
+/* ── FLOW ── */
+.flow{background:var(--bg-warm);border:1px solid var(--border-light);border-radius:14px;padding:22px;margin:16px 0;overflow-x:auto}
+.flow-steps{display:flex;align-items:stretch;min-width:640px;gap:0}
+.flow-step{flex:1;text-align:center;position:relative}
+.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;z-index:2}
+.flow-box{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 8px;margin:0 6px;box-shadow:var(--shadow-sm);height:100%}
+.flow-box .ficon{font-size:18px;margin-bottom:4px}
+.flow-box .fname{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-primary);display:block;margin-bottom:2px}
+.flow-box .fdesc{font-size:9px;color:var(--text-muted);line-height:1.4}
+.flow-box.fc{border-top:3px solid var(--accent-coral)}
+.flow-box.ft{border-top:3px solid var(--accent-teal)}
+.flow-box.fg{border-top:3px solid var(--accent-gold)}
+
+/* ── FORMULA ── */
+.formula{background:var(--accent-gold-light);border-top:2px solid var(--accent-gold);border-radius:0 0 10px 10px;padding:13px 16px;margin:10px 0 18px;font-family:'Space Grotesk',monospace;font-size:11.5px;color:var(--text-secondary);max-width:820px}
+.formula .f-label{font-size:8px;font-weight:700;color:var(--accent-gold-dark);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;display:block}
+
+/* ── FORMULA + EJEMPLO LADO A LADO ── */
+.calc-wrap{margin:10px 0 22px;max-width:900px;border-radius:10px;overflow:hidden;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+.calc-header{background:var(--dark-warm);padding:8px 16px;display:flex;align-items:center;gap:8px}
+.calc-header .ch-label{font-family:'Space Grotesk',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.calc-header .ch-title{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:#fff;flex:1}
+.calc-body{display:grid;grid-template-columns:1fr 1fr}
+.calc-formula{background:var(--accent-gold-light);padding:14px 18px;border-right:1px solid var(--border-light)}
+.calc-example{background:var(--bg-card);padding:14px 18px}
+.calc-col-label{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:block}
+.calc-formula .calc-col-label{color:var(--accent-gold-dark)}
+.calc-example .calc-col-label{color:var(--accent-teal-dark)}
+.calc-formula pre, .calc-example pre{background:transparent;padding:0;margin:0;font-size:11px;line-height:1.9;color:var(--text-secondary);box-shadow:none;border-radius:0}
+.calc-formula pre .file-label, .calc-example pre .file-label{display:none}
+.calc-example pre .res{color:var(--accent-teal-dark);font-weight:700}
+.calc-example pre .resn{color:var(--accent-coral);font-weight:700}
+.calc-note{background:var(--bg-warm);padding:9px 16px;border-top:1px solid var(--border-light);font-size:11px;color:var(--text-muted);line-height:1.55}
+.calc-note strong{color:var(--accent-gold-dark)}
+@media(max-width:700px){.calc-body{grid-template-columns:1fr}.calc-formula{border-right:none;border-bottom:1px solid var(--border-light)}}
+
+/* ── STEPS ── */
+.steps{margin:12px 0 20px;max-width:820px}
+.step-item{display:flex;gap:12px;margin-bottom:16px}
+.step-n{flex-shrink:0;display:flex;flex-direction:column;align-items:center}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--bg-warm);border:1px solid var(--border-light);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted)}
+.step-line{width:1px;flex:1;background:var(--border-light);margin-top:4px}
+.step-body{padding-top:2px}
+.step-body strong{display:block;font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.step-body p{margin:0;font-size:11.5px;color:var(--text-muted);line-height:1.6}
+
+/* ── SCHEMA ── */
+.schema-table{margin:12px 0 22px;border-radius:12px;overflow:hidden;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+.schema-header{background:var(--dark-warm);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.schema-name{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:#fff}
+.schema-desc{font-size:10.5px;color:rgba(255,255,255,.5)}
+
+/* ── COMPARE ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;max-width:820px}
+.compare-box{border-radius:12px;padding:16px}
+.compare-box.bad{background:var(--accent-coral-light);border:1px dashed rgba(232,93,76,.3)}
+.compare-box.good{background:var(--accent-teal-light);border:1px solid var(--accent-teal)}
+.compare-box h5{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(0,0,0,.06)}
+.compare-box.bad h5{color:var(--accent-coral)}
+.compare-box.good h5{color:var(--accent-teal)}
+.compare-box ul{list-style:none;font-size:11.5px}
+.compare-box ul li{padding:4px 0;display:flex;gap:8px;color:var(--text-secondary);line-height:1.5}
+.compare-box ul li::before{content:'→';flex-shrink:0}
+
+/* ── COOKBOOK ── */
+.cookbook{background:var(--bg-card);border:1px solid var(--border-light);border-radius:12px;margin:14px 0;overflow:hidden;box-shadow:var(--shadow-sm)}
+.cookbook-header{background:var(--bg-warm);padding:11px 18px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:10px}
+.cookbook-header .ck-icon{font-size:15px}
+.cookbook-header h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-primary);margin:0}
+.cookbook-header p{font-size:10px;color:var(--text-muted);margin:0 0 0 auto}
+.cookbook-body{padding:14px 18px}
+.ck-step{display:flex;gap:10px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);align-items:flex-start}
+.ck-num{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;background:var(--bg-warm);border:1px solid var(--border-light);border-radius:4px;padding:2px 7px;flex-shrink:0;color:var(--text-muted)}
+.ck-file{color:var(--accent-teal-dark);font-family:'Space Grotesk',monospace;font-size:11px;font-weight:600}
+
+/* ── DEPENDENCY MAP ── */
+.dep-map{background:var(--bg-warm);border:1px solid var(--border-light);border-radius:12px;padding:20px;margin:14px 0}
+.dep-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12px;flex-wrap:wrap}
+.dep-from{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:var(--bg-card);background:var(--dark-warm);border-radius:6px;padding:4px 10px;white-space:nowrap}
+.dep-arrow{color:var(--text-muted);font-size:12px;flex-shrink:0}
+.dep-to{font-family:'Space Grotesk',monospace;font-size:10.5px;color:var(--text-secondary);white-space:nowrap}
+.dep-via{font-size:10.5px;color:var(--text-muted);margin-left:4px}
+
+/* ── TAKEAWAY ── */
+.takeaway{background:linear-gradient(135deg,var(--dark-warm) 0%,#2a2a3e 100%);border-radius:12px;padding:14px 18px;margin:14px 0 20px;display:flex;align-items:center;gap:14px;max-width:820px}
+.takeaway p{font-size:12px;color:rgba(255,255,255,.8);line-height:1.65;margin:0}
+.takeaway p strong{color:var(--accent-gold)}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{height:1px;background:linear-gradient(90deg,var(--accent-coral-light),var(--border-light),var(--accent-teal-light));margin:0}
+
+/* ── PROSE LIST ── */
+ul.prose-list{max-width:820px;list-style:none;padding:0;margin-bottom:12px}
+ul.prose-list li{padding:4px 0;color:var(--text-secondary);font-size:12.5px;display:flex;gap:8px;line-height:1.6}
+ul.prose-list li::before{content:'→';color:var(--accent-coral);flex-shrink:0}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:3px}
+
+/* ── AREA LOGO ── */
+.area-logo{
+  position:absolute;top:20px;right:48px;
+  display:flex;align-items:center;gap:9px;
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(8px);
+  border:1px solid var(--border-light);
+  border-radius:100px;
+  padding:6px 14px 6px 8px;
+  box-shadow:var(--shadow-sm);
+  z-index:2;
+}
+.area-logo svg{width:26px;height:26px;flex-shrink:0}
+.area-logo-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:10.5px;font-weight:700;
+  color:var(--text-primary);line-height:1.2;
+}
+
+@media(max-width:900px){.sidebar{display:none}.main{padding:24px 20px 60px}.compare-grid{grid-template-columns:1fr}.flow-steps{flex-direction:column}.flow-step::after{display:none}.area-logo{right:16px;top:14px}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-eyebrow">▸ Referencia Técnica v2.0</span>
+    <h1>TPO<br>Documentación</h1>
+    <p>Trade Price Optimizer · 26 archivos</p>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label">Visión General</span>
+    <a href="#overview" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>Arquitectura y Módulos</a>
+    <a href="#config" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>Archivos de Configuración</a>
+    <a href="#flow" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>Flujo de Ejecución</a>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label">Datos &amp; Queries</span>
+    <a href="#sandbox-prep" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>⚠️ Prep Sandbox (Paso 0)</a>
+    <a href="#params-reader" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>ParamsReader (BigQuery)</a>
+    <a href="#queries-detail" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>Queries SQL Detallados</a>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label">Módulos Core</span>
+    <a href="#data-factory" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>DataFactory</a>
+    <a href="#derived-tables" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>Schema _derived_tables</a>
+    <a href="#elasticity" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>ElasticityModel (RF)</a>
+    <a href="#optimizer" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>OptimizerModel (ROI)</a>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label">Soporte</span>
+    <a href="#outputs" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>OutputFactory</a>
+    <a href="#utils" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>Utilidades (helper/io)</a>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label">Referencia de Cambios</span>
+    <a href="#bugs" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>🐛 Bugs Conocidos</a>
+    <a href="#cookbook" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>Guía de Cambios</a>
+    <a href="#business-logic" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>Lógica de Negocio</a>
+    <a href="#edge-cases" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>Edge Cases y Errores</a>
+    <a href="#dependencies" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>Mapa de Dependencias</a>
+    <a href="#ejemplo-output" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>📊 Ejemplo de Output</a>
+    <a href="#guia-ejecucion" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>🚀 Cómo Ejecutar</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- HERO -->
+<div class="hero">
+
+  <!-- Logo COE Advanced Analytics -->
+  <div class="area-logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <rect width="40" height="40" rx="10" fill="url(#lgHeroDoc)"/>
+      <circle cx="12" cy="15" r="3" fill="white"/>
+      <circle cx="12" cy="20" r="3" fill="white"/>
+      <circle cx="12" cy="25" r="3" fill="white"/>
+      <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+      <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+      <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+      <defs>
+        <linearGradient id="lgHeroDoc" x1="0" y1="0" x2="40" y2="40">
+          <stop stop-color="#E85D4C"/>
+          <stop offset="1" stop-color="#C94A3A"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="area-logo-name">COE Advanced Analytics</div>
+  </div>
+
+  <div class="hero-inner">
+    <!-- Pixel owl SVG matching playbook style -->
+    <svg width="90" height="110" viewBox="0 0 130 140" fill="none" style="flex-shrink:0">
+      <ellipse cx="30" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(10 30 95)"/>
+      <ellipse cx="32" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(10 32 94)"/>
+      <ellipse cx="100" cy="95" rx="10" ry="16" fill="#C94A3A" transform="rotate(-10 100 95)"/>
+      <ellipse cx="98" cy="94" rx="6" ry="12" fill="#B84039" transform="rotate(-10 98 94)"/>
+      <ellipse cx="65" cy="95" rx="38" ry="33" fill="url(#tBody)"/>
+      <ellipse cx="65" cy="100" rx="26" ry="23" fill="#FFF0EE"/>
+      <!-- data nodes -->
+      <rect x="44" y="83" width="12" height="8" rx="2" fill="#E85D4C" fill-opacity=".7"/>
+      <rect x="59" y="78" width="12" height="8" rx="2" fill="#2D9C9C" fill-opacity=".8"/>
+      <rect x="74" y="83" width="12" height="8" rx="2" fill="#E85D4C" fill-opacity=".7"/>
+      <rect x="52" y="97" width="10" height="7" rx="2" fill="#D4A853" fill-opacity=".8"/>
+      <rect x="68" y="97" width="10" height="7" rx="2" fill="#2D9C9C" fill-opacity=".6"/>
+      <line x1="50" y1="87" x2="65" y2="82" stroke="#E85D4C" stroke-width="1.5" stroke-opacity=".5"/>
+      <line x1="80" y1="87" x2="65" y2="82" stroke="#E85D4C" stroke-width="1.5" stroke-opacity=".5"/>
+      <line x1="57" y1="101" x2="65" y2="112" stroke="#D4A853" stroke-width="1.5" stroke-opacity=".6"/>
+      <line x1="73" y1="101" x2="65" y2="112" stroke="#D4A853" stroke-width="1.5" stroke-opacity=".6"/>
+      <circle cx="65" cy="112" r="5" fill="#D4A853"/>
+      <ellipse cx="65" cy="50" rx="33" ry="28" fill="url(#tHead)"/>
+      <path d="M37 35L32 17L47 30Z" fill="#C94A3A"/>
+      <path d="M93 35L98 17L83 30Z" fill="#C94A3A"/>
+      <circle cx="50" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/>
+      <circle cx="80" cy="48" r="13" fill="white" stroke="#3D3A36" stroke-width="2"/>
+      <circle cx="52" cy="50" r="6" fill="#3D3A36"/>
+      <circle cx="82" cy="50" r="6" fill="#3D3A36"/>
+      <circle cx="54" cy="48" r="2" fill="white"/>
+      <circle cx="84" cy="48" r="2" fill="white"/>
+      <path d="M37 48C37 48 42 43 50 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+      <path d="M93 48C93 48 88 43 80 43" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+      <line x1="62" y1="48" x2="68" y2="48" stroke="#D4A853" stroke-width="3"/>
+      <path d="M65 60L61 69L65 67L69 69Z" fill="#D4A853"/>
+      <path d="M50 123L45 133M50 123L50 133M50 123L55 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+      <path d="M80 123L75 133M80 123L80 133M80 123L85 133" stroke="#D4A853" stroke-width="3" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="tBody" x1="27" y1="62" x2="103" y2="128"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+        <linearGradient id="tHead" x1="32" y1="22" x2="98" y2="78"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient>
+      </defs>
+    </svg>
+
+    <div>
+      <div class="hero-badge"><span class="hero-badge-dot"></span>ALICORP · CANAL MODERNO · TPO v2.0 · 26 ARCHIVOS</div>
+      <h1>Trade Price<br><span class="hl">Optimizer</span></h1>
+      <p>Documentación técnica completa para mantenimiento y desarrollo. Schemas de columnas, bugs conocidos, guía de cambios y edge cases.</p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" style="color:var(--accent-coral)">26</span><span class="stat-label">Archivos documentados</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent-teal)">12</span><span class="stat-label">Queries BigQuery</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent-coral)">3</span><span class="stat-label">Bugs documentados</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--accent-gold-dark)">9</span><span class="stat-label">Salidas por ejecución</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 01. ARQUITECTURA                            -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="overview">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-coral)">▸ ARQUITECTURA</div>
+      <h2>Arquitectura General y Módulos</h2>
+    </div>
+  </div>
+
+  <p>El TPO responde una sola pregunta: <strong>¿A qué precio y por cuántos días debo poner este SKU en oferta para maximizar el ROI de la tanda en cada supermercado?</strong> Entrena un Random Forest por SKU×subcadena, simula la demanda a diferentes precios, y calcula el retorno financiero de cada escenario posible.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🏗️</div>
+      <h4>PASO 0 — PREP SANDBOX</h4>
+      <p>6 queries BigQuery que copian datos de producción al entorno sandbox. Pre-requisito obligatorio.</p>
+      <span class="card-file cf-coral">query_temp_*.sql + query_conta_gestion.sql</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">📥</div>
+      <h4>INGESTIÓN</h4>
+      <p>Lee CSVs de configuración y ejecuta 9 queries contra el sandbox de BigQuery para cargar las tablas base.</p>
+      <span class="card-file cf-teal">params_reader.py · io_utils.py</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏭</div>
+      <h4>TRANSFORMACIÓN</h4>
+      <p>Limpia, filtra, ajusta volúmenes por recodificación de materiales, y genera las tablas derivadas.</p>
+      <span class="card-file cf-teal">data_factory.py · helper_utils.py</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <h4>MODELADO</h4>
+      <p>Random Forest por SKU×subcadena con Optuna. Simula demanda para un horizonte de 4 semanas.</p>
+      <span class="card-file cf-coral">elasticity_model.py</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h4>OPTIMIZACIÓN</h4>
+      <p>Calcula ROI por cada combinación precio×duración. Aplica filtros de negocio. Selecciona el óptimo.</p>
+      <span class="card-file cf-gold">optimizer_model.py</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">💾</div>
+      <h4>SALIDAS</h4>
+      <p>Genera 9 archivos CSV por cada combinación subcadena×categoría activa en data/report/.</p>
+      <span class="card-file cf-teal">output_factory.py</span>
+    </div>
+  </div>
+
+  <h3>Inventario Completo de Archivos</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Archivo</th><th>Tipo</th><th>Rol</th><th>Ubicación</th></tr>
+      <tr><td><code>run_batch_optimizer.py</code></td><td><span class="badge bg">ORQUESTADOR</span></td><td>Punto de entrada único. Controla todo el pipeline.</td><td><code>src/</code></td></tr>
+      <tr><td><code>params_reader.py</code></td><td><span class="badge bb">INGESTIÓN</span></td><td>Conexión BigQuery. Carga las 9 tablas base.</td><td><code>src/</code></td></tr>
+      <tr><td><code>data_factory.py</code></td><td><span class="badge bb">TRANSFORMACIÓN</span></td><td>Limpieza, filtros, tablas derivadas por subcadena×categoría.</td><td><code>src/</code></td></tr>
+      <tr><td><code>elasticity_model.py</code></td><td><span class="badge bo">MODELO</span></td><td>Random Forest + Optuna. Curva de demanda multisemana.</td><td><code>src/</code></td></tr>
+      <tr><td><code>elasticity_model_backup.py</code></td><td><span class="badge bp">BACKUP</span></td><td>Versión anterior del modelo. No se usa. Referencia histórica.</td><td><code>src/</code></td></tr>
+      <tr><td><code>optimizer_model.py</code></td><td><span class="badge bo">MODELO</span></td><td>Cálculo ROI por escenario. Selección del óptimo.</td><td><code>src/</code></td></tr>
+      <tr><td><code>output_factory.py</code></td><td><span class="badge bb">SALIDAS</span></td><td>Generación y guardado de reportes CSV.</td><td><code>src/</code></td></tr>
+      <tr><td><code>io_utils.py</code></td><td><span class="badge bg">UTILIDAD</span></td><td>Lectura de CSVs. Clase IOUtility. Separador pipe (|).</td><td><code>src/</code></td></tr>
+      <tr><td><code>helper_utils.py</code></td><td><span class="badge bg">UTILIDAD</span></td><td>Funciones genéricas: normalización, paths, fechas.</td><td><code>src/</code></td></tr>
+      <tr><td><code>input_config.py</code></td><td><span class="badge bg">UTILIDAD</span></td><td>Verificación de dependencias. Sin lógica activa.</td><td><code>src/</code></td></tr>
+      <tr><td><code>optimizer_input_config.csv</code></td><td><span class="badge by">CONFIG</span></td><td>Periodo, año, semana, canal, localidad de ejecución.</td><td><code>data/Input/</code></td></tr>
+      <tr><td><code>runhierarchy_run_hierarchy.csv</code></td><td><span class="badge by">CONFIG</span></td><td>Qué subcadenas ejecutar y en qué orden.</td><td><code>data/Input/</code></td></tr>
+      <tr><td><code>runhierarchy_run_category.csv</code></td><td><span class="badge by">CONFIG</span></td><td>Qué categorías ejecutar y en qué orden.</td><td><code>data/Input/</code></td></tr>
+      <tr><td><code>query_conta_gestion.sql</code></td><td><span class="badge bo">PREP SQL</span></td><td>Crea temp_amzv_1. Pre-requisito para COGS.</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_temp_fert_hawa.sql</code></td><td><span class="badge bo">PREP SQL</span></td><td>Crea tabla sandbox de materiales FERT/HAWA.</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_temp_mapa_precios.sql</code></td><td><span class="badge bo">PREP SQL</span></td><td>Crea tabla sandbox del mapa de precios.</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_temp_materiales.sql</code></td><td><span class="badge bo">PREP SQL</span></td><td>Crea tabla sandbox de recodificaciones SAP. Fecha hardcoded.</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_temp_precio_efectivo.sql</code></td><td><span class="badge bo">PREP SQL</span></td><td>Crea tabla sandbox de ventas semanales (la más grande).</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_temp_promociones_detalle.sql</code></td><td><span class="badge bo">PREP SQL</span></td><td>Crea tabla sandbox de tandas (con filtros adicionales).</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_ferthawa.sql</code></td><td><span class="badge bp">REFERENCIA</span></td><td>SELECT puro a producción. Versión de referencia sin CREATE TABLE.</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_cogs_unitario.sql</code></td><td><span class="badge bb">LECTURA</span></td><td>Calcula COGS unitario. Ejecutado inline en params_reader.</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_mapa_de_precios.sql</code></td><td><span class="badge bp">REFERENCIA</span></td><td>SELECT puro del mapa de precios. Tiene un bug de coma faltante.</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_materiales.sql</code></td><td><span class="badge bp">REFERENCIA</span></td><td>SELECT puro de materiales. Referencia histórica.</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_precio_efectivo.sql</code></td><td><span class="badge bp">REFERENCIA</span></td><td>SELECT puro de precio efectivo (con {subcadena} param).</td><td><code>queries/</code></td></tr>
+      <tr><td><code>query_promocion_detalle.sql</code></td><td><span class="badge bp">REFERENCIA</span></td><td>SELECT puro de tandas. Sin los filtros extra del temp.</td><td><code>queries/</code></td></tr>
+      <tr><td><code>readme.txt</code></td><td><span class="badge bg">DOC</span></td><td>Instrucciones básicas de ejecución.</td><td>raíz</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 02. CONFIGURACIÓN                           -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="config">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-gold-dark)">▸ CONFIGURACIÓN</div>
+      <h2>Archivos de Configuración CSV</h2>
+    </div>
+  </div>
+
+  <p>Estos tres archivos son los <strong>únicos que se deben modificar</strong> para controlar qué se ejecuta, cuándo y en qué scope. No requieren cambios de código.</p>
+
+  <h3>optimizer_input_config.csv</h3>
+  <pre><span class="file-label">data/Input/optimizer_input_config.csv  · Separador: pipe (|)</span>
+locality|period|year|week|channel
+LIMA|202602|2026|1|MODERNO</pre>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Campo</th><th>Valor Actual</th><th>Dónde se Usa</th><th>Efecto si Cambia</th></tr>
+      <tr><td><code>locality</code></td><td>LIMA</td><td>ParamsReader(locality=), DataFactory filtra des_departamento</td><td>Cambia el filtro geográfico de ventas y el filtro DEX en COGS</td></tr>
+      <tr><td><code>year</code></td><td>2026</td><td>DataFactory: determina qué año de mapa_de_precios es el vigente</td><td>Cambia el precio_base de referencia para toda la ejecución</td></tr>
+      <tr><td><code>week</code></td><td>1</td><td>DataFactory: toma el max de semanas disponibles para ese año</td><td>Cambia la semana de precio_lista_final</td></tr>
+      <tr><td><code>period</code></td><td>202602</td><td>Guardado en DICT_EXECUTION, solo referencial</td><td>No afecta lógica actualmente</td></tr>
+      <tr><td><code>channel</code></td><td>MODERNO</td><td>Guardado en DICT_EXECUTION, solo referencial</td><td>No afecta lógica actualmente</td></tr>
+    </table>
+  </div>
+
+  <h3>runhierarchy_run_hierarchy.csv — Cadenas a Ejecutar</h3>
+  <pre><span class="file-label">data/Input/runhierarchy_run_hierarchy.csv  · Separador: pipe (|)</span>
+locality|chain|subchain|order|active
+LIMA|SPSA|PLAZA VEA|1|1    <span class="cm">← Ejecuta 1ra</span>
+LIMA|SPSA|VIVANDA|2|0      <span class="cm">← Inactivo</span>
+LIMA|CENCOSUD|METRO|3|1    <span class="cm">← Ejecuta 2da</span>
+LIMA|CENCOSUD|WONG|4|0     <span class="cm">← Inactivo</span>
+LIMA|TOTTUS|TOTTUS|5|1     <span class="cm">← Ejecuta 3ra</span>
+LIMA|TOTTUS|ECOMMERCE|6|0  <span class="cm">← Inactivo (ver Bug #2)</span></pre>
+
+  <div class="alert alert-bug">
+    <span class="alert-icon">🐛</span>
+    <p><strong>Bug #2 — ECOMMERCE vs ONLINE:</strong> El CSV tiene <code>ECOMMERCE</code> pero el código en run_batch_optimizer.py línea 183 verifica por <code>'ONLINE'</code>. Si activas ECOMMERCE, usará params_cencosud en lugar de params_tottus. Ver sección de Bugs para el fix.</p>
+  </div>
+
+  <h3>runhierarchy_run_category.csv — Categorías a Ejecutar</h3>
+  <pre><span class="file-label">data/Input/runhierarchy_run_category.csv  · Separador: pipe (|)</span>
+category|order|active
+SALSAS|1|1
+PASTAS|2|1
+ACEITES|3|0
+HARINAS|4|0
+CONSERVAS|5|0
+CEREALES|6|0</pre>
+  <p>El valor de <code>category</code> debe coincidir exactamente con <code>des_categoria</code> en BigQuery (en MAYÚSCULAS). Si no aparece en los datos, DataFactory lanzará un ValueError.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 03. FLUJO                                   -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="flow">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-teal)">▸ ORQUESTACIÓN</div>
+      <h2>Flujo Completo de Ejecución</h2>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-steps">
+      <div class="flow-step"><div class="flow-box fc"><div class="ficon">🏗️</div><span class="fname">PASO 0A</span><span class="fdesc">query_conta_gestion → temp_amzv_1</span></div></div>
+      <div class="flow-step"><div class="flow-box fc"><div class="ficon">🏗️</div><span class="fname">PASO 0B</span><span class="fdesc">5 query_temp_* (paralelo BQ)</span></div></div>
+      <div class="flow-step"><div class="flow-box fg"><div class="ficon">📂</div><span class="fname">PASO 1</span><span class="fdesc">Lee 3 CSVs config + IOUtility</span></div></div>
+      <div class="flow-step"><div class="flow-box fg"><div class="ficon">🗄️</div><span class="fname">PASO 2</span><span class="fdesc">ParamsReader 9 queries sandbox</span></div></div>
+      <div class="flow-step"><div class="flow-box ft"><div class="ficon">🔄</div><span class="fname">PASO 3</span><span class="fdesc">Loop subcadena × categoría</span></div></div>
+      <div class="flow-step"><div class="flow-box ft"><div class="ficon">🏭</div><span class="fname">PASO 4</span><span class="fdesc">DataFactory por combo</span></div></div>
+      <div class="flow-step"><div class="flow-box fc"><div class="ficon">🤖</div><span class="fname">PASO 5</span><span class="fdesc">RF + Optuna horizon=4</span></div></div>
+      <div class="flow-step"><div class="flow-box fg"><div class="ficon">📊</div><span class="fname">PASO 6</span><span class="fdesc">Optimizer + 9 CSVs output</span></div></div>
+    </div>
+  </div>
+
+  <h3>Selección de Tabla de Parámetros RF</h3>
+  <pre><span class="cm"># run_batch_optimizer.py líneas 182-184 — lógica de selección por subcadena</span>
+params_table = <span class="str">'params_cencosud'</span>  <span class="cm"># Default (METRO, WONG)</span>
+<span class="kw">if</span> _subchain <span class="kw">in</span> (<span class="str">'TOTTUS'</span>, <span class="str">'ONLINE'</span>):    params_table = <span class="str">'params_tottus'</span>
+<span class="kw">if</span> _subchain <span class="kw">in</span> (<span class="str">'PLAZA VEA'</span>, <span class="str">'VIVANDA'</span>): params_table = <span class="str">'params_spsa'</span>
+
+<span class="cm"># BUG: El CSV dice 'ECOMMERCE', el código dice 'ONLINE' → cae en el default</span></pre>
+
+  <h3>9 Salidas por Combinación Subcadena×Categoría</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>#</th><th>Nombre del Archivo</th><th>Módulo</th><th>Descripción</th><th>Uso Típico</th></tr>
+      <tr><td><code>_1_</code></td><td>report_demanda_ajustada</td><td>output_factory</td><td>Serie histórica limpia. Input del RF.</td><td>Debug de demanda histórica</td></tr>
+      <tr><td><code>_2_</code></td><td>report_tandas_detalle</td><td>output_factory</td><td>Duraciones históricas de tandas por SKU.</td><td>Revisar tandas atípicas</td></tr>
+      <tr><td><code>_3_</code></td><td>raw_demand_report</td><td>output_factory</td><td>Predicciones crudas RF por precio. Sin elasticidad.</td><td>Debug del modelo RF</td></tr>
+      <tr><td><code>_4_</code></td><td>demand_report</td><td>output_factory</td><td>Predicciones con elasticidad calculada vs precio_base.</td><td>Análisis de elasticidad</td></tr>
+      <tr><td><code>_5_</code></td><td>report_feature_importance</td><td>output_factory</td><td>Importancia de variables por SKU.</td><td>Entender qué mueve la demanda</td></tr>
+      <tr><td><code>_6_</code></td><td>report_metrics</td><td>output_factory</td><td>R², RMSE, MAE, MAPE in-sample por SKU.</td><td>Calidad del modelo por SKU</td></tr>
+      <tr><td><code>_7_</code></td><td>report_model_params</td><td>output_factory</td><td>Hiperparámetros RF usados (guardados o nuevos Optuna).</td><td>Actualizar tablas de params BQ</td></tr>
+      <tr><td><code>_8_</code></td><td>report_tandas_complete_report</td><td>output_factory</td><td>Todos los escenarios precio×duración con ROI completo.</td><td>Exploración de escenarios</td></tr>
+      <tr><td><code>_9_</code></td><td>report_top_roi_report</td><td>output_factory</td><td>El mejor escenario por SKU. <strong>Output final del modelo.</strong></td><td>Decisiones comerciales</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 04. SANDBOX PREP                            -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="sandbox-prep">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-coral)">▸ PRE-REQUISITO CRÍTICO</div>
+      <h2>Queries de Preparación del Sandbox <span class="pill pill-warn">PASO 0</span></h2>
+    </div>
+  </div>
+
+  <div class="alert alert-bug">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>Sin este paso, el modelo no corre.</strong> Estos 6 queries deben ejecutarse en BigQuery antes de cada ejecución cuando los datos subyacentes han cambiado. Copian de producción (<code>acpe-prod-dlk-shrd-gld</code>) al sandbox (<code>acpe-dev-uc-sandbox-aa.dev</code>) porque el entorno de desarrollo no tiene acceso directo a producción.</p>
+  </div>
+
+  <h3>Orden Obligatorio de Ejecución</h3>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-n"><div class="step-num" style="background:var(--accent-coral-light);color:var(--accent-coral);border-color:rgba(232,93,76,.3)">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <strong>query_conta_gestion.sql → Crea dev.temp_amzv_1</strong>
+        <p>Debe ir primero. La tabla temp_amzv_1 es el input del query COGS que se ejecuta inline dentro de params_reader.py. Filtra ventas 2025, canal DEX, moneda PEN. <strong>Fecha hardcodeada: actualizar cuando cambie el año.</strong></p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num" style="background:var(--accent-gold-light);color:var(--accent-gold-dark);border-color:rgba(212,168,83,.3)">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <strong>Los 5 query_temp_*.sql — pueden ejecutarse en paralelo</strong>
+        <p>No tienen dependencias entre sí. Se pueden lanzar simultáneamente para ahorrar tiempo.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num" style="background:var(--accent-teal-light);color:var(--accent-teal);border-color:rgba(45,156,156,.3)">3</div></div>
+      <div class="step-body">
+        <strong>python run_batch_optimizer.py</strong>
+        <p>Recién cuando todas las tablas sandbox están materializadas y actualizadas.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Mapa Producción → Sandbox → ParamsReader</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Query de Prep</th><th>Tabla Sandbox Creada</th><th>Tabla Producción Fuente</th><th>Clave en ParamsReader</th></tr>
+      <tr><td><code>query_conta_gestion.sql</code></td><td><code>dev.temp_amzv_1</code></td><td><code>delivery_contabilidad_gestion.cr_contabilidad_gestion_kpi</code></td><td>Inline en read_cogs_unitario()</td></tr>
+      <tr><td><code>query_temp_mapa_precios.sql</code></td><td><code>dev.tmp_gtm_mapa_precio_cm_moderno_mensual</code></td><td><code>gld_cliente.gtm_mapa_precio_cm_moderno_mensual</code></td><td>InputData_mapa_de_precios</td></tr>
+      <tr><td><code>query_temp_precio_efectivo.sql</code></td><td><code>dev.temp_grow_cliente_detalle</code></td><td><code>gld_cliente.grow_cliente_detalle</code></td><td>InputData_precio_efectivo</td></tr>
+      <tr><td><code>query_temp_fert_hawa.sql</code></td><td><code>dev.temp_s4_material_fert_hawa</code></td><td><code>gld_inventario.s4_material_fert_hawa</code></td><td>InputData_fert_hawa</td></tr>
+      <tr><td><code>query_temp_materiales.sql</code></td><td><code>dev.temp_afo_avance_venta_sell_in_actual</code></td><td><code>gld_cliente.afo_avance_venta_sell_in_actual</code></td><td>InputData_materiales</td></tr>
+      <tr><td><code>query_temp_promociones_detalle.sql</code></td><td><code>dev.tpm_tpm_promocion_detalle</code></td><td><code>gld_financiero.tpm_promocion_detalle</code></td><td>InputData_promocion_detalle</td></tr>
+    </table>
+  </div>
+
+  <h3>Filtros Adicionales de query_temp vs query_referencia</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Tabla</th><th>Filtros ADICIONALES en query_temp</th><th>Impacto si se omiten</th></tr>
+      <tr><td>temp_s4_material_fert_hawa</td><td><code>est_nuevo_material IN ('Z2','Z3','Z4','Z5','Z6','Z7')</code></td><td>Incluye materiales obsoletos o fuera de portafolio</td></tr>
+      <tr><td>temp_grow_cliente_detalle</td><td><code>AND des_canal = 'MODERN'</code></td><td>Incluye ventas de canal tradicional, mayorista, etc.</td></tr>
+      <tr><td>tpm_tpm_promocion_detalle</td><td><code>AND DES_ESTADO = 'Liberado'</code> + <code>AND des_cuenta IN ('TOTTUS','SUPERMERCADOS PERUANOS','CENCOSUD')</code></td><td>Incluye tandas borrador, canceladas o de otros canales</td></tr>
+      <tr><td>temp_afo_avance_venta_sell_in_actual</td><td>Fecha fija: <code>periodo &lt;= '2025-03-01'</code></td><td>No captura recodificaciones posteriores a esa fecha</td></tr>
+    </table>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>query_ferthawa.sql vs query_temp_fert_hawa.sql:</strong> Son casi idénticos en contenido. La diferencia es que <code>query_ferthawa.sql</code> es un SELECT puro a producción (sin CREATE TABLE), útil para validar datos manualmente. El modelo usa exclusivamente la versión con CREATE TABLE.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 05. PARAMS READER                           -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="params-reader">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-gold-dark)">▸ INGESTIÓN</div>
+      <h2>ParamsReader — Conexión BigQuery</h2>
+    </div>
+  </div>
+
+  <p>La clase ParamsReader se instancia una sola vez por ejecución. En su constructor llama secuencialmente a los 9 métodos de lectura. Proyecto BigQuery: <code>acpe-dev-uc-sandbox-aa</code> (sandbox).</p>
+
+  <h3>9 Métodos de Lectura</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Método</th><th>Clave en input_db_df_dict</th><th>Tabla sandbox</th><th>Notas</th></tr>
+      <tr><td><code>read_cogs_unitario()</code></td><td>InputData_cog_unitario</td><td>temp_amzv_1 (query inline)</td><td>Ejecuta el query completo de COGS de 3 CTEs, no solo SELECT *</td></tr>
+      <tr><td><code>read_mapa_de_precios()</code></td><td>InputData_mapa_de_precios</td><td>tmp_gtm_mapa_precio_cm_moderno_mensual</td><td>Últimos 24 meses dinámico</td></tr>
+      <tr><td><code>read_promociones_detalle()</code></td><td>InputData_promocion_detalle</td><td>tpm_tpm_promocion_detalle</td><td>Últimos 24 meses dinámico</td></tr>
+      <tr><td><code>read_materiales()</code></td><td>InputData_materiales</td><td>temp_afo_avance_venta_sell_in_actual</td><td>SELECT * sin filtros adicionales</td></tr>
+      <tr><td><code>read_ferthawa()</code></td><td>InputData_fert_hawa</td><td>temp_s4_material_fert_hawa</td><td>SELECT * sin filtros adicionales</td></tr>
+      <tr><td><code>read_precio_efectivo()</code></td><td>InputData_precio_efectivo</td><td>temp_grow_cliente_detalle</td><td>Filtra subcadenas y 4 locales SAP de Lima</td></tr>
+      <tr><td><code>read_params_tottus()</code></td><td>InputData_params_tottus</td><td>moderno_outputs_tottus_lima_best_params</td><td>Hiperparámetros RF pre-entrenados</td></tr>
+      <tr><td><code>read_params_cencosud()</code></td><td>InputData_params_cencosud</td><td>moderno_outputs_cencosud_lima_best_params</td><td>Hiperparámetros RF pre-entrenados</td></tr>
+      <tr><td><code>read_params_spsa()</code></td><td>InputData_params_spsa</td><td>moderno_outputs_spsa_lima_best_params</td><td>Hiperparámetros RF pre-entrenados</td></tr>
+    </table>
+  </div>
+
+  <h3>Schema Requerido de las Tablas de Parámetros RF</h3>
+  <p>Las tres tablas de params deben tener exactamente estas columnas para que el modelo las indexe correctamente:</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Columna</th><th>Tipo</th><th>Descripción</th><th>Obligatoria</th></tr>
+      <tr class="col-key"><td><code>sku</code></td><td>INT64</td><td>Código de material. Se renombra a cod_material en DataFactory.</td><td><span class="badge bg">SÍ</span></td></tr>
+      <tr class="col-key"><td><code>des_subcadena</code></td><td>STRING</td><td>Nombre de subcadena en MAYÚSCULAS.</td><td><span class="badge bg">SÍ</span></td></tr>
+      <tr><td><code>n_estimators</code></td><td>INT64</td><td>Número de árboles del Random Forest.</td><td><span class="badge bg">SÍ</span></td></tr>
+      <tr><td><code>max_depth</code></td><td>INT64</td><td>Profundidad máxima de cada árbol.</td><td><span class="badge bg">SÍ</span></td></tr>
+      <tr><td><code>min_samples_split</code></td><td>INT64</td><td>Mínimo de muestras para dividir un nodo.</td><td><span class="badge bg">SÍ</span></td></tr>
+      <tr><td><code>min_samples_leaf</code></td><td>INT64</td><td>Mínimo de muestras en hoja.</td><td><span class="badge bg">SÍ</span></td></tr>
+      <tr><td><code>max_features</code></td><td>FLOAT64</td><td>Fracción de features por split. Si falta, se asigna 0.5 por defecto.</td><td><span class="badge bo">OPCIONAL</span></td></tr>
+    </table>
+  </div>
+
+  <div class="alert alert-info">
+    <span class="alert-icon">ℹ️</span>
+    <p>Si un SKU no está en la tabla de parámetros, el modelo corre Optuna (30 trials por defecto) para ese SKU. Los nuevos parámetros se guardan en el archivo <code>_7_report_model_params</code>. Para persistirlos, hay que actualizar la tabla BigQuery <strong>manualmente</strong> — no hay automatización de este paso.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 06. QUERIES SQL                             -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="queries-detail">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-teal)">▸ SQL</div>
+      <h2>Queries SQL — Detalle y Advertencias</h2>
+    </div>
+  </div>
+
+  <h3>query_cogs_unitario.sql — Cálculo del Costo (3 CTEs)</h3>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">CTE1</div><div class="step-line"></div></div>
+      <div class="step-body"><strong>ub_total — Ventas y Costos Base</strong><p>Lee temp_amzv_1. Filtra cod_grupo_precio='D1' (distribución Lima), excluye devoluciones (mnt_venta_bruta&gt;0), convierte volumen a kilos (num_volumen × 1000).</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">CTE2</div><div class="step-line"></div></div>
+      <div class="step-body"><strong>calculo_ub — Costo por Kilo</strong><p>costo_un = (venta_neta - utilidad_bruta_directa) / kilos. La diferencia venta_neta - utilidad_bruta_directa = costo_de_ventas.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">CTE3</div></div>
+      <div class="step-body"><strong>cruce_ub_fert — COGS por Unidad de Almacenamiento</strong><p>Join con s4_material_fert_hawa para obtener el peso máximo por unidad. COGS_Unitario = costo_un × Max_Kilos_unidad.</p></div>
+    </div>
+  </div>
+
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">FÓRMULA</span>
+      <span class="ch-title">COGS Unitario — 3 CTEs en query_cogs_unitario.sql</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Fórmula abstracta</span>
+        <pre>costo_un =
+  SUM(venta_neta − util_bruta_directa)
+  ─────────────────────────────────────
+            SUM(kilos)
+
+COGS_Unitario =
+  costo_un × max(num_peso_neto_por_material)</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Ejemplo — SKU 10004521 TARI TOMATE 200GX24</span>
+        <pre>SUM(venta_neta)           = 315,000 S/.
+SUM(utilidad_bruta_direct)=  63,000 S/.
+SUM(kilos)                =  28,000 kg
+
+costo_un = (315,000 − 63,000) / 28,000
+         = 252,000 / 28,000
+         = <span class="res">9.00 S/./kg</span>
+
+max(num_peso_neto) = 0.200 kg/unidad
+
+COGS_Unitario = 9.00 × 0.200
+              = <span class="res">1.80 S/./unidad</span></pre>
+      </div>
+    </div>
+    <div class="calc-note">El "costo_un" en S/./kg es el costo de ventas por kilo. Se multiplica por el peso máximo de la unidad de almacenamiento para obtener el costo por unidad de venta. Para TARI 200GX24, cada unidad pesa 200g = 0.200 kg.</div>
+  </div>
+
+  <h3>query_precio_efectivo.sql — Limpieza de ID</h3>
+  <pre><span class="cm">-- Problema: algunos cod_material tienen espacios embebidos (ej: "100 456")</span>
+SAFE_CAST(REGEXP_REPLACE(id_material_origen, <span class="str">r'\s'</span>, <span class="str">''</span>) AS INT64) AS id_material_origen
+<span class="cm">-- SAFE_CAST: convierte a NULL si falla, en lugar de lanzar error de casting</span></pre>
+
+  <h3>query_mapa_de_precios.sql — Bug de Coma Faltante</h3>
+  <div class="alert alert-bug">
+    <span class="alert-icon">🐛</span>
+    <p>En el archivo standalone <code>query_mapa_de_precios.sql</code> falta una coma entre <code>cod_material</code> y <code>des_material</code> en el SELECT. La versión usada por el modelo (en query_temp_mapa_precios.sql y en params_reader) sí tiene la coma correcta. Si alguien ejecuta el standalone, fallará.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 07. DATA FACTORY                            -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="data-factory">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-teal)">▸ TRANSFORMACIÓN</div>
+      <h2>DataFactory — Motor de Transformación</h2>
+    </div>
+  </div>
+
+  <p>DataFactory se instancia <strong>una vez por combinación subcadena×categoría</strong>. Recibe el io_utility con todos los DataFrames cargados y produce las tablas derivadas específicas para esa combinación. Su constructor llama dos métodos en secuencia.</p>
+
+  <h3>update_input_df_dict() — Transformaciones por Tabla</h3>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>Lógica especial de METRO — duplicada en 2 lugares:</strong> METRO tiene datos bajo 'METRO' y 'METRO/WONG'. El código unifica ambos como 'METRO' en las líneas 46-48 y 106-108. Si agregas una subcadena similar con nombre compuesto, debes replicar en <strong>ambos lugares</strong>.</p>
+  </div>
+
+  <h4>precio_efectivo → cadena de 6 transformaciones</h4>
+  <div class="steps">
+    <div class="step-item"><div class="step-n"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><strong>Filtro por localidad y subcadena</strong><p>Filtra des_departamento == LIMA y des_subcadena == subchain. Lanza ValueError si queda vacío.</p></div></div>
+    <div class="step-item"><div class="step-n"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><strong>Merge con materiales (left join)</strong><p>Resuelve recodificaciones SAP: cod_material → material_historico → material_actual.</p></div></div>
+    <div class="step-item"><div class="step-n"><div class="step-num">3</div><div class="step-line"></div></div><div class="step-body"><strong>Doble merge con fert_hawa</strong><p>Trae peso_net_or (material original) y peso_net_new (material actual). Calcula ratio = peso_or / peso_new.</p></div></div>
+    <div class="step-item"><div class="step-n"><div class="step-num">4</div><div class="step-line"></div></div><div class="step-body"><strong>Ajuste de volumen</strong><p>material_venta_ajustado = cnt_material × ratio. Normaliza la demanda cuando el SKU cambió de gramaje.</p></div></div>
+    <div class="step-item"><div class="step-n"><div class="step-num">5</div><div class="step-line"></div></div><div class="step-body"><strong>Cálculo de precio efectivo real</strong><p>p_u = sum_mnt_bruto / material_venta_ajustado. Precio real pagado (no el lista), por semana y local.</p></div></div>
+    <div class="step-item"><div class="step-n"><div class="step-num">6</div></div><div class="step-body"><strong>Genera demanda_ajustada</strong><p>Filtra demanda&gt;0 y precio&gt;0. Une precio_lista_final. Añade is_last_week_of_month (Bug #1). Deduplica por [cod_material, year, week, subcadena].</p></div></div>
+  </div>
+
+  <h4>materiales — Rename por Posición (RIESGO)</h4>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p>En data_factory.py línea 82: <code>df.columns = ['material_historico', 'des_1', 'material_actual', 'des_2']</code>. El rename es <strong>por posición</strong>, no por nombre de columna. Si la tabla BigQuery cambia el orden de sus columnas, los datos quedarán mal asignados sin error visible.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 08. DERIVED TABLES SCHEMA                  -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="derived-tables">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-gold-dark)">▸ SCHEMAS</div>
+      <h2>Schema Exacto de _derived_tables</h2>
+    </div>
+  </div>
+
+  <p>Estas son las tablas que circulan internamente entre módulos. Si un cambio rompe el nombre o tipo de una columna, el error aparecerá lejos del origen. Esta sección es la <strong>referencia principal para debugging</strong>.</p>
+
+  <div class="schema-table">
+    <div class="schema-header"><span class="schema-name">DataFactory._derived_tables['demanda_filtrada']</span><span class="schema-desc">Serie de ventas pre-limpieza, antes del filtro demanda&gt;0 y precio&gt;0. Solo para diagnóstico.</span></div>
+    <table>
+      <tr><th>Columna</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr class="col-key"><td><code>cod_material</code></td><td>Int64</td><td>material_actual post-recodificación (no el original)</td></tr>
+      <tr><td><code>material_actual</code></td><td>Int64</td><td>Antes del rename final — solo en versiones intermedias</td></tr>
+      <tr><td><code>des_2</code></td><td>str</td><td>Descripción del material actual. 'SIN DESCRIPCION' si no hubo match</td></tr>
+      <tr><td><code>des_categoria</code></td><td>str</td><td>Categoría del material</td></tr>
+      <tr><td><code>des_subcadena</code></td><td>str</td><td>Subcadena (ya unificada para METRO)</td></tr>
+      <tr><td><code>year / week</code></td><td>int</td><td>Semana ISO</td></tr>
+      <tr><td><code>cantidad_demandada</code></td><td>float</td><td>kg ajustados. Puede incluir ceros o negativos — eso es lo que demanda_ajustada filtra.</td></tr>
+      <tr><td><code>p_unitario</code></td><td>float</td><td>Puede incluir NaN o ceros — filtrados en demanda_ajustada</td></tr>
+      <tr><td><code>sum_mnt_bruto</code></td><td>float</td><td>Suma de ventas brutas antes del cálculo de precio efectivo</td></tr>
+    </table>
+  </div>
+  <p>Esta tabla se genera antes del filtro <code>(cantidad_demandada &gt; 0) & (p_unitario &gt; 0)</code>. La diferencia entre <code>demanda_filtrada</code> y <code>demanda_ajustada</code> revela semanas con ventas nulas o precios implausibles. El log registra la diferencia en sum_mnt_bruto entre ambas para detectar pérdidas de datos en la transformación.</p>
+
+  <div class="schema-table">
+    <div class="schema-header"><span class="schema-name">DataFactory._derived_tables['demanda_ajustada']</span><span class="schema-desc">Serie temporal limpia. Input directo del modelo RF.</span></div>
+    <table>
+      <tr><th>Columna</th><th>Tipo</th><th>Origen</th><th>Descripción</th></tr>
+      <tr class="col-key"><td><code>cod_material</code></td><td>Int64</td><td>material_actual de materiales</td><td>Código SAP actual (resuelve recodificaciones)</td></tr>
+      <tr class="col-key"><td><code>year</code></td><td>int</td><td>precio_efectivo</td><td>Año ISO de la semana</td></tr>
+      <tr class="col-key"><td><code>week</code></td><td>int</td><td>precio_efectivo</td><td>Semana ISO</td></tr>
+      <tr class="col-key"><td><code>des_subcadena</code></td><td>str</td><td>precio_efectivo</td><td>Subcadena (unificada para METRO)</td></tr>
+      <tr><td><code>cantidad_demandada</code></td><td>float</td><td>material_venta_ajustado</td><td>Kilos vendidos ajustados por ratio de recodificación</td></tr>
+      <tr><td><code>p_unitario</code></td><td>float</td><td>p_u (renombrado)</td><td>Precio efectivo real = mnt_bruto/kg</td></tr>
+      <tr><td><code>precio_base</code></td><td>float</td><td>precio_lista_final (merge)</td><td>PVP lista vigente. NaN si no hay precio lista.</td></tr>
+      <tr><td><code>precio_base_encontrado</code></td><td>int</td><td>calculado</td><td>1 si precio_base no es NaN, 0 si es NaN</td></tr>
+      <tr><td><code>is_last_week_of_month</code></td><td>bool</td><td>calculado (<strong style="color:var(--accent-coral)">BUG</strong>)</td><td>Siempre False por Bug #1. El modelo la elimina antes de entrenar.</td></tr>
+    </table>
+  </div>
+
+  <div class="schema-table">
+    <div class="schema-header"><span class="schema-name">DataFactory._derived_tables['saltos_de_precio']</span><span class="schema-desc">Grilla completa de precios a evaluar por el modelo RF — generada en DataFactory</span></div>
+    <table>
+      <tr><th>Columna</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr class="col-key"><td><code>cod_material</code></td><td>Int64</td><td>Código SAP del material</td></tr>
+      <tr class="col-key"><td><code>des_subcadena</code></td><td>str</td><td>Subcadena</td></tr>
+      <tr><td><code>precio</code></td><td>float (1 decimal)</td><td>Precio a evaluar. Generado de precio_base hacia abajo hasta precio_min en pasos de 0.1 (aritmética entera ×10). MÁS precio_base como primer registro. No es truncación simple — es una grilla iterada.</td></tr>
+    </table>
+  </div>
+
+  <h4>Cómo se genera la grilla de saltos_de_precio</h4>
+  <pre><span class="cm"># Para cada cod_material × des_subcadena:</span>
+precio_base = precio_lista_final del año vigente
+precio_min  = min(p_unitario histórico) del grupo en precio_efectivo
+
+<span class="cm"># Incluye precio_base como primer punto</span>
+registros.append({'precio': precio_base})
+
+<span class="cm"># Luego baja de 0.1 en 0.1 hasta precio_min (inclusive)</span>
+p_start = <span class="kw">int</span>(precio_base * 10) - 1    <span class="cm">← empieza 0.1 por debajo del base</span>
+p_min   = <span class="kw">int</span>(precio_min  * 10)
+
+<span class="kw">for</span> p <span class="kw">in</span> range(p_start, p_min - 1, -1):
+    registros.append({'precio': p / 10})
+
+<span class="cm"># IMPORTANTE: si un SKU no tiene precio_base o precio_min → se omite sin error</span>
+<span class="cm"># IMPORTANTE: trunc_1_decimal() se aplica en elasticity_model DESPUÉS de leer esta tabla</span></pre>
+
+  <div class="schema-table">
+    <div class="schema-header"><span class="schema-name">DataFactory._derived_tables['tandas_detalle']</span><span class="schema-desc">Duraciones históricas de tandas por SKU. Input del OptimizerModel. Generado desde promocion_detalle filtrado por cod_material_sku.</span></div>
+    <table>
+      <tr><th>Columna</th><th>Tipo</th><th>Origen / Fórmula</th><th>Nota</th></tr>
+      <tr class="col-key"><td><code>cod_material</code></td><td>Int64</td><td>Filtrado por cod_material_sku (SKUs con precio_lista)</td><td>Solo tandas de SKUs que van a modelarse</td></tr>
+      <tr><td><code>des_material</code></td><td>str</td><td>De promocion_detalle</td><td>Descripción del material</td></tr>
+      <tr><td><code>duracion_dias</code></td><td>int</td><td><code>(fec_fin_sell_out − fec_inicio_sell_out).days + 1</code></td><td>Duración real histórica en días</td></tr>
+      <tr><td><code>duracion_semanas</code></td><td>int</td><td><code>ceil(duracion_dias / 7).clip(1, 4)</code></td><td>Semanas equivalentes. Máximo 4 semanas.</td></tr>
+      <tr><td><code>n_tandas</code></td><td>int</td><td><code>floor(30 / duracion_dias).clip(1, 4)</code></td><td>⚠️ Fórmula diferente al n_tandas del _build_complete_report. Aquí es floor continuo. En el reporte es np.select con valores fijos. Ver nota abajo.</td></tr>
+    </table>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>Dos cálculos distintos de n_tandas:</strong> El n_tandas de <code>tandas_detalle</code> (arriba) usa <code>floor(30/duracion_dias).clip(1,4)</code> y sirve como input al OptimizerModel para construir los escenarios. El n_tandas que aparece en los reportes _8_ y _9_ se recalcula dentro de <code>_build_complete_report()</code> con <code>np.select</code> usando valores fijos (1d→30, 2d→15, 3-7d→4, 8-14d→2, ≥15d→1). <strong>Pueden diferir para la misma duracion_dias</strong> — ej: 9 días da floor(30/9)=3 en tandas_detalle pero np.select da 2 en el reporte.</p>
+  </div>
+
+  <div class="schema-table">
+    <div class="schema-header"><span class="schema-name">ElasticityModel output → demand_result</span><span class="schema-desc">Predicciones de demanda por precio y semana. Input del OptimizerModel.</span></div>
+    <table>
+      <tr><th>Columna</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr class="col-key"><td><code>cod_material</code></td><td>int</td><td>Código SAP</td></tr>
+      <tr class="col-key"><td><code>des_subcadena</code></td><td>str</td><td>Subcadena</td></tr>
+      <tr class="col-key"><td><code>year_pred</code></td><td>int</td><td>Año ISO de la predicción</td></tr>
+      <tr class="col-key"><td><code>week_pred</code></td><td>int</td><td>Semana ISO de la predicción</td></tr>
+      <tr class="col-key"><td><code>precio</code></td><td>float</td><td>Precio evaluado (1 decimal)</td></tr>
+      <tr><td><code>cantidad_predicha</code></td><td>float</td><td>Demanda predicha en kg</td></tr>
+      <tr><td><code>precio_base</code></td><td>float</td><td>Precio máximo del grupo (referencia). Añadido en output_factory.</td></tr>
+      <tr><td><code>elasticidad</code></td><td>float</td><td>Calculada en output_factory. Puede diferir levemente del optimizador.</td></tr>
+    </table>
+  </div>
+
+  <div class="schema-table">
+    <div class="schema-header"><span class="schema-name">OptimizerModel._derived_tables['input_optimizer']</span><span class="schema-desc">Reporte completo con todas las métricas financieras por escenario</span></div>
+    <table>
+      <tr><th>Columna</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr class="col-key"><td><code>cod_material</code></td><td>int</td><td>Código SAP</td></tr>
+      <tr><td><code>precio_base</code></td><td>float</td><td>PVP lista sin descuento</td></tr>
+      <tr><td><code>precio</code></td><td>float</td><td>Precio promocional evaluado</td></tr>
+      <tr><td><code>factor</code></td><td>float</td><td>(precio_base - precio) / precio_base. Descuento porcentual.</td></tr>
+      <tr><td><code>cogs_unitario</code></td><td>float</td><td>Costo por unidad en S/.</td></tr>
+      <tr><td><code>unidades_predicha</code></td><td>int</td><td>floor(cantidad_kg / max_kilos_unidad)</td></tr>
+      <tr><td><code>ingreso_sin_promo</code></td><td>float</td><td>precio_base × unidades_base</td></tr>
+      <tr><td><code>utilidad_sin_promo</code></td><td>float</td><td>ingreso_sin_promo - COGS × unidades_base</td></tr>
+      <tr><td><code>ingreso_con_promo</code></td><td>float</td><td>precio × unidades_predicha</td></tr>
+      <tr><td><code>utilidad_con_promo</code></td><td>float</td><td>ingreso_con_promo - COGS × unidades_predicha</td></tr>
+      <tr><td><code>inversion</code></td><td>float</td><td>(precio_base - precio) × unidades_predicha</td></tr>
+      <tr><td><code>mejora_utilidad</code></td><td>float</td><td>utilidad_con_promo - utilidad_sin_promo</td></tr>
+      <tr><td><code>roi</code></td><td>float</td><td>mejora_utilidad / inversion</td></tr>
+      <tr><td><code>duracion_dias</code></td><td>int</td><td>Duración de la tanda en días</td></tr>
+      <tr><td><code>n_tandas</code></td><td>int</td><td>Número de tandas posibles por mes</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 09. ELASTICITY MODEL                        -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="elasticity">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-coral)">▸ MODELADO RF</div>
+      <h2>ElasticityModel — Random Forest + Optuna</h2>
+    </div>
+  </div>
+
+  <h3>Backup v1.0 vs v2.0 Actual</h3>
+  <div class="compare-grid">
+    <div class="compare-box bad">
+      <h5>v1.0 — elasticity_model_backup.py (NO USAR)</h5>
+      <ul>
+        <li>Predice solo 1 semana futura</li>
+        <li>Aplica precio a TODAS las filas históricas</li>
+        <li>Retorna 3 valores: resultados, importancias, params</li>
+        <li>Sin métricas de evaluación</li>
+        <li>year/week calculado per-grupo</li>
+      </ul>
+    </div>
+    <div class="compare-box good">
+      <h5>v2.0 — elasticity_model.py (ACTUAL)</h5>
+      <ul>
+        <li>Predice horizonte=N semanas (N=4 en producción)</li>
+        <li>Simula semana a semana: H alimenta H+1</li>
+        <li>Retorna 4 valores: + métricas</li>
+        <li>R², RMSE, MAE, MAPE in-sample por SKU</li>
+        <li>year_max/week_max global (evita inconsistencias)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Features del Modelo — Tabla Completa</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Feature</th><th>Tipo</th><th>Propósito</th><th>Nota Técnica</th></tr>
+      <tr><td><code>week_sin / week_cos</code></td><td>Estacionalidad</td><td>Captura patrones cíclicos semanales sin discontinuidad</td><td>Semana clippeada a [1,52] antes del seno/coseno</td></tr>
+      <tr><td><code>p_unitario</code></td><td>Precio</td><td>Variable principal de elasticidad</td><td>Sobreescrito con precio candidato en simulación counterfactual</td></tr>
+      <tr><td><code>precio_ewm_4 / _8 / _12</code></td><td>Precio suavizado</td><td>EWM de precio con ventana corta/media/larga</td><td>shift(1) para evitar data leakage</td></tr>
+      <tr><td><code>precio_gap_4 / _8 / _12</code></td><td>Señal promo</td><td>p_unitario - precio_ewm_X. Negativo = en promo.</td><td>Eliminado por VarianceThreshold si precio es constante</td></tr>
+      <tr><td><code>precio_rollmean_4</code></td><td>Precio promedio móvil</td><td>Rolling mean de 4 semanas con shift(1)</td><td>Complementa los EWMs. También eliminado si varianza ≈ 0.</td></tr>
+      <tr><td><code>demand_lag_1</code></td><td>Autocorrelación</td><td>Demanda de la semana anterior</td><td>np.roll(y,1) circular — primera fila recibe valor de la última. Se fuerza a 0 en la fila 0.</td></tr>
+      <tr><td><code>demand_lag_2</code></td><td>Autocorrelación</td><td>Demanda de hace 2 semanas</td><td>Misma lógica circular. Forzado a 0 en fila 0.</td></tr>
+      <tr><td><code>no_sale_streak</code></td><td>Intermitencia</td><td>Semanas consecutivas sin venta</td><td>Calcula run-length de ceros vía cumsum. <strong>Idéntico a weeks_since_last_sale</strong> — son el mismo cálculo asignado a dos variables.</td></tr>
+      <tr><td><code>weeks_since_last_sale</code></td><td>Intermitencia</td><td>Alias exacto de no_sale_streak</td><td><code>df['weeks_since_last_sale'] = no_sale</code> — misma serie. Redundante pero no genera conflicto porque VarianceThreshold eliminaría una si fueran idénticas... aunque en la práctica ambas pasan si hay varianza. Verificar importancias.</td></tr>
+      <tr><td><code>structural_zero</code></td><td>Placeholder</td><td>Reservado para extensión futura</td><td>Siempre 0. Varianza = 0 → VarianceThreshold(1e-12) lo elimina automáticamente antes del entrenamiento.</td></tr>
+    </table>
+  </div>
+
+  <h3>Pipeline de Preprocesamiento Antes del RF</h3>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-body"><strong>Drop de columnas no-feature</strong><p>Se eliminan: cod_material, year, week, cantidad_demandada, sum_mnt_bruto, precio_base, num_precio_venta_publico, precio_base_encontrado, is_last_week_of_month. Solo quedan columnas numéricas.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-body"><strong>VarianceThreshold(1e-12)</strong><p>Elimina features con varianza casi cero (structural_zero, precio_gap_* si precio es constante). Las features eliminadas no aparecen en el reporte de importancias.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-body"><strong>StandardScaler</strong><p>Normaliza todas las features a media 0, desviación estándar 1 antes de entrenar. El scaler ajustado en el set de entrenamiento se reutiliza para transformar los features en la simulación counterfactual.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">4</div></div>
+      <div class="step-body"><strong>Transformación log1p (solo dentro del KFold)</strong><p>Se aplica a y_train cuando <code>skew(y_train) &gt; 1.5</code> o <code>max(y_train) / (median(y_train) + 1e-6) &gt; 10</code>. En ese caso se entrena el RF sobre log1p(y) y se invierte con expm1. El modelo final (fuera del CV) se entrena sobre y_raw sin transformación.</p></div>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>KFold con SKUs de datos escasos:</strong> <code>n_splits = min(5, len(Xs))</code>. Un SKU con exactamente 10 observaciones (umbral mínimo) usa 5 folds de 2 muestras cada uno — el R² de CV puede ser muy inestable. Los R² del reporte <code>_6_report_metrics</code> son <strong>in-sample</strong> (todo el histórico), no de CV, por lo que no capturan este problema de overfitting.</p>
+  </div>
+
+  <h3>Simulación Multisemana (Novedad v2.0)</h3>
+  <pre><span class="cm"># Para cada precio candidato, simula 4 semanas hacia adelante:</span>
+<span class="kw">for</span> h <span class="kw">in</span> range(<span class="num">1</span>, horizon+<span class="num">1</span>):   <span class="cm"># horizon=4</span>
+    grupo_sim_feat = build_features(grupo_sim)   <span class="cm"># Recalcula lags/EWMs con histórico actualizado</span>
+    X_last = grupo_sim_feat.iloc[[-<span class="num">1</span>]]
+    X_last[<span class="str">'p_unitario'</span>] = precio              <span class="cm"># Sobreescribe con el precio candidato</span>
+    y_pred = model.predict(X_last)[<span class="num">0</span>]
+    
+    nueva_fila[<span class="str">'cantidad_demandada'</span>] = y_pred
+    grupo_sim = pd.concat([grupo_sim, nueva_fila])  <span class="cm"># Predicción H alimenta H+1</span></pre>
+
+  <h3>Reutilización vs Optimización de Hiperparámetros</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Situación</th><th>Comportamiento</th><th>Tiempo aprox.</th></tr>
+      <tr><td>SKU existe en tabla params BQ</td><td>Usa parámetros guardados directamente. No corre Optuna.</td><td>Segundos por SKU</td></tr>
+      <tr><td>SKU no existe en tabla params BQ</td><td>Corre Optuna con n_trials=30. Guarda en _7_ CSV.</td><td>5-15 min por SKU</td></tr>
+      <tr><td><code>optimize_hyperparams=True</code></td><td>Siempre corre Optuna, incluso si ya hay parámetros guardados.</td><td>5-15 min por SKU</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 10. OPTIMIZER MODEL                         -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="optimizer">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-teal)">▸ ROI</div>
+      <h2>OptimizerModel — Cálculo de ROI por Escenario</h2>
+    </div>
+  </div>
+
+  <h3>heuristicas_dias — Factores de Impulso para Demanda Promo (&lt;7 días)</h3>
+  <div class="alert alert-info">
+    <span class="alert-icon">ℹ️</span>
+    <p>Este dict se usa en DOS contextos distintos: (1) para tandas de 1-6 días completos, y (2) para los días residuales en tandas de 7-28 días. <strong>No confundir con la tabla n_tandas</strong> — son dos cálculos independientes.</p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>duracion_dias</th><th>Factor (heuristicas_dias)</th><th>Fórmula demanda PROMO</th><th>Fórmula demanda BASE (sin factor)</th></tr>
+      <tr><td>1 día</td><td><strong style="color:var(--accent-teal)">1.12</strong></td><td><code>max(dem_semanales) × (1/7) × 1.12</code></td><td><code>mean(dem_semanales) × (1/7)</code></td></tr>
+      <tr><td>2 días</td><td><strong style="color:var(--accent-teal)">1.12</strong></td><td><code>max(dem_semanales) × (2/7) × 1.12</code></td><td><code>mean(dem_semanales) × (2/7)</code></td></tr>
+      <tr><td>3 días</td><td><strong style="color:var(--accent-teal)">1.08</strong></td><td><code>max(dem_semanales) × (3/7) × 1.08</code></td><td><code>mean(dem_semanales) × (3/7)</code></td></tr>
+      <tr><td>4 días</td><td><strong style="color:var(--accent-teal)">1.05</strong></td><td><code>max(dem_semanales) × (4/7) × 1.05</code></td><td><code>mean(dem_semanales) × (4/7)</code></td></tr>
+      <tr><td>5 días</td><td><strong style="color:var(--accent-teal)">1.03</strong></td><td><code>max(dem_semanales) × (5/7) × 1.03</code></td><td><code>mean(dem_semanales) × (5/7)</code></td></tr>
+      <tr><td>6 días</td><td><strong style="color:var(--accent-teal)">1.01</strong></td><td><code>max(dem_semanales) × (6/7) × 1.01</code></td><td><code>mean(dem_semanales) × (6/7)</code></td></tr>
+      <tr><td>7 días</td><td>1.00</td><td>Semanas completas: ver lógica 7-28d</td><td>Semanas completas: ver lógica 7-28d</td></tr>
+    </table>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>Trampa de naming en el código:</strong> Para &lt;7 días, la variable en código se llama <code>promedio_4_semanas</code> pero su valor es <code>np.max(demandas_semanales)</code>, no un promedio. La función base sí usa <code>np.mean</code>. Esta asimetría es intencional (la promo genera un pico máximo al inicio), pero el nombre de variable en el código es engañoso.</p>
+  </div>
+
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">EJEMPLO HEURÍSTICA</span>
+      <span class="ch-title">Tanda de 5 días — SKU 10004521, demandas RF = [316, 298, 280, 312] kg</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Fórmula abstracta</span>
+        <pre>demanda_PROMO =
+  max(demandas) × (dias/7) × factor[dias]
+
+demanda_BASE =
+  mean(demandas) × (dias/7)
+  ← sin factor heurístico</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Números — duracion_dias=5, factor[5]=1.03</span>
+        <pre>max(demandas)  = 316 kg
+mean(demandas) = (316+298+280+312)/4 = 301.5 kg
+
+PROMO = 316 × (5/7) × 1.03
+      = 316 × 0.7143 × 1.03
+      = <span class="res">232.6 kg</span>
+
+BASE  = 301.5 × (5/7)
+      = 301.5 × 0.7143
+      = <span class="res">215.4 kg</span>
+
+Uplift esperado = 232.6 − 215.4 = <span class="res">+17.2 kg</span></pre>
+      </div>
+    </div>
+    <div class="calc-note"><strong>Contexto:</strong> Estos son los kg de la tanda completa de 5 días. Luego se dividen por max_kilos_unidad (0.200 kg) para obtener unidades: 232.6/0.200 = 1,163 UN promo vs 215.4/0.200 = 1,077 UN base.</div>
+  </div>
+
+  <h3>Lógica para Tandas de 7-28 días</h3>
+  <pre><span class="cm"># Semanas completas: promedio entre semana i y semana i+1 (promo Y base igual)</span>
+<span class="kw">for</span> i <span class="kw">in</span> range(semanas_completas):
+    promedio = (dem[i] + dem[i+1]) / <span class="num">2</span>  <span class="cm">← si i+1 existe, sino usa dem[-1]</span>
+    demanda_total += promedio
+
+<span class="cm"># Días residuales (duracion_dias % 7):</span>
+<span class="cm"># PROMO: aplica factor de heuristicas_dias[dias_restantes]</span>
+demanda_total += dem[idx] * (dias_restantes / <span class="num">7</span>) * factor
+
+<span class="cm"># BASE:  sin factor</span>
+demanda_total += dem[idx] * (dias_restantes / <span class="num">7</span>)
+
+<span class="cm"># > 28 días: ambas (promo y base) = sum(todas las semanas del horizonte)</span></pre>
+
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">EJEMPLO HEURÍSTICA</span>
+      <span class="ch-title">Tanda de 10 días = 1 semana completa + 3 días residuales</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Fórmula abstracta</span>
+        <pre>semanas_completas = dias // 7
+dias_restantes    = dias %  7
+
+semana i:
+  prom_i = (dem[i] + dem[i+1]) / 2
+
+residuo_PROMO =
+  dem[idx] × (rest/7) × factor[rest]
+
+residuo_BASE =
+  dem[idx] × (rest/7)  ← sin factor</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Números — duracion_dias=10, demandas=[316,298,280,312]</span>
+        <pre>semanas_completas = 10//7 = <span class="res">1</span>
+dias_restantes    = 10% 7 = <span class="res">3</span>  factor[3] = 1.08
+
+Semana completa (i=0):
+  prom_0 = (316 + 298) / 2 = <span class="res">307.0 kg</span>
+
+Residuo 3 días:
+  PROMO: 298 × (3/7) × 1.08 = <span class="res">137.9 kg</span>
+  BASE:  298 × (3/7)         = <span class="res">127.7 kg</span>
+
+Total PROMO = 307.0 + 137.9 = <span class="res">444.9 kg</span>
+Total BASE  = 307.0 + 127.7 = <span class="res">434.7 kg</span></pre>
+      </div>
+    </div>
+    <div class="calc-note">Las semanas completas son iguales para promo y base. El factor heurístico <strong>solo aplica a los días residuales</strong>. Para el residuo se usa <code>dem[semanas_completas]</code> = dem[1] = 298 (la siguiente semana disponible).</div>
+  </div>
+
+  <h3>n_tandas — Tabla de Tandas por Mes (Independiente de heuristicas_dias)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>duracion_dias</th><th>n_tandas/mes</th><th>Lógica</th></tr>
+      <tr><td>== 1 día</td><td><strong style="color:var(--accent-coral)">30</strong></td><td>Hasta 30 activaciones por mes posibles</td></tr>
+      <tr><td>== 2 días</td><td><strong style="color:var(--accent-coral)">15</strong></td><td>~15 activaciones por mes</td></tr>
+      <tr><td>entre 3 y 7 días</td><td><strong style="color:var(--accent-teal)">4</strong></td><td>~4 semanas por mes</td></tr>
+      <tr><td>entre 8 y 14 días</td><td><strong style="color:var(--accent-gold-dark)">2</strong></td><td>~2 tandas de 2 semanas por mes</td></tr>
+      <tr><td>≥ 15 días</td><td>1</td><td>Una sola tanda por mes</td></tr>
+      <tr><td>default</td><td>1</td><td>np.select default para valores no cubiertos</td></tr>
+    </table>
+  </div>
+
+  <h3>Fórmulas Financieras Completas del Optimizador</h3>
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">PASO 1</span>
+      <span class="ch-title">Conversión KG → Unidades de Venta</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Fórmula abstracta</span>
+        <pre>unidades_predicha =
+  floor(cantidad_predicha / max_kilos_unidad)
+
+unidades_base =
+  floor(cantidad_base / max_kilos_unidad)</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Ejemplo — SKU 10004521 TARI TOMATE 200GX24</span>
+        <pre>cantidad_predicha  = 316.0 kg  (con promo)
+cantidad_base      = 225.6 kg  (sin promo)
+max_kilos_unidad   = 0.200 kg/unidad (cada pouch 200g)
+
+unidades_predicha = floor(316.0 / 0.200)
+                  = floor(1,580.0)
+                  = <span class="res">1,580 unidades</span>
+
+unidades_base     = floor(225.6 / 0.200)
+                  = floor(1,128.0)
+                  = <span class="res">1,128 unidades</span></pre>
+      </div>
+    </div>
+    <div class="calc-note">Se usa <strong>floor</strong> (no round) porque no se puede vender una fracción de unidad. Cada unidad del SKU pesa 200g → max_kilos_unidad = 0.200. Para un caso tipo FCB de 24 unidades, max_kilos_unidad sería 24 × 0.200 = 4.800 kg.</div>
+  </div>
+
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">PASO 2</span>
+      <span class="ch-title">Precios a Nivel SKU (Multiempaque)</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Fórmula abstracta</span>
+        <pre>precio_sku      = precio      × num_unidad
+precio_base_sku = precio_base × num_unidad</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Ejemplo — TARI TOMATE, num_unidad = 24 unidades/FCB</span>
+        <pre>precio_promo = 4.60 S/./unidad
+precio_base  = 5.20 S/./unidad
+num_unidad   = 24 (unidades por fardo FCB)
+
+precio_sku      = 4.60 × 24 = <span class="res">110.40 S/./FCB</span>
+precio_base_sku = 5.20 × 24 = <span class="res">124.80 S/./FCB</span></pre>
+      </div>
+    </div>
+    <div class="calc-note">Estos precios a nivel FCB aparecen en el reporte como <em>Precio SKU Modificado</em> y <em>Precio SKU</em>. Son informativos para el área comercial que negocia por fardo, no por unidad suelta.</div>
+  </div>
+
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">PASO 3</span>
+      <span class="ch-title">Cálculo Completo de ROI — Todos los pasos encadenados</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Fórmula abstracta</span>
+        <pre>factor = (pb − p) / pb
+
+ingreso_SIN  = pb × UN_base
+cogs_SIN     = COGS × UN_base
+utilidad_SIN = ingreso_SIN − cogs_SIN
+
+ingreso_CON  = p  × UN_pred
+cogs_CON     = COGS × UN_pred
+utilidad_CON = ingreso_CON − cogs_CON
+
+inversion       = (pb − p) × UN_pred
+mejora_utilidad = utilidad_CON − utilidad_SIN
+ROI             = mejora_utilidad / inversion</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Ejemplo — precio_base=5.20, precio=4.60, COGS=1.80</span>
+        <pre>factor = (5.20−4.60)/5.20 = 0.60/5.20 = <span class="res">0.12 (12%)</span>
+
+── Sin promo ──────────────────────────────
+ingreso_SIN  = 5.20 × 1,128 = <span class="res">5,865.60 S/.</span>
+cogs_SIN     = 1.80 × 1,128 = <span class="res">2,030.40 S/.</span>
+utilidad_SIN = 5,865.60 − 2,030.40 = <span class="res">3,835.20 S/.</span>
+
+── Con promo ──────────────────────────────
+ingreso_CON  = 4.60 × 1,580 = <span class="res">7,268.00 S/.</span>
+cogs_CON     = 1.80 × 1,580 = <span class="res">2,844.00 S/.</span>
+utilidad_CON = 7,268.00 − 2,844.00 = <span class="res">4,424.00 S/.</span>
+
+── ROI ────────────────────────────────────
+inversion       = 0.60 × 1,580 = <span class="res">948.00 S/.</span>
+mejora_utilidad = 4,424.00 − 3,835.20 = <span class="res">588.80 S/.</span>
+ROI             = 588.80 / 948.00 = <span class="res">0.621</span></pre>
+      </div>
+    </div>
+    <div class="calc-note"><strong>Lectura del resultado:</strong> La promo cuesta S/ 948 en descuentos. Genera S/ 588.80 de utilidad adicional versus no hacer nada. ROI = 0.62 significa que recuperas S/ 0.62 por cada S/. 1.00 invertido en el descuento. La utilidad con promo (S/ 4,424) es mayor que sin promo (S/ 3,835) porque el volumen adicional compensa el margen menor por unidad.</div>
+  </div>
+
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">PASO 4</span>
+      <span class="ch-title">Elasticidad — Sensibilidad de la Demanda al Precio</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Fórmula abstracta</span>
+        <pre>elasticidad =
+  (cant_pred − cant_base) / cant_base
+  ──────────────────────────────────
+  (precio − precio_base) / precio_base
+
+= %Δ demanda / %Δ precio</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Ejemplo — usando unidades (1,580 vs 1,128)</span>
+        <pre>%Δ demanda = (1,580 − 1,128) / 1,128
+           = 452 / 1,128
+           = <span class="res">+40.07%</span>  (sube la demanda)
+
+%Δ precio  = (4.60 − 5.20) / 5.20
+           = −0.60 / 5.20
+           = <span class="resn">−11.54%</span> (baja el precio)
+
+elasticidad = +0.4007 / −0.1154
+            = <span class="resn">−3.47</span>
+
+→ Por cada 1% de bajada de precio,
+  la demanda sube 3.47%</pre>
+      </div>
+    </div>
+    <div class="calc-note"><strong>Signo esperado:</strong> La elasticidad debe ser <strong>negativa</strong> (precio baja → demanda sube). El filtro del _9_ excluye elasticidades ≤ 0. Una elasticidad de −3.47 es "elástica" — el bien responde con fuerza al precio. La mayoría de alimentos básicos tienen elasticidades entre −1.0 y −4.0.</div>
+  </div>
+
+  <div class="takeaway">
+    <p><strong>ROI v1.0 vs v2.0:</strong> El código tiene comentado el método anterior. El v1.0 calculaba ROI = <code>((bi_uplift / inversion) - 1) × 100</code> pasando por: uplift → venta_bruta → cogs_sku → bi_total → bi_unitario → bi_uplift. El v2.0 simplifica a <code>mejora_utilidad / inversion</code>. Las columnas del v1.0 <strong>no aparecen</strong> en los outputs actuales pero el schema comentado sirve de referencia histórica.</p>
+  </div>
+
+  <h3>Schema Completo del complete_report (_8_) — 27 Columnas + escenario_id</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>#</th><th>Columna interna (input_optimizer)</th><th>Header en CSV (_8_)</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr class="col-key"><td>1</td><td><code>cod_material</code></td><td>SKU</td><td>int</td><td>Código SAP</td></tr>
+      <tr><td>2</td><td><code>des_material</code></td><td>—</td><td>str</td><td>Descripción del material. Viene de unidades_detalle</td></tr>
+      <tr><td>3</td><td><code>subcadena</code></td><td>Subcadena</td><td>str</td><td>Subcadena de ejecución</td></tr>
+      <tr><td>4</td><td><code>categoria</code></td><td>Categoria</td><td>str</td><td>Categoría de ejecución</td></tr>
+      <tr><td>5</td><td><code>precio_base</code></td><td>Precio Lista</td><td>float</td><td>PVP lista vigente (kg o unidad según des_formato)</td></tr>
+      <tr><td>6</td><td><code>precio</code></td><td>Precio Modificado</td><td>float</td><td>Precio promo evaluado (1 decimal)</td></tr>
+      <tr><td>7</td><td><code>factor</code></td><td>Factor(%)</td><td>float (2d)</td><td>(precio_base − precio) / precio_base. Redondeado a 2 decimales.</td></tr>
+      <tr><td>8</td><td><code>num_unidad</code></td><td>Unidades</td><td>float</td><td>Unidades por SKU (multiempaque). De unidades_detalle.</td></tr>
+      <tr><td>9</td><td><code>cod_unidad_almacenamiento</code></td><td>Unidad Almacenamiento</td><td>str</td><td>EA, KG, etc. De fert_hawa.</td></tr>
+      <tr><td>10</td><td><code>precio_base_sku</code></td><td>Precio SKU</td><td>float</td><td>precio_base × num_unidad</td></tr>
+      <tr><td>11</td><td><code>precio_sku</code></td><td>Precio SKU Modificado</td><td>float</td><td>precio × num_unidad</td></tr>
+      <tr><td>12</td><td><code>cogs_unitario</code></td><td>COGS Unitario</td><td>float</td><td>Costo unitario en S/. De cog_unitario.</td></tr>
+      <tr><td>13</td><td><code>unidades_predicha</code></td><td>Cantidad Predicha (UN)</td><td>int</td><td>floor(cantidad_predicha / max_kilos_unidad)</td></tr>
+      <tr><td>14</td><td><code>unidades_base</code></td><td>Cantidad Predicha sin Promo (UN)</td><td>int</td><td>floor(cantidad_base / max_kilos_unidad)</td></tr>
+      <tr><td>15</td><td><code>cantidad_predicha</code></td><td>Cantidad Predicha (KG)</td><td>float</td><td>Demanda promo en kg (del modelo RF × duración)</td></tr>
+      <tr><td>16</td><td><code>cantidad_base</code></td><td>Cantidad Predicha sin Promo (KG)</td><td>float</td><td>Demanda baseline en kg</td></tr>
+      <tr><td>17</td><td><code>elasticidad</code></td><td>Elasticidad</td><td>float</td><td>Calculada aquí Y en output_factory independientemente (pueden diferir levemente)</td></tr>
+      <tr><td>18</td><td><code>ingreso_sin_promo</code></td><td>Ingreso sin Promocion</td><td>float</td><td>precio_base × unidades_base</td></tr>
+      <tr><td>19</td><td><code>cogs_sin_promo</code></td><td>COGS sin Promocion</td><td>float</td><td>cogs_unitario × unidades_base</td></tr>
+      <tr><td>20</td><td><code>utilidad_sin_promo</code></td><td>Utilidad sin Promocion</td><td>float</td><td>ingreso_sin_promo − cogs_sin_promo</td></tr>
+      <tr><td>21</td><td><code>ingreso_con_promo</code></td><td>Ingreso con Promocion</td><td>float</td><td>precio × unidades_predicha</td></tr>
+      <tr><td>22</td><td><code>cogs_con_promo</code></td><td>COGS con Promocion</td><td>float</td><td>cogs_unitario × unidades_predicha</td></tr>
+      <tr><td>23</td><td><code>utilidad_con_promo</code></td><td>Utilidad con Promocion</td><td>float</td><td>ingreso_con_promo − cogs_con_promo</td></tr>
+      <tr><td>24</td><td><code>inversion</code></td><td>Inversion</td><td>float</td><td>(precio_base − precio) × unidades_predicha</td></tr>
+      <tr><td>25</td><td><code>mejora_utilidad</code></td><td>Mejora Utilidad</td><td>float</td><td>utilidad_con_promo − utilidad_sin_promo</td></tr>
+      <tr><td>26</td><td><code>roi</code></td><td>ROI</td><td>float</td><td>mejora_utilidad / inversion</td></tr>
+      <tr><td>27</td><td><code>duracion_dias</code></td><td>Duracion dias</td><td>int</td><td>Duración de la tanda en días</td></tr>
+      <tr><td>28</td><td><code>n_tandas</code></td><td><strong style="color:var(--accent-coral)">n_tandas (NO renombrado — Bug #3)</strong></td><td>int</td><td>Número de tandas posibles por mes</td></tr>
+      <tr><td>+</td><td><code>escenario_id</code></td><td>Escenario ID</td><td>str</td><td>Solo en _8_. Eliminado antes de generar _9_.</td></tr>
+    </table>
+  </div>
+
+  <h3>Filtros del Top ROI (_9_)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Filtro</th><th>Valor</th><th>Código</th><th>Nota</th></tr>
+      <tr><td>Mínimo de demanda</td><td>≥ 5 kg</td><td><code>df[df['cantidad_predicha'] >= 5]</code></td><td>Filtra demanda atípicamente baja</td></tr>
+      <tr><td>Elasticidad positiva</td><td>&gt; 0</td><td><code>df[df['elasticidad'] > 0]</code></td><td>Solo SKUs donde bajar precio sube demanda</td></tr>
+      <tr><td>Duración máxima</td><td>&lt; 16 días</td><td><code>df[df['duracion_dias'] < 16]</code></td><td>≤15 días (1 o 2 semanas máx)</td></tr>
+      <tr><td>Rango de descuento</td><td>6% – 20%</td><td><code>df[(df['factor'] >= 0.06) & (df['factor'] <= 0.20)]</code></td><td>Umbral de negocio</td></tr>
+      <tr><td>Selección óptima</td><td>idxmax(roi)</td><td><code>df.groupby(['cod_material','subcadena','categoria'])['roi'].idxmax()</code></td><td>El escenario con mayor ROI por grupo. Los ROI negativos SÍ se incluyen si son el mejor disponible — el filtro <code>roi &gt;= 0</code> está comentado.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 11. OUTPUT FACTORY                          -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="outputs">
+  <div class="section-header">
+    <span class="section-num">11</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-teal)">▸ SALIDAS</div>
+      <h2>OutputFactory — Generación de Reportes</h2>
+    </div>
+  </div>
+
+  <h3>get_generator_demand_report() — El Único Método con Lógica Propia</h3>
+  <div class="steps">
+    <div class="step-item"><div class="step-n"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><strong>Guarda reporte crudo (_3_)</strong><p>Todas las predicciones sin procesar, incluyendo el precio_base que entrega el modelo.</p></div></div>
+    <div class="step-item"><div class="step-n"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><strong>Identifica precio_base por grupo</strong><p>Para cada [cod_material, des_subcadena, week_pred], toma el precio máximo como precio_base. Une como columnas adicionales.</p></div></div>
+    <div class="step-item"><div class="step-n"><div class="step-num">3</div></div><div class="step-body"><strong>Calcula elasticidad y guarda (_4_)</strong><p>Excluye filas donde precio == precio_base. Calcula elasticidad. Redondea cantidad a 3 decimales, elasticidad a 6.</p></div></div>
+  </div>
+
+  <div class="takeaway">
+    <p>⚠️ <strong>Elasticidad calculada dos veces:</strong> La fórmula es idéntica en output_factory.py y optimizer_model.py, pero se calculan de forma independiente con diferentes tablas de entrada. Pueden diferir levemente. El reporte _4_ usa output_factory; el _8_ y _9_ usan optimizer_model.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 12. UTILS                                   -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="utils">
+  <div class="section-header">
+    <span class="section-num">12</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-gold-dark)">▸ UTILIDADES</div>
+      <h2>Módulos de Soporte</h2>
+    </div>
+  </div>
+
+  <h3>helper_utils.py — Funciones Críticas</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Función</th><th>Qué hace exactamente</th><th>Dónde se usa</th><th>Gotcha</th></tr>
+      <tr><td><code>normalize_dataframe_uppercase(df)</code></td><td>Detecta si una columna string es numérica. Si sí → Int64/float. Si no → uppercase.</td><td>run_batch_optimizer, antes de DataFactory</td><td>Columna con 95% números y 5% texto queda como string sin error</td></tr>
+      <tr><td><code>add_week_of_year(df, col)</code></td><td>Parsea fecha y extrae año + semana ISO. Agrega columnas week y year (int).</td><td>run_batch_optimizer para mapa_de_precios y promocion_detalle</td><td>El 31 dic puede ser semana 1 del año siguiente (isocalendar)</td></tr>
+      <tr><td><code>clean_column(series)</code></td><td>String, strip, elimina sufijo .0 con regex. Para IDs numéricos leídos como float.</td><td>DataFactory para materiales y fert_hawa</td><td>Regex elimina .0 solo al final: "3.05" no se afecta</td></tr>
+      <tr><td><code>get_directory(dir_name)</code></td><td>Crea directorio si no existe. Soporta rutas absolutas y relativas al proyecto.</td><td>output_factory para paths de salida</td><td>Ruta relativa se resuelve desde el directorio padre del script, no del CWD</td></tr>
+    </table>
+  </div>
+
+  <h3>io_utils.py — IOUtility</h3>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>Separador pipe (|):</strong> La clase IOUtility usa <code>read_csv_files(sep='|')</code>. Si un CSV usa coma como separador, las columnas se parsearán mal sin error visible. Todo el pipeline interno asume pipe.</p>
+  </div>
+
+  <h3>DICT_EXECUTION — Variables Globales</h3>
+  <pre><span class="cm"># Creado en run_batch_optimizer.py, pasado a DataFactory</span>
+DICT_EXECUTION = {
+    <span class="str">'YEAR_EXECUTION'</span>:    <span class="num">2026</span>,      <span class="cm">← Se usa para filtrar precio_lista_final</span>
+    <span class="str">'LOCALITY_EXECUTION'</span>:<span class="str">'LIMA'</span>,    <span class="cm">← Se usa para filtrar precio_efectivo</span>
+    <span class="str">'PERIOD_EXECUTION'</span>:  <span class="str">'202602'</span>,  <span class="cm">← Solo referencial</span>
+    <span class="str">'WEEK_EXECUTION'</span>:    <span class="num">1</span>,         <span class="cm">← Solo referencial</span>
+    <span class="str">'CHANNEL_EXECUTION'</span>: <span class="str">'MODERNO'</span>, <span class="cm">← Solo referencial</span>
+    <span class="str">'SKU_UNIVERSE'</span>:      <span class="str">'ALL'</span>      <span class="cm">← Nunca implementado activamente</span>
+}</pre>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 13. BUGS                                    -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="bugs">
+  <div class="section-header">
+    <span class="section-num">13</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-coral)">▸ BUGS</div>
+      <h2>Bugs Conocidos y Documentados <span class="pill pill-bug">3 BUGS EN PRODUCCIÓN</span></h2>
+    </div>
+  </div>
+
+  <div class="alert alert-bug">
+    <span class="alert-icon">🐛</span>
+    <p>Estos bugs están en el código activo v2.0. No causan crash pero producen resultados incorrectos o silenciosos. El Bug #1 actualmente no afecta las predicciones. El Bug #2 sí afectaría si se activa ECOMMERCE.</p>
+  </div>
+
+  <h3>Bug #3 — Typo en Rename: n_tandas no se renombra en el CSV</h3>
+  <p><strong>Archivos:</strong> optimizer_model.py · <strong>Líneas:</strong> 336 y 395 · <strong>Impacto actual:</strong> El header del CSV sale como <code>n_tandas</code> en lugar de <code>Numero de Tandas</code></p>
+  <pre><span class="cm"># CÓDIGO CON BUG — optimizer_model.py línea 336 (aparece en DOS lugares)</span>
+_dict_replace = {
+    ...
+<span class="bug-line">    <span class="str">'duracion_dias'</span>:<span class="str">'Duracion dias'</span>, <span class="str">'_tandas'</span>:<span class="str">'Numero de Tandas'</span>  <span class="cm">← '_tandas' no matchea ninguna columna</span></span>
+}
+
+<span class="cm"># CORRECCIÓN:</span>
+<span class="fix-line">    <span class="str">'duracion_dias'</span>:<span class="str">'Duracion dias'</span>, <span class="str">'n_tandas'</span>:<span class="str">'Numero de Tandas'</span>  <span class="cm">← 'n_tandas' es el nombre real</span></span></pre>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p>Este bug aparece en <strong>dos lugares</strong> del archivo: línea 336 (para complete_report) y línea 395 (para top_roi_report). Ambos deben corregirse. En los CSVs actuales, la columna sale como <code>n_tandas</code> sin mayúsculas ni espacios — los consumidores downstream deben usar ese nombre.</p>
+  </div>
+
+  <h3>Bug #1 — is_last_week_of_month Siempre Falso</h3>
+  <p><strong>Archivo:</strong> data_factory.py · <strong>Líneas:</strong> 222-223 · <strong>Impacto actual:</strong> Nulo (feature eliminada antes del RF)</p>
+  <pre><span class="cm"># CÓDIGO CON BUG — data_factory.py líneas 222-223</span>
+<span class="bug-line">df_resume_fix['year_real']  = df_resume_fix['date'].dt.year</span>
+<span class="bug-line">df_resume_fix['month_real'] = df_resume_fix['date'].dt.year  <span class="cm">← debería ser .dt.month</span></span>
+df_resume_fix['is_last_week_of_month'] = (
+    df_resume_fix['week'] == 
+    df_resume_fix.groupby(['year_real', 'month_real'])['week'].transform('max')
+)
+
+<span class="cm"># CORRECCIÓN:</span>
+<span class="fix-line">df_resume_fix['year_real']  = df_resume_fix['date'].dt.year</span>
+<span class="fix-line">df_resume_fix['month_real'] = df_resume_fix['date'].dt.month  <span class="cm">← .dt.month</span></span></pre>
+
+  <div class="takeaway">
+    <p><strong>¿Por qué no afecta aún?</strong> La columna <code>is_last_week_of_month</code> está en la lista <code>drop_cols</code> dentro de elasticity_model.py y se elimina antes de entrenar el RF. El bug existe pero el modelo no consume esa feature actualmente.</p>
+  </div>
+
+  <h3>Bug #2 — ECOMMERCE vs ONLINE: Params Incorrectos</h3>
+  <p><strong>Archivos:</strong> runhierarchy_run_hierarchy.csv y run_batch_optimizer.py · <strong>Línea:</strong> 183 · <strong>Impacto actual:</strong> Nulo (ECOMMERCE tiene active=0)</p>
+  <pre><span class="cm"># CÓDIGO CON BUG — run_batch_optimizer.py línea 183</span>
+<span class="bug-line"><span class="kw">if</span> _subchain <span class="kw">in</span> (<span class="str">'TOTTUS'</span>, <span class="str">'ONLINE'</span>): params_table = <span class="str">'params_tottus'</span>  <span class="cm">← 'ONLINE' nunca coincide</span></span>
+
+<span class="cm"># CORRECCIÓN OPCIÓN A — cambiar el código:</span>
+<span class="fix-line"><span class="kw">if</span> _subchain <span class="kw">in</span> (<span class="str">'TOTTUS'</span>, <span class="str">'ECOMMERCE'</span>): params_table = <span class="str">'params_tottus'</span></span>
+
+<span class="cm"># CORRECCIÓN OPCIÓN B — cambiar el CSV:</span>
+<span class="cm"># En runhierarchy_run_hierarchy.csv, cambiar ECOMMERCE → ONLINE</span></pre>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 14. COOKBOOK                                -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="cookbook">
+  <div class="section-header">
+    <span class="section-num">14</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-gold-dark)">▸ RECETARIO</div>
+      <h2>Guía de Cambios — Qué Tocar y Dónde</h2>
+    </div>
+  </div>
+
+  <div class="cookbook">
+    <div class="cookbook-header"><span class="ck-icon">📅</span><h4>Cambiar el periodo/semana de ejecución</h4><p>Ej: semana 1/2026 → semana 10/2026</p></div>
+    <div class="cookbook-body">
+      <div class="ck-step"><span class="ck-num">1</span><span>Editar <span class="ck-file">optimizer_input_config.csv</span> → cambiar year, week y period</span></div>
+      <div class="ck-step"><span class="ck-num">2</span><span>Actualizar filtro en <span class="ck-file">query_conta_gestion.sql</span> si cambia el año: <code>periodo between "2026-01-01" and "2026-12-01"</code></span></div>
+      <div class="ck-step"><span class="ck-num">3</span><span>Re-ejecutar <span class="ck-file">query_conta_gestion.sql</span> en BigQuery</span></div>
+      <div class="ck-step"><span class="ck-num">4</span><span>Re-ejecutar los 5 <span class="ck-file">query_temp_*.sql</span> si hay datos nuevos</span></div>
+      <div class="ck-step"><span class="ck-num">✓</span><span>Ejecutar <code>python run_batch_optimizer.py</code></span></div>
+    </div>
+  </div>
+
+  <div class="cookbook">
+    <div class="cookbook-header"><span class="ck-icon">🏪</span><h4>Agregar una nueva subcadena</h4><p>Ej: MAXIAHORRO dentro de CENCOSUD</p></div>
+    <div class="cookbook-body">
+      <div class="ck-step"><span class="ck-num">1</span><span>Agregar fila en <span class="ck-file">runhierarchy_run_hierarchy.csv</span> con active=1</span></div>
+      <div class="ck-step"><span class="ck-num">2</span><span>En <span class="ck-file">run_batch_optimizer.py</span> líneas 182-184: agregar la subcadena al if/elif de params correspondiente</span></div>
+      <div class="ck-step"><span class="ck-num">3</span><span>Verificar que <span class="ck-file">query_temp_precio_efectivo.sql</span> incluya la subcadena en <code>des_subcadena IN (...)</code></span></div>
+      <div class="ck-step"><span class="ck-num">4</span><span>Verificar que <span class="ck-file">query_temp_promociones_detalle.sql</span> incluya la cuenta en <code>des_cuenta IN (...)</code></span></div>
+      <div class="ck-step"><span class="ck-num">5</span><span>Si la subcadena tiene nombre compuesto en datos (ej: MAXIAHORRO/WONG), agregar lógica especial en <span class="ck-file">data_factory.py</span> en <strong>DOS lugares</strong>: líneas 46-48 y 106-108</span></div>
+      <div class="ck-step"><span class="ck-num">6</span><span>Verificar locales SAP en <span class="ck-file">params_reader.py</span> → read_precio_efectivo() → lista cod_sap_local</span></div>
+    </div>
+  </div>
+
+  <div class="cookbook">
+    <div class="cookbook-header"><span class="ck-icon">🏗️</span><h4>Agregar una cadena completamente nueva</h4><p>Ej: PRIMAX con sus propias tablas de parámetros</p></div>
+    <div class="cookbook-body">
+      <div class="ck-step"><span class="ck-num">1</span><span>Todo lo del recetario de "nueva subcadena"</span></div>
+      <div class="ck-step"><span class="ck-num">2</span><span>Crear tabla BigQuery <code>moderno_outputs_primax_lima_best_params</code> con el schema de la sección 05</span></div>
+      <div class="ck-step"><span class="ck-num">3</span><span>Agregar método <code>read_params_primax()</code> en <span class="ck-file">params_reader.py</span> y llamarlo en el constructor</span></div>
+      <div class="ck-step"><span class="ck-num">4</span><span>Agregar procesamiento del nuevo key en <span class="ck-file">data_factory.py</span> → update_input_df_dict()</span></div>
+      <div class="ck-step"><span class="ck-num">5</span><span>Agregar a <span class="ck-file">run_batch_optimizer.py</span>: <code>if _subchain in ('PRIMAX',): params_table = 'params_primax'</code></span></div>
+    </div>
+  </div>
+
+  <div class="cookbook">
+    <div class="cookbook-header"><span class="ck-icon">🏷️</span><h4>Agregar una nueva categoría</h4><p>Ej: BEBIDAS — solo si ya existe en los datos de BigQuery</p></div>
+    <div class="cookbook-body">
+      <div class="ck-step"><span class="ck-num">1</span><span>Agregar fila en <span class="ck-file">runhierarchy_run_category.csv</span>: <code>BEBIDAS|7|1</code></span></div>
+      <div class="ck-step"><span class="ck-num">2</span><span>Verificar que el valor de category sea exactamente igual a des_categoria en BigQuery (MAYÚSCULAS)</span></div>
+      <div class="ck-step"><span class="ck-num">✓</span><span>No se requieren cambios de código. El modelo la procesará automáticamente.</span></div>
+    </div>
+  </div>
+
+  <div class="cookbook">
+    <div class="cookbook-header"><span class="ck-icon">🔧</span><h4>Cambiar filtros del top ROI</h4><p>Ej: ampliar descuentos de 6-20% a 5-25%</p></div>
+    <div class="cookbook-body">
+      <div class="ck-step"><span class="ck-num">1</span><span>Abrir <span class="ck-file">optimizer_model.py</span> → método _get_best_scenario_by_roi() → líneas 359-362</span></div>
+      <div class="ck-step"><span class="ck-num">2</span><span>Modificar los thresholds: <code>cantidad_predicha >= 5</code> · <code>elasticidad > 0</code> · <code>duracion_dias &lt; 16</code> · <code>factor entre 0.06 y 0.20</code></span></div>
+      <div class="ck-step"><span class="ck-num">⚠️</span><span>El _8_complete_report incluye TODOS los escenarios. Solo _9_ aplica filtros.</span></div>
+    </div>
+  </div>
+
+  <div class="cookbook">
+    <div class="cookbook-header"><span class="ck-icon">🔧</span><h4>Activar ECOMMERCE (corregir Bug #2 primero)</h4><p></p></div>
+    <div class="cookbook-body">
+      <div class="ck-step"><span class="ck-num">1</span><span>Corregir <span class="ck-file">run_batch_optimizer.py</span> línea 183: cambiar <code>'ONLINE'</code> por <code>'ECOMMERCE'</code></span></div>
+      <div class="ck-step"><span class="ck-num">2</span><span>Cambiar active=1 en <span class="ck-file">runhierarchy_run_hierarchy.csv</span> para la fila ECOMMERCE</span></div>
+      <div class="ck-step"><span class="ck-num">3</span><span>Verificar locales SAP de ECOMMERCE en params_reader → read_precio_efectivo()</span></div>
+    </div>
+  </div>
+
+  <div class="cookbook">
+    <div class="cookbook-header"><span class="ck-icon">📦</span><h4>Actualizar recodificaciones SAP (materiales)</h4><p>Hay recodificaciones después de 2025-03-01</p></div>
+    <div class="cookbook-body">
+      <div class="ck-step"><span class="ck-num">1</span><span>Editar <span class="ck-file">query_temp_materiales.sql</span>: cambiar <code>'2025-03-01'</code> a la fecha más reciente disponible</span></div>
+      <div class="ck-step"><span class="ck-num">2</span><span>Re-ejecutar en BigQuery para actualizar la tabla sandbox</span></div>
+    </div>
+  </div>
+
+  <div class="cookbook">
+    <div class="cookbook-header"><span class="ck-icon">🌎</span><h4>Agregar nueva localidad</h4><p>Ej: AREQUIPA — extender a provincias</p></div>
+    <div class="cookbook-body">
+      <div class="ck-step"><span class="ck-num">1</span><span>Cambiar locality en <span class="ck-file">optimizer_input_config.csv</span></span></div>
+      <div class="ck-step"><span class="ck-num">2</span><span>Verificar filtro de zona en <span class="ck-file">query_conta_gestion.sql</span>: actualmente filtra solo <code>des_zona_venta = 'LIMA'</code></span></div>
+      <div class="ck-step"><span class="ck-num">3</span><span>En <span class="ck-file">params_reader.py</span> → read_precio_efectivo(): los locales SAP hardcodeados son solo de Lima. Agregar los de la nueva ciudad.</span></div>
+      <div class="ck-step"><span class="ck-num">⚠️</span><span>El comentario en código dice "MEJORA: LEER UNA LISTA DE VALORES" — esta extensión está formalmente pendiente.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 15. LÓGICA DE NEGOCIO                       -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="business-logic">
+  <div class="section-header">
+    <span class="section-num">15</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-teal)">▸ NEGOCIO</div>
+      <h2>Lógica de Negocio — Por Qué Cada Decisión</h2>
+    </div>
+  </div>
+
+  <h3>Razonamiento de los Filtros del Top ROI</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Filtro</th><th>Valor</th><th>Razonamiento</th><th>Riesgo si se cambia</th></tr>
+      <tr><td>cantidad ≥ 5 kg</td><td>5 kg</td><td>Evita promos para SKUs con demanda marginal donde el ruido estadístico domina la predicción</td><td>Bajarlo: más SKUs con predicciones poco confiables</td></tr>
+      <tr><td>elasticidad > 0</td><td>0</td><td>Solo SKUs donde bajar el precio sube la demanda. Elasticidades negativas indican comportamiento atípico o datos insuficientes</td><td>Eliminar: podrías recomendar bajar precio de SKUs que no responden</td></tr>
+      <tr><td>duracion &lt; 16 días</td><td>15 días máx</td><td>Tandas &gt;2 semanas son operacionalmente complejas y diluyen el efecto promo. El modelo no fue validado para ese horizonte</td><td>Aumentar: predicción semanas 3-4 tiene mayor incertidumbre</td></tr>
+      <tr><td>factor ≥ 6%</td><td>6% mín</td><td>Descuentos menores al 6% no son percibidos como promo y generan costo logístico sin beneficio</td><td>Bajarlo: incluye descuentos mini que el modelo no captura bien</td></tr>
+      <tr><td>factor ≤ 20%</td><td>20% máx</td><td>Descuentos &gt;20% comprometen el margen y generan ROI negativo en la mayoría de categorías Alicorp</td><td>Subirlo: permite descuentos que podrían ser muy negativos en margen</td></tr>
+    </table>
+  </div>
+
+  <h3>trunc_1_decimal — Por Qué Trunca y No Redondea</h3>
+  <pre><span class="cm"># Trunca hacia abajo (floor), NO redondea</span>
+trunc_1_decimal(<span class="num">5.99</span>) = <span class="num">5.9</span>  <span class="cm">← NO 6.0</span>
+trunc_1_decimal(<span class="num">5.95</span>) = <span class="num">5.9</span>  <span class="cm">← NO 6.0</span>
+
+<span class="cm"># Efecto: los precios en saltos_de_precio coinciden exactamente</span>
+<span class="cm"># con los precios en el DataFrame de demanda. Si se usara round(),</span>
+<span class="cm"># podría haber mismatches en el join y SKUs sin curva de demanda.</span></pre>
+
+  <h3>umbral_datos=10 — Mínimo de Observaciones</h3>
+  <p>SKUs con menos de 10 semanas de histórico no se modelan. Con 10 semanas hay ~2.5 meses de datos, suficiente para algún patrón de precio pero insuficiente para estacionalidad. Los SKUs excluidos no aparecen en ningún reporte. Para encontrarlos, comparar el universo del _1_ vs el _4_.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 16. EDGE CASES                              -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="edge-cases">
+  <div class="section-header">
+    <span class="section-num">16</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-coral)">▸ DEBUGGING</div>
+      <h2>Edge Cases y Errores Conocidos</h2>
+    </div>
+  </div>
+
+  <h3>Errores que Paran la Ejecución (ValueError)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Mensaje de Error</th><th>Causa</th><th>Solución</th></tr>
+      <tr><td><code>Input DataFrame 'mapa_de_precios' is empty</code></td><td>Filtro por subcadena o categoría no encontró datos</td><td>Verificar que des_subcadena y des_categoria en BigQuery coincidan exactamente (mayúsculas) con los valores del CSV</td></tr>
+      <tr><td><code>Input DataFrame 'precio_lista_final' is empty</code></td><td>No hay datos de mapa_de_precios para YEAR_EXECUTION</td><td>Verificar que optimizer_input_config tenga el año correcto y que la tabla sandbox tenga datos de ese año</td></tr>
+      <tr><td><code>Input DataFrame 'precio_efectivo' is empty</code></td><td>La subcadena no tiene ventas en la tabla sandbox</td><td>Revisar que query_temp_precio_efectivo incluya la subcadena y los locales SAP correctos</td></tr>
+    </table>
+  </div>
+
+  <h3>Situaciones Silenciosas (Sin Error, Resultados Incorrectos)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Situación</th><th>Efecto</th><th>Cómo Detectar</th></tr>
+      <tr><td>SKU con max_kilos_unidad NULL o ≤ 0</td><td>SKU eliminado del optimizador. No aparece en _8_ ni _9_.</td><td>Buscar en log: "Dropping cod_material with invalid max_kilos_unidad"</td></tr>
+      <tr><td>SKU con menos de 10 semanas históricas</td><td>SKU no se modela. No aparece en ningún reporte.</td><td>Comparar universo en _1_ vs _4_. Los que están en _1_ pero no en _4_ fueron excluidos.</td></tr>
+      <tr><td>SKU sin precio_base en precio_lista_final</td><td>precio_base = NaN. No genera salto de precio para ese SKU.</td><td>Columna precio_base_encontrado = 0 en el reporte _1_</td></tr>
+      <tr><td>ECOMMERCE activo sin corregir Bug #2</td><td>Usa params_cencosud silenciosamente en lugar de params_tottus</td><td>No hay aviso en el log — solo revisando el código</td></tr>
+      <tr><td>Materiales recodificados después de 2025-03-01</td><td>Demanda histórica fragmentada — aparecen como dos SKUs distintos</td><td>SKUs con muy pocos datos en _1_ que deberían tener más historial</td></tr>
+      <tr><td>Columna de materiales reordenada en BigQuery</td><td>material_historico y material_actual intercambiados silenciosamente</td><td>Comparar recodificaciones conocidas contra los datos del _1_</td></tr>
+    </table>
+  </div>
+
+  <h3>Comportamiento de demand_lag con np.roll</h3>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p><code>np.roll(y, 1)</code> hace un desplazamiento circular: la primera fila recibe el valor de la última. Por eso existe la línea que fuerza lag=0 en la primera observación. Si el grupo tiene semanas no contiguas (semanas faltantes), los lags no representan semanas consecutivas reales.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 17. DEPENDENCIAS                            -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="dependencies">
+  <div class="section-header">
+    <span class="section-num">17</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-teal)">▸ DEPENDENCIAS</div>
+      <h2>Mapa de Dependencias y Comandos</h2>
+    </div>
+  </div>
+
+  <h3>Flujo de Datos entre Módulos</h3>
+  <div class="dep-map">
+    <div class="dep-row"><span class="dep-from">run_batch_optimizer.py</span><span class="dep-arrow">→</span><span class="dep-to">IOUtility._input_df_dict</span><span class="dep-via">Lee 3 CSVs de configuración</span></div>
+    <div class="dep-row"><span class="dep-from">run_batch_optimizer.py</span><span class="dep-arrow">→</span><span class="dep-to">ParamsReader.input_db_df_dict</span><span class="dep-via">Lee 9 tablas BigQuery sandbox</span></div>
+    <div class="dep-row"><span class="dep-from">run_batch_optimizer.py</span><span class="dep-arrow">→</span><span class="dep-to">IOUtility._input_df_dict</span><span class="dep-via">Fusiona con .update() (BQ sobreescribe CSV)</span></div>
+    <div class="dep-row"><span class="dep-from">run_batch_optimizer.py</span><span class="dep-arrow">→</span><span class="dep-to">DataFactory(io_utility, subchain, category)</span><span class="dep-via">Pasa el dict completo + contexto de ejecución</span></div>
+    <div class="dep-row"><span class="dep-from">DataFactory</span><span class="dep-arrow">→</span><span class="dep-to">DataFactory._derived_tables</span><span class="dep-via">Produce 6+ tablas derivadas internas</span></div>
+    <div class="dep-row"><span class="dep-from">run_batch_optimizer.py</span><span class="dep-arrow">→</span><span class="dep-to">elasticity_model.generar_curva_demanda()</span><span class="dep-via">Pasa demanda_ajustada, saltos, params, horizon=4</span></div>
+    <div class="dep-row"><span class="dep-from">elasticity_model</span><span class="dep-arrow">→</span><span class="dep-to">(demand_result, importancias, params, metrics)</span><span class="dep-via">Retorna 4 DataFrames</span></div>
+    <div class="dep-row"><span class="dep-from">output_factory</span><span class="dep-arrow">→</span><span class="dep-to">demand_report transformado (_3_ y _4_)</span><span class="dep-via">Calcula elasticidad, guarda CSVs</span></div>
+    <div class="dep-row"><span class="dep-from">run_batch_optimizer.py</span><span class="dep-arrow">→</span><span class="dep-to">OptimizerModel(demand_result, DataFactory)</span><span class="dep-via">Accede directamente a _derived_tables de DataFactory</span></div>
+    <div class="dep-row"><span class="dep-from">output_factory</span><span class="dep-arrow">→</span><span class="dep-to">9 archivos CSV en data/report/</span><span class="dep-via">Guarda _1_ al _9_ por cada combo</span></div>
+  </div>
+
+  <h3>Schema de las 4 Tablas que Consume OptimizerModel de DataFactory</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Tabla</th><th>Columnas Usadas</th><th>Descripción</th></tr>
+      <tr><td><code>tandas_detalle</code></td><td>cod_material, duracion_dias, duracion_semanas, n_tandas</td><td>Duraciones históricas para calcular demanda por tanda</td></tr>
+      <tr><td><code>unidades_detalle</code></td><td>cod_material, des_material, des_formato, num_unidad</td><td>Características del SKU. Filtrado por YEAR_EXECUTION y semana máxima disponible. Si hay cambios de des_material en el año, toma los de la semana más reciente.</td></tr>
+      <tr><td><code>cog_unitario</code></td><td>cod_material, max_kilos_unidad, cogs_unitario</td><td>Costo unitario y peso para convertir kg → UN. SKUs con max_kilos_unidad nulo o ≤0 se eliminan del optimizador.</td></tr>
+      <tr><td><code>fert_hawa</code></td><td>cod_material, cod_unidad_almacenamiento</td><td>Solo estas 2 columnas. Se hace dropna() antes del merge.</td></tr>
+    </table>
+  </div>
+
+  <h3>Dependencias Python</h3>
+  <pre><span class="cm"># conda activate moderno_env</span>
+pandas              <span class="cm"># DataFrames y operaciones de datos</span>
+numpy               <span class="cm"># Operaciones numéricas, roll, floor</span>
+scikit-learn        <span class="cm"># RandomForestRegressor, KFold, StandardScaler, VarianceThreshold</span>
+scipy               <span class="cm"># stats.skew (boxcox importado pero no usado en v2.0)</span>
+optuna              <span class="cm"># Búsqueda de hiperparámetros</span>
+joblib              <span class="cm"># Parallel, delayed — paralelización por grupos SKU</span>
+google-cloud-bigquery  <span class="cm"># bigquery.Client — conexión al sandbox</span>
+unidecode           <span class="cm"># Importado pero no usado activamente</span>
+openpyxl            <span class="cm"># Requerido por IOUtility.read_excel_files() (disponible, no llamado)</span></pre>
+
+  <h3>Comandos de Ejecución</h3>
+  <pre><span class="cm"># Activar entorno</span>
+conda activate moderno_env
+<span class="kw">cd</span> Nuevo_TPM_Moderno/src
+
+<span class="cm"># Ejecución estándar</span>
+python run_batch_optimizer.py
+
+<span class="cm"># Con log a archivo (corridas largas)</span>
+python run_batch_optimizer.py <span class="num">2</span>>&<span class="num">1</span> | tee ../logs/run_$(date +%Y%m%d_%H%M%S).log
+
+<span class="cm"># Verificar tablas sandbox antes de correr:</span>
+SELECT COUNT(*) FROM `acpe-dev-uc-sandbox-aa.dev.temp_amzv_1`
+SELECT COUNT(*) FROM `acpe-dev-uc-sandbox-aa.dev.temp_grow_cliente_detalle`
+SELECT COUNT(*) FROM `acpe-dev-uc-sandbox-aa.dev.tmp_gtm_mapa_precio_cm_moderno_mensual`</pre>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 18. EJEMPLO DE OUTPUT E INTERPRETACIÓN     -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="ejemplo-output">
+  <div class="section-header">
+    <span class="section-num">18</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-gold-dark)">▸ LECTURA DE RESULTADOS</div>
+      <h2>Ejemplo de Output e Interpretación</h2>
+    </div>
+  </div>
+
+  <p>Un run típico para <strong>PLAZA VEA × SALSAS</strong> genera 9 archivos. Así se ve cada uno y cómo leerlo.</p>
+
+  <!-- ── _9_ TOP ROI ── -->
+  <h3>_9_report_top_roi_report — El Output Decisional</h3>
+  <p>Una fila por SKU. El escenario con mayor ROI que pasó los 4 filtros de negocio.</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>SKU</th><th>des_material</th><th>Precio Lista</th><th>Precio Modificado</th>
+        <th>Factor(%)</th><th>Dur. días</th><th>n_tandas</th>
+        <th>Cant. Pred (KG)</th><th>Cant. Base (KG)</th><th>Elasticidad</th>
+        <th>Ingreso c/promo</th><th>Ingreso s/promo</th><th>Inversión</th>
+        <th>Mejora Utilidad</th><th>ROI</th>
+      </tr>
+      <tr style="background:var(--accent-teal-light)">
+        <td><strong>10004521</strong></td><td>TARI TOMATE FCB 200GX24</td>
+        <td>5.20</td><td>4.60</td>
+        <td><strong>0.12</strong></td><td><strong>7</strong></td><td>4</td>
+        <td>1,840.5</td><td>1,102.3</td>
+        <td style="color:var(--accent-teal)"><strong>-2.48</strong></td>
+        <td>14,903.6</td><td>11,282.1</td>
+        <td>1,104.3</td><td>748.2</td>
+        <td style="color:var(--accent-teal)"><strong>0.68</strong></td>
+      </tr>
+      <tr style="background:var(--accent-coral-light)">
+        <td><strong>10007834</strong></td><td>TARI PICANTE FCB 200GX24</td>
+        <td>5.20</td><td>4.80</td>
+        <td>0.08</td><td>3</td><td>4</td>
+        <td>620.1</td><td>540.8</td>
+        <td style="color:var(--accent-teal)"><strong>-1.91</strong></td>
+        <td>4,841.0</td><td>4,528.7</td>
+        <td>248.0</td><td>190.4</td>
+        <td style="color:var(--accent-coral)"><strong>0.77</strong></td>
+      </tr>
+      <tr>
+        <td><strong>10009102</strong></td><td>A1 TRADICIONAL FCB 400GX12</td>
+        <td>8.30</td><td>7.50</td>
+        <td>0.10</td><td>7</td><td>4</td>
+        <td>3,210.0</td><td>2,190.5</td>
+        <td style="color:var(--accent-teal)"><strong>-3.87</strong></td>
+        <td>40,125.0</td><td>30,071.4</td>
+        <td>2,568.0</td><td>3,680.5</td>
+        <td><strong>1.43</strong></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="alert alert-info">
+    <span class="alert-icon">ℹ️</span>
+    <p><strong>Nota sobre los datos del ejemplo:</strong> Los valores son ilustrativos para mostrar el rango típico de variación. Los SKU, precios y cantidades son representativos pero no corresponden a datos reales de producción.</p>
+  </div>
+
+  <h4>Cómo leer cada columna del _9_</h4>
+
+  <div class="compare-grid" style="grid-template-columns:1fr 1fr 1fr;max-width:100%">
+    <div class="card">
+      <div class="card-icon">🏷️</div>
+      <h4>Factor (%) = 0.12</h4>
+      <p>Descuento del 12% sobre precio lista. Factor de 0.06 a 0.20 = rango de negocio permitido. Aquí: S/ 5.20 → S/ 4.60.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📐</div>
+      <h4>Elasticidad = -2.48</h4>
+      <p>Por cada 1% de bajada de precio, la demanda sube 2.48%. Signo negativo es lo esperado — el filtro del _9_ excluye elasticidades ≤ 0. Cuanto más negativa, más sensible al precio.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💰</div>
+      <h4>ROI = 0.68</h4>
+      <p>Por cada sol invertido en el descuento (inversion = diferencia de precio × unidades), se recuperan S/ 0.68 de mejora de utilidad. ROI &gt; 0 = la promo genera más utilidad de la que cuesta.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📦</div>
+      <h4>n_tandas = 4 (7 días)</h4>
+      <p>Se pueden correr 4 tandas de 7 días en un mes. Duraciones 3-7 días siempre dan n_tandas = 4 por el np.select del reporte.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📈</div>
+      <h4>Mejora Utilidad = 748.2</h4>
+      <p>La utilidad con promo supera a la utilidad sin promo en S/ 748.2. Se calcula sobre la <strong>tanda completa</strong> (7 días × 4 semanas de horizonte según duración).</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⏱️</div>
+      <h4>Inversión = 1,104.3</h4>
+      <p>(precio_base − precio) × unidades_predicha. El costo real del descuento en soles. La promo <em>cuesta</em> S/ 1,104.3 para generar S/ 748.2 de mejora → ROI = 748.2 / 1,104.3 = 0.68.</p>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>ROI &lt; 1 no significa "malo":</strong> ROI = 0.68 significa que por cada sol de inversión se recuperan S/ 0.68 de mejora de utilidad. La mejora de utilidad puede ser positiva (la promo genera más volumen y ganancia marginal) incluso si el ROI es &lt; 1. El negocio decide qué umbral de ROI es aceptable. El filtro actual <strong>no tiene umbral mínimo de ROI</strong> — la línea <code>df_tops_result[df_tops_result['roi'] >= 0]</code> está comentada.</p>
+  </div>
+
+  <!-- ── _8_ COMPLETE REPORT ── -->
+  <h3>_8_report_tandas_complete_report — Exploración de Escenarios</h3>
+  <p>Para el SKU 10004521 (TARI TOMATE), el _8_ contiene todos los escenarios que no pasaron el filtro del _9_. Ejemplo de lo que se puede encontrar:</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Escenario ID</th><th>Precio</th><th>Factor</th><th>Dur.</th><th>Cant. (KG)</th><th>ROI</th><th>¿Excluido del _9_ por?</th></tr>
+      <tr><td>escenario_1</td><td>5.20</td><td>0.00</td><td>7d</td><td>1,102.3</td><td>—</td><td style="color:var(--accent-coral)">factor &lt; 0.06 (es el precio base)</td></tr>
+      <tr><td>escenario_2</td><td>5.10</td><td>0.02</td><td>7d</td><td>1,180.4</td><td>0.11</td><td style="color:var(--accent-coral)">factor &lt; 0.06</td></tr>
+      <tr><td>escenario_3</td><td>4.60</td><td>0.12</td><td>21d</td><td>4,320.1</td><td>0.52</td><td style="color:var(--accent-coral)">duracion_dias ≥ 16</td></tr>
+      <tr><td>escenario_4</td><td>3.80</td><td>0.27</td><td>7d</td><td>2,510.8</td><td>-0.34</td><td style="color:var(--accent-coral)">factor &gt; 0.20</td></tr>
+      <tr style="background:var(--accent-teal-light)"><td>escenario_5</td><td>4.60</td><td>0.12</td><td>7d</td><td>1,840.5</td><td>0.68</td><td style="color:var(--accent-teal)">✓ Seleccionado en _9_ (mejor ROI)</td></tr>
+      <tr><td>escenario_6</td><td>4.50</td><td>0.13</td><td>7d</td><td>1,960.2</td><td>0.61</td><td style="color:var(--accent-coral)">ROI inferior al escenario 5</td></tr>
+    </table>
+  </div>
+
+  <!-- ── _4_ DEMAND REPORT ── -->
+  <h3>_4_demand_report — La Curva de Demanda</h3>
+  <p>Para cada SKU, una fila por cada combinación precio × semana predicha. Así se ve la curva para el SKU 10004521 en la semana 1 del horizonte:</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>cod_material</th><th>year_pred</th><th>week_pred</th><th>precio</th><th>cantidad_predicha (KG)</th><th>precio_base</th><th>cantidad_base (KG)</th><th>elasticidad</th></tr>
+      <tr><td>10004521</td><td>2026</td><td>5</td><td>5.20</td><td>— (excluido*)</td><td>5.20</td><td>460.1</td><td>—</td></tr>
+      <tr><td>10004521</td><td>2026</td><td>5</td><td>5.10</td><td>492.3</td><td>5.20</td><td>460.1</td><td>-1.44</td></tr>
+      <tr><td>10004521</td><td>2026</td><td>5</td><td>5.00</td><td>528.8</td><td>5.20</td><td>460.1</td><td>-1.87</td></tr>
+      <tr><td>10004521</td><td>2026</td><td>5</td><td>4.80</td><td>608.4</td><td>5.20</td><td>460.1</td><td>-2.19</td></tr>
+      <tr style="background:var(--accent-teal-light)"><td>10004521</td><td>2026</td><td>5</td><td>4.60</td><td>692.5</td><td>5.20</td><td>460.1</td><td style="color:var(--accent-teal)"><strong>-2.48</strong></td></tr>
+      <tr><td>10004521</td><td>2026</td><td>5</td><td>4.40</td><td>780.2</td><td>5.20</td><td>460.1</td><td>-2.74</td></tr>
+    </table>
+  </div>
+  <p style="font-size:11.5px;color:var(--text-muted)">* precio == precio_base se excluye del _4_ en output_factory (se usa como referencia, no como escenario promo). Sí aparece en el _3_.</p>
+
+  <div class="takeaway">
+    <p><strong>Patrón esperado en la curva de elasticidad:</strong> A medida que el precio baja, la elasticidad debería volverse más negativa (mayor sensibilidad). Si la elasticidad es <strong>positiva</strong> en algún precio, ese escenario se filtra en el _9_ — puede indicar overfitting del RF para ese rango de precio o un SKU Giffen (raro en consumo masivo, usualmente es ruido).</p>
+  </div>
+
+  <!-- ── _6_ METRICS ── -->
+  <h3>_6_report_metrics — Calidad del Modelo por SKU</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>cod_material</th><th>des_subcadena</th><th>r2_insample</th><th>rmse_insample</th><th>mae_insample</th><th>mape_insample</th><th>n_observaciones</th></tr>
+      <tr style="background:var(--accent-teal-light)">
+        <td>10004521</td><td>PLAZA VEA</td>
+        <td style="color:var(--accent-teal)"><strong>0.94</strong></td>
+        <td>28.4</td><td>18.2</td>
+        <td style="color:var(--accent-teal)"><strong>8.3%</strong></td>
+        <td>84</td>
+      </tr>
+      <tr>
+        <td>10007834</td><td>PLAZA VEA</td>
+        <td style="color:var(--accent-gold-dark)">0.71</td>
+        <td>45.1</td><td>31.8</td>
+        <td style="color:var(--accent-gold-dark)">19.2%</td>
+        <td>52</td>
+      </tr>
+      <tr style="background:var(--accent-coral-light)">
+        <td>10011204</td><td>PLAZA VEA</td>
+        <td style="color:var(--accent-coral)">0.31</td>
+        <td>98.7</td><td>72.4</td>
+        <td style="color:var(--accent-coral)">41.8%</td>
+        <td>11</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-box bad">
+      <h5>🚨 SKU de baja confianza (R² &lt; 0.5)</h5>
+      <ul>
+        <li>n_observaciones cerca de 10 → umbral mínimo, CV inestable</li>
+        <li>MAPE &gt; 30% → error de predicción alto</li>
+        <li>El _9_ puede dar una recomendación pero con incertidumbre alta</li>
+        <li>Acción: excluir manualmente, aumentar umbral_datos, o esperar más historial</li>
+      </ul>
+    </div>
+    <div class="compare-box good">
+      <h5>✅ SKU de alta confianza (R² &gt; 0.85)</h5>
+      <ul>
+        <li>n_observaciones &gt; 60 → ~15 meses de historial</li>
+        <li>MAPE &lt; 10% → error &lt; 10% en promedio</li>
+        <li>Curva de demanda estable y predecible</li>
+        <li>Recomendación del _9_ tiene alta confianza</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>R² in-sample ≠ R² predictivo:</strong> El RF puede tener R² = 0.94 in-sample (ajusta muy bien al histórico) pero aun así cometer errores en la predicción de los próximos 4 semanas. Las métricas del _6_ son útiles para descartar SKUs con ajuste pobre, pero no garantizan precisión en el futuro.</p>
+  </div>
+
+  <!-- ── _1_ DEMANDA AJUSTADA ── -->
+  <h3>_1_report_demanda_ajustada — Validación de Inputs</h3>
+  <p>Útil para diagnosticar si los datos de entrada son correctos antes de confiar en el _9_. Para el SKU 10004521:</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>cod_material</th><th>year</th><th>week</th><th>des_subcadena</th><th>cantidad_demandada</th><th>p_unitario</th><th>precio_base</th><th>precio_base_encontrado</th></tr>
+      <tr><td>10004521</td><td>2025</td><td>1</td><td>PLAZA VEA</td><td>412.3</td><td>5.20</td><td>5.20</td><td>1</td></tr>
+      <tr><td>10004521</td><td>2025</td><td>4</td><td>PLAZA VEA</td><td>680.1</td><td>4.50</td><td>5.20</td><td>1</td></tr>
+      <tr><td>10004521</td><td>2025</td><td>5</td><td>PLAZA VEA</td><td>820.4</td><td>4.20</td><td>5.20</td><td>1</td></tr>
+      <tr style="background:var(--accent-gold-light)"><td>10004521</td><td>2025</td><td>8</td><td>PLAZA VEA</td><td>350.2</td><td>5.15</td><td style="color:var(--accent-gold-dark)">NaN</td><td style="color:var(--accent-coral)"><strong>0</strong></td></tr>
+    </table>
+  </div>
+
+  <div class="formula">
+    <span class="f-label">SEÑALES DE DIAGNÓSTICO EN EL _1_</span>
+    precio_base_encontrado = 0  → El SKU no tiene precio lista vigente. No generará saltos_de_precio → no modelado.<br>
+    p_unitario ≫ precio_base   → Precio efectivo mayor al lista. Posible error de datos o semana con facturación atípica.<br>
+    cantidad_demandada muy baja → SKU intermitente. demand_lag y no_sale_streak tendrán mucha influencia.<br>
+    pocos registros (&lt; 10)    → SKU no modelado por umbral_datos. Aparece en _1_ pero no en _4_, _8_, _9_.
+  </div>
+
+  <!-- ── _5_ FEATURE IMPORTANCE ── -->
+  <h3>_5_report_feature_importance — ¿Qué Mueve la Demanda?</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>cod_material</th><th>des_subcadena</th><th>feature</th><th>importancia</th><th>Interpretación</th></tr>
+      <tr style="background:var(--accent-teal-light)"><td>10004521</td><td>PLAZA VEA</td><td>p_unitario</td><td style="color:var(--accent-teal)"><strong>0.41</strong></td><td>El precio explica el 41% de la varianza. Alta sensibilidad al precio → buena candidata para promo.</td></tr>
+      <tr><td>10004521</td><td>PLAZA VEA</td><td>demand_lag_1</td><td>0.28</td><td>La demanda pasada reciente es el 2° predictor. Fuerte autocorrelación.</td></tr>
+      <tr><td>10004521</td><td>PLAZA VEA</td><td>precio_ewm_4</td><td>0.12</td><td>El precio promedio reciente influye. Modela la memoria de precio del consumidor.</td></tr>
+      <tr><td>10004521</td><td>PLAZA VEA</td><td>week_sin</td><td>0.09</td><td>Estacionalidad semanal moderada.</td></tr>
+      <tr style="background:var(--accent-coral-light)"><td>10007834</td><td>PLAZA VEA</td><td>p_unitario</td><td style="color:var(--accent-coral)"><strong>0.04</strong></td><td>Precio explica solo el 4%. Este SKU no responde bien al precio → elasticidad baja → el _9_ podría no recomendar promo para él.</td></tr>
+    </table>
+  </div>
+
+  <div class="takeaway">
+    <p><strong>Regla de oro para analizar el _5_:</strong> Si <code>p_unitario</code> tiene importancia &lt; 10%, el modelo tiene poco para aprender sobre elasticidad de precio — las predicciones serán poco diferenciadas entre precios. Si <code>demand_lag_1</code> domina (&gt; 50%), la demanda es altamente autocorrelacionada y el precio tiene poco efecto medible en el corto plazo. Estos SKUs son malos candidatos a promo aunque aparezcan en el _9_.</p>
+  </div>
+
+  <!-- ── _7_ MODEL PARAMS ── -->
+  <h3>_7_report_model_params — Actualización de Tablas BigQuery</h3>
+  <p>Solo contiene filas para SKUs donde Optuna corrió (SKUs nuevos o cuando <code>optimize_hyperparams=True</code>). Si todos los SKUs tenían parámetros guardados, este reporte estará vacío.</p>
+  <pre><span class="cm"># Columnas del _7_:</span>
+cod_material | des_subcadena | n_estimators | max_depth | min_samples_split | min_samples_leaf | max_features
+
+<span class="cm"># Para persistir los nuevos parámetros en BigQuery:</span>
+<span class="cm"># 1. Descargar el _7_ CSV</span>
+<span class="cm"># 2. Hacer un INSERT o MERGE sobre la tabla sandbox correspondiente:</span>
+<span class="cm">#    moderno_outputs_spsa_lima_best_params     (PLAZA VEA, VIVANDA)</span>
+<span class="cm">#    moderno_outputs_cencosud_lima_best_params  (METRO, WONG)</span>
+<span class="cm">#    moderno_outputs_tottus_lima_best_params    (TOTTUS)</span>
+<span class="cm"># 3. En el próximo run, el modelo usará esos parámetros en lugar de correr Optuna</span></pre>
+
+  <div class="alert alert-bug">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>No hay automatización del paso de persistencia:</strong> El proceso de guardar el _7_ en BigQuery es completamente manual. Si no se hace, el próximo run correrá Optuna de nuevo para esos mismos SKUs y tardará más.</p>
+  </div>
+
+  <!-- ── FLUJO DE VERIFICACIÓN ── -->
+  <h3>Flujo de Verificación Post-Run</h3>
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-n"><div class="step-num" style="background:var(--accent-teal-light);color:var(--accent-teal);border-color:rgba(45,156,156,.3)">1</div><div class="step-line"></div></div>
+      <div class="step-body"><strong>¿Cuántos SKUs llegaron al _9_?</strong><p>Contar filas del _9_ vs filas únicas de cod_material en el _1_. La diferencia son SKUs que: no tienen precio lista, tienen &lt;10 semanas de historial, o no pasaron los filtros de negocio. Si la diferencia es &gt; 30%, revisar los datos de entrada.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num" style="background:var(--accent-teal-light);color:var(--accent-teal);border-color:rgba(45,156,156,.3)">2</div><div class="step-line"></div></div>
+      <div class="step-body"><strong>Verificar rangos de precio en el _9_</strong><p>Factor promedio debería estar entre 0.06 y 0.20. Si hay concentración en los extremos (muchos en 0.06 o muchos en 0.20), revisar si el rango de saltos_de_precio es suficientemente amplio o si el precio histórico mínimo es muy extremo.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num" style="background:var(--accent-teal-light);color:var(--accent-teal);border-color:rgba(45,156,156,.3)">3</div><div class="step-line"></div></div>
+      <div class="step-body"><strong>Revisar el _6_ para SKUs con R² &lt; 0.5</strong><p>Identificar los SKUs de baja confianza. Considerar excluirlos del análisis comercial o marcarlos como "señal de baja confianza" en el dashboard.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num" style="background:var(--accent-gold-light);color:var(--accent-gold-dark);border-color:rgba(212,168,83,.3)">4</div><div class="step-line"></div></div>
+      <div class="step-body"><strong>Comparar unidades_predicha vs unidades_base en el _9_</strong><p>El uplift esperado = unidades_predicha / unidades_base. Valores &lt; 1.05 (menos del 5% de incremento) con ROI positivo son sospechosos — revisar si el precio cayó muy poco (factor cercano a 0.06) o si la elasticidad calculada es muy alta.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num" style="background:var(--accent-gold-light);color:var(--accent-gold-dark);border-color:rgba(212,168,83,.3)">5</div></div>
+      <div class="step-body"><strong>Si el _7_ tiene filas → persistir en BigQuery</strong><p>Ejecutar el INSERT/MERGE sobre la tabla de parámetros correspondiente antes del próximo run de producción.</p></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 19. GUÍA DE EJECUCIÓN PASO A PASO          -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="section" id="guia-ejecucion">
+  <div class="section-header">
+    <span class="section-num">19</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-coral)">▸ CÓMO EJECUTAR</div>
+      <h2>Guía de Ejecución — De Cero a Resultados</h2>
+    </div>
+  </div>
+
+  <!-- PASO 0: PREREQUISITOS -->
+  <h3>Antes de Ejecutar — Checklist de Prerequisitos</h3>
+
+  <div class="compare-grid" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="card">
+      <div class="card-icon">🐍</div>
+      <h4>Entorno Conda</h4>
+      <p>El entorno <code>moderno_env</code> debe estar creado con todas las dependencias. Incluye: pandas, numpy, scikit-learn, optuna, joblib, google-cloud-bigquery.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔑</div>
+      <h4>Credenciales BigQuery</h4>
+      <p>Se necesita acceso al proyecto <code>acpe-dev-uc-sandbox-aa</code>. Verificar con: <code>gcloud auth application-default login</code> o que la variable <code>GOOGLE_APPLICATION_CREDENTIALS</code> apunte al .json de servicio.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📁</div>
+      <h4>Estructura de Carpetas</h4>
+      <p>El proyecto debe estar en <code>Nuevo_TPM_Moderno/</code> con las carpetas <code>src/</code>, <code>data/Input/</code> y <code>data/report/</code> existentes. La carpeta <code>report/</code> puede estar vacía.</p>
+    </div>
+  </div>
+
+  <!-- PASO 1: CONFIGURAR -->
+  <h3>Paso 1 — Configurar los 3 Archivos de Control</h3>
+  <p>Antes de correr el script, edita estos 3 archivos CSV en <code>Nuevo_TPM_Moderno/data/Input/</code>:</p>
+
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">ARCHIVO 1</span>
+      <span class="ch-title">optimizer_input_config.csv — Define el período de ejecución</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Columnas del archivo</span>
+        <pre>locality | period | year | week | channel</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Ejemplo — Para correr semana 7 de 2026</span>
+        <pre>locality | period | year | week | channel
+LIMA     | 202602 | 2026 |   7  | MODERNO
+
+<span class="cm">← year y week definen qué semana es la "vigente"</span>
+<span class="cm">← period es el mes en formato YYYYMM</span>
+<span class="cm">← locality y channel son filtros del negocio</span></pre>
+      </div>
+    </div>
+    <div class="calc-note"><strong>¿Qué afecta?</strong> YEAR_EXECUTION y WEEK_EXECUTION determinan qué precio_lista_final se usa como precio_base y qué semana de unidades_detalle se toma. Cambiarlo sin correr primero las queries de sandbox (Paso 0) causará que DataFactory no encuentre datos para esa semana.</div>
+  </div>
+
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">ARCHIVO 2</span>
+      <span class="ch-title">runhierarchy_run_hierarchy.csv — Define qué subcadenas correr y en qué orden</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Columnas del archivo</span>
+        <pre>locality | chain | subchain | order | active
+
+active = 1  → se ejecuta
+active = 0  → se salta</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Estado actual del archivo (lo que corre hoy)</span>
+        <pre>locality | chain    | subchain  | order | active
+LIMA     | SPSA     | PLAZA VEA |   1   | <span class="res">1</span>  ✓ corre
+LIMA     | SPSA     | VIVANDA   |   2   | <span class="resn">0</span>  ✗ salta
+LIMA     | CENCOSUD | METRO     |   3   | <span class="res">1</span>  ✓ corre
+LIMA     | CENCOSUD | WONG      |   4   | <span class="resn">0</span>  ✗ salta
+LIMA     | TOTTUS   | TOTTUS    |   5   | <span class="res">1</span>  ✓ corre
+LIMA     | TOTTUS   | ECOMMERCE |   6   | <span class="resn">0</span>  ✗ salta</pre>
+      </div>
+    </div>
+    <div class="calc-note">Para activar VIVANDA, cambiar su <code>active</code> de 0 a 1. Eso también cambia la tabla de params usada: VIVANDA usa <code>params_spsa</code> (igual que PLAZA VEA). Para agregar una subcadena nueva, agregar una fila y asegurarse que tenga una tabla de params RF en BigQuery.</div>
+  </div>
+
+  <div class="calc-wrap">
+    <div class="calc-header">
+      <span class="ch-label">ARCHIVO 3</span>
+      <span class="ch-title">runhierarchy_run_category.csv — Define qué categorías correr</span>
+    </div>
+    <div class="calc-body">
+      <div class="calc-formula">
+        <span class="calc-col-label">Columnas del archivo</span>
+        <pre>category | order | active</pre>
+      </div>
+      <div class="calc-example">
+        <span class="calc-col-label">Estado actual</span>
+        <pre>category   | order | active
+SALSAS     |   1   | <span class="res">1</span>  ✓ corre
+PASTAS     |   2   | <span class="res">1</span>  ✓ corre
+ACEITES    |   3   | <span class="resn">0</span>  ✗ salta
+HARINAS    |   4   | <span class="resn">0</span>  ✗ salta
+CONSERVAS  |   5   | <span class="resn">0</span>  ✗ salta
+CEREALES   |   6   | <span class="resn">0</span>  ✗ salta</pre>
+      </div>
+    </div>
+    <div class="calc-note">El nombre de la categoría debe coincidir <strong>exactamente</strong> (mayúsculas) con el valor de <code>des_categoria</code> en las tablas BigQuery. Si no hay match, DataFactory filtrará todos los SKUs y los reportes saldrán vacíos sin error explícito.</div>
+  </div>
+
+  <!-- PASO 2: QUERIES SANDBOX -->
+  <h3>Paso 2 — Verificar que las Tablas Sandbox estén Actualizadas (Paso 0)</h3>
+
+  <div class="alert alert-bug">
+    <span class="alert-icon">⚠️</span>
+    <p><strong>Esto es manual y crítico.</strong> El modelo Python NO ejecuta las queries de sandbox automáticamente. Antes de cada corrida, un analista debe correr manualmente los 5 scripts SQL en BigQuery para cargar las tablas de datos que el modelo va a leer.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>#</th><th>Script SQL</th><th>Tabla que carga en sandbox</th><th>Cuándo re-ejecutar</th></tr>
+      <tr><td>1</td><td><code>query_temp_precio_efectivo.sql</code></td><td><code>dev.temp_precio_efectivo</code></td><td>Cada semana (datos de ventas)</td></tr>
+      <tr><td>2</td><td><code>query_temp_mapa_precios.sql</code></td><td><code>dev.temp_mapa_precios</code></td><td>Cada semana (precios lista actualizados)</td></tr>
+      <tr><td>3</td><td><code>query_temp_materiales.sql</code></td><td><code>dev.temp_materiales</code></td><td>Si cambian materiales / recodificaciones</td></tr>
+      <tr><td>4</td><td><code>query_temp_fert_hawa.sql</code></td><td><code>dev.temp_amzv_2</code></td><td>Si cambia el catálogo de unidades de almacenamiento</td></tr>
+      <tr><td>5</td><td><code>query_temp_promociones_detalle.sql</code></td><td><code>dev.temp_promociones_detalle</code></td><td>Cada vez que hay nuevas tandas históricas</td></tr>
+      <tr style="background:var(--accent-gold-light)"><td>+</td><td><code>query_cogs_unitario.sql</code> (indirecto)</td><td><code>dev.temp_amzv_1</code></td><td>Mensual (COGS se actualiza con conta_gestion)</td></tr>
+    </table>
+  </div>
+
+  <pre><span class="cm">-- En BigQuery UI o desde bq CLI, ejecutar en orden:</span>
+<span class="cm">-- 1. Abrir cada query_temp_*.sql desde la carpeta /sql o /src del proyecto</span>
+<span class="cm">-- 2. Verificar que el WHERE de fechas cubra el período de ejecución deseado</span>
+<span class="cm">-- 3. Correr el script — crea o sobreescribe la tabla temp correspondiente</span>
+<span class="cm">-- 4. Validar que la tabla no esté vacía: SELECT COUNT(*) FROM dev.temp_precio_efectivo</span></pre>
+
+  <!-- PASO 3: EJECUTAR -->
+  <h3>Paso 3 — Ejecución del Modelo</h3>
+
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <strong>Activar entorno y posicionarse en el directorio correcto</strong>
+        <pre>conda activate moderno_env
+cd Nuevo_TPM_Moderno
+cd src</pre>
+        <p>El script usa <code>os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))</code> para construir rutas — por eso <strong>debe ejecutarse desde dentro de <code>/src</code></strong>. Si se corre desde otro directorio, las rutas a <code>data/Input/</code> y <code>data/report/</code> no van a resolver.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <strong>Correr el optimizador</strong>
+        <pre>python run_batch_optimizer.py</pre>
+        <p>No recibe argumentos de línea de comando. Toda la configuración viene de los 3 CSVs del Paso 1.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <strong>Lo que verás en consola (flujo esperado)</strong>
+        <pre><span class="cm"># Carga de archivos locales</span>
+[INFO] Locating input files... Found 26 files
+[INFO] Loading model input datasets from BigQuery
+[INFO] BigQuery tables generation completed successfully
+
+<span class="cm"># Inicio del loop — con config actual: 3 subcadenas × 2 categorías = 6 iteraciones</span>
+[DEBUG] Starting execution for locality index: LIMA
+[DEBUG] Starting execution for category: SALSAS
+
+<span class="cm"># Por cada subcadena × categoría:</span>
+[INFO] Generating demand report | subchain=PLAZA VEA | category=SALSAS
+[INFO] Starting demand elasticity prediction process
+[INFO] Demand by tandas generated (BY PRICE)
+[INFO] Generating demand report ... rows=4821
+
+<span class="cm"># Al terminar cada bloque:</span>
+Finished calculation for:
+| SUBCHAIN:  PLAZA VEA |
+| LOCALITY:  LIMA      |
+| CATEGORY:  SALSAS    |
+in 142.38 seconds</pre>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n"><div class="step-num">4</div></div>
+      <div class="step-body">
+        <strong>Los outputs se guardan en <code>data/report/</code></strong>
+        <pre>data/report/
+├── _1_report_demanda_ajustada_PLAZA VEA_SALSAS.csv
+├── _2_report_tandas_detalle_PLAZA VEA_SALSAS.csv
+├── _3_raw_demand_report_PLAZA VEA_SALSAS.csv
+├── _4_demand_report_PLAZA VEA_SALSAS.csv
+├── _5_report_feature_importance_PLAZA VEA_SALSAS.csv
+├── _6_report_metrics_PLAZA VEA_SALSAS.csv
+├── _7_report_model_params_PLAZA VEA_SALSAS.csv
+├── _8_report_tandas_complete_report_PLAZA VEA_SALSAS.csv
+├── _9_report_top_roi_report_PLAZA VEA_SALSAS.csv
+...  (mismo set por cada subcadena × categoría)
+</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIEMPO ESTIMADO -->
+  <h3>Tiempo de Ejecución Estimado</h3>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Escenario</th><th>Subcadenas × Categorías</th><th>Tiempo aprox.</th><th>Cuello de botella</th></tr>
+      <tr style="background:var(--accent-teal-light)">
+        <td>Config actual (activos)</td>
+        <td>3 × 2 = 6 bloques</td>
+        <td><strong style="color:var(--accent-teal)">~15–25 min</strong></td>
+        <td>Optuna (SKUs nuevos sin params guardados)</td>
+      </tr>
+      <tr>
+        <td>Todas las subcadenas activas</td>
+        <td>6 × 2 = 12 bloques</td>
+        <td>~30–50 min</td>
+        <td>Idem</td>
+      </tr>
+      <tr>
+        <td>Todas las subcadenas + categorías</td>
+        <td>6 × 6 = 36 bloques</td>
+        <td>~90–150 min</td>
+        <td>BigQuery latency + Optuna</td>
+      </tr>
+      <tr style="background:var(--accent-gold-light)">
+        <td>Con todos los params en BQ (sin Optuna)</td>
+        <td>6 × 2 = 6 bloques</td>
+        <td><strong style="color:var(--accent-gold-dark)">~5–8 min</strong></td>
+        <td>Solo lectura BQ + inferencia RF</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="alert alert-tip">
+    <span class="alert-icon">💡</span>
+    <p>Si hay muchos SKUs nuevos (primera vez que se corre una categoría), Optuna corre 30 trials por SKU en paralelo (<code>n_jobs=6</code>). Para acelerar: subir <code>n_jobs</code> si el servidor tiene más cores, o bajar <code>n_trials</code> de 30 a 15 en <code>elasticity_model.py</code> (línea 284) a costa de peores hiperparámetros.</p>
+  </div>
+
+  <!-- ERRORES COMUNES -->
+  <h3>Errores Comunes y Cómo Resolverlos</h3>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Error / Síntoma</th><th>Causa probable</th><th>Cómo resolverlo</th></tr>
+      <tr>
+        <td><code>FileNotFoundError: data/Input/</code></td>
+        <td>Se ejecutó desde fuera de <code>/src</code></td>
+        <td><code>cd src</code> y volver a correr</td>
+      </tr>
+      <tr>
+        <td><code>google.auth.exceptions.DefaultCredentialsError</code></td>
+        <td>No hay credenciales GCP activas</td>
+        <td><code>gcloud auth application-default login</code></td>
+      </tr>
+      <tr>
+        <td><code>ValueError: Input DataFrame 'precio_lista_final' is empty</code></td>
+        <td>La semana/año en <code>optimizer_input_config.csv</code> no tiene datos en la tabla sandbox</td>
+        <td>Correr primero <code>query_temp_mapa_precios.sql</code> con el período correcto</td>
+      </tr>
+      <tr>
+        <td>Los reportes _8_ y _9_ salen vacíos sin error</td>
+        <td>El nombre de categoría en <code>run_category.csv</code> no coincide con <code>des_categoria</code> en BQ</td>
+        <td>Verificar que sea exactamente <code>SALSAS</code> (mayúsculas, sin espacios extra)</td>
+      </tr>
+      <tr>
+        <td>El _9_ tiene muy pocos SKUs (ej: solo 2 o 3)</td>
+        <td>La mayoría no pasó los filtros de ROI / elasticidad / factor</td>
+        <td>Revisar el _8_ para ver cuántos hay antes de filtros, y el _6_ para ver R² bajos</td>
+      </tr>
+      <tr>
+        <td>Ejecución muy lenta (&gt; 1h para 6 bloques)</td>
+        <td>Optuna corriendo 30 trials para muchos SKUs nuevos</td>
+        <td>Persistir los params del _7_ en BQ después de la primera corrida</td>
+      </tr>
+      <tr>
+        <td><code>KeyError: 'params_cencosud'</code></td>
+        <td>La tabla BQ <code>moderno_outputs_cencosud_lima_best_params</code> no existe o está vacía</td>
+        <td>Crear la tabla en sandbox con el schema correcto (al menos una fila dummy) o asegurarse que params_reader no falle</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- LOOP RESUMIDO -->
+  <h3>Resumen Visual del Loop de Ejecución</h3>
+  <p>Con la config actual (PLAZA VEA + METRO + TOTTUS) × (SALSAS + PASTAS), el script corre 6 bloques en este orden:</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>#</th><th>Subcadena</th><th>Categoría</th><th>Params BQ usada</th><th>Outputs generados</th></tr>
+      <tr><td>1</td><td>PLAZA VEA</td><td>SALSAS</td><td>params_spsa</td><td>9 CSVs con sufijo _PLAZA VEA_SALSAS</td></tr>
+      <tr><td>2</td><td>PLAZA VEA</td><td>PASTAS</td><td>params_spsa</td><td>9 CSVs con sufijo _PLAZA VEA_PASTAS</td></tr>
+      <tr><td>3</td><td>METRO</td><td>SALSAS</td><td>params_cencosud</td><td>9 CSVs con sufijo _METRO_SALSAS</td></tr>
+      <tr><td>4</td><td>METRO</td><td>PASTAS</td><td>params_cencosud</td><td>9 CSVs con sufijo _METRO_PASTAS</td></tr>
+      <tr><td>5</td><td>TOTTUS</td><td>SALSAS</td><td>params_tottus</td><td>9 CSVs con sufijo _TOTTUS_SALSAS</td></tr>
+      <tr><td>6</td><td>TOTTUS</td><td>PASTAS</td><td>params_tottus</td><td>9 CSVs con sufijo _TOTTUS_PASTAS</td></tr>
+    </table>
+  </div>
+  <p>Total: <strong>54 archivos CSV</strong> en <code>data/report/</code> al finalizar. Si algún bloque falla, los bloques anteriores ya están guardados — el script no hace rollback.</p>
+
+</section>
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '-60px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
