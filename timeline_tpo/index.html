@@ -25,6 +25,12 @@
   --border:     #E8E4DD;
   --shadow-sm:  0 2px 6px rgba(26,26,46,.07);
   --shadow-md:  0 5px 18px rgba(26,26,46,.12);
+  --purple:       #7B5EA7;
+  --purple-dark:  #5D4687;
+  --purple-light: #F2EEF9;
+  --blue:         #3A7BD5;
+  --blue-dark:    #2E62B0;
+  --blue-light:   #E8F0FD;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{background:#f0ede8}
@@ -58,15 +64,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
   z-index:2;
 }
 .area-logo svg{width:26px;height:26px;flex-shrink:0}
-.area-logo-name{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:10.5px;font-weight:700;
-  color:var(--text-primary);line-height:1.2;
-}
-.area-logo-sub{
-  font-size:8.5px;color:var(--text-muted);
-  letter-spacing:.4px;
-}
+.area-logo-name{font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:700;color:var(--text-primary);line-height:1.2;}
+.area-logo-sub{font-size:8.5px;color:var(--text-muted);letter-spacing:.4px;}
 
 /* ═══ LEGEND ═════════════════════════════════════ */
 .legend-bar{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;padding:10px 48px;border-bottom:1px solid var(--border);background:var(--bg-card)}
@@ -153,7 +152,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
 .grp-node::after{content:'';position:absolute;inset:1.5px;border-radius:50%;background:currentColor;opacity:.7}
 .grp-connector{width:1px;flex:0 0 22px;background:currentColor;opacity:.2}
 
-/* ═══ COLOR SCHEMES ══════════════════════════════ */
+/* ═══ COLOR SCHEMES — BASE ════════════════════════ */
 .dc-coral .dest-card::before{background:var(--coral)}.dc-coral .dest-card{color:var(--coral)}.dc-coral .dc-date{color:var(--coral)}.dc-coral .dc-pill{background:var(--coral-light);color:var(--coral)}.dc-coral .dest-node{border-color:var(--coral);color:var(--coral)}.dc-coral .dest-connector{background:var(--coral)}.dc-coral .dest-card::after{background:var(--coral)}
 .dc-teal .dest-card::before{background:var(--teal)}.dc-teal .dest-card{color:var(--teal)}.dc-teal .dc-date{color:var(--teal)}.dc-teal .dc-pill{background:var(--teal-light);color:var(--teal-dark)}.dc-teal .dest-node{border-color:var(--teal);color:var(--teal)}.dc-teal .dest-connector{background:var(--teal)}.dc-teal .dest-card::after{background:var(--teal)}
 .dc-gold .dest-card::before{background:var(--gold)}.dc-gold .dest-card{color:var(--gold-dark)}.dc-gold .dc-date{color:var(--gold-dark)}.dc-gold .dc-pill{background:var(--gold-light);color:var(--gold-dark)}.dc-gold .dest-node{border-color:var(--gold);color:var(--gold)}.dc-gold .dest-connector{background:var(--gold)}.dc-gold .dest-card::after{background:var(--gold)}
@@ -164,6 +163,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
 .gc-teal .grp-card{color:var(--teal)}.gc-teal .gi-date{color:var(--teal)}.gc-teal .grp-card::before{background:var(--teal)}.gc-teal .grp-node{border-color:var(--teal);color:var(--teal)}.gc-teal .grp-connector{background:var(--teal)}.gc-teal .grp-card::after{background:var(--teal)}
 .gc-gold .grp-card{color:var(--gold-dark)}.gc-gold .gi-date{color:var(--gold-dark)}.gc-gold .grp-card::before{background:var(--gold)}.gc-gold .grp-node{border-color:var(--gold);color:var(--gold)}.gc-gold .grp-connector{background:var(--gold)}.gc-gold .grp-card::after{background:var(--gold)}
 .gc-mix .grp-card{color:var(--teal)}.gc-mix .gi-date{color:var(--teal)}.gc-mix .grp-card::before{background:var(--teal)}.gc-mix .grp-node{border-color:var(--teal);color:var(--teal)}.gc-mix .grp-connector{background:var(--teal)}.gc-mix .grp-card::after{background:var(--teal)}
+
+/* ── GOBIERNO · purple ──────────────────────────── */
+.dc-purple .dest-card::before{background:var(--purple)}.dc-purple .dest-card{color:var(--purple)}.dc-purple .dc-date{color:var(--purple)}.dc-purple .dc-pill{background:var(--purple-light);color:var(--purple-dark)}.dc-purple .dest-node{border-color:var(--purple);color:var(--purple)}.dc-purple .dest-connector{background:var(--purple)}.dc-purple .dest-card::after{background:var(--purple)}
+.pc-purple .pc-date{color:var(--purple)}.pc-purple .peq-node{border-color:var(--purple);color:var(--purple)}.pc-purple .peq-connector{background:var(--purple)}.pc-purple .peq-card::after{background:var(--purple)}.pc-purple .peq-card{background:#f8f4ff;border-color:rgba(123,94,167,.25)}
+.gc-purple .grp-card{color:var(--purple)}.gc-purple .gi-date{color:var(--purple)}.gc-purple .grp-card::before{background:var(--purple)}.gc-purple .grp-node{border-color:var(--purple);color:var(--purple)}.gc-purple .grp-connector{background:var(--purple)}.gc-purple .grp-card::after{background:var(--purple)}.gc-purple .grp-card{background:#f8f4ff;border-color:rgba(123,94,167,.25)}
+
+/* ── BIG DATA · blue ────────────────────────────── */
+.dc-blue .dest-card::before{background:var(--blue)}.dc-blue .dest-card{color:var(--blue)}.dc-blue .dc-date{color:var(--blue)}.dc-blue .dc-pill{background:var(--blue-light);color:var(--blue-dark)}.dc-blue .dest-node{border-color:var(--blue);color:var(--blue)}.dc-blue .dest-connector{background:var(--blue)}.dc-blue .dest-card::after{background:var(--blue)}
+.pc-blue .pc-date{color:var(--blue)}.pc-blue .peq-node{border-color:var(--blue);color:var(--blue)}.pc-blue .peq-connector{background:var(--blue)}.pc-blue .peq-card::after{background:var(--blue)}.pc-blue .peq-card{background:#eef4ff;border-color:rgba(58,123,213,.25)}
+.gc-blue .grp-card{color:var(--blue)}.gc-blue .gi-date{color:var(--blue)}.gc-blue .grp-card::before{background:var(--blue)}.gc-blue .grp-node{border-color:var(--blue);color:var(--blue)}.gc-blue .grp-connector{background:var(--blue)}.gc-blue .grp-card::after{background:var(--blue)}.gc-blue .grp-card{background:#eef4ff;border-color:rgba(58,123,213,.25)}
 
 /* ═══ METRICS TABLE ══════════════════════════════ */
 .tl-col.dest.wide{width:220px}
@@ -195,7 +204,6 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
 .footer-logo{display:flex;align-items:center;gap:7px}
 .footer-logo svg{width:22px;height:22px}
 .footer-logo-name{font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;color:var(--text-primary)}
-
 </style>
 </head>
 <body>
@@ -222,7 +230,6 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
     </svg>
     <div>
       <div class="area-logo-name">COE Advanced Analytics</div>
-      
     </div>
   </div>
 
@@ -230,11 +237,13 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
     <div>
       <div class="hero-badge"><span class="badge-dot"></span>Alicorp · AA · TPO v1 → v2</div>
       <h1>Timeline Modelo <span class="hl">TPO</span></h1>
-      <p>Abr 2025 — Feb 2026 · Hitos destacados y seguimiento completo del proceso</p>
+      <p>Feb 2025 — Feb 2026 · Hitos TPO · Gobierno de Datos · Big Data</p>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">11</div><div class="stat-label">Meses</div></div>
-      <div class="stat"><div class="stat-num">8</div><div class="stat-label">Hitos destacados</div></div>
+      <div class="stat"><div class="stat-num">13</div><div class="stat-label">Meses</div></div>
+      <div class="stat"><div class="stat-num">8</div><div class="stat-label">Hitos TPO</div></div>
+      <div class="stat"><div class="stat-num" style="color:var(--purple)">4</div><div class="stat-label">Hitos Gobierno</div></div>
+      <div class="stat"><div class="stat-num" style="color:var(--blue)">5</div><div class="stat-label">Pases BD</div></div>
       <div class="stat"><div class="stat-num" style="color:var(--teal)">+23%</div><div class="stat-label">Util. Bruta POC</div></div>
     </div>
   </div>
@@ -244,7 +253,9 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
 <div class="legend-bar">
   <div class="leg"><div class="leg-dot" style="background:var(--coral)"></div>Consultoría BAIN</div>
   <div class="leg"><div class="leg-dot" style="background:var(--teal)"></div>POC / Traspaso / Entregas</div>
-  <div class="leg"><div class="leg-dot" style="background:var(--gold)"></div>Refactoring & Canal Moderno</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--gold)"></div>Refactoring &amp; Canal Moderno</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--purple)"></div>Gobierno de Datos</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--blue)"></div>Big Data · Pases a Producción</div>
   <div class="leg-sep"></div>
   <div class="leg-size">
     <span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:12px;border-radius:50%;background:var(--text-muted);display:inline-block"></span>Destacado</span>
@@ -258,6 +269,25 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
 <div class="tl-stage" id="stage">
 <div class="tl-inner">
   <div class="tl-rail"></div>
+
+  <!-- ⓪ GOBIERNO: Feb 5 + Feb 10 · ABOVE -->
+  <div class="tl-col grp gc-purple" style="animation-delay:.00s">
+    <div class="grp-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
+      <div class="grp-card above">
+        <div class="grp-item">
+          <div class="gi-date">05 Feb 2025</div>
+          <div class="gi-title">🏛️ Gobierno + Cronograma Mapa de Precio Moderno &amp; Tradi</div>
+        </div>
+        <div class="grp-item">
+          <div class="gi-date">10 Feb 2025</div>
+          <div class="gi-title">📋 Creación del Plan de Remediación</div>
+        </div>
+      </div>
+    </div>
+    <div class="grp-connector"></div><div class="grp-node"></div>
+    <div class="grp-spacer-below"></div>
+  </div>
+  <div class="tl-col gap"></div>
 
   <!-- ① Apr 4 · peq · ABOVE -->
   <div class="tl-col peq pc-coral" style="animation-delay:.04s">
@@ -353,6 +383,18 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   </div>
   <div class="tl-col gap"></div>
 
+  <!-- ⑤b Jun 3 · GOBIERNO Precio Lista + Precio Pactado · peq · BELOW -->
+  <div class="tl-col peq pc-purple" style="animation-delay:.24s">
+    <div class="peq-spacer-above"></div>
+    <div class="peq-node"></div><div class="peq-connector"></div>
+    <div class="peq-card below">
+      <div class="pc-date">03 Jun 2025</div>
+      <div class="pc-title">🏛️ Gobierno: Precio de Lista &amp; Precio Pactado</div>
+    </div>
+    <div class="peq-spacer-below" style="min-height:0"></div>
+  </div>
+  <div class="tl-col gap"></div>
+
   <!-- ⑥ Jul 18 · DEST · BELOW -->
   <div class="tl-col dest wide dc-gold" style="animation-delay:.27s">
     <div class="dest-spacer-above"></div>
@@ -389,7 +431,7 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
     <div class="grp-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
       <div class="grp-card above">
         <div class="grp-item"><div class="gi-date">22 Jul 2025</div><div class="gi-title">Inicio acercamiento Canal Moderno — D. Osorio</div></div>
-        <div class="grp-item"><div class="gi-date">08 Ago 2025</div><div class="gi-title">1ª Reunión revisión estructura — Raúl, D.Osorio & AA</div></div>
+        <div class="grp-item"><div class="gi-date">08 Ago 2025</div><div class="gi-title">1ª Reunión revisión estructura — Raúl, D.Osorio &amp; AA</div></div>
       </div>
     </div>
     <div class="grp-connector"></div><div class="grp-node"></div>
@@ -415,7 +457,7 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   <div class="tl-col grp gc-mix" style="animation-delay:.40s">
     <div class="grp-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
       <div class="grp-card above">
-        <div class="grp-item"><div class="gi-date" style="color:var(--teal)">01 Oct 2025</div><div class="gi-title">1ª Entrega Modelo Moderno — Salsas & Pastas</div></div>
+        <div class="grp-item"><div class="gi-date" style="color:var(--teal)">01 Oct 2025</div><div class="gi-title">1ª Entrega Modelo Moderno — Salsas &amp; Pastas</div></div>
         <div class="grp-item"><div class="gi-date" style="color:var(--coral)">13 Oct 2025</div><div class="gi-title">1ª Respuesta Daniel — 1er Review</div></div>
         <div class="grp-item"><div class="gi-date" style="color:var(--teal)">16 Oct 2025</div><div class="gi-title">2ª Entrega con Feedback levantado</div></div>
         <div class="grp-item"><div class="gi-date" style="color:var(--gold-dark)">01 Nov 2025</div><div class="gi-title">Ingresa David al equipo</div></div>
@@ -423,6 +465,18 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
     </div>
     <div class="grp-connector"></div><div class="grp-node"></div>
     <div class="grp-spacer-below"></div>
+  </div>
+  <div class="tl-col gap"></div>
+
+  <!-- ⑨b Oct 30 · BD Mapa Precios CM · peq · BELOW -->
+  <div class="tl-col peq pc-blue" style="animation-delay:.42s">
+    <div class="peq-spacer-above"></div>
+    <div class="peq-node"></div><div class="peq-connector"></div>
+    <div class="peq-card below">
+      <div class="pc-date">30 Oct 2025</div>
+      <div class="pc-title">📊 BD · Mapa Precios CM — Pase a Producción</div>
+    </div>
+    <div class="peq-spacer-below" style="min-height:0"></div>
   </div>
   <div class="tl-col gap"></div>
 
@@ -438,6 +492,37 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
       <div style="margin-top:6px;display:flex;align-items:center;gap:5px;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:600;color:var(--text-muted)"><span style="font-size:10px">👤</span> D. Osorio</div>
     </div>
     <div class="dest-spacer-below" style="min-height:0"></div>
+  </div>
+  <div class="tl-col gap"></div>
+
+  <!-- ⑩b GRUPO BD: Dic 5 + Dic 11 · BELOW -->
+  <div class="tl-col grp gc-blue" style="animation-delay:.47s">
+    <div class="grp-spacer-above"></div>
+    <div class="grp-node"></div><div class="grp-connector"></div>
+    <div class="grp-card below">
+      <div class="grp-item">
+        <div class="gi-date">05 Dic 2025</div>
+        <div class="gi-title">📊 Mapa Precios AS — Pase a Producción</div>
+      </div>
+      <div class="grp-item">
+        <div class="gi-date">11 Dic 2025</div>
+        <div class="gi-title">📊 SISO Fase 1 — Pase a Producción</div>
+      </div>
+    </div>
+    <div class="grp-spacer-below" style="min-height:0"></div>
+  </div>
+  <div class="tl-col gap"></div>
+
+  <!-- ⑩c Dic 11 · GOBIERNO TPM · peq · ABOVE -->
+  <div class="tl-col peq pc-purple" style="animation-delay:.48s">
+    <div class="peq-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
+      <div class="peq-card above">
+        <div class="pc-date">11 Dic 2025</div>
+        <div class="pc-title">🏛️ Gobierno TPM Promociones</div>
+      </div>
+    </div>
+    <div class="peq-connector"></div><div class="peq-node"></div>
+    <div class="peq-spacer-below"></div>
   </div>
   <div class="tl-col gap"></div>
 
@@ -480,6 +565,18 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
     </div>
     <div class="grp-connector"></div><div class="grp-node"></div>
     <div class="grp-spacer-below"></div>
+  </div>
+  <div class="tl-col gap"></div>
+
+  <!-- ⑬b Ene 22 · BD SISO Fase 2 · peq · BELOW -->
+  <div class="tl-col peq pc-blue" style="animation-delay:.62s">
+    <div class="peq-spacer-above"></div>
+    <div class="peq-node"></div><div class="peq-connector"></div>
+    <div class="peq-card below">
+      <div class="pc-date">22 Ene 2026</div>
+      <div class="pc-title">📊 SISO Fase 2 — Pase a Producción</div>
+    </div>
+    <div class="peq-spacer-below" style="min-height:0"></div>
   </div>
   <div class="tl-col gap"></div>
 
@@ -536,10 +633,9 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
     </svg>
     <div>
       <div class="footer-logo-name">COE Advanced Analytics</div>
-      
     </div>
   </div>
-  <span>Modelo Promociones Tradicional · Feb 2026</span>
+  <span>Modelo Promociones · TPO + Gobierno + Big Data · Mar 2026</span>
 </footer>
 
 <script>
