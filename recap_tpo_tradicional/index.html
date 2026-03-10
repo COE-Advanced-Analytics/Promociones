@@ -45,15 +45,13 @@ body {
   overflow: hidden;
 }
 .hero::before {
-  content:'';
-  position:absolute; bottom:-40px; right:60px;
+  content:''; position:absolute; bottom:-40px; right:60px;
   width:200px; height:200px;
   background: radial-gradient(circle, var(--coral-light) 0%, transparent 70%);
   border-radius:50%; pointer-events:none;
 }
 .hero::after {
-  content:'';
-  position:absolute; top:-30px; right:350px;
+  content:''; position:absolute; top:-30px; right:350px;
   width:160px; height:160px;
   background: radial-gradient(circle, var(--teal-light) 0%, transparent 70%);
   border-radius:50%; pointer-events:none;
@@ -65,36 +63,27 @@ body {
 }
 .hero-badge {
   display:inline-flex; align-items:center; gap:6px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  padding: 3px 11px;
-  border-radius: 100px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 3px 11px; border-radius: 100px;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 9px; font-weight:700;
-  color: var(--coral);
-  text-transform:uppercase; letter-spacing:.5px;
-  margin-bottom:10px;
+  font-size: 9px; font-weight:700; color: var(--coral);
+  text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px;
 }
 .badge-dot {
-  width:6px; height:6px;
-  background:var(--coral); border-radius:50%;
+  width:6px; height:6px; background:var(--coral); border-radius:50%;
   animation: pulse 2s infinite;
 }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-
 .hero h1 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(24px,3.2vw,36px);
-  font-weight:700; line-height:1.15;
+  font-size: clamp(24px,3.2vw,36px); font-weight:700; line-height:1.15;
   color: var(--text-primary); margin-bottom:6px;
 }
 .hero h1 .hl { color:var(--coral) }
 .hero p { font-size:13.5px; color:var(--text-muted) }
-
 .hero-stats { display:flex; gap:24px; flex-wrap:wrap }
 .stat .stat-num {
-  font-family:'Space Grotesk',sans-serif;
-  font-size:22px; font-weight:700;
+  font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700;
   color:var(--text-primary); line-height:1;
 }
 .stat .stat-label { font-size:11px; color:var(--text-muted); margin-top:3px }
@@ -103,82 +92,64 @@ body {
 .area-logo{
   position:absolute; top:18px; right:28px;
   display:flex; align-items:center; gap:9px;
-  background:rgba(255,255,255,.78);
-  backdrop-filter:blur(8px);
-  border:1px solid var(--border);
-  border-radius:100px;
-  padding:6px 14px 6px 8px;
-  box-shadow:var(--shadow-sm);
-  z-index:2;
+  background:rgba(255,255,255,.78); backdrop-filter:blur(8px);
+  border:1px solid var(--border); border-radius:100px;
+  padding:6px 14px 6px 8px; box-shadow:var(--shadow-sm); z-index:2;
 }
-.area-logo svg{width:26px;height:26px;flex-shrink:0}
+.area-logo svg{ width:26px; height:26px; flex-shrink:0 }
 .area-logo-name{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:10.5px; font-weight:700;
+  font-family:'Space Grotesk',sans-serif; font-size:10.5px; font-weight:700;
   color:var(--text-primary); line-height:1.2;
-}
-.area-logo-sub{
-  font-size:8.5px; color:var(--text-muted);
-  letter-spacing:.4px;
 }
 
 /* ═══ CONTEXT BAR ═════════════════════════════════ */
 .context-bar {
   display:flex; align-items:center; gap:10px;
   padding:10px 28px;
-  background:var(--gold-light);
-  border-bottom:1px solid rgba(212,168,83,.25);
+  background:var(--gold-light); border-bottom:1px solid rgba(212,168,83,.25);
   font-size:13px; color:var(--gold-dark);
 }
-.context-bar strong {
-  font-family:'Space Grotesk',sans-serif;
-  font-weight:700; letter-spacing:.3px;
-}
+.context-bar strong { font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:.3px; }
 
-/* ═══ SECTION HEADER ══════════════════════════════ */
+/* ═══ 2-COL SECTION HEADERS (from exec HTML) ══════ */
 .section-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin: 22px 0 0;
-  padding: 0 28px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; padding: 22px 28px 0;
 }
 .sec-label {
   display:flex; align-items:center; gap:8px;
-  font-family:'Space Grotesk',sans-serif;
-  font-size:11px; font-weight:700;
-  text-transform:uppercase; letter-spacing:.8px;
-  padding:8px 16px;
+  font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.8px; padding:8px 16px;
   border-radius:7px 7px 0 0;
 }
 .sec-label.teal  { background:var(--teal);  color:#fff }
 .sec-label.coral { background:var(--coral); color:#fff }
-.sec-label.gold  { background:var(--gold);  color:#fff }
 
-/* ═══ MAIN GRID ═══════════════════════════════════ */
-.main-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin: 0 0 24px;
-  padding: 0 28px;
+/* ═══ GRIDS ═══════════════════════════════════════ */
+.grid-2 {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; padding: 0 28px;
 }
+.grid-3 {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px; padding: 0 28px;
+}
+.grid-4 {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 16px; padding: 0 28px;
+}
+.pad-h { padding: 0 28px; }
 
-/* ═══ CARD ════════════════════════════════════════ */
+/* ═══ CARD (exec style) ═══════════════════════════ */
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px 18px;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow .2s, transform .2s;
-  position:relative;
-  overflow:hidden;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+  box-shadow: var(--shadow-sm); transition: box-shadow .2s, transform .2s;
+  position:relative; overflow:hidden;
 }
 .card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px) }
 .card::before {
-  content:'';
-  position:absolute; left:0; top:8px; bottom:8px;
+  content:''; position:absolute; left:0; top:8px; bottom:8px;
   width:3px; border-radius:0 3px 3px 0;
 }
 .card.c-teal::before  { background:var(--teal) }
@@ -186,31 +157,81 @@ body {
 .card.c-gold::before  { background:var(--gold) }
 
 .card-title {
-  font-family:'Space Grotesk',sans-serif;
-  font-size:14px; font-weight:700;
-  color:var(--text-primary);
-  margin-bottom:14px;
+  font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700;
+  color:var(--text-primary); margin-bottom:14px;
   display:flex; align-items:center; gap:8px; flex-wrap:wrap;
 }
 .card-title .pill {
-  font-size:9px; font-weight:700;
-  letter-spacing:.7px; text-transform:uppercase;
+  font-size:9px; font-weight:700; letter-spacing:.7px; text-transform:uppercase;
   padding:3px 10px; border-radius:100px;
 }
 .pill-teal  { background:var(--teal-light);  color:var(--teal-dark) }
 .pill-coral { background:var(--coral-light); color:var(--coral-dark) }
 .pill-gold  { background:var(--gold-light);  color:var(--gold-dark) }
-
 .card p { font-size:13px; color:var(--text-secondary); line-height:1.6; }
+
+/* ═══ CARD (detail/simple style) ══════════════════ */
+.s-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 13px 14px; box-shadow: var(--shadow-sm);
+  position: relative; overflow: hidden;
+}
+.s-card::before {
+  content:''; position:absolute; left:0; top:6px; bottom:6px;
+  width:3px; background:var(--teal); border-radius:0 3px 3px 0;
+}
+.s-card h4 {
+  font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700;
+  color:var(--text-primary); margin-bottom:8px;
+}
+.s-card ul { margin:0 0 0 14px; padding:0; }
+.s-card ul li { font-size:11.5px; color:var(--text-secondary); line-height:1.5; margin-bottom:3px; }
+
+.s-card-highlight {
+  background: var(--teal-light); border: 1px solid rgba(45,156,156,.25);
+  border-radius: 8px; padding: 14px 18px;
+  position: relative; overflow: hidden;
+}
+.s-card-highlight::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--teal);
+}
+.s-card-highlight p { font-size:13px; color:var(--text-secondary); margin-bottom:10px; }
+.s-card-highlight ul { margin:0 0 8px 18px; padding:0; }
+.s-card-highlight ul li { font-size:12.5px; color:var(--text-secondary); line-height:1.6; margin-bottom:3px; }
+
+.code-mini {
+  background:#f5f5f5; padding:5px 8px; border-radius:5px;
+  font-family:monospace; font-size:10.5px; margin-top:5px; color:var(--text-secondary);
+}
+.logic-ol { padding:0 0 0 18px; margin:0; }
+.logic-ol li { font-size:13px; color:var(--text-secondary); line-height:1.7; margin-bottom:2px; }
+
+/* ═══ DIVIDER ═════════════════════════════════════ */
 .divider { border:none; border-top:1px solid var(--border); margin:11px 0; }
+.section-divider {
+  position:relative; margin:28px 28px 0; border:none; border-top:2px solid var(--border);
+}
+.section-divider-label {
+  display:inline-flex; align-items:center; gap:8px;
+  position:absolute; top:-13px; left:50%; transform:translateX(-50%);
+  background:var(--bg-cream); padding:0 16px;
+  font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); white-space:nowrap;
+}
+
+/* ═══ SUB-SECTION LABEL ═══════════════════════════ */
+.sub-label {
+  font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.9px; color:var(--text-muted);
+  padding:18px 28px 8px; display:flex; align-items:center; gap:8px;
+}
+.sub-label::after { content:''; flex:1; height:1px; background:var(--border); }
 
 /* ═══ FLOW ════════════════════════════════════════ */
 .flow { display:flex; align-items:center; gap:6px; margin:12px 0; }
 .flow-step {
-  flex:1; text-align:center;
-  background:var(--teal-light);
-  border:1px solid rgba(45,156,156,.2);
-  border-radius:8px; padding:10px 6px;
+  flex:1; text-align:center; background:var(--teal-light);
+  border:1px solid rgba(45,156,156,.2); border-radius:8px; padding:10px 6px;
 }
 .flow-step .fs-icon { font-size:1.8rem; display:block; margin-bottom:6px }
 .flow-step .fs-lbl { font-size:10.5px; color:var(--teal-dark); font-family:'Space Grotesk',sans-serif; font-weight:600; line-height:1.3; }
@@ -228,16 +249,6 @@ body {
 .mbox .mb-subs { margin-top:10px; display:flex; flex-direction:column; gap:4px }
 .mbox .mb-sub { font-size:11.5px; color:var(--text-secondary); background:rgba(255,255,255,.6); border-radius:5px; padding:3px 8px; display:flex; align-items:center; gap:5px; }
 .mbox .mb-sub strong { font-family:'Space Grotesk',sans-serif; font-weight:700; }
-
-/* ═══ TANDAS ══════════════════════════════════════ */
-.tandas-note { font-size:11px; color:var(--text-muted); font-style:italic; text-align:center; margin-bottom:10px; }
-.tandas { display:flex; gap:6px; margin:10px 0; }
-.tanda { flex:1; text-align:center; padding:10px 4px; border-radius:8px; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; border:1.5px solid transparent; }
-.tanda .t-name { display:block }
-.tanda .t-week { display:block; margin-top:3px; font-family:'DM Sans',sans-serif; font-weight:400; font-size:9px; color:var(--text-muted); }
-.tanda .t-icon { display:block; font-size:13px; margin-top:3px }
-.tanda.ok { background:var(--teal-light); border-color:rgba(45,156,156,.4); color:var(--teal-dark); }
-.tanda.no { background:var(--teal-light); border-color:rgba(45,156,156,.4); color:var(--teal-dark); }
 
 /* ═══ MARGIN KPIs ═════════════════════════════════ */
 .mkpi-row { display:flex; gap:8px; margin:12px 0; align-items:stretch; }
@@ -260,23 +271,28 @@ body {
 .mkpi.coral .mk-trend { color:var(--coral-dark) }
 .mkpi.gold  .mk-trend { color:var(--gold-dark) }
 
+/* ═══ TANDAS ══════════════════════════════════════ */
+.tandas-note { font-size:11px; color:var(--text-muted); font-style:italic; text-align:center; margin-bottom:10px; }
+.tandas { display:flex; gap:6px; margin:10px 0; }
+.tanda { flex:1; text-align:center; padding:10px 4px; border-radius:8px; font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700; border:1.5px solid transparent; }
+.tanda .t-name { display:block } .tanda .t-week { display:block; margin-top:3px; font-family:'DM Sans',sans-serif; font-weight:400; font-size:9px; color:var(--text-muted); }
+.tanda .t-icon { display:block; font-size:13px; margin-top:3px }
+.tanda.ok { background:var(--teal-light); border-color:rgba(45,156,156,.4); color:var(--teal-dark); }
+.tanda.no { background:var(--teal-light); border-color:rgba(45,156,156,.4); color:var(--teal-dark); }
+
 /* ═══ FILTER ══════════════════════════════════════ */
 .filter-wrap { margin:12px 0; display:flex; gap:12px; align-items:flex-start }
 .filter-funnel { font-size:2.2rem; flex-shrink:0; margin-top:4px }
 .filter-steps  { flex:1; display:flex; flex-direction:column; gap:6px }
 .fstep { display:flex; align-items:center; gap:8px; padding:7px 11px; border-radius:7px; font-size:12px; color:var(--text-secondary); }
-.fstep.f1 { background:var(--teal-light) }
-.fstep.f2 { background:var(--gold-light) }
-.fstep.f3 { background:var(--coral-light) }
+.fstep.f1 { background:var(--teal-light) } .fstep.f2 { background:var(--gold-light) } .fstep.f3 { background:var(--coral-light) }
 .fstep .pct { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:11px; min-width:52px; }
-.fstep.f1 .pct { color:var(--teal-dark) }
-.fstep.f2 .pct { color:var(--gold-dark) }
-.fstep.f3 .pct { color:var(--coral-dark) }
+.fstep.f1 .pct { color:var(--teal-dark) } .fstep.f2 .pct { color:var(--gold-dark) } .fstep.f3 .pct { color:var(--coral-dark) }
 .fstep strong { font-weight:700 }
 .filter-out { display:flex; flex-direction:column; gap:6px; padding-top:4px }
 .fout-badge { font-family:'Space Grotesk',sans-serif; font-size:9px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; padding:5px 11px; border-radius:100px; white-space:nowrap; }
-.fb-teal  { background:var(--teal-light);  color:var(--teal-dark) }
-.fb-gold  { background:var(--gold-light);  color:var(--gold-dark) }
+.fb-teal { background:var(--teal-light); color:var(--teal-dark) }
+.fb-gold { background:var(--gold-light); color:var(--gold-dark) }
 
 /* ═══ RISK ════════════════════════════════════════ */
 .risk-box { background:var(--coral-light); border:1px dashed rgba(232,93,76,.35); border-radius:8px; padding:12px 14px; margin-top:10px; display:flex; gap:10px; align-items:flex-start; }
@@ -285,36 +301,46 @@ body {
 
 /* ═══ FOOTER ══════════════════════════════════════ */
 footer {
-  padding:14px 28px;
-  border-top:1px solid var(--border);
-  display:flex; justify-content:space-between;
-  align-items:center; flex-wrap:wrap; gap:8px;
-  font-size:10px; color:var(--text-muted);
-  background:var(--bg-card);
+  padding:14px 28px; border-top:1px solid var(--border); margin-top:32px;
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
+  font-size:10px; color:var(--text-muted); background:var(--bg-card);
 }
 .footer-brand { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:10px; color:var(--coral); letter-spacing:.5px; }
 .footer-logo { display:flex; align-items:center; gap:7px; }
 .footer-logo svg { width:22px; height:22px; }
 .footer-logo-name { font-family:'Space Grotesk',sans-serif; font-size:9.5px; font-weight:700; color:var(--text-primary); }
-.footer-logo-sub { font-size:8px; color:var(--text-muted); }
 
+/* ═══ SPACING HELPERS ═════════════════════════════ */
+.mt-16 { margin-top:16px; }
+.mt-20 { margin-top:20px; }
+.mb-20 { margin-bottom:20px; }
+.mb-32 { margin-bottom:32px; }
+
+@media(max-width:900px){
+  .grid-4 { grid-template-columns:1fr 1fr }
+  .grid-3 { grid-template-columns:1fr 1fr }
+  .section-header { grid-template-columns:1fr }
+}
 @media(max-width:640px){
-  .main-grid, .section-header { grid-template-columns:1fr; padding:0 14px }
-  .hero { padding:18px 14px 16px }
-  .context-bar, footer { padding:9px 14px }
-  .area-logo { right:14px; top:14px; }
+  .grid-2,.grid-3,.grid-4 { grid-template-columns:1fr; padding:0 14px }
+  .hero,.context-bar,footer { padding-left:14px; padding-right:14px }
+  .pad-h { padding:0 14px }
+  .sub-label { padding-left:14px; padding-right:14px }
+  .section-header { padding:16px 14px 0; }
+  .section-divider { margin-left:14px; margin-right:14px }
+  .area-logo { right:14px; top:14px }
 }
 </style>
 </head>
 <body>
 
-<!-- ═══ HERO ═══════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════ -->
+<!--  HERO                                          -->
+<!-- ═══════════════════════════════════════════════ -->
 <div class="hero">
-
-  <!-- Logo COE AA -->
   <div class="area-logo">
     <svg viewBox="0 0 40 40" fill="none">
-      <rect width="40" height="40" rx="10" fill="url(#lgHero2)"/>
+      <rect width="40" height="40" rx="10" fill="url(#lgH)"/>
       <circle cx="12" cy="15" r="3" fill="white"/>
       <circle cx="12" cy="20" r="3" fill="white"/>
       <circle cx="12" cy="25" r="3" fill="white"/>
@@ -322,18 +348,13 @@ footer {
       <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
       <circle cx="28" cy="20" r="4" fill="#D4A853"/>
       <defs>
-        <linearGradient id="lgHero2" x1="0" y1="0" x2="40" y2="40">
-          <stop stop-color="#E85D4C"/>
-          <stop offset="1" stop-color="#C94A3A"/>
+        <linearGradient id="lgH" x1="0" y1="0" x2="40" y2="40">
+          <stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/>
         </linearGradient>
       </defs>
     </svg>
-    <div>
-      <div class="area-logo-name">COE Advanced Analytics</div>
-      
-    </div>
+    <div><div class="area-logo-name">COE Advanced Analytics</div></div>
   </div>
-
   <div class="hero-inner">
     <div>
       <div class="hero-badge"><span class="badge-dot"></span>Alicorp · AA · TPO Tradicional</div>
@@ -348,143 +369,896 @@ footer {
   </div>
 </div>
 
-<!-- ═══ CONTEXT BAR ═══════════════════════════════ -->
 <div class="context-bar">
   📌 <strong>Contexto:</strong>&nbsp;Utiliza análisis de elasticidad y reglas de negocio, validado por <em>'Diferencias en Diferencias' (DiD)</em> para asegurar causalidad.
 </div>
 
-<!-- ═══ SECTION HEADERS ══════════════════════════ -->
-<div class="section-header">
-  <div class="sec-label teal">📊 Lógica y Funcionamiento del Modelo</div>
-  <div class="sec-label coral">🏆 Hallazgos, Fortalezas y Limitaciones</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  BLOQUE 1 — DETALLE TÉCNICO MEJORADO           -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<style>
+/* ─── TECH BANNER ─────────────────────────────── */
+.tech-banner {
+  margin: 24px 28px 0;
+  background: linear-gradient(135deg, #1e1e3a 0%, #2d2b5e 55%, #3a3880 100%);
+  border-radius: 14px; padding: 20px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap; position: relative; overflow: hidden;
+}
+.tech-banner::before {
+  content:''; position:absolute; top:-50px; right:-30px;
+  width:220px; height:220px;
+  background: radial-gradient(circle, rgba(98,96,196,.35) 0%, transparent 70%);
+  border-radius:50%;
+}
+.tech-banner::after {
+  content:''; position:absolute; bottom:-40px; left:180px;
+  width:160px; height:160px;
+  background: radial-gradient(circle, rgba(45,156,156,.2) 0%, transparent 70%);
+  border-radius:50%;
+}
+.tech-banner-left { position:relative; z-index:1; }
+.tech-banner-left h2 {
+  font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700;
+  color:#fff; margin-bottom:4px;
+}
+.tech-banner-left p { font-size:12.5px; color:rgba(255,255,255,.65); }
+.tech-banner-chips { display:flex; gap:8px; flex-wrap:wrap; position:relative; z-index:1; }
+.t-chip {
+  display:flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,.1); backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.2); border-radius:100px;
+  padding:5px 13px; font-family:'Space Grotesk',sans-serif;
+  font-size:10px; font-weight:700; color:rgba(255,255,255,.9); letter-spacing:.3px;
+}
+.t-chip-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.dot-teal   { background:var(--teal); }
+.dot-gold   { background:var(--gold); }
+.dot-coral  { background:var(--coral); }
+
+/* ─── SECTION BLOCK HEADER ───────────────────── */
+.blk-header {
+  display:flex; align-items:center; gap:12px;
+  padding: 22px 28px 10px;
+}
+.blk-icon {
+  width:36px; height:36px; border-radius:10px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.blk-icon.bi-indigo { background:linear-gradient(135deg,#3a3880,#6260c4); }
+.blk-icon.bi-teal   { background:linear-gradient(135deg,#1a6b6b,#2D9C9C); }
+.blk-icon.bi-gold   { background:linear-gradient(135deg,#a07020,#D4A853); }
+.blk-icon.bi-coral  { background:linear-gradient(135deg,#C94A3A,#E85D4C); }
+.blk-icon svg { width:18px; height:18px; }
+.blk-title {
+  font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700;
+  color:var(--text-primary); letter-spacing:.4px;
+}
+.blk-title span { font-weight:400; color:var(--text-muted); font-size:11.5px; margin-left:6px; }
+.blk-line { flex:1; height:1px; background:var(--border); }
+
+/* ─── LÓGICA GENERAL: TIMELINE ────────────────── */
+.timeline-wrap { padding: 0 28px; margin-bottom:24px; }
+.timeline {
+  display:grid; grid-template-columns:repeat(6,1fr);
+  gap:0; position:relative;
+}
+.timeline::before {
+  content:''; position:absolute; top:22px; left:22px; right:22px; height:2px;
+  background:linear-gradient(90deg, #6260c4, #2D9C9C, #D4A853, #E85D4C, #2D9C9C, #6260c4);
+  z-index:0;
+}
+.tl-step { display:flex; flex-direction:column; align-items:center; position:relative; z-index:1; padding:0 4px; }
+.tl-num {
+  width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700; color:#fff;
+  margin-bottom:10px; box-shadow:0 3px 10px rgba(0,0,0,.15);
+  flex-shrink:0;
+}
+.tl-s1 .tl-num { background:linear-gradient(135deg,#3a3880,#6260c4); }
+.tl-s2 .tl-num { background:linear-gradient(135deg,#1a6b6b,#2D9C9C); }
+.tl-s3 .tl-num { background:linear-gradient(135deg,#238080,#3ab5b5); }
+.tl-s4 .tl-num { background:linear-gradient(135deg,#a07020,#D4A853); }
+.tl-s5 .tl-num { background:linear-gradient(135deg,#C94A3A,#E85D4C); }
+.tl-s6 .tl-num { background:linear-gradient(135deg,#3a3880,#6260c4); }
+.tl-card {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
+  padding:10px 10px 12px; text-align:center; width:100%;
+  box-shadow:var(--shadow-sm); transition:transform .15s, box-shadow .15s;
+}
+.tl-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.tl-card-icon { font-size:1.4rem; display:block; margin-bottom:5px; }
+.tl-card-title { font-family:'Space Grotesk',sans-serif; font-size:10.5px; font-weight:700; color:var(--text-primary); margin-bottom:4px; line-height:1.2; }
+.tl-card-text  { font-size:10px; color:var(--text-muted); line-height:1.4; }
+
+/* ─── FLUJO: PIPELINE CARDS ───────────────────── */
+.pipeline-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:12px; padding:0 28px; margin-bottom:24px;
+}
+.pipe-card {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:11px;
+  overflow:hidden; box-shadow:var(--shadow-sm);
+  transition:transform .15s, box-shadow .15s;
+}
+.pipe-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.pipe-head {
+  padding:10px 12px 8px; display:flex; align-items:center; gap:9px;
+}
+.pipe-num {
+  width:24px; height:24px; border-radius:7px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:#fff;
+}
+.pipe-head-title { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--text-primary); line-height:1.2; }
+.pipe-body { padding:0 12px 12px; }
+.pipe-body p { font-size:11px; color:var(--text-secondary); line-height:1.5; }
+/* pipeline color variants */
+.pc-1 .pipe-head { background:rgba(98,96,196,.08); border-bottom:1px solid rgba(98,96,196,.15); }
+.pc-1 .pipe-num  { background:linear-gradient(135deg,#3a3880,#6260c4); }
+.pc-2 .pipe-head { background:rgba(45,156,156,.08); border-bottom:1px solid rgba(45,156,156,.15); }
+.pc-2 .pipe-num  { background:linear-gradient(135deg,#1a6b6b,#2D9C9C); }
+.pc-3 .pipe-head { background:rgba(45,156,156,.06); border-bottom:1px solid rgba(45,156,156,.12); }
+.pc-3 .pipe-num  { background:linear-gradient(135deg,#238080,#3ab5b5); }
+.pc-4 .pipe-head { background:rgba(212,168,83,.08); border-bottom:1px solid rgba(212,168,83,.18); }
+.pc-4 .pipe-num  { background:linear-gradient(135deg,#a07020,#D4A853); }
+.pc-5 .pipe-head { background:rgba(212,168,83,.08); border-bottom:1px solid rgba(212,168,83,.18); }
+.pc-5 .pipe-num  { background:linear-gradient(135deg,#C4983F,#D4A853); }
+.pc-6 .pipe-head { background:rgba(232,93,76,.07); border-bottom:1px solid rgba(232,93,76,.15); }
+.pc-6 .pipe-num  { background:linear-gradient(135deg,#C94A3A,#E85D4C); }
+.pc-7 .pipe-head { background:rgba(98,96,196,.08); border-bottom:1px solid rgba(98,96,196,.15); }
+.pc-7 .pipe-num  { background:linear-gradient(135deg,#3a3880,#6260c4); }
+.pc-8 .pipe-head { background:rgba(45,156,156,.08); border-bottom:1px solid rgba(45,156,156,.15); }
+.pc-8 .pipe-num  { background:linear-gradient(135deg,#1a6b6b,#2D9C9C); }
+
+/* ─── FUENTES: DATA SOURCE CARDS ─────────────── */
+.src-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:12px; padding:0 28px; margin-bottom:24px;
+}
+.src-card {
+  background:var(--bg-card); border:1px solid var(--border); border-radius:11px;
+  overflow:hidden; box-shadow:var(--shadow-sm);
+  transition:transform .15s, box-shadow .15s;
+}
+.src-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.src-head {
+  padding:11px 14px; display:flex; align-items:center; gap:10px;
+}
+.src-icon-wrap {
+  width:34px; height:34px; border-radius:9px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:1.2rem;
+}
+.src-head-text {}
+.src-head-title { font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; color:var(--text-primary); }
+.src-head-sub   { font-size:10px; color:var(--text-muted); margin-top:1px; }
+.src-body { padding:0 14px 13px; }
+.src-body p { font-size:11px; color:var(--text-secondary); line-height:1.5; margin-bottom:4px; }
+.src-code {
+  background:#f0f0f0; border-radius:5px; padding:4px 8px;
+  font-family:monospace; font-size:10px; color:#444; margin-top:4px;
+  display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+/* src color variants */
+.sv-teal   .src-head { background:linear-gradient(135deg,rgba(45,156,156,.1),rgba(45,156,156,.04)); border-bottom:1px solid rgba(45,156,156,.18); }
+.sv-teal   .src-icon-wrap { background:linear-gradient(135deg,#1a6b6b,#2D9C9C); }
+.sv-indigo .src-head { background:linear-gradient(135deg,rgba(98,96,196,.1),rgba(98,96,196,.04)); border-bottom:1px solid rgba(98,96,196,.18); }
+.sv-indigo .src-icon-wrap { background:linear-gradient(135deg,#3a3880,#6260c4); }
+.sv-gold   .src-head { background:linear-gradient(135deg,rgba(212,168,83,.12),rgba(212,168,83,.04)); border-bottom:1px solid rgba(212,168,83,.22); }
+.sv-gold   .src-icon-wrap { background:linear-gradient(135deg,#a07020,#D4A853); }
+.sv-coral  .src-head { background:linear-gradient(135deg,rgba(232,93,76,.08),rgba(232,93,76,.03)); border-bottom:1px solid rgba(232,93,76,.15); }
+.sv-coral  .src-icon-wrap { background:linear-gradient(135deg,#C94A3A,#E85D4C); }
+
+/* ─── RF MODEL CARD ──────────────────────────── */
+.rf-model-wrap { padding:0 28px; margin-bottom:24px; }
+.rf-model-card {
+  border-radius:14px; overflow:hidden; box-shadow:0 4px 20px rgba(26,26,46,.1);
+  display:grid; grid-template-columns:260px 1fr;
+}
+.rf-model-left {
+  background:linear-gradient(160deg,#1e1e3a 0%,#2d2b5e 60%,#3a3880 100%);
+  padding:24px 20px; display:flex; flex-direction:column; justify-content:space-between;
+  position:relative; overflow:hidden;
+}
+.rf-model-left::before {
+  content:''; position:absolute; top:-30px; right:-30px;
+  width:120px; height:120px; border-radius:50%;
+  background:radial-gradient(circle,rgba(98,96,196,.4) 0%,transparent 70%);
+}
+.rf-model-left::after {
+  content:''; position:absolute; bottom:-20px; left:20px;
+  width:90px; height:90px; border-radius:50%;
+  background:radial-gradient(circle,rgba(45,156,156,.25) 0%,transparent 70%);
+}
+.rf-model-title {
+  font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700;
+  color:#fff; line-height:1.25; position:relative; z-index:1;
+}
+.rf-model-title span { color:#9a98e8; }
+.rf-model-sub { font-size:11.5px; color:rgba(255,255,255,.6); margin-top:6px; position:relative; z-index:1; }
+.rf-kpis { display:flex; flex-direction:column; gap:8px; position:relative; z-index:1; }
+.rf-kpi {
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
+  border-radius:9px; padding:8px 12px; display:flex; align-items:center; gap:9px;
+}
+.rf-kpi-icon { font-size:1.2rem; flex-shrink:0; }
+.rf-kpi-lbl { font-size:11px; color:rgba(255,255,255,.8); line-height:1.3; }
+.rf-kpi-lbl strong { color:#fff; font-family:'Space Grotesk',sans-serif; }
+.rf-model-right {
+  background:var(--bg-card); padding:22px 24px;
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.rf-bullets { display:flex; flex-direction:column; gap:9px; }
+.rf-bullet {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:10px 12px; border-radius:9px;
+  border:1px solid var(--border); background:var(--bg-cream);
+  transition:background .15s;
+}
+.rf-bullet:hover { background:var(--teal-light); }
+.rf-bullet-dot {
+  width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:4px;
+}
+.rf-bullet-txt { font-size:12px; color:var(--text-secondary); line-height:1.5; }
+.rf-bullet-txt strong { font-family:'Space Grotesk',sans-serif; color:var(--text-primary); }
+.rf-footer-note {
+  margin-top:14px; padding:10px 14px; border-radius:9px;
+  background:linear-gradient(135deg,var(--teal-light),rgba(98,96,196,.06));
+  border:1px solid rgba(45,156,156,.2);
+  font-size:12px; color:var(--text-secondary); font-style:italic;
+}
+
+/* ─── CONSIDERACIONES BANNER ─────────────────── */
+.cons-banner {
+  margin: 0 28px 28px;
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm);
+}
+.cons-head {
+  background:linear-gradient(135deg,rgba(212,168,83,.15),rgba(212,168,83,.04));
+  border-bottom:1px solid rgba(212,168,83,.25);
+  padding:12px 18px; display:flex; align-items:center; gap:10px;
+}
+.cons-head-icon {
+  width:30px; height:30px; border-radius:8px; flex-shrink:0;
+  background:linear-gradient(135deg,#a07020,#D4A853);
+  display:flex; align-items:center; justify-content:center;
+}
+.cons-head-icon svg { width:16px; height:16px; }
+.cons-head-title { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--text-primary); }
+.cons-items { display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
+.cons-item {
+  padding:14px 16px; display:flex; align-items:flex-start; gap:10px;
+  border-right:1px solid var(--border);
+}
+.cons-item:last-child { border-right:none; }
+.cons-item-icon {
+  width:32px; height:32px; border-radius:8px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:1rem;
+}
+.ci-1 { background:rgba(98,96,196,.1); }
+.ci-2 { background:rgba(212,168,83,.12); }
+.ci-3 { background:rgba(45,156,156,.1); }
+.ci-4 { background:rgba(232,93,76,.08); }
+.cons-item-txt { font-size:11.5px; color:var(--text-secondary); line-height:1.5; }
+.cons-item-txt strong { font-family:'Space Grotesk',sans-serif; color:var(--text-primary); font-size:12px; display:block; margin-bottom:2px; }
+
+@media(max-width:900px){
+  .timeline { grid-template-columns:repeat(3,1fr); }
+  .timeline::before { display:none; }
+  .pipeline-grid { grid-template-columns:repeat(2,1fr); }
+  .src-grid { grid-template-columns:repeat(2,1fr); }
+  .rf-model-card { grid-template-columns:1fr; }
+  .cons-items { grid-template-columns:repeat(2,1fr); }
+  .cons-item:nth-child(2) { border-right:none; }
+}
+@media(max-width:640px){
+  .timeline,.pipeline-grid,.src-grid { grid-template-columns:1fr; padding:0 14px; }
+  .cons-items { grid-template-columns:1fr; }
+  .cons-item { border-right:none; border-bottom:1px solid var(--border); }
+  .cons-item:last-child { border-bottom:none; }
+  .tech-banner,.rf-model-wrap,.cons-banner { margin-left:14px; margin-right:14px; }
+}
+</style>
+
+<!-- Tech Banner -->
+<div class="tech-banner">
+  <div class="tech-banner-left">
+    <h2>Detalle Técnico del Modelo</h2>
+    <p>Lógica, flujo de datos, fuentes y arquitectura analítica del TPO Tradicional</p>
+  </div>
+  <div class="tech-banner-chips">
+    <div class="t-chip"><span class="t-chip-dot dot-indigo" style="background:#9a98e8"></span>Random Forest</div>
+    <div class="t-chip"><span class="t-chip-dot dot-teal"></span>BigQuery · SQL Server</div>
+    <div class="t-chip"><span class="t-chip-dot dot-gold"></span>Elasticidad Precio–Demanda</div>
+  </div>
 </div>
 
-<!-- ═══ MAIN GRID ══════════════════════════════════ -->
-<div class="main-grid" style="margin-top:0">
-
-  <!-- ① Elasticidad -->
-  <div class="card c-teal">
-    <div class="card-title">
-      📈 Optimización basada en Elasticidad
-      <span class="pill pill-teal">Lógica núcleo</span>
-    </div>
-    <div class="flow">
-      <div class="flow-step"><span class="fs-icon">🗄️</span><span class="fs-lbl">Datos Transaccionales<br>& Precios Efectivos</span></div>
-      <span class="flow-arr">→</span>
-      <div class="flow-step"><span class="fs-icon">📉</span><span class="fs-lbl">Curvas de<br>Elasticidad</span></div>
-      <span class="flow-arr">→</span>
-      <div class="flow-step"><span class="fs-icon">🏷️</span><span class="fs-lbl">Promociones<br>por SKU</span></div>
-    </div>
-    <hr class="divider">
-    <p>Genera promociones por SKU usando datos transaccionales, precios efectivos y curvas de elasticidad.</p>
+<!-- 1. Lógica General: Timeline -->
+<div class="blk-header mt-20">
+  <div class="blk-icon bi-indigo">
+    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="white" stroke-width="1.5"/><path d="M9 5v4l3 2" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
   </div>
-
-  <!-- ② Bodegas -->
-  <div class="card c-coral">
-    <div class="card-title">
-      🏪 Impacto Positivo en Bodegas (BO)
-      <span class="pill pill-coral">Resultados piloto</span>
+  <div class="blk-title">Lógica General <span>— 6 pasos secuenciales</span></div>
+  <div class="blk-line"></div>
+</div>
+<div class="timeline-wrap mt-16">
+  <div class="timeline">
+    <div class="tl-step tl-s1">
+      <div class="tl-num">1</div>
+      <div class="tl-card"><span class="tl-card-icon">🗄️</span><div class="tl-card-title">Datos Transaccionales</div><div class="tl-card-text">Origen CMP</div></div>
     </div>
-    <div class="metrics-grid">
-      <div class="mbox teal">
-        <span class="mb-val">+13–22%</span>
-        <span class="mb-lbl">Venta Total</span>
-        <div class="mb-subs">
-          <div class="mb-sub">🎟 Ticket Prom. <strong>+15%</strong></div>
-          <div class="mb-sub">💰 Util. Bruta <strong>+15%</strong></div>
-        </div>
-      </div>
-      <div class="mbox coral">
-        <span class="mb-val">+20%</span>
-        <span class="mb-lbl">Pareto Core</span>
-        <div class="mb-subs">
-          <div class="mb-sub">🎟 Ticket Prom. <strong>+9%</strong></div>
-          <div class="mb-sub">💰 Util. Bruta <strong>+21%</strong></div>
-        </div>
-      </div>
+    <div class="tl-step tl-s2">
+      <div class="tl-num">2</div>
+      <div class="tl-card"><span class="tl-card-icon">🔍</span><div class="tl-card-title">Filtro DEX</div><div class="tl-card-text">Por provincia</div></div>
     </div>
-    <p>Incremento en ventas del 13% al 22%, especialmente en clientes <strong>Pareto Core</strong>.</p>
+    <div class="tl-step tl-s3">
+      <div class="tl-num">3</div>
+      <div class="tl-card"><span class="tl-card-icon">💲</span><div class="tl-card-title">Precios Efectivos</div><div class="tl-card-text">vs. Lista por SKU</div></div>
+    </div>
+    <div class="tl-step tl-s4">
+      <div class="tl-num">4</div>
+      <div class="tl-card"><span class="tl-card-icon">⚖️</span><div class="tl-card-title">Ajuste de Pesos</div><div class="tl-card-text">Sell-In · Fert-Hawa</div></div>
+    </div>
+    <div class="tl-step tl-s5">
+      <div class="tl-num">5</div>
+      <div class="tl-card"><span class="tl-card-icon">📉</span><div class="tl-card-title">Predicción Elasticidad</div><div class="tl-card-text">Desc. 2%–8%</div></div>
+    </div>
+    <div class="tl-step tl-s6">
+      <div class="tl-num">6</div>
+      <div class="tl-card"><span class="tl-card-icon">🏆</span><div class="tl-card-title">Tandas Óptimas</div><div class="tl-card-text">Lima</div></div>
+    </div>
   </div>
+</div>
 
-  <!-- ③ Tandas -->
-  <div class="card c-gold">
-    <div class="card-title">
-      🗓️ Control de Ejecución en 5 Tandas
-      <span class="pill pill-gold">Semanales</span>
-    </div>
-    <p class="tandas-note">Cada tanda = 1 semana · No se repite el mismo descuento en semanas consecutivas</p>
-    <div class="tandas">
-      <div class="tanda ok"><span class="t-name">Tanda 1</span><span class="t-week">Semana 1</span><span class="t-icon">✅</span></div>
-      <div class="tanda ok"><span class="t-name">Tanda 2</span><span class="t-week">Semana 2</span><span class="t-icon">✅</span></div>
-      <div class="tanda no"><span class="t-name">Tanda 3</span><span class="t-week">Semana 3</span><span class="t-icon">🚫</span></div>
-      <div class="tanda ok"><span class="t-name">Tanda 4</span><span class="t-week">Semana 4</span><span class="t-icon">✅</span></div>
-      <div class="tanda no"><span class="t-name">Tanda 5</span><span class="t-week">Semana 5</span><span class="t-icon">🚫</span></div>
-    </div>
-    <hr class="divider">
-    <p>Distribuye el presupuesto en bloques semanales, <strong>prohibiendo descuentos iguales en tandas consecutivas</strong> para evitar saturación y canibalización.</p>
+<!-- 2. Flujo del Sistema -->
+<div class="blk-header">
+  <div class="blk-icon bi-teal">
+    <svg viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 5l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
-
-  <!-- ④ Mejora del Margen -->
-  <div class="card c-teal">
-    <div class="card-title">
-      📊 Mejora del Margen y Utilidad
-      <span class="pill pill-teal">Proporcional</span>
-    </div>
-    <div class="mkpi-row">
-      <div class="mkpi teal"><span class="mk-icon">🛒</span><span class="mk-val">+13–22%</span><span class="mk-lbl">Venta Total</span><span class="mk-trend">▲ crecimiento sostenido</span></div>
-      <div class="mkpi gold"><span class="mk-icon">🎟️</span><span class="mk-val">+15%</span><span class="mk-lbl">Ticket Promedio</span><span class="mk-trend">▲ por cliente</span></div>
-      <div class="mkpi coral"><span class="mk-icon">💰</span><span class="mk-val">+15–21%</span><span class="mk-lbl">Utilidad Bruta</span><span class="mk-trend">▲ margen real</span></div>
-    </div>
-    <hr class="divider">
-    <p>La utilidad bruta crece <strong>proporcionalmente</strong> a las ventas, revelando una mejora real del margen sin canibalización.</p>
+  <div class="blk-title">Flujo del Sistema <span>— 8 etapas del pipeline</span></div>
+  <div class="blk-line"></div>
+</div>
+<div class="pipeline-grid mt-16">
+  <div class="pipe-card pc-1">
+    <div class="pipe-head"><div class="pipe-num">1</div><div class="pipe-head-title">Configuración</div></div>
+    <div class="pipe-body"><p>CSVs y parámetros de ejecución. Inputs iniciales del modelo.</p></div>
   </div>
-
-  <!-- ⑤ Restricciones -->
-  <div class="card c-gold">
-    <div class="card-title">
-      🔒 Restricciones de Negocio Clave
-      <span class="pill pill-gold">Reglas de ejecución</span>
-    </div>
-    <div class="filter-wrap">
-      <div class="filter-funnel">🔺</div>
-      <div class="filter-steps">
-        <div class="fstep f1"><span class="pct">Entrada</span> SKUs candidatos iniciales del universo</div>
-        <div class="fstep f2"><span class="pct">Filtro 1</span> Solo SKUs con <strong>ROI &gt; 0</strong></div>
-        <div class="fstep f3"><span class="pct">Filtro 2</span> Descuentos entre <strong>2% y 8%</strong></div>
-      </div>
-      <div class="filter-out">
-        <span class="fout-badge fb-teal">✅ ROI &gt; 0</span>
-        <span class="fout-badge fb-gold">📉 Desc. 2–8%</span>
-      </div>
-    </div>
-    <hr class="divider">
-    <p>Solo se ejecutan promociones con <strong>ROI &gt; 0</strong> y descuentos entre <strong>2% y 8%</strong>, garantizando rentabilidad en cada acción.</p>
+  <div class="pipe-card pc-2">
+    <div class="pipe-head"><div class="pipe-num">2</div><div class="pipe-head-title">BigQuery + Excel</div></div>
+    <div class="pipe-body"><p>Integración de tablas analíticas. Inputs manuales de negocio.</p></div>
   </div>
+  <div class="pipe-card pc-3">
+    <div class="pipe-head"><div class="pipe-num">3</div><div class="pipe-head-title">Ingesta de Datos</div></div>
+    <div class="pipe-body"><p>Filtros por DEX. Estandarización de variables.</p></div>
+  </div>
+  <div class="pipe-card pc-4">
+    <div class="pipe-head"><div class="pipe-num">4</div><div class="pipe-head-title">Regramaje</div></div>
+    <div class="pipe-body"><p>Normalización de gramajes. Equivalencia entre presentaciones.</p></div>
+  </div>
+  <div class="pipe-card pc-5">
+    <div class="pipe-head"><div class="pipe-num">5</div><div class="pipe-head-title">Tablón de Demanda</div></div>
+    <div class="pipe-body"><p>Dataset unificado de entrenamiento. Variables de precio y demanda.</p></div>
+  </div>
+  <div class="pipe-card pc-6">
+    <div class="pipe-head"><div class="pipe-num">6</div><div class="pipe-head-title">Tablón de Simulación</div></div>
+    <div class="pipe-body"><p>Simulación de precios y descuentos. Evaluación de escenarios.</p></div>
+  </div>
+  <div class="pipe-card pc-7">
+    <div class="pipe-head"><div class="pipe-num">7</div><div class="pipe-head-title">Features + Modelo RF</div></div>
+    <div class="pipe-body"><p>Construcción de features. Random Forest para estimar elasticidad.</p></div>
+  </div>
+  <div class="pipe-card pc-8">
+    <div class="pipe-head"><div class="pipe-num">8</div><div class="pipe-head-title">Métricas de Tandas</div></div>
+    <div class="pipe-body"><p>Cálculo de ROI. Generación de promociones finales.</p></div>
+  </div>
+</div>
 
-  <!-- ⑥ Riesgos -->
-  <div class="card c-coral">
-    <div class="card-title">
-      ⚠️ Riesgos y Limitaciones en PDM
-      <span class="pill pill-coral">Área de mejora</span>
+<!-- 3. Fuentes de Datos -->
+<div class="blk-header">
+  <div class="blk-icon bi-gold">
+    <svg viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="5" rx="6" ry="2.5" stroke="white" stroke-width="1.5"/><path d="M3 5v8c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V5" stroke="white" stroke-width="1.5"/><path d="M3 9c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5" stroke="white" stroke-width="1.5"/></svg>
+  </div>
+  <div class="blk-title">Fuentes de Datos <span>— 6 tablas de origen</span></div>
+  <div class="blk-line"></div>
+</div>
+<div class="src-grid mt-16">
+  <div class="src-card sv-teal">
+    <div class="src-head">
+      <div class="src-icon-wrap">🧾</div>
+      <div class="src-head-text"><div class="src-head-title">Transacciones</div><div class="src-head-sub">poc_promos</div></div>
     </div>
-    <p>Principales limitaciones identificadas en el canal <strong>PDM</strong>:</p>
-    <div class="risk-box">
-      <div class="risk-icon">🔬</div>
+    <div class="src-body"><p>Combina clientes DEX, materiales y transacciones de venta.</p></div>
+  </div>
+  <div class="src-card sv-indigo">
+    <div class="src-head">
+      <div class="src-icon-wrap">📒</div>
+      <div class="src-head-text"><div class="src-head-title">Contabilidad</div><div class="src-head-sub">COGS unitario</div></div>
+    </div>
+    <div class="src-body"><p>Gestión de contabilidad. Cálculo del costo por unidad vendida.</p></div>
+  </div>
+  <div class="src-card sv-coral">
+    <div class="src-head">
+      <div class="src-icon-wrap">💲</div>
+      <div class="src-head-text"><div class="src-head-title">Precio Efectivo</div><div class="src-head-sub">dex_cliente_detalle</div></div>
+    </div>
+    <div class="src-body">
+      <span class="src-code">cod_clase_posicion IN ('TNR','TDN')</span>
+      <span class="src-code">SAFE_DIVIDE(SUM(mnt_bruto), SUM(cnt_material_venta))</span>
+    </div>
+  </div>
+  <div class="src-card sv-gold">
+    <div class="src-head">
+      <div class="src-icon-wrap">🏷️</div>
+      <div class="src-head-text"><div class="src-head-title">Precio Lista</div><div class="src-head-sub">dex_cliente_detalle</div></div>
+    </div>
+    <div class="src-body">
+      <span class="src-code">cod_clase_posicion = 'TNR'</span>
+      <span class="src-code">SAFE_DIVIDE(SUM(mnt_bruto), SUM(cnt_material_venta))</span>
+    </div>
+  </div>
+  <div class="src-card sv-teal">
+    <div class="src-head">
+      <div class="src-icon-wrap">📦</div>
+      <div class="src-head-text"><div class="src-head-title">Materiales</div><div class="src-head-sub">af0_avance_venta_sell_in</div></div>
+    </div>
+    <div class="src-body"><p>Equivalencias de regramaje entre presentaciones.</p></div>
+  </div>
+  <div class="src-card sv-indigo">
+    <div class="src-head">
+      <div class="src-icon-wrap">🔩</div>
+      <div class="src-head-text"><div class="src-head-title">Fert-Hawa</div><div class="src-head-sub">s4_material_fert_hawa</div></div>
+    </div>
+    <div class="src-body"><p>Información técnica de materiales y relaciones FERT–HAWA.</p></div>
+  </div>
+</div>
+
+<!-- 4. Modelo RF -->
+<div class="blk-header">
+  <div class="blk-icon bi-indigo">
+    <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="3" fill="white"/><path d="M9 2v2M9 14v2M2 9h2M14 9h2M4.2 4.2l1.4 1.4M12.4 12.4l1.4 1.4M4.2 13.8l1.4-1.4M12.4 5.6l1.4-1.4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </div>
+  <div class="blk-title">Modelo de Elasticidad <span>— Random Forest</span></div>
+  <div class="blk-line"></div>
+</div>
+<div class="rf-model-wrap mt-16">
+  <div class="rf-model-card">
+    <div class="rf-model-left">
       <div>
-        <div class="risk-title">Muestras Pequeñas · Alta Variabilidad</div>
-        <p style="font-size:12px; color:var(--text-secondary);">Falta de significancia estadística por <strong>muestras pequeñas</strong> y alta variabilidad en el comportamiento de compra, lo que dificulta conclusiones robustas por segmento.</p>
+        <div class="rf-model-title">Random <span>Forest</span><br>Elasticity Model</div>
+        <div class="rf-model-sub">Núcleo analítico del TPO Tradicional</div>
+      </div>
+      <div class="rf-kpis">
+        <div class="rf-kpi"><span class="rf-kpi-icon">📊</span><div class="rf-kpi-lbl"><strong>Features:</strong> precio, volumen y contexto</div></div>
+        <div class="rf-kpi"><span class="rf-kpi-icon">📉</span><div class="rf-kpi-lbl"><strong>Descuentos simulados:</strong> 2% – 8%</div></div>
+        <div class="rf-kpi"><span class="rf-kpi-icon">🎯</span><div class="rf-kpi-lbl"><strong>Salida:</strong> curvas demanda por SKU</div></div>
+      </div>
+    </div>
+    <div class="rf-model-right">
+      <div class="rf-bullets">
+        <div class="rf-bullet"><div class="rf-bullet-dot" style="background:#6260c4"></div><div class="rf-bullet-txt">Se construyen <strong>features de precio, volumen y contexto</strong> para cada SKU.</div></div>
+        <div class="rf-bullet"><div class="rf-bullet-dot" style="background:var(--teal)"></div><div class="rf-bullet-txt">El modelo aprende la <strong>elasticidad precio–demanda</strong> usando datos históricos transaccionales.</div></div>
+        <div class="rf-bullet"><div class="rf-bullet-dot" style="background:var(--gold)"></div><div class="rf-bullet-txt">Permite estimar el impacto esperado de aplicar diferentes niveles de descuento.</div></div>
+        <div class="rf-bullet"><div class="rf-bullet-dot" style="background:var(--coral)"></div><div class="rf-bullet-txt">Se utiliza para <strong>simular promociones entre 2% y 8%</strong> antes de su ejecución.</div></div>
+      </div>
+      <div class="rf-footer-note">Las curvas de demanda generadas optimizan la selección y timing de las tandas promocionales.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Consideraciones -->
+<div class="blk-header">
+  <div class="blk-icon bi-gold">
+    <svg viewBox="0 0 18 18" fill="none"><path d="M9 2L2 6v6l7 4 7-4V6L9 2z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 10V7M9 12v.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </div>
+  <div class="blk-title">Consideraciones del Modelo <span>— alcance y parámetros</span></div>
+  <div class="blk-line"></div>
+</div>
+<div class="cons-banner mt-16">
+  <div class="cons-head">
+    <div class="cons-head-icon">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5v6l7 4 7-4V5L8 1z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="cons-head-title">Parámetros de ejecución y alcance geográfico</div>
+  </div>
+  <div class="cons-items">
+    <div class="cons-item">
+      <div class="cons-item-icon ci-1">🏢</div>
+      <div class="cons-item-txt"><strong>DEXs activas</strong>ATUQ · ATIPANA · Dist. Exclusiva del Sur · MINALI · VALLE</div>
+    </div>
+    <div class="cons-item">
+      <div class="cons-item-icon ci-2">🏷️</div>
+      <div class="cons-item-txt"><strong>Rango de descuentos</strong>Simulaciones entre 2% y 8% por SKU</div>
+    </div>
+    <div class="cons-item">
+      <div class="cons-item-icon ci-3">📍</div>
+      <div class="cons-item-txt"><strong>COGS variable</strong>El costo unitario varía según la provincia de cada DEX</div>
+    </div>
+    <div class="cons-item">
+      <div class="cons-item-icon ci-4">✅</div>
+      <div class="cons-item-txt"><strong>Filtro de rentabilidad</strong>Solo se conservan promociones con ROI &gt; 0</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  BLOQUE 3 — RESUMEN VISUAL MEJORADO            -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<style>
+/* ─── RESUMEN BANNER ────────────────────────────── */
+.resumen-banner {
+  margin: 32px 28px 0;
+  background: linear-gradient(135deg, #1a6b6b 0%, #2D9C9C 50%, #3ab5b5 100%);
+  border-radius: 14px;
+  padding: 20px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  position: relative; overflow: hidden;
+}
+.resumen-banner::before {
+  content:''; position:absolute; top:-40px; right:-40px;
+  width:200px; height:200px;
+  background: radial-gradient(circle, rgba(255,255,255,.12) 0%, transparent 70%);
+  border-radius:50%;
+}
+.resumen-banner::after {
+  content:''; position:absolute; bottom:-30px; left:100px;
+  width:140px; height:140px;
+  background: radial-gradient(circle, rgba(212,168,83,.2) 0%, transparent 70%);
+  border-radius:50%;
+}
+.resumen-banner-left { position:relative; z-index:1; }
+.resumen-banner-left h2 {
+  font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700;
+  color:#fff; margin-bottom:4px; letter-spacing:-.2px;
+}
+.resumen-banner-left p { font-size:12.5px; color:rgba(255,255,255,.75); }
+.resumen-banner-chips { display:flex; gap:8px; flex-wrap:wrap; position:relative; z-index:1; }
+.r-chip {
+  display:flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,.15); backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.25); border-radius:100px;
+  padding:5px 14px; font-family:'Space Grotesk',sans-serif;
+  font-size:10.5px; font-weight:700; color:#fff; letter-spacing:.3px;
+}
+.r-chip svg { width:14px; height:14px; flex-shrink:0; }
+
+/* ─── RICH CARDS ────────────────────────────────── */
+.rich-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px; padding: 18px 28px 36px;
+}
+
+.rich-card {
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 4px 20px rgba(26,26,46,.1);
+  transition: transform .2s, box-shadow .2s;
+  position: relative;
+}
+.rich-card:hover { transform:translateY(-4px); box-shadow:0 10px 32px rgba(26,26,46,.16); }
+
+/* card header band */
+.rc-head {
+  padding: 18px 18px 14px;
+  position: relative; overflow:hidden;
+}
+.rc-head::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:rgba(255,255,255,.2);
+}
+.rc-head-icon {
+  width: 44px; height: 44px; border-radius: 11px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.2); margin-bottom:10px;
+}
+.rc-head-icon svg { width:24px; height:24px; }
+.rc-head h3 {
+  font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:700;
+  color:#fff; margin-bottom:3px; line-height:1.2;
+}
+.rc-head .rc-badge {
+  display:inline-block; background:rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.3); border-radius:100px;
+  font-size:9px; font-weight:700; letter-spacing:.6px; text-transform:uppercase;
+  color:rgba(255,255,255,.9); padding:2px 10px;
+}
+/* decorative circle */
+.rc-head .rc-deco {
+  position:absolute; top:-20px; right:-20px;
+  width:90px; height:90px; border-radius:50%;
+  background:rgba(255,255,255,.08);
+}
+.rc-head .rc-deco2 {
+  position:absolute; bottom:-30px; right:30px;
+  width:70px; height:70px; border-radius:50%;
+  background:rgba(255,255,255,.06);
+}
+
+/* card colors */
+.rc-teal .rc-head  { background: linear-gradient(135deg, #1a6b6b 0%, #2D9C9C 100%); }
+.rc-gold .rc-head  { background: linear-gradient(135deg, #a07020 0%, #D4A853 100%); }
+.rc-indigo .rc-head { background: linear-gradient(135deg, #3a3880 0%, #6260c4 100%); }
+
+/* card body */
+.rc-body {
+  background: var(--bg-card); padding: 16px 18px 18px;
+}
+
+/* ─── ELASTICIDAD FLOW ───────────────────────────── */
+.eflow { display:flex; flex-direction:column; gap:0; }
+.eflow-step {
+  display:flex; align-items:center; gap:12px;
+  padding: 10px 12px; border-radius:9px; margin-bottom:4px;
+  border:1px solid var(--border);
+  background: var(--bg-cream);
+  transition: background .15s;
+}
+.eflow-step:hover { background: var(--teal-light); }
+.eflow-num {
+  width:22px; height:22px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700;
+  background: var(--teal); color:#fff;
+}
+.eflow-step-icon { font-size:1.3rem; flex-shrink:0; }
+.eflow-txt { font-size:12px; color:var(--text-secondary); line-height:1.3; }
+.eflow-txt strong { font-family:'Space Grotesk',sans-serif; color:var(--text-primary); }
+.eflow-arr {
+  display:flex; align-items:center; justify-content:center;
+  color:var(--teal); font-size:1.1rem; margin:1px 0 1px 14px;
+}
+.rc-foot-note { font-size:11.5px; color:var(--text-muted); margin-top:12px; font-style:italic; }
+
+/* ─── TANDAS VISUAL ──────────────────────────────── */
+.tandas-v2 { display:flex; flex-direction:column; gap:7px; }
+.tv2-row {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 12px; border-radius:9px; border:1.5px solid transparent;
+}
+.tv2-row.tv-ok { background:rgba(45,156,156,.08); border-color:rgba(45,156,156,.25); }
+.tv2-row.tv-no { background:rgba(232,93,76,.06);  border-color:rgba(232,93,76,.2); }
+.tv2-badge {
+  font-family:'Space Grotesk',sans-serif; font-size:10px; font-weight:700;
+  min-width:56px; padding:3px 8px; border-radius:6px; text-align:center;
+}
+.tv-ok .tv2-badge { background:var(--teal); color:#fff; }
+.tv-no .tv2-badge { background:#f0f0f0; color:var(--text-muted); }
+.tv2-week { font-size:11.5px; color:var(--text-secondary); flex:1; }
+.tv2-status { font-size:1.1rem; }
+.tv2-rule {
+  margin-top:12px; padding:9px 12px; border-radius:9px;
+  background: var(--gold-light); border:1px solid rgba(212,168,83,.3);
+  font-size:11.5px; color:var(--gold-dark);
+  display:flex; gap:7px; align-items:flex-start;
+}
+.tv2-rule svg { width:14px; height:14px; flex-shrink:0; margin-top:1px; }
+
+/* ─── RESTRICCIONES FUNNEL ─────────────────────── */
+.rfunnel { display:flex; flex-direction:column; gap:0; }
+.rf-step {
+  display:flex; align-items:stretch; gap:0;
+}
+.rf-connector {
+  display:flex; flex-direction:column; align-items:center; width:28px; flex-shrink:0;
+}
+.rf-dot {
+  width:12px; height:12px; border-radius:50%; flex-shrink:0;
+  border:2.5px solid; margin-top:14px;
+}
+.rf-line { flex:1; width:2px; margin:2px 0; }
+.rf-content {
+  flex:1; padding:9px 12px; border-radius:9px; margin:4px 0;
+  display:flex; align-items:center; gap:10px; border:1px solid transparent;
+}
+.rf-step.rs-in  .rf-dot  { border-color:#888; }
+.rf-step.rs-in  .rf-line { background:#ddd; }
+.rf-step.rs-in  .rf-content { background:#f7f7f7; border-color:#e0e0e0; }
+.rf-step.rs-roi .rf-dot  { border-color:var(--teal); }
+.rf-step.rs-roi .rf-line { background:var(--teal); }
+.rf-step.rs-roi .rf-content { background:var(--teal-light); border-color:rgba(45,156,156,.3); }
+.rf-step.rs-dsc .rf-dot  { border-color:var(--gold); }
+.rf-step.rs-dsc .rf-content { background:var(--gold-light); border-color:rgba(212,168,83,.3); }
+.rf-icon { font-size:1.4rem; flex-shrink:0; }
+.rf-label { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--text-primary); }
+.rf-sublabel { font-size:10.5px; color:var(--text-muted); margin-top:1px; }
+.rs-in  .rf-label { color:#888; }
+.rs-roi .rf-label { color:var(--teal-dark); }
+.rs-dsc .rf-label { color:var(--gold-dark); }
+.rf-result {
+  margin-top:12px; padding:10px 14px; border-radius:9px;
+  background:linear-gradient(135deg, var(--teal-light), var(--gold-light));
+  border:1px solid rgba(45,156,156,.2);
+  display:flex; align-items:center; gap:10px;
+}
+.rf-result-icon { font-size:1.6rem; }
+.rf-result-txt { font-size:12px; color:var(--text-secondary); }
+.rf-result-txt strong { font-family:'Space Grotesk',sans-serif; color:var(--text-primary); }
+
+@media(max-width:900px){ .rich-grid { grid-template-columns:1fr 1fr } }
+@media(max-width:640px){ .rich-grid { grid-template-columns:1fr; padding:12px 14px 28px; } .resumen-banner { margin:24px 14px 0; } }
+</style>
+
+<!-- Banner superior -->
+<div class="resumen-banner">
+  <div class="resumen-banner-left">
+    <h2>Resumen Operativo del Modelo</h2>
+    <p>Lógica de elasticidad, control de tandas y restricciones de negocio</p>
+  </div>
+  <div class="resumen-banner-chips">
+    <div class="r-chip">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6H14L11 9L12 13L8 11L4 13L5 9L2 6H6L8 2Z" fill="white" opacity=".9"/></svg>
+      Elasticidad por SKU
+    </div>
+    <div class="r-chip">
+      <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="2" rx="1" fill="white" opacity=".9"/><rect x="2" y="7" width="9" height="2" rx="1" fill="white" opacity=".9"/><rect x="2" y="11" width="11" height="2" rx="1" fill="white" opacity=".9"/></svg>
+      5 Tandas semanales
+    </div>
+    <div class="r-chip">
+      <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="white" stroke-width="1.5" opacity=".9"/><path d="M8 5V8L10 10" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity=".9"/></svg>
+      ROI &gt; 0 garantizado
+    </div>
+  </div>
+</div>
+
+<!-- 3 rich cards -->
+<div class="rich-grid">
+
+  <!-- 1. Elasticidad -->
+  <div class="rich-card rc-teal">
+    <div class="rc-head">
+      <div class="rc-deco"></div><div class="rc-deco2"></div>
+      <div class="rc-head-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="16 7 22 7 22 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Optimización basada<br>en Elasticidad</h3>
+      <span class="rc-badge">Lógica núcleo</span>
+    </div>
+    <div class="rc-body">
+      <div class="eflow">
+        <div class="eflow-step">
+          <div class="eflow-num">1</div>
+          <span class="eflow-step-icon">🗄️</span>
+          <div class="eflow-txt"><strong>Datos Transaccionales</strong><br>Precios efectivos por SKU</div>
+        </div>
+        <div class="eflow-arr">↓</div>
+        <div class="eflow-step">
+          <div class="eflow-num">2</div>
+          <span class="eflow-step-icon">📉</span>
+          <div class="eflow-txt"><strong>Curvas de Elasticidad</strong><br>Relación precio–demanda</div>
+        </div>
+        <div class="eflow-arr">↓</div>
+        <div class="eflow-step">
+          <div class="eflow-num">3</div>
+          <span class="eflow-step-icon">🏷️</span>
+          <div class="eflow-txt"><strong>Promociones por SKU</strong><br>Descuentos 2% – 8%</div>
+        </div>
+      </div>
+      <p class="rc-foot-note">Genera las mejores ofertas minimizando riesgo de margen.</p>
+    </div>
+  </div>
+
+  <!-- 2. Tandas -->
+  <div class="rich-card rc-gold">
+    <div class="rc-head">
+      <div class="rc-deco"></div><div class="rc-deco2"></div>
+      <div class="rc-head-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="18" rx="2" stroke="white" stroke-width="2"/>
+          <line x1="16" y1="2" x2="16" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="8" y1="2" x2="8" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <line x1="3" y1="10" x2="21" y2="10" stroke="white" stroke-width="2"/>
+          <circle cx="8" cy="15" r="1.5" fill="white"/>
+          <circle cx="12" cy="15" r="1.5" fill="white" opacity=".5"/>
+          <circle cx="16" cy="15" r="1.5" fill="white"/>
+        </svg>
+      </div>
+      <h3>Control de Ejecución<br>en 5 Tandas</h3>
+      <span class="rc-badge">Semanales</span>
+    </div>
+    <div class="rc-body">
+      <div class="tandas-v2">
+        <div class="tv2-row tv-ok">
+          <span class="tv2-badge">Tanda 1</span>
+          <span class="tv2-week">Semana 1 — activa</span>
+          <span class="tv2-status">✅</span>
+        </div>
+        <div class="tv2-row tv-ok">
+          <span class="tv2-badge">Tanda 2</span>
+          <span class="tv2-week">Semana 2 — activa</span>
+          <span class="tv2-status">✅</span>
+        </div>
+        <div class="tv2-row tv-no">
+          <span class="tv2-badge">Tanda 3</span>
+          <span class="tv2-week">Semana 3 — bloqueada</span>
+          <span class="tv2-status">🚫</span>
+        </div>
+        <div class="tv2-row tv-ok">
+          <span class="tv2-badge">Tanda 4</span>
+          <span class="tv2-week">Semana 4 — activa</span>
+          <span class="tv2-status">✅</span>
+        </div>
+        <div class="tv2-row tv-no">
+          <span class="tv2-badge">Tanda 5</span>
+          <span class="tv2-week">Semana 5 — bloqueada</span>
+          <span class="tv2-status">🚫</span>
+        </div>
+      </div>
+      <div class="tv2-rule">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 2C4.7 2 2 4.7 2 8s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 9V8m0-3v1" stroke="#C4983F" stroke-width="1.5" stroke-linecap="round"/></svg>
+        No se repite el mismo descuento en semanas consecutivas para evitar saturación.
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Restricciones -->
+  <div class="rich-card rc-indigo">
+    <div class="rc-head">
+      <div class="rc-deco"></div><div class="rc-deco2"></div>
+      <div class="rc-head-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L4 6V12C4 16.4 7.4 20.5 12 22C16.6 20.5 20 16.4 20 12V6L12 2Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Restricciones de<br>Negocio Clave</h3>
+      <span class="rc-badge">Reglas de ejecución</span>
+    </div>
+    <div class="rc-body">
+      <div class="rfunnel">
+        <div class="rf-step rs-in">
+          <div class="rf-connector">
+            <div class="rf-dot"></div>
+            <div class="rf-line"></div>
+          </div>
+          <div class="rf-content">
+            <span class="rf-icon">📦</span>
+            <div><div class="rf-label">Universo de SKUs</div><div class="rf-sublabel">Candidatos iniciales del modelo</div></div>
+          </div>
+        </div>
+        <div class="rf-step rs-roi">
+          <div class="rf-connector">
+            <div class="rf-dot"></div>
+            <div class="rf-line"></div>
+          </div>
+          <div class="rf-content">
+            <span class="rf-icon">📈</span>
+            <div><div class="rf-label">Filtro ROI &gt; 0</div><div class="rf-sublabel">Solo promociones rentables</div></div>
+          </div>
+        </div>
+        <div class="rf-step rs-dsc">
+          <div class="rf-connector">
+            <div class="rf-dot"></div>
+          </div>
+          <div class="rf-content">
+            <span class="rf-icon">🏷️</span>
+            <div><div class="rf-label">Descuento 2% – 8%</div><div class="rf-sublabel">Rango seguro de promoción</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="rf-result">
+        <span class="rf-result-icon">🎯</span>
+        <div class="rf-result-txt">Solo se ejecutan promociones con <strong>ROI &gt; 0</strong> y descuentos en rango <strong>2%–8%</strong>, garantizando rentabilidad.</div>
       </div>
     </div>
   </div>
 
 </div>
+
 
 <!-- ═══ FOOTER ══════════════════════════════════════ -->
 <footer>
   <span class="footer-brand">▸ ALICORP · AA</span>
   <div class="footer-logo">
     <svg viewBox="0 0 40 40" fill="none">
-      <rect width="40" height="40" rx="10" fill="url(#lgFoot2)"/>
+      <rect width="40" height="40" rx="10" fill="url(#lgF)"/>
       <circle cx="12" cy="15" r="3" fill="white"/>
       <circle cx="12" cy="20" r="3" fill="white"/>
       <circle cx="12" cy="25" r="3" fill="white"/>
@@ -492,16 +1266,12 @@ footer {
       <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
       <circle cx="28" cy="20" r="4" fill="#D4A853"/>
       <defs>
-        <linearGradient id="lgFoot2" x1="0" y1="0" x2="40" y2="40">
-          <stop stop-color="#E85D4C"/>
-          <stop offset="1" stop-color="#C94A3A"/>
+        <linearGradient id="lgF" x1="0" y1="0" x2="40" y2="40">
+          <stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/>
         </linearGradient>
       </defs>
     </svg>
-    <div>
-      <div class="footer-logo-name">COE Advanced Analytics</div>
-      
-    </div>
+    <div><div class="footer-logo-name">COE Advanced Analytics</div></div>
   </div>
   <span>Modelo Promociones Tradicional · Feb 2026</span>
 </footer>
