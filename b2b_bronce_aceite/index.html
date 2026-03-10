@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estrategia Promocional Aceites Gastronomía</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-cream:   #FDFBF7;
+  --bg-warm:    #F8F5F0;
+  --bg-card:    #FFFFFF;
+  --text-primary:   #3D3A36;
+  --text-muted:     #7a7a8a;
+  --coral:      #E85D4C;
+  --coral-dark: #C94A3A;
+  --coral-light:#FFF0EE;
+  --teal:       #2D9C9C;
+  --teal-dark:  #238080;
+  --teal-light: #E8F6F6;
+  --amber:      #D97706;
+  --amber-light:#FEF3C7;
+  --gold:       #D4A853;
+  --border:     #E8E4DD;
+  --shadow-sm:  0 2px 6px rgba(26,26,46,.07);
+  --shadow-md:  0 5px 18px rgba(26,26,46,.11);
+}
+*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+html { background:#EDEAE4; }
+body {
+  font-family:'DM Sans', sans-serif;
+  background: var(--bg-cream);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* ══ HERO ═══════════════════════════════════════ */
+.hero {
+  background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
+  padding: 26px 36px 22px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:''; position:absolute; bottom:-50px; right:80px;
+  width:220px; height:220px;
+  background: radial-gradient(circle, #FFF0EE 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero::after {
+  content:''; position:absolute; top:-30px; left:40%;
+  width:160px; height:160px;
+  background: radial-gradient(circle, var(--teal-light) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+  position: relative; z-index:1;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px 12px 4px 8px;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--coral);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 10px;
+}
+.badge-dot { width:6px; height:6px; background:var(--coral); border-radius:50%; }
+.hero h1 {
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.hero h1 .hl-teal  { color: var(--teal); }
+.hero h1 .hl-coral { color: var(--coral); }
+.hero p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px; }
+
+.hero-stats {
+  display: flex;
+  gap: 0;
+  margin-top: 4px;
+}
+.hstat {
+  padding: 0 20px 0 0;
+  border-right: 1px solid var(--border);
+  margin-right: 20px;
+}
+.hstat:last-child { border-right: none; }
+.hstat-num {
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 22px; font-weight: 700;
+  line-height: 1;
+}
+.hstat-num.green { color: #059669; }
+.hstat-num.teal  { color: var(--teal); }
+.hstat-num.amber { color: var(--amber); }
+.hstat-label { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+/* Logo pill */
+.area-logo {
+  display: flex; align-items: center; gap: 9px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 14px 6px 8px;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+  align-self: center;
+}
+.area-logo svg { width:26px; height:26px; flex-shrink:0; }
+.area-logo-name {
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 10.5px; font-weight: 700;
+  color: var(--text-primary); line-height: 1.2;
+}
+
+/* ══ LAYOUT ══════════════════════════════════════ */
+.container { padding: 30px 36px 0; }
+.grid   { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+
+/* ══ SECTION TITLES ══════════════════════════════ */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  margin: 34px 0 14px;
+  color: var(--text-primary);
+}
+.sec-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items:center; justify-content:center;
+  flex-shrink: 0;
+}
+.sec-icon.teal  { background: var(--teal); }
+.sec-icon.coral { background: var(--coral); }
+.sec-icon.amber { background: var(--amber); }
+.sec-icon.green { background: #059669; }
+.sec-icon svg   { width:16px; height:16px; }
+
+/* ══ CARDS ══════════════════════════════════════ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.card h3 {
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 16px; font-weight: 700;
+  margin-bottom: 8px;
+}
+.card p { font-size: 13.5px; color: #555; line-height: 1.65; }
+ul { margin: 8px 0 0 18px; font-size: 13.5px; line-height: 1.75; color: #444; }
+
+.highlight        { border-left: 4px solid var(--teal); }
+.highlight-amber  { border-left: 4px solid var(--amber); }
+
+/* ══ PILOT BLOCK ════════════════════════════════ */
+.pilot-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.pilot-col { padding: 22px 20px; border-right: 1px solid var(--border); }
+.pilot-col:last-child { border-right: none; }
+.pilot-col h4 {
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 10px; color: #aaa;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  margin-bottom: 14px;
+}
+.pilot-stat { display:flex; align-items:baseline; gap:7px; margin-bottom:10px; }
+.pilot-stat .num {
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 30px; font-weight: 700; line-height: 1;
+}
+.pilot-stat .num.green { color: #059669; }
+.pilot-stat .num.red   { color: #DC2626; }
+.pilot-stat .num.teal  { color: var(--teal); }
+.pilot-stat .num.amber { color: var(--amber); }
+.pilot-stat .desc { font-size: 12.5px; color: #666; line-height: 1.4; }
+
+/* ══ FUGA INSIGHT ════════════════════════════════ */
+.fuga-insight {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--teal-light);
+  border: 1px solid #A7D7D7;
+  border-radius: 12px;
+  padding: 16px 22px;
+  margin-top: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.fuga-badge {
+  flex-shrink: 0; width:56px; height:56px;
+  background: var(--teal);
+  border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 18px; font-weight:700; color:white;
+}
+.fuga-text strong { font-family:'Space Grotesk',sans-serif; font-size:15px; color:#1E7070; display:block; margin-bottom:4px; }
+.fuga-text span   { font-size:13px; color:#4A8080; line-height:1.5; }
+
+/* ══ PROPUESTA VISUAL ════════════════════════════ */
+.prop-box {
+  display: flex; align-items: stretch; gap: 0;
+  flex-wrap: wrap;
+}
+.prop-item {
+  flex: 1; min-width: 150px;
+  text-align: center;
+  padding: 20px 16px;
+  border-radius: 10px;
+}
+.prop-item.before { background: #FEF9F0; border: 1px solid #FDDCAA; }
+.prop-item.after  { background: var(--teal-light); border: 1px solid #A7D7D7; }
+.prop-item.result { background: #F4FBF4; border: 1px solid #A7D7B0; text-align:left; }
+.prop-arrow { flex:0 0 52px; display:flex; align-items:center; justify-content:center; font-size:26px; color:#ccc; }
+.prop-label {
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 10px; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.08em;
+  margin-bottom: 8px;
+}
+.prop-label.amber { color: var(--amber); }
+.prop-label.teal  { color: var(--teal); }
+.prop-label.green { color: #059669; }
+.prop-num {
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 44px; font-weight: 700; line-height:1;
+}
+.prop-num.amber { color: var(--amber); }
+.prop-num.teal  { color: var(--teal); }
+.prop-unit { font-size: 14px; font-weight:600; margin-top: 4px; }
+.prop-pill {
+  display: inline-block;
+  font-size: 12px; font-weight:600;
+  padding: 4px 12px; border-radius:20px;
+  margin-top: 10px;
+}
+.prop-pill.amber { background:#FEF3C7; color:#92400E; }
+.prop-pill.teal  { background:#CCEFEF; color:#1E7070; }
+.result-list { font-size:13px; color:#065F46; line-height:1.7; }
+.result-list div { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+.result-list svg { flex-shrink:0; width:14px; height:14px; }
+
+/* ══ DESPLIEGUE ═════════════════════════════════ */
+.ola-row { display:flex; gap:0; margin-top:4px; }
+.ola-card {
+  flex:1; padding:14px 18px;
+  background: var(--bg-warm);
+  border-radius:8px; border:1px solid var(--border);
+}
+.ola-num {
+  font-family:'Space Grotesk', sans-serif;
+  font-size:10px; font-weight:700;
+  color: var(--teal);
+  text-transform:uppercase; letter-spacing:0.1em;
+  margin-bottom:4px;
+}
+.ola-mes { font-family:'Space Grotesk', sans-serif; font-size:20px; font-weight:700; margin-bottom:4px; }
+.ola-dex { font-size:13px; color:#666; line-height:1.5; }
+.ola-sep { flex:0 0 44px; display:flex; align-items:center; justify-content:center; font-size:20px; color:#ccc; }
+
+/* ══ ESCENARIO CARDS ════════════════════════════ */
+.esc-tag {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:10.5px; font-weight:700;
+  padding:3px 10px; border-radius:4px;
+  margin-bottom:12px;
+  text-transform:uppercase; letter-spacing:0.06em;
+}
+.tag-a { background:#DBEAFE; color:#1D4ED8; }
+.tag-b { background:#D1FAE5; color:#065F46; }
+.esc-main {
+  font-family:'Space Grotesk', sans-serif;
+  font-size: 32px; font-weight:700;
+  color: var(--teal);
+  line-height:1; margin-bottom:2px;
+}
+.esc-sub { font-size:12px; color:#999; margin-bottom:14px; }
+.metric-group-label {
+  font-family:'Space Grotesk', sans-serif;
+  font-size:10px; color:#ccc;
+  text-transform:uppercase; letter-spacing:0.07em;
+  margin: 14px 0 8px;
+  padding-top:12px; border-top:1px solid #F2EFE9;
+}
+.mrow {
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:12.5px; padding:5px 0;
+  border-bottom:1px solid #F5F2ED;
+}
+.mrow:last-child { border-bottom:none; }
+.mrow .ml { color:#999; }
+.mrow .mv { font-weight:600; color:#3D3A36; }
+.mrow .mv.teal { color: var(--teal); font-weight:700; }
+
+/* ══ FOOTER ══════════════════════════════════════ */
+.footer {
+  margin-top:40px; border-top:1px solid var(--border);
+  padding:14px 36px; font-size:11px; color:#bbb;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.footer-logo { display:flex; align-items:center; gap:7px; }
+.footer-logo svg { width:20px; height:20px; }
+.footer-logo-name { font-family:'Space Grotesk',sans-serif; font-size:9.5px; font-weight:700; color:var(--text-primary); }
+
+@media(max-width:900px){
+  .grid,.grid-3,.pilot-block { grid-template-columns:1fr; }
+  .prop-box { flex-direction:column; }
+  .ola-row { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-top">
+    <div style="flex:1;min-width:260px;">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Alicorp · AA · Aceites Gastronomía
+      </div>
+      <h1>Estrategia <span class="hl-teal">Promocional</span> —<br>Aceites <span class="hl-coral">Gastronomía</span></h1>
+      <p>Cambio de dinámica: de +3 a +6 baldes con 2.5% de descuento · Segmento Bronce B2B</p>
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-num teal">+13%</div>
+          <div class="hstat-label">Var. Venta piloto</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num green">0%</div>
+          <div class="hstat-label">Fuga de clientes</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num amber">S/ 77K</div>
+          <div class="hstat-label">Ahorro anual est.</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num teal">240</div>
+          <div class="hstat-label">Clientes piloto</div>
+        </div>
+      </div>
+    </div>
+    <div class="area-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="10" fill="url(#lgHero)"/>
+        <circle cx="12" cy="15" r="3" fill="white"/>
+        <circle cx="12" cy="20" r="3" fill="white"/>
+        <circle cx="12" cy="25" r="3" fill="white"/>
+        <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+        <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+        <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+        <defs>
+          <linearGradient id="lgHero" x1="0" y1="0" x2="40" y2="40">
+            <stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="area-logo-name">COE Advanced<br>Analytics</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ══ CONTEXTO ═══════════════════════════════ -->
+  <div class="section-title">
+    <div class="sec-icon teal">
+      <svg viewBox="0 0 18 18" fill="none"><path d="M9 2a7 7 0 100 14A7 7 0 009 2zm0 3v4l3 2" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+    Contexto del Piloto
+  </div>
+
+  <div class="card highlight">
+    <h3>¿Cuál fue la dinámica evaluada?</h3>
+    <p>Se evaluó cambiar la condición de activación del descuento del 2.5%: en lugar de otorgarlo desde <strong>+3 baldes</strong>, se exige <strong>+6 baldes</strong> como umbral. La dinámica aplica solo para giros <strong>que no sean Chifas ni Pollerías</strong>.</p>
+    <ul>
+      <li>Piloto ejecutado en: <strong>Alimentos del Valle (ADV)</strong> · Período: <strong>Noviembre 2025 – Enero 2026</strong>.</li>
+      <li><strong>240 clientes</strong> en grupo acción · Segmento Bronce Sin Potencial.</li>
+    </ul>
+  </div>
+
+  <!-- ══ RESULTADOS PILOTO ═══════════════════════ -->
+  <div class="section-title">
+    <div class="sec-icon coral">
+      <svg viewBox="0 0 18 18" fill="none"><path d="M3 12l4-4 3 3 5-6" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    Resultados del Piloto
+  </div>
+
+  <div class="pilot-block">
+    <div class="pilot-col">
+      <h4>Retención de clientes</h4>
+      <div class="pilot-stat"><span class="num teal">71.4%</span></div>
+      <p style="font-size:13px;color:#555;margin:0;line-height:1.55;">Clientes con compras &lt;6 baldes mantienen su comportamiento. Sin fuga significativa.</p>
+    </div>
+    <div class="pilot-col">
+      <h4>Grupo Acción vs 3M Previo</h4>
+      <div class="pilot-stat"><span class="num green">+13%</span><span class="desc">Var. Venta</span></div>
+      <div class="pilot-stat"><span class="num green">+13%</span><span class="desc">Var. Volumen</span></div>
+      <div class="pilot-stat"><span class="num amber">-4%</span><span class="desc">Var. Inversión promo</span></div>
+    </div>
+    <div class="pilot-col">
+      <h4>Grupo Control vs 3M Previo</h4>
+      <div class="pilot-stat"><span class="num red">-14%</span><span class="desc">Var. Venta</span></div>
+      <div class="pilot-stat"><span class="num red">-7%</span><span class="desc">Var. Volumen</span></div>
+      <p style="font-size:12px;color:#bbb;margin:4px 0 0;">Sin dinámica activa en el período</p>
+    </div>
+  </div>
+
+  <!-- Fuga insight -->
+  <div class="fuga-insight">
+    <div class="fuga-badge">0%</div>
+    <div class="fuga-text">
+      <strong>Indicador de Fuga: 0% — No se evidenció fuga de clientes</strong>
+      <span>Los 240 clientes del grupo acción <strong>siguieron comprando</strong> durante el piloto. El cambio de umbral de 3 a 6 baldes no generó pérdida de clientes ni reducción del comportamiento de compra.</span>
+    </div>
+  </div>
+
+  <!-- ══ LA PROPUESTA ════════════════════════════ -->
+  <div class="section-title">
+    <div class="sec-icon amber">
+      <svg viewBox="0 0 18 18" fill="none"><path d="M9 2l2 5h5l-4 3 1.5 5L9 12l-4.5 3L6 10 2 7h5z" stroke="white" stroke-width="1.4" stroke-linejoin="round"/></svg>
+    </div>
+    La Propuesta
+  </div>
+
+  <div class="card" style="padding:24px 26px;">
+    <div class="prop-box">
+      <div class="prop-item before">
+        <div class="prop-label amber">Dinámica Actual</div>
+        <div class="prop-num amber">+3</div>
+        <div class="prop-unit" style="color:#92400E;">baldes</div>
+        <div class="prop-pill amber">2.5% descuento</div>
+      </div>
+      <div class="prop-arrow">→</div>
+      <div class="prop-item after">
+        <div class="prop-label teal">Propuesta Nueva</div>
+        <div class="prop-num teal">+6</div>
+        <div class="prop-unit" style="color:#1E7070;">baldes</div>
+        <div class="prop-pill teal">2.5% descuento</div>
+      </div>
+      <div class="prop-arrow">→</div>
+      <div class="prop-item result" style="flex:1.4;min-width:200px;">
+        <div class="prop-label green" style="margin-bottom:12px;">Resultado Esperado</div>
+        <div class="result-list">
+          <div>
+            <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="#059669"/><path d="M4 7l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Mismo descuento, <strong>mayor exigencia</strong>
+          </div>
+          <div>
+            <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="#059669"/><path d="M4 7l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Reducción de inversión promocional
+          </div>
+          <div>
+            <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="#059669"/><path d="M4 7l2 2 4-4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Sin pérdida de clientes (piloto)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Olas -->
+    <div style="margin-top:18px;padding-top:16px;border-top:1px solid #F0EDE8;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:0.09em;margin-bottom:10px;">
+        📅 &nbsp;Plan de Despliegue — 2 Olas
+      </div>
+      <div class="ola-row">
+        <div class="ola-card">
+          <div class="ola-num">Ola 1</div>
+          <div class="ola-mes">Abril 2026</div>
+          <div class="ola-dex">Todas las DEX Lima + DEXSUR</div>
+        </div>
+        <div class="ola-sep">→</div>
+        <div class="ola-card">
+          <div class="ola-num">Ola 2</div>
+          <div class="ola-mes">Mayo 2026</div>
+          <div class="ola-dex">Todas las DEX a nivel nacional</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:12px;color:#bbb;padding-top:10px;border-top:1px solid #F5F2ED;">
+      Aplica solo para Aceites AS Gastronomía · Excluye Chifas y Pollerías · Segmento Bronce B2B
+    </div>
+  </div>
+
+  <!-- ══ ESCENARIOS ═══════════════════════════════ -->
+  <div class="section-title">
+    <div class="sec-icon teal">
+      <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="10" width="4" height="6" rx="1" fill="white"/><rect x="7" y="6" width="4" height="10" rx="1" fill="white" fill-opacity=".7"/><rect x="12" y="2" width="4" height="14" rx="1" fill="white" fill-opacity=".5"/></svg>
+    </div>
+    Escenarios de Impacto — Clientes que hoy compran entre 3 y 6 baldes
+  </div>
+  <p style="font-size:12.5px;color:#aaa;margin:-8px 0 14px;">Solo transacciones Aceites AS · Oct–Dic 2025 · Dinámica: DX-ASG-USE-008-D-ESC-3+2.5% RESTO</p>
+
+  <div class="grid">
+
+    <!-- ESC A -->
+    <div class="card">
+      <span class="esc-tag tag-a">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#1D4ED8"/></svg>
+        Escenario A · Todos los Bronce
+      </span>
+      <div class="esc-main">1,217</div>
+      <div class="esc-sub">clientes que perderían el descuento al subir el umbral</div>
+
+      <div class="metric-group-label">Métricas mensuales</div>
+      <div class="mrow"><span class="ml">Venta mensual</span><span class="mv">S/ 588K</span></div>
+      <div class="mrow"><span class="ml">Volumen mensual</span><span class="mv">82 TN</span></div>
+      <div class="mrow"><span class="ml">Inversión mensual</span><span class="mv">S/ 9,265</span></div>
+      <div class="mrow"><span class="ml">Ticket promedio</span><span class="mv">S/ 484</span></div>
+      <div class="mrow"><span class="ml">Vol por cliente</span><span class="mv">0.07 TN</span></div>
+      <div class="mrow"><span class="ml">Inversión por cliente</span><span class="mv">S/ 7.6</span></div>
+      <div class="mrow"><span class="ml">Descuento por cliente</span><span class="mv">S/ 12.1</span></div>
+
+      <div class="metric-group-label">Ahorro en inversión promo</div>
+      <div class="mrow"><span class="ml">Ahorro anual 2026</span><span class="mv teal">S/ 83,383</span></div>
+      <div class="mrow"><span class="ml">Ahorro Ola 1 (Abr)</span><span class="mv">S/ 50,030</span></div>
+      <div class="mrow"><span class="ml">Ahorro Ola 2 (May)</span><span class="mv">S/ 29,647</span></div>
+
+      <div class="metric-group-label">Representación universo</div>
+      <div class="mrow"><span class="ml">% clientes AS (33K)</span><span class="mv">4%</span></div>
+      <div class="mrow"><span class="ml">% volumen B2B (4,200 TN)</span><span class="mv">1.9%</span></div>
+    </div>
+
+    <!-- ESC B -->
+    <div class="card highlight">
+      <span class="esc-tag tag-b">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" fill="#059669"/></svg>
+        Escenario B · Bronce Sin Potencial
+      </span>
+      <div class="esc-main">1,119</div>
+      <div class="esc-sub">clientes afectados · menor riesgo comercial</div>
+
+      <div class="metric-group-label">Métricas mensuales</div>
+      <div class="mrow"><span class="ml">Venta mensual</span><span class="mv">S/ 534K</span></div>
+      <div class="mrow"><span class="ml">Volumen mensual</span><span class="mv">74 TN</span></div>
+      <div class="mrow"><span class="ml">Inversión mensual</span><span class="mv">S/ 8,542</span></div>
+      <div class="mrow"><span class="ml">Ticket promedio</span><span class="mv">S/ 478</span></div>
+      <div class="mrow"><span class="ml">Vol por cliente</span><span class="mv">0.07 TN</span></div>
+      <div class="mrow"><span class="ml">Inversión por cliente</span><span class="mv">S/ 7.6</span></div>
+      <div class="mrow"><span class="ml">Descuento por cliente</span><span class="mv">S/ 11.9</span></div>
+
+      <div class="metric-group-label">Ahorro en inversión promo</div>
+      <div class="mrow"><span class="ml">Ahorro anual 2026</span><span class="mv teal">S/ 76,880</span></div>
+      <div class="mrow"><span class="ml">Ahorro Ola 1 (Abr)</span><span class="mv">S/ 46,128</span></div>
+      <div class="mrow"><span class="ml">Ahorro Ola 2 (May)</span><span class="mv">S/ 27,335</span></div>
+
+      <div class="metric-group-label">Representación universo</div>
+      <div class="mrow"><span class="ml">% clientes AS (33K)</span><span class="mv">3%</span></div>
+      <div class="mrow"><span class="ml">% volumen B2B (4,200 TN)</span><span class="mv">1.7%</span></div>
+    </div>
+
+  </div>
+
+  <!-- ══ CONDICIONES ═══════════════════════════════ -->
+  <div class="section-title">
+    <div class="sec-icon amber">
+      <svg viewBox="0 0 18 18" fill="none"><path d="M9 2L2 6v6l7 4 7-4V6L9 2z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8v2M9 12h.01" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+    Condiciones de la Dinámica
+  </div>
+
+  <div class="card highlight-amber">
+    <ul>
+      <li>Aplica únicamente para clientes de <strong>Aceites AS (Gastronomía)</strong>.</li>
+      <li>Excluye giros de <strong>Chifas y Pollerías</strong>.</li>
+      <li>Descuento del <strong>2.5%</strong> se otorga al alcanzar <strong>+6 baldes</strong> en la tanda.</li>
+      <li>Segmento objetivo: <strong>Bronce Sin Potencial</strong> (menor riesgo comercial).</li>
+      <li>Referencia piloto: Alimentos del Valle (ADV), Nov 2025 – Ene 2026.</li>
+      <li>Universo total clientes AS: <strong>33,886 clientes</strong>.</li>
+    </ul>
+  </div>
+
+  <div style="height:40px;"></div>
+</div>
+
+<!-- ══ FOOTER ══════════════════════════════════════ -->
+<div class="footer">
+  <span>Aceites Gastronomía · Estrategia Promocional Bronce · Alicorp Advanced Analytics · Oct–Dic 2025</span>
+  <div class="footer-logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <rect width="40" height="40" rx="10" fill="url(#lgFoot)"/>
+      <circle cx="12" cy="15" r="3" fill="white"/>
+      <circle cx="12" cy="20" r="3" fill="white"/>
+      <circle cx="12" cy="25" r="3" fill="white"/>
+      <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+      <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+      <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+      <defs>
+        <linearGradient id="lgFoot" x1="0" y1="0" x2="40" y2="40">
+          <stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="footer-logo-name">COE Advanced Analytics</span>
+  </div>
+</div>
+
+</body>
+</html>
