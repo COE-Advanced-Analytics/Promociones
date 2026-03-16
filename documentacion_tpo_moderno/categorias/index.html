@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📊 Ranking de Categorías | TPO v3.0</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-cream: #FDFBF7;
+  --bg-warm: #F8F5F0;
+  --bg-card: #FFFFFF;
+  --text-primary: #3D3A36;
+  --text-secondary: #4a4a5a;
+  --text-muted: #7a7a8a;
+  --accent-coral: #E85D4C;
+  --accent-coral-dark: #C94A3A;
+  --accent-coral-light: #FFF0EE;
+  --accent-teal: #2D9C9C;
+  --accent-teal-dark: #238080;
+  --accent-teal-light: #E8F6F6;
+  --accent-gold: #D4A853;
+  --accent-gold-dark: #C4983F;
+  --accent-gold-light: #FDF8EC;
+  --dark-warm: #3D3A36;
+  --border-light: #E8E4DD;
+  --shadow-sm: 0 2px 8px rgba(26,26,46,0.06);
+  --shadow-md: 0 4px 16px rgba(26,26,46,0.10);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#f0ede8}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--text-primary);line-height:1.6}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:100vh;max-width:1400px;margin:0 auto}
+
+/* ── SIDEBAR ── */
+.sidebar{width:260px;flex-shrink:0;background:var(--bg-card);border-right:1px solid var(--border-light);position:sticky;top:0;height:100vh;overflow-y:auto;box-shadow:2px 0 12px rgba(0,0,0,0.04)}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:2px}
+
+.sidebar-logo{padding:20px 18px 16px;border-bottom:1px solid var(--border-light)}
+.logo-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;color:var(--accent-coral);letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:5px}
+.sidebar-logo h1{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:var(--text-primary);line-height:1.2}
+.sidebar-logo p{font-size:10px;color:var(--text-muted);margin-top:4px}
+
+.nav-group{padding:10px 0 4px}
+.nav-group-label{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);padding:6px 18px 3px;display:block}
+.nav-link{display:flex;align-items:center;gap:8px;padding:5px 18px;text-decoration:none;color:var(--text-muted);font-size:11.5px;font-weight:500;transition:all .15s;border-left:2px solid transparent;cursor:pointer}
+.nav-link:hover{color:var(--text-primary);background:var(--bg-warm)}
+.nav-link.active{color:var(--accent-coral);border-left-color:var(--accent-coral);background:var(--accent-coral-light)}
+.nav-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+/* ── MAIN ── */
+.main{flex:1;padding:0 48px 80px;overflow:hidden}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--bg-warm) 0%,var(--bg-cream) 100%);border-radius:0 0 20px 20px;padding:36px 48px 32px;margin:0 -48px 32px;border-bottom:1px solid var(--border-light);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;bottom:-60px;right:-30px;width:300px;height:300px;background:radial-gradient(circle,var(--accent-coral-light) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero::after{content:'';position:absolute;top:-40px;left:30%;width:200px;height:200px;background:radial-gradient(circle,var(--accent-teal-light) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero-inner{position:relative;z-index:1;display:flex;align-items:center;gap:28px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--border-light);padding:4px 12px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--accent-coral);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.hero-badge-dot{width:6px;height:6px;background:var(--accent-coral);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:var(--text-primary);margin-bottom:10px}
+.hero h1 .hl{color:var(--accent-coral)}
+.hero p{font-size:13px;color:var(--text-muted);max-width:500px;line-height:1.7}
+.hero-stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:var(--text-primary);line-height:1}
+.stat-label{font-size:10px;color:var(--text-muted);margin-top:2px}
+
+/* ── SECTION ── */
+.section{padding-top:52px;border-bottom:1px solid var(--border-light);padding-bottom:44px}
+.section:last-child{border-bottom:none}
+.section-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px}
+.section-num{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted);padding-top:6px;min-width:24px;flex-shrink:0}
+.section-tag{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.section h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary);line-height:1.25}
+.section h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--text-primary);margin:30px 0 12px}
+.section h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-secondary);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+.section p{font-size:12.5px;color:var(--text-secondary);margin-bottom:12px;max-width:820px;line-height:1.8}
+.section p strong{color:var(--text-primary)}
+
+/* ── PILLS ── */
+.pill{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;margin-left:6px;vertical-align:middle;position:relative;top:-1px}
+.pill-bug{background:var(--accent-coral-light);color:var(--accent-coral);border:1px solid rgba(232,93,76,.25)}
+.pill-new{background:var(--accent-teal-light);color:var(--accent-teal)}
+.pill-warn{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.pill-info{background:var(--accent-teal-light);color:var(--accent-teal)}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:16px 0}
+.card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:14px;padding:16px;box-shadow:var(--shadow-sm);transition:box-shadow .2s}
+.card:hover{box-shadow:var(--shadow-md)}
+.card-icon{font-size:18px;margin-bottom:9px}
+.card h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-primary);margin:0 0 6px}
+.card p{font-size:11px;color:var(--text-muted);margin:0;line-height:1.55}
+.card-file{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;margin-top:10px;padding:3px 8px;border-radius:100px;display:inline-block}
+.cf-coral{background:var(--accent-coral-light);color:var(--accent-coral)}
+.cf-teal{background:var(--accent-teal-light);color:var(--accent-teal)}
+.cf-gold{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+
+/* ── ALERTS ── */
+.alert{display:flex;gap:12px;padding:12px 16px;border-radius:10px;margin:14px 0;max-width:820px}
+.alert-icon{font-size:15px;flex-shrink:0;padding-top:1px}
+.alert p{margin:0;font-size:12px;line-height:1.7}
+.alert-bug{background:var(--accent-coral-light);border:1px solid rgba(232,93,76,.25)}
+.alert-bug p{color:var(--accent-coral-dark)}
+.alert-warn{background:var(--accent-gold-light);border:1px solid rgba(212,168,83,.3)}
+.alert-warn p{color:#8a6520}
+.alert-info{background:var(--accent-teal-light);border:1px solid rgba(45,156,156,.25)}
+.alert-info p{color:var(--accent-teal-dark)}
+.alert-tip{background:var(--accent-gold-light);border-top:2px solid var(--accent-gold);border-radius:0 0 10px 10px;border-left:none;border-right:none;border-bottom:none}
+.alert-tip p{color:var(--text-secondary)}
+.alert-tip p strong{color:var(--accent-gold-dark)}
+
+/* ── CODE ── */
+pre{background:var(--dark-warm);border-radius:10px;padding:16px 20px;overflow-x:auto;margin:12px 0 20px;font-family:'Space Grotesk',monospace;font-size:11px;line-height:1.75;color:#f0ede8;position:relative}
+pre .file-label{display:block;color:rgba(255,255,255,.35);margin-bottom:10px;font-size:8.5px;letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:8px}
+.kw{color:#E85D4C}.fn{color:#D4A853}.str{color:#7dd3c4}.cm{color:rgba(255,255,255,.35);font-style:italic}.num{color:#a5d6a7}.cls{color:#f4a261}
+.bug-line{background:rgba(232,93,76,.18);display:block;margin:0 -20px;padding:0 20px;border-left:3px solid var(--accent-coral)}
+.fix-line{background:rgba(45,156,156,.15);display:block;margin:0 -20px;padding:0 20px;border-left:3px solid var(--accent-teal)}
+code{font-family:'Space Grotesk',monospace;font-size:11px;background:var(--accent-coral-light);padding:2px 6px;border-radius:4px;color:var(--accent-coral-dark)}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;margin:12px 0 24px;border-radius:12px;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;font-size:12px;background:var(--bg-card)}
+th{font-family:'Space Grotesk',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border-light);background:var(--bg-warm);white-space:nowrap}
+td{padding:9px 14px;border-bottom:1px solid rgba(232,228,221,.5);color:var(--text-secondary);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-warm)}
+.badge{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:.3px;white-space:nowrap}
+.bg{background:var(--accent-teal-light);color:var(--accent-teal-dark)}
+.bb{background:var(--accent-teal-light);color:var(--accent-teal-dark)}
+.bo{background:var(--accent-coral-light);color:var(--accent-coral)}
+.bp{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.by{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.br{background:var(--accent-coral-light);color:var(--accent-coral)}
+.col-key td:first-child{font-weight:700;color:var(--text-primary)}
+
+/* ── FLOW ── */
+.flow{background:var(--bg-warm);border:1px solid var(--border-light);border-radius:14px;padding:22px;margin:16px 0;overflow-x:auto}
+.flow-steps{display:flex;align-items:stretch;min-width:640px;gap:0}
+.flow-step{flex:1;text-align:center;position:relative}
+.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;z-index:2}
+.flow-box{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 8px;margin:0 6px;box-shadow:var(--shadow-sm);height:100%}
+.flow-box .ficon{font-size:18px;margin-bottom:4px}
+.flow-box .fname{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-primary);display:block;margin-bottom:2px}
+.flow-box .fdesc{font-size:9px;color:var(--text-muted);line-height:1.4}
+.flow-box.fc{border-top:3px solid var(--accent-coral)}
+.flow-box.ft{border-top:3px solid var(--accent-teal)}
+.flow-box.fg{border-top:3px solid var(--accent-gold)}
+
+/* ── FORMULA ── */
+.formula{background:var(--accent-gold-light);border-top:2px solid var(--accent-gold);border-radius:0 0 10px 10px;padding:13px 16px;margin:10px 0 18px;font-family:'Space Grotesk',monospace;font-size:11.5px;color:var(--text-secondary);max-width:820px}
+.formula .f-label{font-size:8px;font-weight:700;color:var(--accent-gold-dark);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;display:block}
+
+/* ── FORMULA + EJEMPLO LADO A LADO ── */
+.calc-wrap{margin:10px 0 22px;max-width:900px;border-radius:10px;overflow:hidden;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+.calc-header{background:var(--dark-warm);padding:8px 16px;display:flex;align-items:center;gap:8px}
+.calc-header .ch-label{font-family:'Space Grotesk',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.calc-header .ch-title{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:#fff;flex:1}
+.calc-body{display:grid;grid-template-columns:1fr 1fr}
+.calc-formula{background:var(--accent-gold-light);padding:14px 18px;border-right:1px solid var(--border-light)}
+.calc-example{background:var(--bg-card);padding:14px 18px}
+.calc-col-label{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:block}
+.calc-formula .calc-col-label{color:var(--accent-gold-dark)}
+.calc-example .calc-col-label{color:var(--accent-teal-dark)}
+.calc-formula pre, .calc-example pre{background:transparent;padding:0;margin:0;font-size:11px;line-height:1.9;color:var(--text-secondary);box-shadow:none;border-radius:0}
+.calc-formula pre .file-label, .calc-example pre .file-label{display:none}
+.calc-example pre .res{color:var(--accent-teal-dark);font-weight:700}
+.calc-example pre .resn{color:var(--accent-coral);font-weight:700}
+.calc-note{background:var(--bg-warm);padding:9px 16px;border-top:1px solid var(--border-light);font-size:11px;color:var(--text-muted);line-height:1.55}
+.calc-note strong{color:var(--accent-gold-dark)}
+@media(max-width:700px){.calc-body{grid-template-columns:1fr}.calc-formula{border-right:none;border-bottom:1px solid var(--border-light)}}
+
+/* ── STEPS ── */
+.steps{margin:12px 0 20px;max-width:820px}
+.step-item{display:flex;gap:12px;margin-bottom:16px}
+.step-n{flex-shrink:0;display:flex;flex-direction:column;align-items:center}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--bg-warm);border:1px solid var(--border-light);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted)}
+.step-line{width:1px;flex:1;background:var(--border-light);margin-top:4px}
+.step-body{padding-top:2px}
+.step-body strong{display:block;font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.step-body p{margin:0;font-size:11.5px;color:var(--text-muted);line-height:1.6}
+
+/* ── SCHEMA ── */
+.schema-table{margin:12px 0 22px;border-radius:12px;overflow:hidden;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+.schema-header{background:var(--dark-warm);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.schema-name{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:#fff}
+.schema-desc{font-size:10.5px;color:rgba(255,255,255,.5)}
+
+/* ── COMPARE ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;max-width:820px}
+.compare-box{border-radius:12px;padding:16px}
+.compare-box.bad{background:var(--accent-coral-light);border:1px dashed rgba(232,93,76,.3)}
+.compare-box.good{background:var(--accent-teal-light);border:1px solid var(--accent-teal)}
+.compare-box h5{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(0,0,0,.06)}
+.compare-box.bad h5{color:var(--accent-coral)}
+.compare-box.good h5{color:var(--accent-teal)}
+.compare-box ul{list-style:none;font-size:11.5px}
+.compare-box ul li{padding:4px 0;display:flex;gap:8px;color:var(--text-secondary);line-height:1.5}
+.compare-box ul li::before{content:'→';flex-shrink:0}
+
+/* ── COOKBOOK ── */
+.cookbook{background:var(--bg-card);border:1px solid var(--border-light);border-radius:12px;margin:14px 0;overflow:hidden;box-shadow:var(--shadow-sm)}
+.cookbook-header{background:var(--bg-warm);padding:11px 18px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:10px}
+.cookbook-header .ck-icon{font-size:15px}
+.cookbook-header h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-primary);margin:0}
+.cookbook-header p{font-size:10px;color:var(--text-muted);margin:0 0 0 auto}
+.cookbook-body{padding:14px 18px}
+.ck-step{display:flex;gap:10px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);align-items:flex-start}
+.ck-num{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;background:var(--bg-warm);border:1px solid var(--border-light);border-radius:4px;padding:2px 7px;flex-shrink:0;color:var(--text-muted)}
+.ck-file{color:var(--accent-teal-dark);font-family:'Space Grotesk',monospace;font-size:11px;font-weight:600}
+
+/* ── DEPENDENCY MAP ── */
+.dep-map{background:var(--bg-warm);border:1px solid var(--border-light);border-radius:12px;padding:20px;margin:14px 0}
+.dep-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12px;flex-wrap:wrap}
+.dep-from{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:var(--bg-card);background:var(--dark-warm);border-radius:6px;padding:4px 10px;white-space:nowrap}
+.dep-arrow{color:var(--text-muted);font-size:12px;flex-shrink:0}
+.dep-to{font-family:'Space Grotesk',monospace;font-size:10.5px;color:var(--text-secondary);white-space:nowrap}
+.dep-via{font-size:10.5px;color:var(--text-muted);margin-left:4px}
+
+/* ── TAKEAWAY ── */
+.takeaway{background:linear-gradient(135deg,var(--dark-warm) 0%,#2a2a3e 100%);border-radius:12px;padding:14px 18px;margin:14px 0 20px;display:flex;align-items:center;gap:14px;max-width:820px}
+.takeaway p{font-size:12px;color:rgba(255,255,255,.8);line-height:1.65;margin:0}
+.takeaway p strong{color:var(--accent-gold)}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{height:1px;background:linear-gradient(90deg,var(--accent-coral-light),var(--border-light),var(--accent-teal-light));margin:0}
+
+/* ── PROSE LIST ── */
+ul.prose-list{max-width:820px;list-style:none;padding:0;margin-bottom:12px}
+ul.prose-list li{padding:4px 0;color:var(--text-secondary);font-size:12.5px;display:flex;gap:8px;line-height:1.6}
+ul.prose-list li::before{content:'→';color:var(--accent-coral);flex-shrink:0}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:3px}
+
+@media(max-width:900px){.sidebar{display:none}.main{padding:24px 20px 60px}.compare-grid{grid-template-columns:1fr}.flow-steps{flex-direction:column}.flow-step::after{display:none}}
+</style>
+</head>
+
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-eyebrow">ALICORP · COE ANALYTICS</span>
+    <h1>TPO v3.0</h1>
+    <p>Canal Moderno</p>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Páginas</span>
+      <a href="../" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>← Inicio (Doc Técnica)</a>
+      <a href="../validacion/" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>🔬 Validación & Diagnóstico</a>
+      <a href="../changelog/" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>📋 Changelog v3.0</a>
+      <a href="../categorias/" class="nav-link active"><span class="nav-dot" style="background:var(--accent-gold)"></span>📊 Ranking Categorías</a>
+  </div>
+</nav>
+<div class="main">
+<section id="ranking-categorias" class="section">
+  <div class="section-header">
+    <span class="section-num">★</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-gold-dark)">▸ SELECCIÓN DE CATEGORÍAS</div>
+      <h2>📊 Ranking de Categorías para Promo — Canal Moderno</h2>
+    </div>
+  </div>
+
+  <div class="alert" style="background:var(--accent-gold-light);border-left:4px solid var(--accent-gold);padding:12px 16px;border-radius:6px;margin-bottom:24px">
+    <p><strong>Contexto:</strong> Pastas y Salsas fueron elegidas inicialmente de forma arbitraria. Este análisis determina qué categorías son las mejores candidatas a promo usando métricas objetivas del historial de ventas. Ejecutado en BigQuery · Período: últimos 12 meses rolling · Subcadenas: PLAZA VEA, METRO, TOTTUS.</p>
+  </div>
+
+  <!-- HALLAZGO CRÍTICO -->
+  <div style="background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;padding:18px 20px;margin-bottom:24px">
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#991B1B;margin-bottom:10px">🚨 Hallazgo Crítico — Categorías Actuales</div>
+    <p style="font-size:13px;color:#7F1D1D;line-height:1.8">
+      <strong>Pastas y Salsas presentan margen bruto negativo</strong> según el análisis de COGS:
+      Pastas: <strong>-14.8%</strong> · Salsas: <strong>-60.1%</strong>.<br>
+      Esto explica directamente por qué muchos SKUs de estas categorías no generan escenarios válidos en el optimizer
+      (el guard <code>bi_uplift &gt; 0</code> se viola cuando el COGS supera el precio).<br><br>
+      <strong>Causa probable:</strong> La query de COGS usa <code>des_cluster_canal = 'DEX'</code> que puede no
+      ser el cluster correcto para canal moderno, o los costos asignados a estas categorías en <code>temp_amzv_1</code>
+      incluyen gastos adicionales que no corresponden a costo de producto puro.
+      <strong>Se recomienda validar con el área de Controlling</strong> antes de descartar estas categorías.
+    </p>
+  </div>
+
+  <!-- METODOLOGÍA -->
+  <h3 style="font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px;margin-bottom:16px">Metodología del Score</h3>
+
+  <p style="font-size:13px;color:#555;margin-bottom:16px">El score compuesto (0–100 pts) agrega 5 dimensiones normalizadas min-max entre todas las categorías. Cada dimensión se escala internamente para que la categoría mejor en esa dimensión reciba 100 y la peor 0, permitiendo comparación justa independientemente de las unidades.</p>
+
+  <table>
+    <tr><th>#</th><th>Dimensión</th><th>Peso</th><th>Fuente</th><th>Qué mide</th><th>¿Por qué importa?</th></tr>
+    <tr>
+      <td>1</td><td><strong>Elasticidad / Uplift</strong></td><td style="color:var(--accent-teal-dark);font-weight:700">30%</td>
+      <td><code>precio_efectivo</code></td>
+      <td>% de incremento de demanda en semanas con precio &lt; 94% del precio base</td>
+      <td>Categorías que responden bien al descuento generan ROI real. Sin uplift la promo no sirve.</td>
+    </tr>
+    <tr style="background:#F8F5F0">
+      <td>2</td><td><strong>Margen bruto</strong></td><td style="color:var(--accent-teal-dark);font-weight:700">25%</td>
+      <td><code>cog_unitario</code></td>
+      <td>(Precio − COGS) / Precio promedio por categoría</td>
+      <td>Sin margen suficiente, el descuento destruye utilidad aunque suba el volumen.</td>
+    </tr>
+    <tr>
+      <td>3</td><td><strong>Volumen de ventas</strong></td><td style="color:var(--accent-teal-dark);font-weight:700">20%</td>
+      <td><code>precio_efectivo</code></td>
+      <td>Kg totales vendidos en los últimos 12 meses</td>
+      <td>Mayor volumen = mayor impacto absoluto de la promo y más señal para el modelo RF.</td>
+    </tr>
+    <tr style="background:#F8F5F0">
+      <td>4</td><td><strong>Señal promo histórica</strong></td><td style="color:var(--accent-teal-dark);font-weight:700">15%</td>
+      <td><code>precio_efectivo</code></td>
+      <td>% de semanas con precio promocional detectado (descuento ≥ 6%)</td>
+      <td>Categorías con más semanas promo tienen más data para que el RF aprenda la curva precio-demanda.</td>
+    </tr>
+    <tr>
+      <td>5</td><td><strong>Variabilidad de precio (CV)</strong></td><td style="color:var(--accent-teal-dark);font-weight:700">10%</td>
+      <td><code>precio_efectivo</code></td>
+      <td>Coeficiente de variación del precio: std/media</td>
+      <td>Alta variación indica que la categoría tiene historial real de cambios de precio = mejor señal.</td>
+    </tr>
+  </table>
+
+  <div style="background:#F0FDFA;border-radius:8px;padding:14px 16px;margin:16px 0;font-size:13px;border:1px solid #99F6E4">
+    <strong>Filtros mínimos</strong> para columna <code>pasa_filtros</code>:
+    n_skus ≥ 8 · margen ≥ 15% · semanas con data ≥ 20.
+    Categorías que no cumplen pueden aún aparecer en el ranking pero marcadas con <code>✗</code> y la razón.
+    La detección de semanas promo usa precio &lt; 94% del P90 histórico del SKU como proxy de "semana en oferta".
+  </div>
+
+  <!-- RESULTADOS - TOP POR SUBCADENA -->
+  <h3 style="font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px;margin:28px 0 16px">Resultados — Top Categorías que Pasan Filtros</h3>
+
+  <!-- TODAS LAS SUBCADENAS -->
+  <h4 style="margin-bottom:8px;color:#3D3A36">🏆 Consolidado (TODAS las subcadenas)</h4>
+  <div style="font-size:12px;color:#6B7280;margin-bottom:8px">Métricas promediadas entre PLAZA VEA, METRO y TOTTUS. Pasa filtros si ≥ 2 de 3 subcadenas cumplen los mínimos.</div>
+  <table>
+    <tr><th>Rank</th><th>Categoría</th><th>N° SKUs</th><th>Margen %</th><th>Uplift promo %</th><th>Score Elast.</th><th>Score Margen</th><th>Score Vol.</th><th>Score Promo</th><th>Score CV</th><th>Score Total</th><th>Filtros</th></tr>
+    <tr style="background:#F0FDFA"><td>1</td><td><strong>Detergentes</strong></td><td>220</td><td style="color:#059669;font-weight:700">70.3%</td><td>344.5%</td><td>0.7</td><td>76.0</td><td>26.3</td><td>88.2</td><td>2.7</td><td style="font-weight:700;color:#059669">33.7</td><td style="color:#059669">✓ OK</td></tr>
+    <tr><td>2</td><td><strong>Suavizantes</strong></td><td>59</td><td style="color:#059669;font-weight:700">70.2%</td><td>838.9%</td><td>1.7</td><td>75.8</td><td>3.4</td><td>21.9</td><td>6.3</td><td style="font-weight:700;color:#059669">23.3</td><td style="color:#059669">✓ OK</td></tr>
+    <tr style="background:#F8F5F0"><td>3</td><td><strong>Limpiadores Light Duty</strong></td><td>45</td><td style="color:#059669;font-weight:700">69.1%</td><td>18.8%</td><td>0.0</td><td>74.7</td><td>4.3</td><td>19.8</td><td>2.6</td><td style="font-weight:700;color:#059669">21.9</td><td style="color:#059669">✓ OK</td></tr>
+    <tr><td>4</td><td><strong>Jabón Líquido</strong></td><td>54</td><td style="color:#059669;font-weight:700">60.9%</td><td>32.6%</td><td>0.1</td><td>65.9</td><td>2.3</td><td>27.7</td><td>3.7</td><td style="font-weight:700;color:#059669">20.3</td><td style="color:#059669">✓ OK</td></tr>
+    <tr style="background:#F8F5F0"><td>5</td><td><strong>Lavavajillas</strong></td><td>41</td><td style="color:#059669;font-weight:700">53.2%</td><td>42.4%</td><td>0.1</td><td>57.5</td><td>10.4</td><td>18.0</td><td>3.2</td><td style="font-weight:700;color:#059669">18.7</td><td style="color:#059669">✓ OK</td></tr>
+    <tr><td>6</td><td><strong>Enjuague Bucal</strong></td><td>26</td><td style="color:#059669;font-weight:700">50.1%</td><td>47.2%</td><td>0.1</td><td>54.1</td><td>1.1</td><td>11.7</td><td>2.2</td><td style="font-weight:700;color:#059669">15.3</td><td style="color:#059669">✓ OK</td></tr>
+    <tr style="background:#F8F5F0"><td>7</td><td><strong>Limpiadores Especializados</strong></td><td>65</td><td style="color:#059669;font-weight:700">45.0%</td><td>16.6%</td><td>0.0</td><td>48.6</td><td>3.0</td><td>16.5</td><td>2.2</td><td style="font-weight:700;color:#059669">14.8</td><td style="color:#059669">✓ OK</td></tr>
+    <tr><td>8</td><td><strong>Limpiadores Heavy Duty</strong></td><td>34</td><td style="color:#059669;font-weight:700">47.9%</td><td>-0.7%</td><td>0.0</td><td>51.8</td><td>1.2</td><td>9.7</td><td>1.2</td><td style="font-weight:700;color:#059669">14.3</td><td style="color:#059669">✓ OK</td></tr>
+    <tr style="background:#FFFBEB"><td>—</td><td>Pastas <em>(actual)</em></td><td>145</td><td style="color:#DC2626;font-weight:700">-14.8%</td><td>142.7%</td><td>0.3</td><td>0</td><td>61.9</td><td>74.7</td><td>3.5</td><td style="font-weight:700;color:#D97706">20.5</td><td style="color:#DC2626">✗ margen&lt;15%</td></tr>
+    <tr style="background:#FEF2F2"><td>—</td><td>Salsas <em>(actual)</em></td><td>74</td><td style="color:#DC2626;font-weight:700">-60.1%</td><td>40.3%</td><td>0.1</td><td>0</td><td>31.1</td><td>29.8</td><td>1.9</td><td style="font-weight:700;color:#DC2626">9.5</td><td style="color:#DC2626">✗ margen&lt;15%</td></tr>
+  </table>
+
+  <!-- POR SUBCADENA -->
+  <h4 style="margin:24px 0 8px;color:#3D3A36">Por subcadena — Top 8 que pasan filtros</h4>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px">
+
+    <div style="border:1px solid var(--border-light);border-radius:8px;overflow:hidden">
+      <div style="background:#2A2825;color:white;padding:8px 14px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700">PLAZA VEA</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11.5px">
+        <tr><th style="padding:5px 8px;background:#F8F5F0;text-align:left">Categoría</th><th style="padding:5px 8px;background:#F8F5F0">Score</th><th style="padding:5px 8px;background:#F8F5F0">Margen</th></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8"><strong>Detergentes</strong></td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">35.8</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">62.6%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Limpiadores Light Duty</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">22.4</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">69.1%</td></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Suavizantes</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">21.4</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">63.0%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Jabón Líquido</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">20.5</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">62.1%</td></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Limpiadores Especializados</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">20.4</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">62.7%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Lavavajillas</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">19.0</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">49.5%</td></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Enjuague Bucal</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">16.0</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">52.3%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px">Limpiadores Heavy Duty</td><td style="padding:5px 8px;text-align:center;color:#059669;font-weight:700">14.6</td><td style="padding:5px 8px;text-align:center">48.1%</td></tr>
+      </table>
+    </div>
+
+    <div style="border:1px solid var(--border-light);border-radius:8px;overflow:hidden">
+      <div style="background:#2A2825;color:white;padding:8px 14px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700">METRO</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11.5px">
+        <tr><th style="padding:5px 8px;background:#F8F5F0;text-align:left">Categoría</th><th style="padding:5px 8px;background:#F8F5F0">Score</th><th style="padding:5px 8px;background:#F8F5F0">Margen</th></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8"><strong>Detergentes</strong></td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">31.3</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">74.9%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Suavizantes</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">22.7</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">64.1%</td></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Limpiadores Light Duty</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">22.0</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">69.9%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Jabón Líquido</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">20.9</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">60.2%</td></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Lavavajillas</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">18.9</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">57.8%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Cereales</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">16.9</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">45.8%</td></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Limpiadores Heavy Duty</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">16.9</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">57.2%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px">Enjuague Bucal</td><td style="padding:5px 8px;text-align:center;color:#059669;font-weight:700">14.7</td><td style="padding:5px 8px;text-align:center">47.9%</td></tr>
+      </table>
+    </div>
+
+    <div style="border:1px solid var(--border-light);border-radius:8px;overflow:hidden">
+      <div style="background:#2A2825;color:white;padding:8px 14px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700">TOTTUS</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11.5px">
+        <tr><th style="padding:5px 8px;background:#F8F5F0;text-align:left">Categoría</th><th style="padding:5px 8px;background:#F8F5F0">Score</th><th style="padding:5px 8px;background:#F8F5F0">Margen</th></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8"><strong>Detergentes</strong></td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">34.0</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">73.4%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Suavizantes</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">25.8</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">83.4%</td></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Limpiadores Light Duty</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">21.3</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">68.3%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Jabón Líquido</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">19.5</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">60.5%</td></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Lavavajillas</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">18.3</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">52.2%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Limpiadores Especializados</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">18.0</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">58.7%</td></tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8">Enjuague Bucal</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center;color:#059669;font-weight:700">15.2</td><td style="padding:5px 8px;border-bottom:1px solid #F0EDE8;text-align:center">50.0%</td></tr>
+        <tr style="background:#FDFBF7"><td style="padding:5px 8px">Shampoo</td><td style="padding:5px 8px;text-align:center;color:#059669;font-weight:700">13.7</td><td style="padding:5px 8px;text-align:center">38.9%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- INTERPRETACIÓN -->
+  <h3 style="font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px;margin:28px 0 16px">Interpretación de Resultados</h3>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+
+    <div style="background:#F0FDF4;border-radius:10px;padding:16px;border:1px solid #A7F3D0">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#065F46;margin-bottom:10px">✅ Mejor candidato absoluto: Detergentes</div>
+      <p style="font-size:13px;color:#374151;line-height:1.8">
+      Es la única categoría que aparece en el <strong>top 1 de las 3 subcadenas</strong> con scores de 31–36 puntos.
+      Tiene el margen más alto (70%+), 220 SKUs activos y fuerte señal promo histórica (88 de score).
+      El uplift de 344% consolidado indica que cuando hay promo, la demanda responde muy bien.
+      <strong>Recomendación: prioridad máxima para el siguiente run del TPO.</strong>
+      </p>
+    </div>
+
+    <div style="background:#F0FDF4;border-radius:10px;padding:16px;border:1px solid #A7F3D0">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#065F46;margin-bottom:10px">✅ Segundo grupo sólido: Cuidado del Hogar</div>
+      <p style="font-size:13px;color:#374151;line-height:1.8">
+      Suavizantes, Limpiadores Light Duty, Jabón Líquido y Lavavajillas forman un grupo consistente con
+      márgenes entre 50–70%, presentes en las 3 subcadenas y con señal promo razonable.
+      Tienen menos volumen que Detergentes pero son buenos candidatos para una segunda ronda de categorías.
+      <strong>Recomendación: incluir 2–3 de estas en el próximo ciclo.</strong>
+      </p>
+    </div>
+
+    <div style="background:#FFFBEB;border-radius:10px;padding:16px;border:1px solid #FCD34D">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#78350F;margin-bottom:10px">⚠️ Pastas — alto volumen pero margen cuestionable</div>
+      <p style="font-size:13px;color:#374151;line-height:1.8">
+      Pastas es la categoría con <strong>mayor volumen</strong> (15,407 ton consolidadas) y la segunda en score promo histórica (74.7).
+      Su margen negativo (-14.8%) viene probablemente de un problema en el cálculo de COGS, no de un problema real de negocio.
+      <strong>Acción recomendada: validar COGS con Controlling antes de excluir.</strong>
+      Si el margen real es positivo, Pastas debería estar en el top 3.
+      </p>
+    </div>
+
+    <div style="background:#FEF2F2;border-radius:10px;padding:16px;border:1px solid #FECACA">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#991B1B;margin-bottom:10px">🚨 Salsas — margen negativo y score bajo</div>
+      <p style="font-size:13px;color:#374151;line-height:1.8">
+      Salsas tiene margen de -60%, score total de solo 9.5 y bajo cv_precio (poca variación histórica de precio).
+      Incluso si el problema de COGS se corrige parcialmente, la señal promo histórica es limitada y el uplift registrado
+      (40%) es moderado. Entre las categorías evaluadas, Salsas sería una de las últimas en priorizar.
+      <strong>Acción: revisar si el portafolio de Salsas tiene suficiente señal promo en los datos.</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- PASOS SIGUIENTES -->
+  <h3 style="font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px;margin:28px 0 16px">Próximos Pasos Recomendados</h3>
+  <table>
+    <tr><th>#</th><th>Acción</th><th>Responsable</th><th>Impacto</th></tr>
+    <tr><td>1</td><td>Validar COGS de Pastas y Salsas con Controlling — confirmar si el margen negativo es real o un artefacto del cluster DEX</td><td>Analytics + Controlling</td><td style="color:#DC2626;font-weight:700">Crítico</td></tr>
+    <tr style="background:#F8F5F0"><td>2</td><td>Correr TPO con Detergentes como categoría prioritaria (modificar <code>runhierarchy_run_category.csv</code>)</td><td>Analytics</td><td style="color:#059669;font-weight:700">Alto</td></tr>
+    <tr><td>3</td><td>Evaluar incluir Suavizantes + Lavavajillas en el siguiente ciclo</td><td>Comercial + Analytics</td><td style="color:#059669;font-weight:700">Alto</td></tr>
+    <tr style="background:#F8F5F0"><td>4</td><td>Ajustar <code>min_skus</code> de 8 a 5 para recuperar categorías como Harinas (13 SKUs, 51% margen) que casi pasan</td><td>Analytics</td><td style="color:#D97706;font-weight:700">Medio</td></tr>
+    <tr><td>5</td><td>Re-ejecutar el ranking con COGS corregido y período de 6 meses para comparar estabilidad del ranking</td><td>Analytics</td><td style="color:#D97706;font-weight:700">Medio</td></tr>
+  </table>
+
+  <div style="margin-top:16px;padding:12px 16px;background:#F8F5F0;border-radius:8px;font-size:12px;color:#777;border:1px solid #E8E4DD">
+    <strong>Nota sobre la query:</strong> El archivo <code>query_ranking_categorias.sql</code> está disponible en el repositorio del proyecto.
+    Los parámetros <code>min_skus</code>, <code>min_margen</code> y <code>min_semanas</code> son ajustables con <code>DECLARE</code> al inicio de la query.
+    Se puede re-ejecutar mensualmente para mantener el ranking actualizado.
+  </div>
+
+</section>
+
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<a href="../" title="← Volver al inicio"
+   style="position:fixed;bottom:28px;right:28px;z-index:9999;
+          display:flex;align-items:center;gap:8px;
+          background:#D4A853;color:white;padding:11px 22px;border-radius:50px;
+          font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;
+          text-decoration:none;box-shadow:0 4px 16px rgba(212,168,83,0.4);
+          transition:all .2s"
+   onmouseover="this.style.background='#C4983F';this.style.transform='translateY(-2px)'"
+   onmouseout="this.style.background='#D4A853';this.style.transform='translateY(0)'">
+  ← Volver al inicio
+</a>
+
+</body>
+</html>
