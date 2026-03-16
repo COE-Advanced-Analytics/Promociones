@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📋 Changelog v3.0 | TPO v3.0</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-cream: #FDFBF7;
+  --bg-warm: #F8F5F0;
+  --bg-card: #FFFFFF;
+  --text-primary: #3D3A36;
+  --text-secondary: #4a4a5a;
+  --text-muted: #7a7a8a;
+  --accent-coral: #E85D4C;
+  --accent-coral-dark: #C94A3A;
+  --accent-coral-light: #FFF0EE;
+  --accent-teal: #2D9C9C;
+  --accent-teal-dark: #238080;
+  --accent-teal-light: #E8F6F6;
+  --accent-gold: #D4A853;
+  --accent-gold-dark: #C4983F;
+  --accent-gold-light: #FDF8EC;
+  --dark-warm: #3D3A36;
+  --border-light: #E8E4DD;
+  --shadow-sm: 0 2px 8px rgba(26,26,46,0.06);
+  --shadow-md: 0 4px 16px rgba(26,26,46,0.10);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#f0ede8}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--text-primary);line-height:1.6}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:100vh;max-width:1400px;margin:0 auto}
+
+/* ── SIDEBAR ── */
+.sidebar{width:260px;flex-shrink:0;background:var(--bg-card);border-right:1px solid var(--border-light);position:sticky;top:0;height:100vh;overflow-y:auto;box-shadow:2px 0 12px rgba(0,0,0,0.04)}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:2px}
+
+.sidebar-logo{padding:20px 18px 16px;border-bottom:1px solid var(--border-light)}
+.logo-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;color:var(--accent-coral);letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:5px}
+.sidebar-logo h1{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:var(--text-primary);line-height:1.2}
+.sidebar-logo p{font-size:10px;color:var(--text-muted);margin-top:4px}
+
+.nav-group{padding:10px 0 4px}
+.nav-group-label{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);padding:6px 18px 3px;display:block}
+.nav-link{display:flex;align-items:center;gap:8px;padding:5px 18px;text-decoration:none;color:var(--text-muted);font-size:11.5px;font-weight:500;transition:all .15s;border-left:2px solid transparent;cursor:pointer}
+.nav-link:hover{color:var(--text-primary);background:var(--bg-warm)}
+.nav-link.active{color:var(--accent-coral);border-left-color:var(--accent-coral);background:var(--accent-coral-light)}
+.nav-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+/* ── MAIN ── */
+.main{flex:1;padding:0 48px 80px;overflow:hidden}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--bg-warm) 0%,var(--bg-cream) 100%);border-radius:0 0 20px 20px;padding:36px 48px 32px;margin:0 -48px 32px;border-bottom:1px solid var(--border-light);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;bottom:-60px;right:-30px;width:300px;height:300px;background:radial-gradient(circle,var(--accent-coral-light) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero::after{content:'';position:absolute;top:-40px;left:30%;width:200px;height:200px;background:radial-gradient(circle,var(--accent-teal-light) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero-inner{position:relative;z-index:1;display:flex;align-items:center;gap:28px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--border-light);padding:4px 12px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--accent-coral);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.hero-badge-dot{width:6px;height:6px;background:var(--accent-coral);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:var(--text-primary);margin-bottom:10px}
+.hero h1 .hl{color:var(--accent-coral)}
+.hero p{font-size:13px;color:var(--text-muted);max-width:500px;line-height:1.7}
+.hero-stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:var(--text-primary);line-height:1}
+.stat-label{font-size:10px;color:var(--text-muted);margin-top:2px}
+
+/* ── SECTION ── */
+.section{padding-top:52px;border-bottom:1px solid var(--border-light);padding-bottom:44px}
+.section:last-child{border-bottom:none}
+.section-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px}
+.section-num{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted);padding-top:6px;min-width:24px;flex-shrink:0}
+.section-tag{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.section h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary);line-height:1.25}
+.section h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--text-primary);margin:30px 0 12px}
+.section h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-secondary);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+.section p{font-size:12.5px;color:var(--text-secondary);margin-bottom:12px;max-width:820px;line-height:1.8}
+.section p strong{color:var(--text-primary)}
+
+/* ── PILLS ── */
+.pill{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;margin-left:6px;vertical-align:middle;position:relative;top:-1px}
+.pill-bug{background:var(--accent-coral-light);color:var(--accent-coral);border:1px solid rgba(232,93,76,.25)}
+.pill-new{background:var(--accent-teal-light);color:var(--accent-teal)}
+.pill-warn{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.pill-info{background:var(--accent-teal-light);color:var(--accent-teal)}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:16px 0}
+.card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:14px;padding:16px;box-shadow:var(--shadow-sm);transition:box-shadow .2s}
+.card:hover{box-shadow:var(--shadow-md)}
+.card-icon{font-size:18px;margin-bottom:9px}
+.card h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-primary);margin:0 0 6px}
+.card p{font-size:11px;color:var(--text-muted);margin:0;line-height:1.55}
+.card-file{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;margin-top:10px;padding:3px 8px;border-radius:100px;display:inline-block}
+.cf-coral{background:var(--accent-coral-light);color:var(--accent-coral)}
+.cf-teal{background:var(--accent-teal-light);color:var(--accent-teal)}
+.cf-gold{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+
+/* ── ALERTS ── */
+.alert{display:flex;gap:12px;padding:12px 16px;border-radius:10px;margin:14px 0;max-width:820px}
+.alert-icon{font-size:15px;flex-shrink:0;padding-top:1px}
+.alert p{margin:0;font-size:12px;line-height:1.7}
+.alert-bug{background:var(--accent-coral-light);border:1px solid rgba(232,93,76,.25)}
+.alert-bug p{color:var(--accent-coral-dark)}
+.alert-warn{background:var(--accent-gold-light);border:1px solid rgba(212,168,83,.3)}
+.alert-warn p{color:#8a6520}
+.alert-info{background:var(--accent-teal-light);border:1px solid rgba(45,156,156,.25)}
+.alert-info p{color:var(--accent-teal-dark)}
+.alert-tip{background:var(--accent-gold-light);border-top:2px solid var(--accent-gold);border-radius:0 0 10px 10px;border-left:none;border-right:none;border-bottom:none}
+.alert-tip p{color:var(--text-secondary)}
+.alert-tip p strong{color:var(--accent-gold-dark)}
+
+/* ── CODE ── */
+pre{background:var(--dark-warm);border-radius:10px;padding:16px 20px;overflow-x:auto;margin:12px 0 20px;font-family:'Space Grotesk',monospace;font-size:11px;line-height:1.75;color:#f0ede8;position:relative}
+pre .file-label{display:block;color:rgba(255,255,255,.35);margin-bottom:10px;font-size:8.5px;letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:8px}
+.kw{color:#E85D4C}.fn{color:#D4A853}.str{color:#7dd3c4}.cm{color:rgba(255,255,255,.35);font-style:italic}.num{color:#a5d6a7}.cls{color:#f4a261}
+.bug-line{background:rgba(232,93,76,.18);display:block;margin:0 -20px;padding:0 20px;border-left:3px solid var(--accent-coral)}
+.fix-line{background:rgba(45,156,156,.15);display:block;margin:0 -20px;padding:0 20px;border-left:3px solid var(--accent-teal)}
+code{font-family:'Space Grotesk',monospace;font-size:11px;background:var(--accent-coral-light);padding:2px 6px;border-radius:4px;color:var(--accent-coral-dark)}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;margin:12px 0 24px;border-radius:12px;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;font-size:12px;background:var(--bg-card)}
+th{font-family:'Space Grotesk',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border-light);background:var(--bg-warm);white-space:nowrap}
+td{padding:9px 14px;border-bottom:1px solid rgba(232,228,221,.5);color:var(--text-secondary);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-warm)}
+.badge{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:.3px;white-space:nowrap}
+.bg{background:var(--accent-teal-light);color:var(--accent-teal-dark)}
+.bb{background:var(--accent-teal-light);color:var(--accent-teal-dark)}
+.bo{background:var(--accent-coral-light);color:var(--accent-coral)}
+.bp{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.by{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.br{background:var(--accent-coral-light);color:var(--accent-coral)}
+.col-key td:first-child{font-weight:700;color:var(--text-primary)}
+
+/* ── FLOW ── */
+.flow{background:var(--bg-warm);border:1px solid var(--border-light);border-radius:14px;padding:22px;margin:16px 0;overflow-x:auto}
+.flow-steps{display:flex;align-items:stretch;min-width:640px;gap:0}
+.flow-step{flex:1;text-align:center;position:relative}
+.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;z-index:2}
+.flow-box{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 8px;margin:0 6px;box-shadow:var(--shadow-sm);height:100%}
+.flow-box .ficon{font-size:18px;margin-bottom:4px}
+.flow-box .fname{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-primary);display:block;margin-bottom:2px}
+.flow-box .fdesc{font-size:9px;color:var(--text-muted);line-height:1.4}
+.flow-box.fc{border-top:3px solid var(--accent-coral)}
+.flow-box.ft{border-top:3px solid var(--accent-teal)}
+.flow-box.fg{border-top:3px solid var(--accent-gold)}
+
+/* ── FORMULA ── */
+.formula{background:var(--accent-gold-light);border-top:2px solid var(--accent-gold);border-radius:0 0 10px 10px;padding:13px 16px;margin:10px 0 18px;font-family:'Space Grotesk',monospace;font-size:11.5px;color:var(--text-secondary);max-width:820px}
+.formula .f-label{font-size:8px;font-weight:700;color:var(--accent-gold-dark);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;display:block}
+
+/* ── FORMULA + EJEMPLO LADO A LADO ── */
+.calc-wrap{margin:10px 0 22px;max-width:900px;border-radius:10px;overflow:hidden;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+.calc-header{background:var(--dark-warm);padding:8px 16px;display:flex;align-items:center;gap:8px}
+.calc-header .ch-label{font-family:'Space Grotesk',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.calc-header .ch-title{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:#fff;flex:1}
+.calc-body{display:grid;grid-template-columns:1fr 1fr}
+.calc-formula{background:var(--accent-gold-light);padding:14px 18px;border-right:1px solid var(--border-light)}
+.calc-example{background:var(--bg-card);padding:14px 18px}
+.calc-col-label{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:block}
+.calc-formula .calc-col-label{color:var(--accent-gold-dark)}
+.calc-example .calc-col-label{color:var(--accent-teal-dark)}
+.calc-formula pre, .calc-example pre{background:transparent;padding:0;margin:0;font-size:11px;line-height:1.9;color:var(--text-secondary);box-shadow:none;border-radius:0}
+.calc-formula pre .file-label, .calc-example pre .file-label{display:none}
+.calc-example pre .res{color:var(--accent-teal-dark);font-weight:700}
+.calc-example pre .resn{color:var(--accent-coral);font-weight:700}
+.calc-note{background:var(--bg-warm);padding:9px 16px;border-top:1px solid var(--border-light);font-size:11px;color:var(--text-muted);line-height:1.55}
+.calc-note strong{color:var(--accent-gold-dark)}
+@media(max-width:700px){.calc-body{grid-template-columns:1fr}.calc-formula{border-right:none;border-bottom:1px solid var(--border-light)}}
+
+/* ── STEPS ── */
+.steps{margin:12px 0 20px;max-width:820px}
+.step-item{display:flex;gap:12px;margin-bottom:16px}
+.step-n{flex-shrink:0;display:flex;flex-direction:column;align-items:center}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--bg-warm);border:1px solid var(--border-light);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted)}
+.step-line{width:1px;flex:1;background:var(--border-light);margin-top:4px}
+.step-body{padding-top:2px}
+.step-body strong{display:block;font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.step-body p{margin:0;font-size:11.5px;color:var(--text-muted);line-height:1.6}
+
+/* ── SCHEMA ── */
+.schema-table{margin:12px 0 22px;border-radius:12px;overflow:hidden;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+.schema-header{background:var(--dark-warm);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.schema-name{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:#fff}
+.schema-desc{font-size:10.5px;color:rgba(255,255,255,.5)}
+
+/* ── COMPARE ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;max-width:820px}
+.compare-box{border-radius:12px;padding:16px}
+.compare-box.bad{background:var(--accent-coral-light);border:1px dashed rgba(232,93,76,.3)}
+.compare-box.good{background:var(--accent-teal-light);border:1px solid var(--accent-teal)}
+.compare-box h5{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(0,0,0,.06)}
+.compare-box.bad h5{color:var(--accent-coral)}
+.compare-box.good h5{color:var(--accent-teal)}
+.compare-box ul{list-style:none;font-size:11.5px}
+.compare-box ul li{padding:4px 0;display:flex;gap:8px;color:var(--text-secondary);line-height:1.5}
+.compare-box ul li::before{content:'→';flex-shrink:0}
+
+/* ── COOKBOOK ── */
+.cookbook{background:var(--bg-card);border:1px solid var(--border-light);border-radius:12px;margin:14px 0;overflow:hidden;box-shadow:var(--shadow-sm)}
+.cookbook-header{background:var(--bg-warm);padding:11px 18px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:10px}
+.cookbook-header .ck-icon{font-size:15px}
+.cookbook-header h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-primary);margin:0}
+.cookbook-header p{font-size:10px;color:var(--text-muted);margin:0 0 0 auto}
+.cookbook-body{padding:14px 18px}
+.ck-step{display:flex;gap:10px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);align-items:flex-start}
+.ck-num{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;background:var(--bg-warm);border:1px solid var(--border-light);border-radius:4px;padding:2px 7px;flex-shrink:0;color:var(--text-muted)}
+.ck-file{color:var(--accent-teal-dark);font-family:'Space Grotesk',monospace;font-size:11px;font-weight:600}
+
+/* ── DEPENDENCY MAP ── */
+.dep-map{background:var(--bg-warm);border:1px solid var(--border-light);border-radius:12px;padding:20px;margin:14px 0}
+.dep-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12px;flex-wrap:wrap}
+.dep-from{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:var(--bg-card);background:var(--dark-warm);border-radius:6px;padding:4px 10px;white-space:nowrap}
+.dep-arrow{color:var(--text-muted);font-size:12px;flex-shrink:0}
+.dep-to{font-family:'Space Grotesk',monospace;font-size:10.5px;color:var(--text-secondary);white-space:nowrap}
+.dep-via{font-size:10.5px;color:var(--text-muted);margin-left:4px}
+
+/* ── TAKEAWAY ── */
+.takeaway{background:linear-gradient(135deg,var(--dark-warm) 0%,#2a2a3e 100%);border-radius:12px;padding:14px 18px;margin:14px 0 20px;display:flex;align-items:center;gap:14px;max-width:820px}
+.takeaway p{font-size:12px;color:rgba(255,255,255,.8);line-height:1.65;margin:0}
+.takeaway p strong{color:var(--accent-gold)}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{height:1px;background:linear-gradient(90deg,var(--accent-coral-light),var(--border-light),var(--accent-teal-light));margin:0}
+
+/* ── PROSE LIST ── */
+ul.prose-list{max-width:820px;list-style:none;padding:0;margin-bottom:12px}
+ul.prose-list li{padding:4px 0;color:var(--text-secondary);font-size:12.5px;display:flex;gap:8px;line-height:1.6}
+ul.prose-list li::before{content:'→';color:var(--accent-coral);flex-shrink:0}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:3px}
+
+@media(max-width:900px){.sidebar{display:none}.main{padding:24px 20px 60px}.compare-grid{grid-template-columns:1fr}.flow-steps{flex-direction:column}.flow-step::after{display:none}}
+</style>
+</head>
+
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-eyebrow">ALICORP · COE ANALYTICS</span>
+    <h1>TPO v3.0</h1>
+    <p>Canal Moderno</p>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Páginas</span>
+      <a href="../" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>← Inicio (Doc Técnica)</a>
+      <a href="../validacion/" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>🔬 Validación & Diagnóstico</a>
+      <a href="../changelog/" class="nav-link active"><span class="nav-dot" style="background:var(--accent-teal)"></span>📋 Changelog v3.0</a>
+      <a href="../categorias/" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>📊 Ranking Categorías</a>
+  </div>
+</nav>
+<div class="main">
+<section id="changelog-v3" class="section">
+  <div class="section-header">
+    <span class="section-num">★</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-teal)">▸ CHANGELOG</div>
+      <h2>📋 Changelog v3.0 — Desarrollo Mar-2026</h2>
+    </div>
+  </div>
+
+  <div class="alert" style="background:var(--accent-teal-light);border-left:4px solid var(--accent-teal);padding:12px 16px;border-radius:6px;margin-bottom:24px">
+    <p>Este changelog documenta todos los cambios implementados en TPO v3.0 respecto a v2.0, desarrollados durante marzo 2026. Los cambios están agrupados por área funcional.</p>
+  </div>
+
+  <!-- ── GRUPO 1: ARQUITECTURA CORE ── -->
+  <h3 style="margin-top:8px;font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px">GRUPO 1 — Arquitectura Core</h3>
+
+  <h4 style="margin-top:20px">1. Horizonte M+2 con weeks_ahead configurable <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">run_batch_optimizer.py</span></h4>
+  <p>En v2.0 el horizonte de predicción era fijo. En v3.0 se calcula dinámicamente desde el CSV de configuración.</p>
+  <div class="code-block"><pre><span class="cm"># Cálculo dinámico del horizonte</span>
+target_date = date(target_year, 1, 1) + timedelta(weeks=target_week - 1)
+last_date   = date(data_year,   1, 1) + timedelta(weeks=data_week   - 1)
+WEEKS_AHEAD = (target_date - last_date).days // 7
+
+<span class="cm"># Configuración activa (feb 2026)</span>
+<span class="cm"># datos hasta: year=2026 week=9 | target: year=2026 week=17 → weeks_ahead=8</span></pre></div>
+  <p>El modelo de elasticidad avanza <code>weeks_ahead</code> pasos en silencio antes de guardar las predicciones, garantizando que las estimaciones correspondan a la semana objetivo real (M+2).</p>
+
+  <h4 style="margin-top:24px">2. Fuentes de materiales migradas a fert_hawa <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">data_factory.py</span></h4>
+  <table>
+    <tr><th>Campo</th><th>v2.0 (origen)</th><th>v3.0 (origen)</th></tr>
+    <tr><td><code>des_material</code></td><td>mapa_de_precios</td><td>fert_hawa.DescM</td></tr>
+    <tr><td><code>num_unidad</code></td><td>mapa_de_precios</td><td>fert_hawa.num_factor_unidad_almacenamiento</td></tr>
+    <tr><td>universo SKUs</td><td>mapa_de_precios</td><td>precio_efectivo (Grow)</td></tr>
+    <tr><td><code>precio_base</code></td><td>mapa_de_precios</td><td>precio_efectivo (Grow)</td></tr>
+  </table>
+  <p style="margin-top:8px"><code>mapa_de_precios</code> se sigue leyendo de BigQuery por backward-compatibility pero se ignora completamente en el pipeline v3.0. Aparece en logs como: <em>"ignorado en v3.0"</em>.</p>
+  <div class="code-block"><pre><span class="cm"># data_factory.py — rename fert_hawa</span>
+df = df.rename(columns={
+    <span class="str">'num_factor_unidad_almacenamiento'</span>: <span class="str">'num_unidad'</span>
+})</pre></div>
+
+  <h4 style="margin-top:24px">3. Universo de SKUs y precios desde Grow (precio_efectivo) <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">data_factory.py + query_precio_efectivo.sql</span></h4>
+  <p>En v2.0 el universo de SKUs activos y el <code>precio_base</code> venían de <code>mapa_de_precios</code> (tabla interna Alicorp). En v3.0 vienen de <strong>Grow</strong> (<code>gld_cliente.grow_cliente_detalle</code>), que refleja ventas reales en canal moderno.</p>
+  <div class="code-block"><pre><span class="cm">-- query_precio_efectivo.sql — fuente Grow</span>
+SELECT
+  EXTRACT(ISOYEAR FROM fec_venta) AS year,
+  EXTRACT(ISOWEEK  FROM fec_venta) AS week,
+  id_material_origen               AS cod_material,
+  SUM(mnt_venta_sin_igv)           AS Sum_mnt_bruto,
+  SUM(cnt_material)                AS Sum_cnt_material_venta,
+  SAFE_DIVIDE(SUM(mnt_venta_sin_igv), SUM(cnt_material)) AS p_u
+FROM `acpe-prod-dlk-shrd-gld.gld_cliente.grow_cliente_detalle`
+WHERE periodo >= <span class="str">'2023-01-01'</span>
+  AND des_canal = <span class="str">'MODERN'</span>
+  AND des_cadena = <span class="str">'{subcadena}'</span>
+GROUP BY ALL
+ORDER BY year, week, cod_material</pre></div>
+  <p>Historia disponible: <strong>desde 2023-01-01 → ~164 semanas</strong>. El <code>precio_base</code> se deriva como el precio máximo reciente observado por SKU×subcadena en este dataset.</p>
+
+  <!-- ── GRUPO 2: FÓRMULA ROI ── -->
+  <h3 style="margin-top:32px;font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px">GRUPO 2 — Fórmula ROI → GTN Nueva Propuesta (feb 2026)</h3>
+
+  <h4 style="margin-top:20px">4. Nueva fórmula GTN en UCOs <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">optimizer_model.py · _find_optimal_window</span></h4>
+  <p>En v2.0 el uplift se calculaba en kilos mezclados con el BI unitario en S/ por UCO, produciendo ROI negativos incorrectos. En v3.0 todo se calcula en <strong>UCOs (Unidades de Consumo)</strong>.</p>
+
+  <div style="background:var(--accent-teal-light);border-radius:8px;padding:16px 20px;margin:12px 0;font-family:'Space Grotesk',sans-serif">
+    <p style="font-size:11px;font-weight:700;color:var(--accent-teal-dark);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Fórmula GTN Nueva Propuesta</p>
+    <table style="width:100%;font-size:12px">
+      <tr><td style="padding:3px 8px;font-weight:600">Inversión</td><td style="padding:3px 8px"><code>(precio_base − precio_promo) × un_promo</code></td></tr>
+      <tr style="background:rgba(0,0,0,0.03)"><td style="padding:3px 8px;font-weight:600">Venta Bruta</td><td style="padding:3px 8px"><code>precio_base × un_promo</code></td></tr>
+      <tr><td style="padding:3px 8px;font-weight:600">Costos</td><td style="padding:3px 8px"><code>cogs_unitario × un_promo</code></td></tr>
+      <tr style="background:rgba(0,0,0,0.03)"><td style="padding:3px 8px;font-weight:600">BI Total</td><td style="padding:3px 8px"><code>Venta Bruta − Inversión − Costos</code></td></tr>
+      <tr><td style="padding:3px 8px;font-weight:600">BI Unitario</td><td style="padding:3px 8px"><code>BI Total / un_promo</code></td></tr>
+      <tr style="background:rgba(0,0,0,0.03)"><td style="padding:3px 8px;font-weight:600">Uplift (UN)</td><td style="padding:3px 8px"><code>un_promo − un_base</code></td></tr>
+      <tr><td style="padding:3px 8px;font-weight:600">BI Uplift</td><td style="padding:3px 8px"><code>BI Unitario × Uplift (UN)</code></td></tr>
+      <tr style="background:rgba(45,156,156,0.15)"><td style="padding:3px 8px;font-weight:700;color:var(--accent-teal-dark)">ROI</td><td style="padding:3px 8px;font-weight:700;color:var(--accent-teal-dark)"><code>(BI Uplift / Inversión) − 1</code></td></tr>
+    </table>
+    <p style="font-size:11px;margin-top:10px;color:var(--text-muted)">Guards: se descarta el escenario si <code>uplift_units ≤ 0</code> OR <code>bi_uplift ≤ 0</code> OR <code>inversion ≤ 0</code></p>
+  </div>
+
+  <div class="code-block"><pre><span class="cm"># Conversión kilos → UCOs</span>
+un_promo = int(np.floor(qty_promo / max_kilos_unidad))
+un_base  = int(np.floor(qty_base  / max_kilos_unidad))
+
+inversion    = (precio_base - precio) * un_promo
+venta_bruta  = precio_base * un_promo
+costos       = cogs_unitario * un_promo
+bi_total     = venta_bruta - inversion - costos
+bi_unitario  = bi_total / un_promo
+uplift_units = un_promo - un_base
+bi_uplift    = bi_unitario * uplift_units
+roi          = round((bi_uplift / inversion - 1) * 100, 2)
+
+<span class="kw">if</span> uplift_units <= 0 <span class="kw">or</span> bi_uplift <= 0 <span class="kw">or</span> inversion <= 0:
+    <span class="kw">continue</span></pre></div>
+
+  <h4 style="margin-top:24px">5. Fix baseline desde demanda_ajustada (historial real) <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">optimizer_model.py</span></h4>
+  <p>En v2.0 el baseline se buscaba entre las predicciones del modelo — pero <code>precio_base</code> nunca estaba en el grid de precios candidatos (el grid empieza un paso por debajo). Resultado: fallback siempre al precio promo más alto → <code>un_base ≈ un_promo</code> → <code>uplift ≤ 0</code> → <strong>reporte vacío</strong>.</p>
+  <div class="code-block"><pre><span class="cm"># Fix: baseline desde historial real filtrado a precio_base ±5%</span>
+mask_base_hist = np.isclose(
+    hist_sku[<span class="str">'p_unitario'</span>].astype(float),
+    float(precio_base_sku),
+    rtol=<span class="num">0.05</span>
+)
+hist_at_base = hist_sku[mask_base_hist].sort_values(<span class="str">'week'</span>, ascending=<span class="kw">False</span>)
+
+<span class="kw">if not</span> hist_at_base.empty:
+    demanda_base_semanal = hist_at_base[<span class="str">'cantidad_demandada'</span>].head(<span class="num">8</span>).mean()
+<span class="kw">else</span>:
+    <span class="cm"># Fallback: precio máximo histórico disponible</span>
+    precio_max_hist = hist_sku[<span class="str">'p_unitario'</span>].max()
+    demanda_base_semanal = hist_sku[mask_max][<span class="str">'cantidad_demandada'</span>].head(<span class="num">8</span>).mean()</pre></div>
+
+  <!-- ── GRUPO 3: PREDICCIÓN DIARIA ── -->
+  <h3 style="margin-top:32px;font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px">GRUPO 3 — Predicción y Distribución Diaria</h3>
+
+  <h4 style="margin-top:20px">6. Perfil diario ponderado real por SKU×subcadena <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">optimizer_model.py · _build_perfil_dict</span></h4>
+  <p>En v2.0 la demanda semanal se distribuía uniformemente entre los 7 días (1/7 por día). En v3.0 se usa el perfil real de ventas por día de semana para cada SKU×subcadena, calculado desde las últimas 8 semanas de <code>demanda_ajustada</code>.</p>
+  <div class="code-block"><pre><span class="cm"># Estructura del perfil diario</span>
+_perfil_dict: Dict[(cod_material, des_subcadena), Dict[dia_semana, pct]]
+<span class="cm"># dia_semana: 0=Lunes, 1=Martes, ..., 6=Domingo</span>
+<span class="cm"># pct: proporción de la demanda semanal que cae ese día (suma=1.0)</span>
+
+<span class="cm"># Fallback si no hay perfil para el SKU</span>
+perfil_uniforme = {d: <span class="num">1/7</span> <span class="kw">for</span> d <span class="kw">in</span> range(<span class="num">7</span>)}</pre></div>
+
+  <h4 style="margin-top:24px">7. Evaluación exhaustiva de todas las ventanas diarias <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">optimizer_model.py · _find_optimal_window</span></h4>
+  <p>Para cada precio candidato se evalúan <strong>98 combinaciones</strong> de ventana: 7 días de inicio × 14 duraciones posibles. Se selecciona la combinación con ROI máximo.</p>
+  <div class="code-block"><pre><span class="kw">for</span> start_day <span class="kw">in</span> range(<span class="num">7</span>):       <span class="cm"># 0=Lun … 6=Dom</span>
+    <span class="kw">for</span> duration <span class="kw">in</span> range(<span class="num">1</span>, <span class="num">15</span>): <span class="cm"># 1 a 14 días</span>
+        indices   = list(range(start_day, min(start_day + duration, <span class="num">28</span>)))
+        qty_promo = sum(daily_promo[i] <span class="kw">for</span> i <span class="kw">in</span> indices)
+        qty_base  = sum(daily_base[i]  <span class="kw">for</span> i <span class="kw">in</span> indices)
+        <span class="cm"># ... evaluar ROI y guardar si es el mejor hasta ahora</span>
+        <span class="kw">if</span> roi > best_roi:
+            best_roi = roi
+            best = { ... }</pre></div>
+
+  <!-- ── GRUPO 4: FECHAS Y DÍAS ── -->
+  <h3 style="margin-top:32px;font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px">GRUPO 4 — Recomendación de Días y Fechas Concretas</h3>
+
+  <h4 style="margin-top:20px">8. Fechas concretas en el output <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">optimizer_model.py</span></h4>
+  <p>Cada escenario recomendado incluye ahora las fechas absolutas de inicio y fin de la promoción, calculadas desde el lunes de la semana M+2 predicha.</p>
+  <div class="code-block"><pre><span class="cm"># Cálculo de fechas concretas por escenario</span>
+monday = iso_to_date(year_pred_first, week_pred_first)  <span class="cm"># lunes de semana M+2</span>
+
+fecha_inicio      = (monday + pd.Timedelta(days=start_day)).strftime(<span class="str">'%Y-%m-%d'</span>)
+fecha_fin         = (monday + pd.Timedelta(days=start_day + duration - 1)).strftime(<span class="str">'%Y-%m-%d'</span>)
+dia_semana_inicio = DIAS_SEMANA[start_day % 7]
+<span class="cm"># DIAS_SEMANA = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo']</span></pre></div>
+  <p>Campos nuevos en el output: <code>fecha_inicio</code>, <code>fecha_fin</code>, <code>dia_semana_inicio</code>, <code>start_day_of_week</code>.</p>
+
+  <h4 style="margin-top:24px">9. n_tandas — tabla fija original <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">optimizer_model.py</span></h4>
+  <p>Se restauró la tabla de conversión duración→tandas original del negocio:</p>
+  <div class="code-block"><pre>df[<span class="str">'n_tandas'</span>] = np.select(
+    [
+        df[<span class="str">'duracion_dias'</span>] == <span class="num">1</span>,
+        df[<span class="str">'duracion_dias'</span>] == <span class="num">2</span>,
+        df[<span class="str">'duracion_dias'</span>].between(<span class="num">3</span>,  <span class="num">7</span>),
+        df[<span class="str">'duracion_dias'</span>].between(<span class="num">8</span>, <span class="num">14</span>),
+        df[<span class="str">'duracion_dias'</span>] >= <span class="num">15</span>
+    ],
+    [<span class="num">30</span>, <span class="num">15</span>, <span class="num">4</span>, <span class="num">2</span>, <span class="num">1</span>],
+    default=<span class="num">1</span>
+)</pre></div>
+
+  <!-- ── GRUPO 5: FILTROS DE NEGOCIO ── -->
+  <h3 style="margin-top:32px;font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px">GRUPO 5 — Filtros del Reporte Final (_9_)</h3>
+
+  <h4 style="margin-top:20px">10. Filtros de negocio en _get_best_scenario_by_roi <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">optimizer_model.py</span></h4>
+  <p>Se aplican 4 filtros en orden antes de seleccionar el mejor escenario por SKU:</p>
+  <table>
+    <tr><th>#</th><th>Filtro</th><th>Criterio</th><th>Razón</th></tr>
+    <tr><td>1</td><td>cantidad_predicha</td><td><code>≥ 5</code></td><td>Volumen mínimo operativo</td></tr>
+    <tr><td>2</td><td>duracion_dias</td><td><code>&lt; 16</code></td><td>Máximo 15 días de promo</td></tr>
+    <tr><td>3</td><td>factor descuento</td><td><code>6% ≤ factor ≤ 20%</code></td><td>Regla dura de negocio — descuentos fuera de rango no se usan</td></tr>
+    <tr><td>4</td><td>elasticidad</td><td><code>&lt; 0</code></td><td>Solo SKUs donde bajar precio sube la demanda (economicamente correcto)</td></tr>
+  </table>
+  <div class="code-block"><pre><span class="cm"># Fórmula del factor de descuento</span>
+factor = round((precio_base - precio_promo) / precio_base, 2)
+<span class="cm"># Ejemplo: precio_base=10, precio_promo=8.5 → factor=0.15 (15%)</span>
+
+<span class="cm"># Fórmula de elasticidad precio-demanda</span>
+elasticidad = ((qty_promo - qty_base) / qty_base) / ((precio - precio_base) / precio_base)
+<span class="cm"># Valor esperado: negativo (precio baja → demanda sube)</span></pre></div>
+
+  <!-- ── GRUPO 6: FIX TÉCNICOS ── -->
+  <h3 style="margin-top:32px;font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px">GRUPO 6 — Fixes Técnicos (Mar-2026)</h3>
+
+  <h4 style="margin-top:20px">11. Fix cast cod_material en cog_unitario <span class="pill" style="background:var(--accent-coral-light);color:var(--accent-coral-dark)">data_factory.py</span></h4>
+  <p>El bloque de <code>cog_unitario</code> no tenía cast a Int64, a diferencia de todas las otras tablas. Esto causaba que el lookup fallara por tipo string vs Int64, excluyendo SKUs que sí tenían COGS.</p>
+  <div class="code-block"><pre><span class="cm"># FIX — agregar cast igual que todas las demás tablas</span>
+df[<span class="str">'cod_material'</span>] = pd.to_numeric(df[<span class="str">'cod_material'</span>], errors=<span class="str">'coerce'</span>).astype(<span class="str">'Int64'</span>)
+<span class="cm"># Impacto: 429 → 570 filas de COGS disponibles</span></pre></div>
+
+  <h4 style="margin-top:24px">12. Fix float comparison para precio_base <span class="pill" style="background:var(--accent-coral-light);color:var(--accent-coral-dark)">optimizer_model.py</span></h4>
+  <p>La comparación <code>precio == precio_base</code> fallaba por precisión de punto flotante. Se reemplazó con <code>np.isclose</code>.</p>
+  <div class="code-block"><pre><span class="cm"># Antes — fallaba por float precision</span>
+<span class="bug-line">mask = grupo[<span class="str">'precio'</span>] == precio_base_sku</span>
+
+<span class="cm"># Fix — tolerancia ±0.01%</span>
+<span class="fix-line">mask = np.isclose(grupo[<span class="str">'precio'</span>].astype(float), float(precio_base_sku), rtol=<span class="num">1e-4</span>)</span></pre></div>
+
+  <h4 style="margin-top:24px">13. Fix KeyError cod_material_sku <span class="pill" style="background:var(--accent-coral-light);color:var(--accent-coral-dark)">data_factory.py</span></h4>
+  <p><code>promocion_detalle</code> se procesaba antes que <code>precio_efectivo</code>, por lo que <code>cod_material_sku</code> aún no existía. Fix: guardar como <code>_promocion_detalle_raw</code> durante el loop y procesar al final.</p>
+
+  <h4 style="margin-top:24px">14. Fix ValueError NA to integer <span class="pill" style="background:var(--accent-coral-light);color:var(--accent-coral-dark)">optimizer_model.py</span></h4>
+  <div class="code-block"><pre><span class="cm"># Fix — dropna antes del cast</span>
+df_unidades = df_unidades.dropna(subset=[<span class="str">'cod_material'</span>])
+df_unidades[<span class="str">'cod_material'</span>] = df_unidades[<span class="str">'cod_material'</span>].astype(int)</pre></div>
+
+  <h4 style="margin-top:24px">15. Query cog_unitario — SAFE_CAST + limpieza alfanuméricos <span class="pill" style="background:var(--accent-coral-light);color:var(--accent-coral-dark)">query_cogs_unitario.sql</span></h4>
+  <p>La query original fallaba con <code>Bad int64 value: DS952V</code> al encontrar materiales alfanuméricos. Se reemplazó <code>CAST</code> por <code>SAFE_CAST</code> con <code>LTRIM</code> de ceros y filtro de NULLs.</p>
+  <div class="code-block"><pre><span class="cm">-- Antes</span>
+<span class="bug-line">CAST(cod_material AS INT64)</span>
+
+<span class="cm">-- Fix</span>
+<span class="fix-line">SAFE_CAST(LTRIM(CAST(cod_material AS STRING), <span class="str">'0'</span>) AS INT64)</span>
+<span class="cm">-- + WHERE cod_material IS NOT NULL para descartar alfanuméricos</span></pre></div>
+
+  <!-- ── GRUPO 7: TRAZABILIDAD ── -->
+  <h3 style="margin-top:32px;font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px">GRUPO 7 — Trazabilidad y Diagnóstico (Mar-2026)</h3>
+
+  <h4 style="margin-top:20px">16. Logs [TRAZABILIDAD] del embudo de SKUs <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">optimizer_model.py</span></h4>
+  <div class="code-block"><pre><span class="cm"># Pre-loop: cuántos SKUs tienen COGS y cuántos no</span>
+[TRAZABILIDAD] SKUs en demand_result: 41 | con COGS: 23 | sin COGS (omitidos): 18
+[TRAZABILIDAD] SKUs sin COGS: [3300117, 3300118, ...]
+
+<span class="cm"># Post-loop: clasificación de SKUs sin ventana válida</span>
+[TRAZABILIDAD] ventana_invalida_todos_precios: [3300018, 3300075, ...]
+[TRAZABILIDAD] post-COGS | kilos_invalido=0 | sin_ventana=15 | con_escenario=8
+
+<span class="cm"># Por filtro en _get_best_scenario_by_roi</span>
+[TRAZABILIDAD] 0_input_optimizer:       8 SKUs | SKUs=[3300017, ...]
+[TRAZABILIDAD] 1_cantidad_predicha>=5:  8 SKUs | SKUs=[...]
+[TRAZABILIDAD] 2_duracion_dias<16:      8 SKUs | SKUs=[...]
+[TRAZABILIDAD] 3_factor_6pct_20pct:     5 SKUs | SKUs=[...]
+[TRAZABILIDAD] 4_elasticidad<0:         5 SKUs | SKUs=[...]</pre></div>
+
+  <h4 style="margin-top:24px">17. Log [DIAG] diagnóstico por SKU con ventana inválida <span class="pill" style="background:var(--accent-teal-light);color:var(--accent-teal-dark)">optimizer_model.py</span></h4>
+  <div class="code-block"><pre><span class="cm"># Nivel DEBUG — primer precio candidato de cada SKU sin ventana</span>
+[DIAG] cod=3300018 | precio_base=13.8 precio_promo=11.20 |
+       demanda_base_sem=3112.5 demanda_promo_sem=2370.11 |
+       max_kilos=0.4 cogs=4.64 |
+       un_promo_est=23701 un_base_est=31125 uplift_est=-7424 |
+       bi_unitario_est=9.15</pre></div>
+  <p>Permite identificar si el fallo es por <strong>uplift negativo</strong> (demanda inelástica) o por <strong>BI unitario negativo</strong> (COGS demasiado alto).</p>
+
+  <!-- ── RESUMEN TABLA ── -->
+  <h3 style="margin-top:32px;font-family:'Space Grotesk',sans-serif;color:var(--accent-teal-dark);border-bottom:2px solid var(--accent-teal-light);padding-bottom:6px">Resumen de Cambios</h3>
+  <table>
+    <tr><th>#</th><th>Cambio</th><th>Archivo</th><th>Impacto</th></tr>
+    <tr><td>1</td><td>Horizonte M+2 dinámico (weeks_ahead)</td><td>run_batch_optimizer.py</td><td>Predicciones apuntan a semana objetivo real</td></tr>
+    <tr><td>2</td><td>Fuentes a fert_hawa (des_material, num_unidad)</td><td>data_factory.py</td><td>Datos de materiales más precisos y actualizados</td></tr>
+    <tr><td>3</td><td>Universo SKUs y precios desde Grow</td><td>data_factory.py + SQL</td><td>Universo basado en ventas reales canal moderno</td></tr>
+    <tr><td>4</td><td>Fórmula ROI → GTN Nueva Propuesta en UCOs</td><td>optimizer_model.py</td><td>Elimina ROI negativos, cálculo financiero correcto</td></tr>
+    <tr><td>5</td><td>Fix baseline desde demanda_ajustada ±5%</td><td>optimizer_model.py</td><td>Elimina reporte vacío por baseline incorrecto</td></tr>
+    <tr><td>6</td><td>Perfil diario ponderado real por SKU</td><td>optimizer_model.py</td><td>Distribución realista de demanda por día</td></tr>
+    <tr><td>7</td><td>Evaluación 98 ventanas (7 días × 14 duraciones)</td><td>optimizer_model.py</td><td>Encuentra la ventana óptima real de cada SKU</td></tr>
+    <tr><td>8</td><td>Fechas concretas en output</td><td>optimizer_model.py</td><td>fecha_inicio, fecha_fin, dia_semana_inicio</td></tr>
+    <tr><td>9</td><td>n_tandas tabla fija original</td><td>optimizer_model.py</td><td>Alineado con lógica de negocio original</td></tr>
+    <tr><td>10</td><td>Filtro elasticidad &lt; 0 en reporte final</td><td>optimizer_model.py</td><td>Solo SKUs con comportamiento económicamente correcto</td></tr>
+    <tr><td>11</td><td>Fix cast Int64 en cog_unitario</td><td>data_factory.py</td><td>+141 SKUs con COGS (429 → 570 filas)</td></tr>
+    <tr><td>12</td><td>Fix float comparison np.isclose</td><td>optimizer_model.py</td><td>Elimina falsos negativos en lookup de precio_base</td></tr>
+    <tr><td>13</td><td>Fix KeyError cod_material_sku</td><td>data_factory.py</td><td>Elimina crash al procesar promocion_detalle</td></tr>
+    <tr><td>14</td><td>Fix ValueError NA to integer</td><td>optimizer_model.py</td><td>Elimina crash en cast de cod_material</td></tr>
+    <tr><td>15</td><td>Query cog_unitario SAFE_CAST</td><td>query_cogs_unitario.sql</td><td>Descarta alfanuméricos sin crash</td></tr>
+    <tr><td>16</td><td>Logs [TRAZABILIDAD] embudo SKUs</td><td>optimizer_model.py</td><td>Monitoreo completo del funnel en cada run</td></tr>
+    <tr><td>17</td><td>Log [DIAG] diagnóstico por SKU</td><td>optimizer_model.py</td><td>Identifica causa de ventana inválida</td></tr>
+  </table>
+
+</section>
+
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<a href="../" title="← Volver al inicio"
+   style="position:fixed;bottom:28px;right:28px;z-index:9999;
+          display:flex;align-items:center;gap:8px;
+          background:#D4A853;color:white;padding:11px 22px;border-radius:50px;
+          font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;
+          text-decoration:none;box-shadow:0 4px 16px rgba(212,168,83,0.4);
+          transition:all .2s"
+   onmouseover="this.style.background='#C4983F';this.style.transform='translateY(-2px)'"
+   onmouseout="this.style.background='#D4A853';this.style.transform='translateY(0)'">
+  ← Volver al inicio
+</a>
+
+</body>
+</html>
