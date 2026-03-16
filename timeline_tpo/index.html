@@ -174,6 +174,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--tex
 .pc-blue .pc-date{color:var(--blue)}.pc-blue .peq-node{border-color:var(--blue);color:var(--blue)}.pc-blue .peq-connector{background:var(--blue)}.pc-blue .peq-card::after{background:var(--blue)}.pc-blue .peq-card{background:#eef4ff;border-color:rgba(58,123,213,.25)}
 .gc-blue .grp-card{color:var(--blue)}.gc-blue .gi-date{color:var(--blue)}.gc-blue .grp-card::before{background:var(--blue)}.gc-blue .grp-node{border-color:var(--blue);color:var(--blue)}.gc-blue .grp-connector{background:var(--blue)}.gc-blue .grp-card::after{background:var(--blue)}.gc-blue .grp-card{background:#eef4ff;border-color:rgba(58,123,213,.25)}
 
+/* ── CALIDAD GOBIERNO ───────────────────────────── */
+.qual-section{margin-top:6px;padding-top:5px;border-top:1px dashed rgba(123,94,167,.25)}
+.qual-label{font-family:'Space Grotesk',sans-serif;font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--purple-dark);opacity:.6;display:block;margin-bottom:3px}
+.qual-row{display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+.qual-chip{display:inline-flex;align-items:center;gap:2px;padding:2px 6px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;line-height:1}
+.qual-chip.was{background:rgba(123,94,167,.08);color:var(--purple-dark);text-decoration:line-through;opacity:.65}
+.qual-chip.now{background:linear-gradient(135deg,rgba(45,156,156,.15),rgba(45,156,156,.25));color:var(--teal-dark);border:1px solid rgba(45,156,156,.3)}
+.qual-chip.pct{background:var(--purple-light);color:var(--purple-dark);border:1px solid rgba(123,94,167,.2)}
+.qual-arrow{font-size:8px;color:var(--text-muted);line-height:1}
+
 /* ═══ METRICS TABLE ══════════════════════════════ */
 .tl-col.dest.wide{width:220px}
 .dest-card.wide{width:208px}
@@ -383,13 +393,21 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   </div>
   <div class="tl-col gap"></div>
 
-  <!-- ⑤b Jun 3 · GOBIERNO Precio Lista + Precio Pactado · peq · BELOW -->
-  <div class="tl-col peq pc-purple" style="animation-delay:.24s">
+  <!-- ⑤b Jun 3 · GOBIERNO Precio Lista + Precio Pactado · peq · BELOW — CON CALIDAD -->
+  <div class="tl-col peq pc-purple" style="animation-delay:.24s;width:118px">
     <div class="peq-spacer-above"></div>
     <div class="peq-node"></div><div class="peq-connector"></div>
-    <div class="peq-card below">
+    <div class="peq-card below" style="width:110px">
       <div class="pc-date">03 Jun 2025</div>
       <div class="pc-title">🏛️ Gobierno: Precio de Lista &amp; Precio Pactado</div>
+      <div class="qual-section">
+        <span class="qual-label">Calidad</span>
+        <div class="qual-row">
+          <span class="qual-chip was">99.82%</span>
+          <span class="qual-arrow">→</span>
+          <span class="qual-chip now">100% ✓</span>
+        </div>
+      </div>
     </div>
     <div class="peq-spacer-below" style="min-height:0"></div>
   </div>
@@ -513,12 +531,18 @@ footer{padding:14px 48px;border-top:1px solid var(--border);display:flex;justify
   </div>
   <div class="tl-col gap"></div>
 
-  <!-- ⑩c Dic 11 · GOBIERNO TPM · peq · ABOVE -->
-  <div class="tl-col peq pc-purple" style="animation-delay:.48s">
+  <!-- ⑩c Dic 11 · GOBIERNO TPM · peq · ABOVE — CON CALIDAD -->
+  <div class="tl-col peq pc-purple" style="animation-delay:.48s;width:118px">
     <div class="peq-spacer-above" style="display:flex;flex-direction:column;justify-content:flex-end">
-      <div class="peq-card above">
+      <div class="peq-card above" style="width:110px">
         <div class="pc-date">11 Dic 2025</div>
         <div class="pc-title">🏛️ Gobierno TPM Promociones</div>
+        <div class="qual-section">
+          <span class="qual-label">Calidad</span>
+          <div class="qual-row">
+            <span class="qual-chip pct">99.97%</span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="peq-connector"></div><div class="peq-node"></div>
