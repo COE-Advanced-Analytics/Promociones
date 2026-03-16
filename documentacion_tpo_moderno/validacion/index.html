@@ -242,6 +242,7 @@ ul.prose-list li::before{content:'→';color:var(--accent-coral);flex-shrink:0}
 
 @media(max-width:900px){.sidebar{display:none}.main{padding:24px 20px 60px}.compare-grid{grid-template-columns:1fr}.flow-steps{flex-direction:column}.flow-step::after{display:none}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 
 </head>
@@ -293,7 +294,7 @@ ul.prose-list li::before{content:'→';color:var(--accent-coral);flex-shrink:0}
         <span style="background:#DC262618;color:#DC2626;border:1px solid #DC262640;
           padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700">✗ 6 errores</span>
       </div>
-      <div class="summary-grid">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin:18px 0">
         <div style="text-align:center;padding:16px 12px;background:white;border:1px solid #E8E4DD;
         border-radius:10px;min-width:100px;flex:1">
         <div style="font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;color:#2D9C9C;line-height:1">6</div>
@@ -2906,6 +2907,5 @@ Descuentos fuera de rango no son operativos y se excluyen del reporte final.
    onmouseout="this.style.background='#D4A853';this.style.transform='translateY(0)'">
   ← Volver al inicio
 </a>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </body>
 </html>
