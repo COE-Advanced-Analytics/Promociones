@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TPO — Documentación Técnica v2.0 | Playbook Analytics</title>
+<title>TPO v3.0 — Documentación Técnica | Alicorp Analytics</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -240,27 +240,10 @@ ul.prose-list li::before{content:'→';color:var(--accent-coral);flex-shrink:0}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:3px}
 
-/* ── AREA LOGO ── */
-.area-logo{
-  position:absolute;top:20px;right:48px;
-  display:flex;align-items:center;gap:9px;
-  background:rgba(255,255,255,.78);
-  backdrop-filter:blur(8px);
-  border:1px solid var(--border-light);
-  border-radius:100px;
-  padding:6px 14px 6px 8px;
-  box-shadow:var(--shadow-sm);
-  z-index:2;
-}
-.area-logo svg{width:26px;height:26px;flex-shrink:0}
-.area-logo-name{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:10.5px;font-weight:700;
-  color:var(--text-primary);line-height:1.2;
-}
-
-@media(max-width:900px){.sidebar{display:none}.main{padding:24px 20px 60px}.compare-grid{grid-template-columns:1fr}.flow-steps{flex-direction:column}.flow-step::after{display:none}.area-logo{right:16px;top:14px}}
+@media(max-width:900px){.sidebar{display:none}.main{padding:24px 20px 60px}.compare-grid{grid-template-columns:1fr}.flow-steps{flex-direction:column}.flow-step::after{display:none}}
 </style>
+</head>
+
 </head>
 <body>
 <div class="layout">
@@ -310,35 +293,15 @@ ul.prose-list li::before{content:'→';color:var(--accent-coral);flex-shrink:0}
     <a href="#dependencies" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>Mapa de Dependencias</a>
     <a href="#ejemplo-output" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>📊 Ejemplo de Output</a>
     <a href="#guia-ejecucion" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>🚀 Cómo Ejecutar</a>
+    <span class="nav-group-label">Novedades v3.0</span>
+    <a href="#navegacion-v3" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>🗂 Contenido v3.0</a>
   </div>
 </nav>
 
-<!-- MAIN -->
 <div class="main">
 
 <!-- HERO -->
 <div class="hero">
-
-  <!-- Logo COE Advanced Analytics -->
-  <div class="area-logo">
-    <svg viewBox="0 0 40 40" fill="none">
-      <rect width="40" height="40" rx="10" fill="url(#lgHeroDoc)"/>
-      <circle cx="12" cy="15" r="3" fill="white"/>
-      <circle cx="12" cy="20" r="3" fill="white"/>
-      <circle cx="12" cy="25" r="3" fill="white"/>
-      <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
-      <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
-      <circle cx="28" cy="20" r="4" fill="#D4A853"/>
-      <defs>
-        <linearGradient id="lgHeroDoc" x1="0" y1="0" x2="40" y2="40">
-          <stop stop-color="#E85D4C"/>
-          <stop offset="1" stop-color="#C94A3A"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    <div class="area-logo-name">COE Advanced Analytics</div>
-  </div>
-
   <div class="hero-inner">
     <!-- Pixel owl SVG matching playbook style -->
     <svg width="90" height="110" viewBox="0 0 130 140" fill="none" style="flex-shrink:0">
@@ -2331,6 +2294,58 @@ in 142.38 seconds</pre>
 
 </section>
 
+
+
+<section class="section" id="navegacion-v3">
+  <div class="section-header">
+    <span class="section-num">▶</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-teal)">▸ NOVEDADES v3.0</div>
+      <h2>Contenido adicional — TPO v3.0</h2>
+    </div>
+  </div>
+  <p style="color:#555;font-size:13px;margin-bottom:24px">
+    Los desarrollos de marzo 2026 están en secciones independientes. Haz clic para abrir.
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+
+    <a href="./changelog/" style="text-decoration:none"
+       onmouseover="this.querySelector('.ci').style.transform='translateY(-4px)';this.querySelector('.ci').style.boxShadow='0 8px 24px rgba(45,156,156,0.2)'"
+       onmouseout="this.querySelector('.ci').style.transform='';this.querySelector('.ci').style.boxShadow='var(--shadow-sm)'">
+      <div class="ci" style="background:white;border:1.5px solid #2D9C9C;border-radius:12px;padding:24px;transition:all .2s;box-shadow:var(--shadow-sm)">
+        <div style="font-size:30px;margin-bottom:10px">📋</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#2D9C9C;margin-bottom:8px">Changelog v3.0</div>
+        <div style="font-size:12px;color:#777;line-height:1.7">17 cambios en 7 grupos: fórmula GTN, predicción diaria, fechas concretas, fixes técnicos y trazabilidad.</div>
+        <div style="margin-top:14px;font-size:11px;font-weight:700;color:#2D9C9C;letter-spacing:0.05em">VER CHANGELOG →</div>
+      </div>
+    </a>
+
+    <a href="./categorias/" style="text-decoration:none"
+       onmouseover="this.querySelector('.ci').style.transform='translateY(-4px)';this.querySelector('.ci').style.boxShadow='0 8px 24px rgba(212,168,83,0.2)'"
+       onmouseout="this.querySelector('.ci').style.transform='';this.querySelector('.ci').style.boxShadow='var(--shadow-sm)'">
+      <div class="ci" style="background:white;border:1.5px solid #D4A853;border-radius:12px;padding:24px;transition:all .2s;box-shadow:var(--shadow-sm)">
+        <div style="font-size:30px;margin-bottom:10px">📊</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#D4A853;margin-bottom:8px">Ranking de Categorías</div>
+        <div style="font-size:12px;color:#777;line-height:1.7">Score compuesto con 5 dimensiones. Resultados por PLAZA VEA, METRO y TOTTUS. Detergentes lidera el ranking.</div>
+        <div style="margin-top:14px;font-size:11px;font-weight:700;color:#D4A853;letter-spacing:0.05em">VER RANKING →</div>
+      </div>
+    </a>
+
+    <a href="./validacion/" style="text-decoration:none"
+       onmouseover="this.querySelector('.ci').style.transform='translateY(-4px)';this.querySelector('.ci').style.boxShadow='0 8px 24px rgba(232,93,76,0.2)'"
+       onmouseout="this.querySelector('.ci').style.transform='';this.querySelector('.ci').style.boxShadow='var(--shadow-sm)'">
+      <div class="ci" style="background:white;border:1.5px solid #E85D4C;border-radius:12px;padding:24px;transition:all .2s;box-shadow:var(--shadow-sm)">
+        <div style="font-size:30px;margin-bottom:10px">🔬</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#E85D4C;margin-bottom:8px">Validación & Diagnóstico</div>
+        <div style="font-size:12px;color:#777;line-height:1.7">Reporte ejecutivo de outputs del modelo + diagnóstico completo del embudo de SKUs con trazabilidad.</div>
+        <div style="margin-top:14px;font-size:11px;font-weight:700;color:#E85D4C;letter-spacing:0.05em">VER VALIDACIÓN →</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+</div><!-- /main -->
+</div><!-- /layout -->
 </div><!-- /main -->
 </div><!-- /layout -->
 
@@ -2348,5 +2363,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '-60px 0px -60% 0px' });
 sections.forEach(s => observer.observe(s));
 </script>
+
 </body>
 </html>
