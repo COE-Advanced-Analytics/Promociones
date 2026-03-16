@@ -2,56 +2,271 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TPO v3.0 — Validación de Resultados | 2026-03-16 19:53:38</title>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔬 Validación & Diagnóstico | TPO v3.0</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;margin:0}
-.hero{background:#F8F5F0;padding:24px 40px;border-bottom:1px solid #E8E4DD}
-.hero h1{font-family:'Space Grotesk',sans-serif;font-size:26px;margin:0;line-height:1.2}
-.hero p{color:#777;margin-top:5px;font-size:13px}
-.hero-meta{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.chip{background:#2D9C9C;color:white;font-size:11px;font-weight:600;padding:3px 11px;border-radius:20px;letter-spacing:0.03em;display:inline-block;margin:2px}
-.chip.orange{background:#D97706}.chip.gray{background:#6B7280}
-.main{max-width:1400px;margin:0 auto;padding:24px 40px}
-.summary-card{background:white;border:1px solid #E8E4DD;border-radius:10px;padding:24px;margin-bottom:24px}
-.summary-grid{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}
-.combo{background:white;border:1px solid #E8E4DD;border-radius:10px;margin-bottom:28px;overflow:hidden}
-.combo-head{padding:14px 24px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #F0EDE8}
-.combo-head h2{margin:0;font-family:'Space Grotesk',sans-serif;font-size:17px}
-.combo-body{padding:20px 24px}
-.pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;border-bottom:2px solid #E8E4DD;padding-bottom:8px}
-.tab-btn{padding:6px 14px;border-radius:6px 6px 0 0;font-size:12px;font-weight:600;cursor:pointer;
-  border:1px solid #E8E4DD;background:#F8F5F0;color:#555;margin-bottom:-2px;transition:all .15s}
-.tab-btn.active{background:#2D9C9C;color:white;border-color:#2D9C9C}
-.tab-pane{display:none}.tab-pane.active{display:block}
-code{font-size:12px;background:#F0EDE8;padding:1px 5px;border-radius:3px;color:#2D9C9C;font-family:monospace}
-table tr:hover{background:#F8F5F0!important}
-@media(max-width:900px){.main{padding:16px}}
-</style>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script>
-function switchTab(cid, idx) {
-  document.querySelectorAll('.tab-btn').forEach(function(b){
-    if(b.getAttribute('onclick') && b.getAttribute('onclick').indexOf("'"+cid+"'")!==-1){
-      b.classList.remove('active');
-      if(b.getAttribute('onclick').indexOf(','+idx+')')!==-1) b.classList.add('active');
-    }
-  });
-  document.querySelectorAll('.tab-pane').forEach(function(p){
-    if(p.id && p.id.startsWith('tp_'+cid+'_')){
-      p.classList.remove('active');
-      if(p.id==='tp_'+cid+'_'+idx) p.classList.add('active');
-    }
-  });
+:root {
+  --bg-cream: #FDFBF7;
+  --bg-warm: #F8F5F0;
+  --bg-card: #FFFFFF;
+  --text-primary: #3D3A36;
+  --text-secondary: #4a4a5a;
+  --text-muted: #7a7a8a;
+  --accent-coral: #E85D4C;
+  --accent-coral-dark: #C94A3A;
+  --accent-coral-light: #FFF0EE;
+  --accent-teal: #2D9C9C;
+  --accent-teal-dark: #238080;
+  --accent-teal-light: #E8F6F6;
+  --accent-gold: #D4A853;
+  --accent-gold-dark: #C4983F;
+  --accent-gold-light: #FDF8EC;
+  --dark-warm: #3D3A36;
+  --border-light: #E8E4DD;
+  --shadow-sm: 0 2px 8px rgba(26,26,46,0.06);
+  --shadow-md: 0 4px 16px rgba(26,26,46,0.10);
 }
-</script>
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#f0ede8}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--text-primary);line-height:1.6}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:100vh;max-width:1400px;margin:0 auto}
+
+/* ── SIDEBAR ── */
+.sidebar{width:260px;flex-shrink:0;background:var(--bg-card);border-right:1px solid var(--border-light);position:sticky;top:0;height:100vh;overflow-y:auto;box-shadow:2px 0 12px rgba(0,0,0,0.04)}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:2px}
+
+.sidebar-logo{padding:20px 18px 16px;border-bottom:1px solid var(--border-light)}
+.logo-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;color:var(--accent-coral);letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:5px}
+.sidebar-logo h1{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:var(--text-primary);line-height:1.2}
+.sidebar-logo p{font-size:10px;color:var(--text-muted);margin-top:4px}
+
+.nav-group{padding:10px 0 4px}
+.nav-group-label{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);padding:6px 18px 3px;display:block}
+.nav-link{display:flex;align-items:center;gap:8px;padding:5px 18px;text-decoration:none;color:var(--text-muted);font-size:11.5px;font-weight:500;transition:all .15s;border-left:2px solid transparent;cursor:pointer}
+.nav-link:hover{color:var(--text-primary);background:var(--bg-warm)}
+.nav-link.active{color:var(--accent-coral);border-left-color:var(--accent-coral);background:var(--accent-coral-light)}
+.nav-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+/* ── MAIN ── */
+.main{flex:1;padding:0 48px 80px;overflow:hidden}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--bg-warm) 0%,var(--bg-cream) 100%);border-radius:0 0 20px 20px;padding:36px 48px 32px;margin:0 -48px 32px;border-bottom:1px solid var(--border-light);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;bottom:-60px;right:-30px;width:300px;height:300px;background:radial-gradient(circle,var(--accent-coral-light) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero::after{content:'';position:absolute;top:-40px;left:30%;width:200px;height:200px;background:radial-gradient(circle,var(--accent-teal-light) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero-inner{position:relative;z-index:1;display:flex;align-items:center;gap:28px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--border-light);padding:4px 12px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--accent-coral);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.hero-badge-dot{width:6px;height:6px;background:var(--accent-coral);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:var(--text-primary);margin-bottom:10px}
+.hero h1 .hl{color:var(--accent-coral)}
+.hero p{font-size:13px;color:var(--text-muted);max-width:500px;line-height:1.7}
+.hero-stats{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:var(--text-primary);line-height:1}
+.stat-label{font-size:10px;color:var(--text-muted);margin-top:2px}
+
+/* ── SECTION ── */
+.section{padding-top:52px;border-bottom:1px solid var(--border-light);padding-bottom:44px}
+.section:last-child{border-bottom:none}
+.section-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px}
+.section-num{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted);padding-top:6px;min-width:24px;flex-shrink:0}
+.section-tag{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.section h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary);line-height:1.25}
+.section h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--text-primary);margin:30px 0 12px}
+.section h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-secondary);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+.section p{font-size:12.5px;color:var(--text-secondary);margin-bottom:12px;max-width:820px;line-height:1.8}
+.section p strong{color:var(--text-primary)}
+
+/* ── PILLS ── */
+.pill{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;margin-left:6px;vertical-align:middle;position:relative;top:-1px}
+.pill-bug{background:var(--accent-coral-light);color:var(--accent-coral);border:1px solid rgba(232,93,76,.25)}
+.pill-new{background:var(--accent-teal-light);color:var(--accent-teal)}
+.pill-warn{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.pill-info{background:var(--accent-teal-light);color:var(--accent-teal)}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:16px 0}
+.card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:14px;padding:16px;box-shadow:var(--shadow-sm);transition:box-shadow .2s}
+.card:hover{box-shadow:var(--shadow-md)}
+.card-icon{font-size:18px;margin-bottom:9px}
+.card h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-primary);margin:0 0 6px}
+.card p{font-size:11px;color:var(--text-muted);margin:0;line-height:1.55}
+.card-file{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;margin-top:10px;padding:3px 8px;border-radius:100px;display:inline-block}
+.cf-coral{background:var(--accent-coral-light);color:var(--accent-coral)}
+.cf-teal{background:var(--accent-teal-light);color:var(--accent-teal)}
+.cf-gold{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+
+/* ── ALERTS ── */
+.alert{display:flex;gap:12px;padding:12px 16px;border-radius:10px;margin:14px 0;max-width:820px}
+.alert-icon{font-size:15px;flex-shrink:0;padding-top:1px}
+.alert p{margin:0;font-size:12px;line-height:1.7}
+.alert-bug{background:var(--accent-coral-light);border:1px solid rgba(232,93,76,.25)}
+.alert-bug p{color:var(--accent-coral-dark)}
+.alert-warn{background:var(--accent-gold-light);border:1px solid rgba(212,168,83,.3)}
+.alert-warn p{color:#8a6520}
+.alert-info{background:var(--accent-teal-light);border:1px solid rgba(45,156,156,.25)}
+.alert-info p{color:var(--accent-teal-dark)}
+.alert-tip{background:var(--accent-gold-light);border-top:2px solid var(--accent-gold);border-radius:0 0 10px 10px;border-left:none;border-right:none;border-bottom:none}
+.alert-tip p{color:var(--text-secondary)}
+.alert-tip p strong{color:var(--accent-gold-dark)}
+
+/* ── CODE ── */
+pre{background:var(--dark-warm);border-radius:10px;padding:16px 20px;overflow-x:auto;margin:12px 0 20px;font-family:'Space Grotesk',monospace;font-size:11px;line-height:1.75;color:#f0ede8;position:relative}
+pre .file-label{display:block;color:rgba(255,255,255,.35);margin-bottom:10px;font-size:8.5px;letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:8px}
+.kw{color:#E85D4C}.fn{color:#D4A853}.str{color:#7dd3c4}.cm{color:rgba(255,255,255,.35);font-style:italic}.num{color:#a5d6a7}.cls{color:#f4a261}
+.bug-line{background:rgba(232,93,76,.18);display:block;margin:0 -20px;padding:0 20px;border-left:3px solid var(--accent-coral)}
+.fix-line{background:rgba(45,156,156,.15);display:block;margin:0 -20px;padding:0 20px;border-left:3px solid var(--accent-teal)}
+code{font-family:'Space Grotesk',monospace;font-size:11px;background:var(--accent-coral-light);padding:2px 6px;border-radius:4px;color:var(--accent-coral-dark)}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto;margin:12px 0 24px;border-radius:12px;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;font-size:12px;background:var(--bg-card)}
+th{font-family:'Space Grotesk',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border-light);background:var(--bg-warm);white-space:nowrap}
+td{padding:9px 14px;border-bottom:1px solid rgba(232,228,221,.5);color:var(--text-secondary);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-warm)}
+.badge{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:.3px;white-space:nowrap}
+.bg{background:var(--accent-teal-light);color:var(--accent-teal-dark)}
+.bb{background:var(--accent-teal-light);color:var(--accent-teal-dark)}
+.bo{background:var(--accent-coral-light);color:var(--accent-coral)}
+.bp{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.by{background:var(--accent-gold-light);color:var(--accent-gold-dark)}
+.br{background:var(--accent-coral-light);color:var(--accent-coral)}
+.col-key td:first-child{font-weight:700;color:var(--text-primary)}
+
+/* ── FLOW ── */
+.flow{background:var(--bg-warm);border:1px solid var(--border-light);border-radius:14px;padding:22px;margin:16px 0;overflow-x:auto}
+.flow-steps{display:flex;align-items:stretch;min-width:640px;gap:0}
+.flow-step{flex:1;text-align:center;position:relative}
+.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;z-index:2}
+.flow-box{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 8px;margin:0 6px;box-shadow:var(--shadow-sm);height:100%}
+.flow-box .ficon{font-size:18px;margin-bottom:4px}
+.flow-box .fname{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-primary);display:block;margin-bottom:2px}
+.flow-box .fdesc{font-size:9px;color:var(--text-muted);line-height:1.4}
+.flow-box.fc{border-top:3px solid var(--accent-coral)}
+.flow-box.ft{border-top:3px solid var(--accent-teal)}
+.flow-box.fg{border-top:3px solid var(--accent-gold)}
+
+/* ── FORMULA ── */
+.formula{background:var(--accent-gold-light);border-top:2px solid var(--accent-gold);border-radius:0 0 10px 10px;padding:13px 16px;margin:10px 0 18px;font-family:'Space Grotesk',monospace;font-size:11.5px;color:var(--text-secondary);max-width:820px}
+.formula .f-label{font-size:8px;font-weight:700;color:var(--accent-gold-dark);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;display:block}
+
+/* ── FORMULA + EJEMPLO LADO A LADO ── */
+.calc-wrap{margin:10px 0 22px;max-width:900px;border-radius:10px;overflow:hidden;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+.calc-header{background:var(--dark-warm);padding:8px 16px;display:flex;align-items:center;gap:8px}
+.calc-header .ch-label{font-family:'Space Grotesk',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.calc-header .ch-title{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:#fff;flex:1}
+.calc-body{display:grid;grid-template-columns:1fr 1fr}
+.calc-formula{background:var(--accent-gold-light);padding:14px 18px;border-right:1px solid var(--border-light)}
+.calc-example{background:var(--bg-card);padding:14px 18px}
+.calc-col-label{font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;display:block}
+.calc-formula .calc-col-label{color:var(--accent-gold-dark)}
+.calc-example .calc-col-label{color:var(--accent-teal-dark)}
+.calc-formula pre, .calc-example pre{background:transparent;padding:0;margin:0;font-size:11px;line-height:1.9;color:var(--text-secondary);box-shadow:none;border-radius:0}
+.calc-formula pre .file-label, .calc-example pre .file-label{display:none}
+.calc-example pre .res{color:var(--accent-teal-dark);font-weight:700}
+.calc-example pre .resn{color:var(--accent-coral);font-weight:700}
+.calc-note{background:var(--bg-warm);padding:9px 16px;border-top:1px solid var(--border-light);font-size:11px;color:var(--text-muted);line-height:1.55}
+.calc-note strong{color:var(--accent-gold-dark)}
+@media(max-width:700px){.calc-body{grid-template-columns:1fr}.calc-formula{border-right:none;border-bottom:1px solid var(--border-light)}}
+
+/* ── STEPS ── */
+.steps{margin:12px 0 20px;max-width:820px}
+.step-item{display:flex;gap:12px;margin-bottom:16px}
+.step-n{flex-shrink:0;display:flex;flex-direction:column;align-items:center}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--bg-warm);border:1px solid var(--border-light);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted)}
+.step-line{width:1px;flex:1;background:var(--border-light);margin-top:4px}
+.step-body{padding-top:2px}
+.step-body strong{display:block;font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.step-body p{margin:0;font-size:11.5px;color:var(--text-muted);line-height:1.6}
+
+/* ── SCHEMA ── */
+.schema-table{margin:12px 0 22px;border-radius:12px;overflow:hidden;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+.schema-header{background:var(--dark-warm);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.schema-name{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:#fff}
+.schema-desc{font-size:10.5px;color:rgba(255,255,255,.5)}
+
+/* ── COMPARE ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;max-width:820px}
+.compare-box{border-radius:12px;padding:16px}
+.compare-box.bad{background:var(--accent-coral-light);border:1px dashed rgba(232,93,76,.3)}
+.compare-box.good{background:var(--accent-teal-light);border:1px solid var(--accent-teal)}
+.compare-box h5{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(0,0,0,.06)}
+.compare-box.bad h5{color:var(--accent-coral)}
+.compare-box.good h5{color:var(--accent-teal)}
+.compare-box ul{list-style:none;font-size:11.5px}
+.compare-box ul li{padding:4px 0;display:flex;gap:8px;color:var(--text-secondary);line-height:1.5}
+.compare-box ul li::before{content:'→';flex-shrink:0}
+
+/* ── COOKBOOK ── */
+.cookbook{background:var(--bg-card);border:1px solid var(--border-light);border-radius:12px;margin:14px 0;overflow:hidden;box-shadow:var(--shadow-sm)}
+.cookbook-header{background:var(--bg-warm);padding:11px 18px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:10px}
+.cookbook-header .ck-icon{font-size:15px}
+.cookbook-header h4{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-primary);margin:0}
+.cookbook-header p{font-size:10px;color:var(--text-muted);margin:0 0 0 auto}
+.cookbook-body{padding:14px 18px}
+.ck-step{display:flex;gap:10px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);align-items:flex-start}
+.ck-num{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;background:var(--bg-warm);border:1px solid var(--border-light);border-radius:4px;padding:2px 7px;flex-shrink:0;color:var(--text-muted)}
+.ck-file{color:var(--accent-teal-dark);font-family:'Space Grotesk',monospace;font-size:11px;font-weight:600}
+
+/* ── DEPENDENCY MAP ── */
+.dep-map{background:var(--bg-warm);border:1px solid var(--border-light);border-radius:12px;padding:20px;margin:14px 0}
+.dep-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12px;flex-wrap:wrap}
+.dep-from{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:var(--bg-card);background:var(--dark-warm);border-radius:6px;padding:4px 10px;white-space:nowrap}
+.dep-arrow{color:var(--text-muted);font-size:12px;flex-shrink:0}
+.dep-to{font-family:'Space Grotesk',monospace;font-size:10.5px;color:var(--text-secondary);white-space:nowrap}
+.dep-via{font-size:10.5px;color:var(--text-muted);margin-left:4px}
+
+/* ── TAKEAWAY ── */
+.takeaway{background:linear-gradient(135deg,var(--dark-warm) 0%,#2a2a3e 100%);border-radius:12px;padding:14px 18px;margin:14px 0 20px;display:flex;align-items:center;gap:14px;max-width:820px}
+.takeaway p{font-size:12px;color:rgba(255,255,255,.8);line-height:1.65;margin:0}
+.takeaway p strong{color:var(--accent-gold)}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{height:1px;background:linear-gradient(90deg,var(--accent-coral-light),var(--border-light),var(--accent-teal-light));margin:0}
+
+/* ── PROSE LIST ── */
+ul.prose-list{max-width:820px;list-style:none;padding:0;margin-bottom:12px}
+ul.prose-list li{padding:4px 0;color:var(--text-secondary);font-size:12.5px;display:flex;gap:8px;line-height:1.6}
+ul.prose-list li::before{content:'→';color:var(--accent-coral);flex-shrink:0}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:3px}
+
+@media(max-width:900px){.sidebar{display:none}.main{padding:24px 20px 60px}.compare-grid{grid-template-columns:1fr}.flow-steps{flex-direction:column}.flow-step::after{display:none}}
+</style>
+</head>
+
 </head>
 <body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-eyebrow">ALICORP · COE ANALYTICS</span>
+    <h1>TPO v3.0</h1>
+    <p>Validación & Diagnóstico</p>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Páginas</span>
+    <a href="../" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>← Inicio (Doc Técnica)</a>
+    <a href="../changelog/" class="nav-link"><span class="nav-dot" style="background:var(--accent-teal)"></span>📋 Changelog v3.0</a>
+    <a href="../categorias/" class="nav-link"><span class="nav-dot" style="background:var(--accent-gold)"></span>📊 Ranking Categorías</a>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Esta página</span>
+    <a href="#" class="nav-link active"><span class="nav-dot" style="background:var(--accent-coral)"></span>🔍 Validación Output</a>
+    <a href="#diagnostico-skus" class="nav-link"><span class="nav-dot" style="background:var(--accent-coral)"></span>🔬 Diagnóstico Embudo</a>
+  </div>
+</nav>
+<div class="main">
+
 <div class="hero">
   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
     <div>
@@ -2595,20 +2810,102 @@ Descuentos fuera de rango no son operativos y se excluyen del reporte final.
   Generado con validacion_tpo_v3.py
 </div>
 
-<!-- Botón flotante → Documentación -->
-<a href="../" title="Volver a la Documentación Técnica"
+
+
+<section class="section" id="diagnostico-skus">
+  <div class="section-header">
+    <span class="section-num">★</span>
+    <div>
+      <div class="section-tag" style="color:var(--accent-coral)">▸ DIAGNÓSTICO</div>
+      <h2>🔬 Diagnóstico del Embudo de SKUs — v3.0 (16-Mar-2026)</h2>
+    </div>
+  </div>
+  <p>Esta sección documenta el análisis completo de por qué los SKUs se pierden en cada etapa del pipeline. Se realizó mediante logs de trazabilidad agregados en <code>optimizer_model.py</code> y <code>data_factory.py</code>.</p>
+
+  <h3 style="margin-top:24px">Embudo completo (run 16-Mar-2026)</h3>
+  <table>
+    <tr><th>Subcadena</th><th>Cat</th><th>demand_result</th><th>-sin COGS</th><th>con COGS</th><th>-ventana inválida</th><th>con escenario</th><th>-factor 6-20%</th><th>final _9_</th></tr>
+    <tr><td>PLAZA VEA</td><td>SALSAS</td><td>41</td><td>-18</td><td>23</td><td>-15</td><td>8</td><td>-3</td><td>5</td></tr>
+    <tr><td>PLAZA VEA</td><td>PASTAS</td><td>52</td><td>-10</td><td>42</td><td>-32</td><td>10</td><td>-1</td><td>9</td></tr>
+    <tr><td>METRO</td><td>SALSAS</td><td>42</td><td>-18</td><td>24</td><td>-16</td><td>8</td><td>-1</td><td>7</td></tr>
+    <tr><td>METRO</td><td>PASTAS</td><td>51</td><td>-8</td><td>43</td><td>-31</td><td>12</td><td>-1</td><td>11</td></tr>
+    <tr><td>TOTTUS</td><td>SALSAS</td><td>26</td><td>-7</td><td>19</td><td>-12</td><td>7</td><td>0</td><td>7</td></tr>
+    <tr><td>TOTTUS</td><td>PASTAS</td><td>30</td><td>-5</td><td>25</td><td>-10</td><td>15</td><td>-2</td><td>13</td></tr>
+  </table>
+
+  <h3 style="margin-top:28px">Cuello de botella 1 — SKUs sin COGS</h3>
+  <div class="callout callout-warn">
+    <strong>Causa raíz confirmada:</strong> La query <code>query_cogs_unitario.sql</code> hace INNER JOIN entre <code>temp_amzv_1</code> y <code>fert_hawa</code>. SKUs que no tienen ventas en <code>temp_amzv_1</code> con <code>des_cluster_canal = 'DEX'</code> quedan fuera, aunque sí tengan <code>est_nuevo_material</code> válido en fert_hawa (Z2-Z7).
+  </div>
+  <p><strong>Fix aplicado (16-Mar-2026):</strong> Se agregó <code>pd.to_numeric(...).astype('Int64')</code> al bloque <code>cog_unitario</code> en <code>data_factory.py</code>. El cast faltante causaba que el lookup <code>cod not in cogs_dict</code> fallara por tipo de dato (string vs Int64), incluso para SKUs que sí tenían COGS en BigQuery. Esto recuperó ~14 SKUs adicionales (429 → 570 filas de COGS).</p>
+  <p><strong>SKUs sin COGS confirmados (genuinos, sin ventas DEX):</strong></p>
+  <table>
+    <tr><th>Categoría</th><th>SKUs</th></tr>
+    <tr><td>SALSAS</td><td>3300078, 3300117, 3300118, 3300150, 3300151, 3300169, 3300226, 3300227, 3300228, 3300229, 3300268, 3300306, 3305230, 3305371, 3305372, 3305373, 3305375, 3305376, 3305377, 3305378</td></tr>
+    <tr><td>PASTAS</td><td>4300005, 4302080, 4302081, 4302082, 4302083, 4302089, 4302095, 4302115, 4302121, 4302124, 4302143, 4302158, 4304021, 4304027, 4304075</td></tr>
+  </table>
+  <p style="margin-top:8px"><strong>Pendiente de negocio:</strong> Confirmar si estos SKUs deberían tener COGS desde otro cluster o grupo de precio distinto a D1. Query exploratoria disponible para validar en <code>temp_amzv_1</code>.</p>
+
+  <h3 style="margin-top:28px">Cuello de botella 2 — ventana_invalida_todos_precios</h3>
+  <div class="callout callout-warn">
+    <strong>Causa raíz confirmada:</strong> El 100% de los SKUs en esta categoría fallan por <code>uplift_units ≤ 0</code>, es decir, el modelo predice que bajar el precio <em>no incrementa</em> la demanda (o incluso la baja). El <code>bi_unitario_est</code> de todos estos SKUs es positivo, confirmando que el COGS no es el problema.
+  </div>
+  <p><strong>Diagnóstico con log [DIAG] (16-Mar-2026):</strong> Se agregó log DEBUG por cada SKU mostrando <code>demanda_base_sem</code>, <code>demanda_promo_sem</code>, <code>uplift_est</code> y <code>bi_unitario_est</code> para el primer precio candidato. Ejemplos representativos:</p>
+  <table>
+    <tr><th>SKU</th><th>precio_base</th><th>demanda_base_sem</th><th>demanda_promo_sem</th><th>uplift_est</th><th>bi_unitario_est</th><th>Diagnóstico</th></tr>
+    <tr><td>3300018</td><td>13.8</td><td>3,112</td><td>2,370</td><td style="color:var(--accent-coral)">-7,424</td><td>9.15</td><td>Demanda cae con promo</td></tr>
+    <tr><td>3300075</td><td>9.8</td><td>3,238</td><td>172</td><td style="color:var(--accent-coral)">-64,543</td><td>8.13</td><td>Demanda colapsa con promo</td></tr>
+    <tr><td>4302173</td><td>2.4</td><td>3,363</td><td>2,818</td><td style="color:var(--accent-coral)">-8,724</td><td>1.85</td><td>Demanda inelástica</td></tr>
+    <tr><td>4305044</td><td>5.7</td><td>7,486</td><td>5,411</td><td style="color:var(--accent-coral)">-8,299</td><td>3.79</td><td>Demanda cae con promo</td></tr>
+  </table>
+  <p style="margin-top:8px"><strong>Interpretación:</strong> Estos SKUs tienen demanda inelástica al precio o el modelo Random Forest no aprendió correctamente la relación precio→demanda porque tuvieron pocas semanas de historia a precio promocional. La historia disponible es <strong>desde 2023-01-01</strong> (~164 semanas de <code>precio_efectivo</code>) y <strong>24 meses rolling</strong> de <code>promocion_detalle</code>.</p>
+  <p><strong>El optimizer los filtra correctamente</strong> — no tiene sentido recomendar una promo donde el modelo predice caída de demanda.</p>
+  <p><strong>Opciones para negocio/modelado:</strong></p>
+  <ul>
+    <li>Aceptar que estos SKUs no son candidatos a promo en este período</li>
+    <li>Investigar cuántas semanas a precio promocional tiene cada SKU en el historial (señal insuficiente = modelo no aprende la curva)</li>
+    <li>Si hay pocas semanas promo, considerar enriquecer con datos de otras cadenas del mismo SKU</li>
+  </ul>
+
+  <h3 style="margin-top:28px">Resumen de cuellos de botella por impacto</h3>
+  <table>
+    <tr><th>#</th><th>Cuello de botella</th><th>SKUs perdidos típico</th><th>Causa</th><th>¿Accionable?</th></tr>
+    <tr><td>1</td><td>Sin COGS (cast bug)</td><td>~14 SKUs recuperados con fix</td><td>Cast Int64 faltante en data_factory</td><td style="color:green">✅ Ya corregido</td></tr>
+    <tr><td>2</td><td>Sin COGS (genuino)</td><td>5-19 por combo</td><td>Sin ventas DEX en temp_amzv_1</td><td style="color:var(--accent-gold)">⚠️ Pendiente negocio</td></tr>
+    <tr><td>3</td><td>ventana_invalida</td><td>7-32 por combo</td><td>Demanda inelástica / señal insuficiente</td><td style="color:var(--accent-gold)">⚠️ Revisión modelado</td></tr>
+    <tr><td>4</td><td>Filtro factor 6-20%</td><td>0-3 por combo</td><td>Regla dura de negocio</td><td style="color:green">✅ Correcto por diseño</td></tr>
+    <tr><td>5</td><td>Filtro elasticidad &lt; 0</td><td>0 (sin impacto)</td><td>Todos los que llegan ya tienen elast &lt; 0</td><td style="color:green">✅ Filtro válido</td></tr>
+  </table>
+
+  <h3 style="margin-top:28px">Logs de trazabilidad disponibles</h3>
+  <p>Los siguientes marcadores están activos en el código para monitorear el embudo en cada run:</p>
+  <div class="code-block"><pre>[TRAZABILIDAD] SKUs en demand_result: N | con COGS: M | sin COGS (omitidos): K
+[TRAZABILIDAD] SKUs sin COGS: [lista de SKUs]
+[TRAZABILIDAD] ventana_invalida_todos_precios: [lista de SKUs]
+[TRAZABILIDAD] post-COGS | kilos_invalido=0 | sin_ventana=N | con_escenario=M
+[TRAZABILIDAD] 0_input_optimizer: N SKUs, F filas | SKUs=[...]
+[TRAZABILIDAD] 1_cantidad_predicha>=5: N SKUs, F filas
+[TRAZABILIDAD] 2_duracion_dias<16: N SKUs, F filas
+[TRAZABILIDAD] 3_factor_6pct_20pct: N SKUs, F filas
+[TRAZABILIDAD] 4_elasticidad<0: N SKUs, F filas
+[DIAG] cod=X | precio_base=Y | demanda_base_sem=A | demanda_promo_sem=B | uplift_est=C | bi_unitario_est=D</pre></div>
+</section>
+
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<a href="../" title="← Volver al inicio"
    style="position:fixed;bottom:28px;right:28px;z-index:9999;
-          display:flex;align-items:center;gap:10px;
-          background:#D4A853;color:white;
-          padding:12px 20px;border-radius:50px;
-          font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;
-          text-decoration:none;letter-spacing:0.03em;
-          box-shadow:0 4px 18px rgba(212,168,83,0.45);
+          display:flex;align-items:center;gap:8px;
+          background:#D4A853;color:white;padding:11px 22px;border-radius:50px;
+          font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;
+          text-decoration:none;box-shadow:0 4px 16px rgba(212,168,83,0.4);
           transition:all .2s"
    onmouseover="this.style.background='#C4983F';this.style.transform='translateY(-2px)'"
    onmouseout="this.style.background='#D4A853';this.style.transform='translateY(0)'">
-  ← 📄 Documentación Técnica
+  ← Volver al inicio
 </a>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </body>
 </html>
