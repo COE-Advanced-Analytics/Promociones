@@ -216,6 +216,15 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
   .step:not(:last-child)::after{content:'↓';right:auto;left:50%;top:auto;bottom:-18px}
   .exec-footer{padding:32px 24px}
 }
+
+.coe-logo{position:fixed;bottom:28px;left:28px;z-index:9000;display:flex;align-items:center;
+  gap:9px;background:rgba(253,251,247,.92);backdrop-filter:blur(8px);
+  border:1px solid #E8E4DD;border-radius:100px;padding:6px 14px 6px 8px;
+  box-shadow:0 2px 12px rgba(26,26,46,.1)}
+.coe-logo svg{width:26px;height:26px;flex-shrink:0}
+.coe-logo-name{font-family:'Space Grotesk',sans-serif;font-size:10.5px;
+  font-weight:700;color:#3D3A36;line-height:1.2}
+.coe-logo-sub{font-size:9px;color:#7a7a8a;font-weight:400}
 </style>
 </head>
 <body>
@@ -244,10 +253,6 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
     <div class="hero-content">
     <div class="hero-eyebrow">Trade Price Optimizer · Alicorp · Mar 2026</div>
     <h1 class="hero-title">TPO<br><span>v3.0</span></h1>
-    <p class="hero-subtitle">
-      De una selección arbitraria de categorías a un sistema de optimización de precios
-      basado en evidencia, predicción por día y fórmula financiera GTN.
-    </p>
     <div class="hero-kpis">
       <div class="hero-kpi fade-up">
         <div class="hero-kpi-val">52</div>
@@ -260,8 +265,17 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
       </div>
       <div class="hero-divider fade-up"></div>
       <div class="hero-kpi fade-up">
-        <div class="hero-kpi-val">S/ 64K</div>
-        <div class="hero-kpi-label">Inversión estimada</div>
+        <div style="display:flex;gap:20px;justify-content:center">
+          <div style="text-align:center">
+            <div class="hero-kpi-val" style="font-size:36px">2.1x</div>
+            <div class="hero-kpi-label">Ratio inv/venta<br><span style="font-size:10px;opacity:.7">Pastas</span></div>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,.2);margin:4px 0"></div>
+          <div style="text-align:center">
+            <div class="hero-kpi-val" style="font-size:36px">2.9x</div>
+            <div class="hero-kpi-label">Ratio inv/venta<br><span style="font-size:10px;opacity:.7">Salsas</span></div>
+          </div>
+        </div>
       </div>
     </div>
     <p style="margin-top:48px;font-size:12px;color:#7a7a8a;letter-spacing:.1em;text-transform:uppercase">
@@ -276,66 +290,92 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
      01 — CAMBIOS v3.0
 ══════════════════════════════════════════════════════════ -->
 <section class="section" id="cambios">
-  <div class="section-label">01 — Qué cambió</div>
-  <h2 class="section-title">De v2.0 a <em>v3.0</em><br>¿Qué resolvimos?</h2>
-  <p class="section-lead">
-    v2.0 tenía cuatro problemas críticos que invalidaban las recomendaciones.
-    v3.0 los resuelve todos con cambios arquitecturales en el pipeline.
-  </p>
+  <div class="section-label">01 — Cambios v3.0</div>
+  <h2 class="section-title">De v2.0 a <em>v3.0</em></h2>
+  <p class="section-lead">Cinco preguntas sin respuesta en v2.0. Cinco decisiones de diseño que las resuelven.</p>
 
-  <div class="grid-2" style="gap:32px;align-items:start">
+  <!-- BIG 5 PROBLEMS -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:36px">
+    <div style="background:#E8F6F6;border:2px solid #2D9C9C;border-radius:10px;padding:16px 12px;text-align:center">
+      <div style="font-size:22px;margin-bottom:6px">💰</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#2D9C9C;margin-bottom:4px">Precio real</div>
+      <div style="font-size:11px;color:#7a7a8a;line-height:1.5">¿Sobre qué precio calculamos el descuento — lista o efectivo?</div>
+    </div>
+    <div style="background:#FDF8EC;border:2px solid #D4A853;border-radius:10px;padding:16px 12px;text-align:center">
+      <div style="font-size:22px;margin-bottom:6px">📅</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#D4A853;margin-bottom:4px">Horizonte M+2</div>
+      <div style="font-size:11px;color:#7a7a8a;line-height:1.5">¿Para qué semana estamos prediciendo — hoy o M+2?</div>
+    </div>
+    <div style="background:#FFF0EE;border:2px solid #E85D4C;border-radius:10px;padding:16px 12px;text-align:center">
+      <div style="font-size:22px;margin-bottom:6px">📊</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#E85D4C;margin-bottom:4px">ROI GTN</div>
+      <div style="font-size:11px;color:#7a7a8a;line-height:1.5">¿Kilos o UCOs? ¿La fórmula mide lo que el negocio valora?</div>
+    </div>
+    <div style="background:#E8F6F6;border:2px solid #2D9C9C;border-radius:10px;padding:16px 12px;text-align:center">
+      <div style="font-size:22px;margin-bottom:6px">📆</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#2D9C9C;margin-bottom:4px">Perfil diario</div>
+      <div style="font-size:11px;color:#7a7a8a;line-height:1.5">¿Todos los días venden igual o hay un patrón por SKU?</div>
+    </div>
+    <div style="background:#FDF8EC;border:2px solid #D4A853;border-radius:10px;padding:16px 12px;text-align:center">
+      <div style="font-size:22px;margin-bottom:6px">🗓️</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#D4A853;margin-bottom:4px">Fechas exactas</div>
+      <div style="font-size:11px;color:#7a7a8a;line-height:1.5">¿El output da la fecha exacta o solo la semana?</div>
+    </div>
+  </div>
+
+  <!-- CHANGE ITEMS in 2 cols -->
+  <div class="grid-2" style="gap:28px;align-items:start">
     <div>
-      <!-- Grupos 1-5 de cambios -->
       <div style="margin-bottom:8px;font-size:12px;font-weight:700;color:#2D9C9C;letter-spacing:.08em;text-transform:uppercase">Arquitectura &amp; Datos</div>
       <div class="change-item" style="border-left:3px solid #2D9C9C;padding-left:14px;margin-left:4px">
         <span class="change-num" style="background:#2D9C9C;color:white;border-color:#2D9C9C">★</span>
         <div>
-          <div class="change-title" style="color:#2D9C9C;font-size:15px">Universo de SKUs y precios desde Grow</div>
-          <div class="change-desc">El precio base ya no es el precio de lista — es lo que el consumidor <em>realmente pagó</em>. Se calcula semana a semana con las ventas de Grow y se filtra a semanas sin promoción para capturar el precio "normal".</div>
+          <div class="change-title" style="color:#2D9C9C;font-size:15px">Precios y universo de SKUs desde Grow</div>
+          <div class="change-desc">El precio base dejó de ser el precio de lista. Ahora se calcula a partir de las transacciones reales de Grow, filtrando a semanas sin promoción para capturar el precio que el consumidor efectivamente pagó.</div>
           <div class="formula-box" style="margin-top:8px;font-size:11px">
-            <div><span class="hl">p_unitario</span>    = mnt_venta_sin_igv / cnt_material &nbsp;<span style="color:#555">← precio real pagado</span></div>
-            <div><span class="hl">precio_base</span>  = mediana(<span class="hl">p_unitario</span>) &nbsp;donde precio ∈ [P90 × 0.95, P90 × 1.05]</div>
-            <div style="color:#6b7280;margin-top:4px;font-size:10px">164 semanas desde ene 2023 · gld_cliente.grow_cliente_detalle</div>
+            <div><span class="hl">p_unitario</span> = mnt_venta_sin_igv / cnt_material</div>
+            <div><span class="hl">precio_base</span> = mediana(p_unitario) donde precio ∈ [P90×0.95, P90×1.05]</div>
+            <div style="color:#6b7280;margin-top:4px;font-size:10px">164 semanas · gld_cliente.grow_cliente_detalle</div>
           </div>
-          <span class="change-impact">↑ Factor de descuento aplicado sobre precio efectivo, no sobre lista</span>
+          <span class="change-impact">↑ Descuento calculado sobre lo que el consumidor realmente paga</span>
         </div>
       </div>
       <div class="change-item">
         <span class="change-num">1</span>
         <div>
           <div class="change-title">Horizonte M+2 dinámico</div>
-          <div class="change-desc">El modelo avanza automáticamente al período target (sem 17, abril 2026). <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">weeks_ahead = 8</code> semanas.</div>
-          <span class="change-impact">↑ Predicciones apuntan al período correcto</span>
+          <div class="change-desc">El modelo proyecta automáticamente a la semana target (sem 17, abril 2026) — no la semana actual. <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">weeks_ahead = 8</code></div>
+          <span class="change-impact">↑ Predicciones alineadas con el período de ejecución</span>
         </div>
       </div>
       <div class="change-item">
         <span class="change-num">2</span>
         <div>
           <div class="change-title">Materiales desde fert_hawa</div>
-          <div class="change-desc">Des_material y num_unidad ahora vienen de la fuente maestra de materiales Alicorp, no de mapa_de_precios.</div>
-          <span class="change-impact">↑ Datos de producto siempre actualizados</span>
+          <div class="change-desc">Des_material y num_unidad vienen de la fuente maestra de materiales Alicorp, garantizando nomenclatura y unidades siempre actualizadas.</div>
+          <span class="change-impact">↑ Datos de producto consistentes con SAP</span>
         </div>
       </div>
 
-      <div style="margin:24px 0 8px;font-size:12px;font-weight:700;color:#D4A853;letter-spacing:.08em;text-transform:uppercase">Fórmula Financiera</div>
+      <div style="margin:20px 0 8px;font-size:12px;font-weight:700;color:#D4A853;letter-spacing:.08em;text-transform:uppercase">Fórmula Financiera</div>
       <div class="change-item" style="border-left:3px solid #D4A853;padding-left:14px;margin-left:4px">
         <span class="change-num" style="background:#D4A853;color:white;border-color:#D4A853">★</span>
         <div>
-          <div class="change-title" style="color:#D4A853;font-size:15px">Fórmula GTN Nueva Propuesta (feb 2026)</div>
-          <div class="change-desc">v2.0 calculaba uplift en kilos mezclados con BI unitario — generando ROI negativos incorrectos. v3.0 calcula todo en <strong>UCOs (Unidades de Consumo)</strong>: la inversión, el beneficio incremental y el ROI responden a la misma unidad de negocio.</div>
+          <div class="change-title" style="color:#D4A853;font-size:15px">ROI GTN — Nueva propuesta (feb 2026)</div>
+          <div class="change-desc">v2.0 mezclaba kilos con UCOs al calcular el beneficio incremental, produciendo ROI negativos por error de unidades. v3.0 unifica todo en UCOs para que inversión y uplift sean comparables.</div>
           <div class="formula-box" style="margin-top:10px;font-size:11px">
-            <div><span class="hl">Inversión</span>  = (P.Base − P.Promo) × Unidades</div>
-            <div><span class="hl">BI Uplift</span>  = BI Unitario × (Un.Promo − Un.Base)</div>
-            <div><span class="result">ROI</span>        = (BI Uplift / Inversión) − 1</div>
+            <div><span class="hl">Inversión</span> = (P.Base − P.Promo) × Unidades</div>
+            <div><span class="hl">BI Uplift</span> = BI Unitario × (Un.Promo − Un.Base)</div>
+            <div><span class="result">ROI</span>      = (BI Uplift / Inversión) − 1</div>
           </div>
-          <span class="change-impact">↑ Cálculo financiero correcto y alineado con GTN</span>
+          <span class="change-impact">↑ Métrica financiera correcta y alineada con GTN</span>
         </div>
       </div>
       <div class="change-item">
         <span class="change-num">3</span>
         <div>
-          <div class="change-title">Baseline correcto desde historial real</div>
-          <div class="change-desc">v2.0 buscaba el precio base en las predicciones del modelo — ese precio nunca estaba en el grid, causando reporte vacío. v3.0 usa el promedio histórico de semanas a precio normal (±5% del P90).</div>
+          <div class="change-title">Baseline desde historial real</div>
+          <div class="change-desc">Antes, el precio base se buscaba dentro de las predicciones del modelo — ese precio nunca coincidía y el reporte salía vacío. Ahora se toma directamente del historial de semanas sin promoción.</div>
           <span class="change-impact">↑ Elimina el bug de reporte vacío</span>
         </div>
       </div>
@@ -347,52 +387,36 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
         <span class="change-num" style="background:#E85D4C;color:white;border-color:#E85D4C">★</span>
         <div>
           <div class="change-title" style="color:#E85D4C;font-size:15px">Perfil diario real por SKU × cadena</div>
-          <div class="change-desc">v2.0 distribuía la demanda uniformemente (1/7 por día, todos los días igual). v3.0 calcula el <strong>perfil histórico de ventas por día de semana</strong> para cada SKU y cadena: si el SKU vende 30% de su semana los sábados en Metro, el optimizador lo sabe y elige el inicio de promo en consecuencia. Esto genera <strong>98 combinaciones evaluadas</strong> (7 días de inicio × 14 duraciones) seleccionando la ventana de máximo ROI.</div>
-          <span class="change-impact">↑ Recomendación de día y duración basada en comportamiento real</span>
+          <div class="change-desc">Antes, la demanda semanal se repartía en partes iguales (1/7 por día). Ahora el modelo aprende el patrón histórico de ventas por día de semana para cada SKU y cadena — si el 48% de las ventas ocurre los lunes, la promo arranca el lunes. Se evalúan 98 ventanas (7 días × 14 duraciones) y se selecciona la de máximo ROI.</div>
+          <span class="change-impact">↑ Inicio y duración óptimos basados en comportamiento real</span>
         </div>
       </div>
       <div class="change-item">
         <span class="change-num">4</span>
         <div>
-          <div class="change-title">Fechas concretas en el output</div>
-          <div class="change-desc">Cada recomendación incluye <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_inicio</code>, <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_fin</code> y <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">dia_semana_inicio</code> calculados desde el lunes de la semana M+2.</div>
-          <span class="change-impact">↑ Entregable listo para implementar directamente</span>
+          <div class="change-title">Fechas exactas en el output</div>
+          <div class="change-desc">El reporte final incluye <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_inicio</code>, <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_fin</code> y <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">dia_semana_inicio</code> — calculadas desde el lunes de la semana M+2. El entregable es ejecutable directamente.</div>
+          <span class="change-impact">↑ Sin pasos manuales para convertir semana a fecha</span>
         </div>
       </div>
       <div class="change-item">
         <span class="change-num">5</span>
         <div>
-          <div class="change-title">Filtros del reporte final (_9_)</div>
-          <div class="change-desc">4 filtros en cascada: cantidad predicha ≥ 5, duración &lt; 16 días, factor descuento 6%–20%, elasticidad &lt; 0. Solo pasan SKUs con comportamiento económicamente correcto.</div>
-          <span class="change-impact">↑ Cero recomendaciones destructivas de valor</span>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+            <div class="change-title" style="margin:0">Filtros del reporte final (_9_)</div>
+            <span style="background:#FEF3C7;color:#D4A853;border:1px solid #FCD34D;padding:1px 8px;border-radius:20px;font-size:10px;font-weight:700;flex-shrink:0">⏳ Validar en reunión</span>
+          </div>
+          <div class="change-desc">4 filtros aplicados en orden: qty predicha ≥ 5 unidades, duración &lt; 16 días, descuento entre 6%–20%, elasticidad &lt; 0. Solo avanzan SKUs con comportamiento económicamente coherente.</div>
+          <span class="change-impact">↑ Sin recomendaciones que destruyan valor</span>
         </div>
       </div>
 
-      <div style="margin:24px 0 8px;font-size:12px;font-weight:700;color:#2D9C9C;letter-spacing:.08em;text-transform:uppercase">Fechas &amp; Filtros</div>
-      <div class="change-item">
-        <span class="change-num">8</span>
-        <div>
-          <div class="change-title">Fechas concretas en el output</div>
-          <div class="change-desc">Cada recomendación incluye <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_inicio</code>, <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_fin</code> y <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">dia_semana_inicio</code> calculados desde el lunes de la semana M+2.</div>
-          <span class="change-impact">↑ Entregable listo para implementar directamente</span>
-        </div>
-      </div>
-      <div class="change-item">
-        <span class="change-num">9</span>
-        <div>
-          <div class="change-title">Filtros del reporte final (_9_)</div>
-          <div class="change-desc">4 filtros en cascada: cantidad predicha ≥ 5, duración &lt; 16 días, factor descuento 6%–20%, elasticidad &lt; 0. Solo pasan SKUs con comportamiento económicamente correcto.</div>
-          <span class="change-impact">↑ Cero recomendaciones destructivas de valor</span>
-        </div>
-      </div>
-
-      <!-- Summary box -->
-      <div class="highlight" style="margin-top:28px">
+      <div class="highlight" style="margin-top:24px">
         <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Impacto total</div>
         <div class="grid-2" style="gap:16px">
           <div>
             <div class="stat-med" style="color:#D4A853">+30%</div>
-            <div class="stat-label">más SKUs recomendados<br><span style="color:#7a7a8a;font-size:10px">40 → 52 SKUs (fix cast COGS)</span></div>
+            <div class="stat-label">más SKUs recomendados<br><span style="color:#7a7a8a;font-size:10px">40 → 52 SKUs</span></div>
           </div>
           <div>
             <div class="stat-med" style="color:#2D9C9C">M+2</div>
@@ -403,7 +427,6 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
     </div>
   </div>
 </section>
-
 <div class="divider"></div>
 
 <!-- ══════════════════════════════════════════════════════════
@@ -534,11 +557,24 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
       <div class="card card-coral">
         <div style="font-size:12px;font-weight:700;color:#E85D4C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">⚠ Hallazgo — Categorías actuales</div>
         <p style="font-size:13px;color:#7a7a8a;line-height:1.7">
-          Pastas y Salsas tienen <strong style="color:#E85D4C">margen negativo</strong> en el cálculo de COGS actual
-          (Pastas −14.8%, Salsas −60.1%). Con margen negativo, el BI Uplift siempre es negativo y el ROI del optimizer nunca puede ser positivo, independientemente de la elasticidad.
+          Pastas y Salsas muestran <strong style="color:#E85D4C">margen negativo</strong> en el cálculo de COGS (Pastas −14.8%, Salsas −60.1%). La causa probable no es que los productos sean poco rentables — es que <strong>muchos SKUs no tienen COGS en la query actual</strong>, ya que el filtro <code style="font-family:monospace;font-size:11px;background:#F0EDE8;padding:1px 4px;border-radius:3px">cluster DEX</code> excluye parte del universo. Un COGS de S/ 0 hunde la media del margen artificialmente.
         </p>
-        <p style="font-size:12px;color:#7a7a8a;margin-top:8px">
-          <strong style="color:#D4A853">Acción: validar con Controlling si el COGS refleja el canal correcto.</strong>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0">
+          <div style="background:#FFF0EE;border-radius:6px;padding:8px 10px;text-align:center">
+            <div style="font-size:18px;font-weight:800;color:#E85D4C;font-family:'Space Grotesk',sans-serif">44%</div>
+            <div style="font-size:10px;color:#7a7a8a">sin COGS · Metro P</div>
+          </div>
+          <div style="background:#FFF0EE;border-radius:6px;padding:8px 10px;text-align:center">
+            <div style="font-size:18px;font-weight:800;color:#E85D4C;font-family:'Space Grotesk',sans-serif">43%</div>
+            <div style="font-size:10px;color:#7a7a8a">sin COGS · Metro S</div>
+          </div>
+          <div style="background:#FDF8EC;border-radius:6px;padding:8px 10px;text-align:center">
+            <div style="font-size:18px;font-weight:800;color:#D4A853;font-family:'Space Grotesk',sans-serif">~20%</div>
+            <div style="font-size:10px;color:#7a7a8a">sin COGS · PV/Tottus</div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:#7a7a8a;margin-top:4px">
+          <strong style="color:#D4A853">Acción: ampliar el cluster en la query de COGS o validar con Controlling.</strong>
         </p>
       </div>
 
@@ -561,8 +597,7 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
         </table>
         <div style="background:#FFF0EE;border:1px solid #F5B4AD;border-radius:8px;padding:10px 14px;font-size:12px;margin-bottom:8px">
           <strong style="color:#E85D4C">SKUs atípicos en Metro × Pastas:</strong>
-          4300018 (CV 33.9%) y 4302175 (CV 30.6%). Son los únicos de toda la muestra que superan el umbral.
-          Nota: 4300018 también es el SKU de mayor ROI del run (+981%) — su precio volátil puede estar inflando la elasticidad estimada. Validar con trade antes de ejecutar.
+          Pasta Alianza Spaghetti 450G — SKU 4300018 (CV 33.9%) y Fid. Don Vittorio Cod.Ray 250G — SKU 4302175 (CV 30.6%). Únicos en toda la muestra. Nota: Pasta Alianza Spaghetti también es el SKU de mayor ROI del run (+981%) — su precio volátil puede estar inflando la elasticidad estimada. Validar con trade antes de ejecutar.
         </div>
         <p style="font-size:11px;color:#7a7a8a">
           CV = std(precio) / media(precio) por SKU. Si supera 30%, el RF puede aprender una curva distorsionada. El validador técnico (tab "🔎 Outliers de Precio") muestra la distribución completa por SKU.
@@ -615,7 +650,7 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
         <div class="callout callout-coral" style="font-size:12px">
           ROI mediano negativo por problema de COGS. 
           Adicionalmente, <strong>2 SKUs con precio volátil (CV &gt; 30%)</strong>: 
-          4300018 (CV 33.9%) y 4302175 (CV 30.6%) — únicos en toda la muestra. 
+          Pasta Alianza Spaghetti 450G (CV 33.9%) y Fid. Don Vittorio Cod.Ray 250G (CV 30.6%) — únicos en toda la muestra. 
           Sus predicciones son válidas pero con mayor incertidumbre en el precio base.
         </div>
       </div>
@@ -1022,249 +1057,245 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
 ══════════════════════════════════════════════════════════ -->
 <section class="section compact" id="resultados">
   <div class="section-label">06 — Ejemplos reales</div>
-  <h2 class="section-title">Una recomendación<br>por cada <em>cadena × categoría</em></h2>
-  <p class="section-lead">SKUs con ROI positivo del reporte final. Teal = Pastas · Dorado = Salsas. Porcentajes sobre ventas y volumen de los últimos 12 meses (Grow).</p>
+  <h2 class="section-title">Dos <em>Pastas</em>,<br>dos <em>Salsas</em></h2>
+  <p class="section-lead">Un caso que ilustra el perfil diario concentrado y otro con comportamiento distribuido. Los porcentajes son participación en la categoría × cadena (últimos 12 meses, Grow).</p>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <div style="margin-top:24px">
+        <div style="font-size:13px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Contexto de mercado — Promociones históricas por categoría (últimos 24 meses) &nbsp;<span style="background:#FEF3C7;color:#D4A853;border:1px solid #FCD34D;padding:1px 8px;border-radius:20px;font-size:10px;font-weight:700">⏳ Validar en reunión</span></div>
+        <table class="exec-table">
+          <thead><tr><th>Categoría</th><th style="text-align:right">Total promos</th><th style="text-align:right">≥ 30 días</th><th>% sobre total</th><th style="text-align:center">Media días</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700">Pastas</td>
+              <td style="text-align:right">358,559</td>
+              <td style="text-align:right;color:#E85D4C;font-weight:700">205,998</td>
+              <td><div style="display:flex;align-items:center;gap:8px"><div style="width:80px;background:#F0EDE8;border-radius:3px;height:10px"><div style="height:10px;border-radius:3px;background:#E85D4C;width:59%"></div></div><span style="font-weight:700;color:#E85D4C;font-size:14px">57.5%</span></div></td>
+              <td style="text-align:center;font-weight:700;font-size:15px;color:#E85D4C">25 días</td>
+            </tr>
+            <tr style="background:#FDF8EC">
+              <td style="font-weight:700">Salsas</td>
+              <td style="text-align:right">102,117</td>
+              <td style="text-align:right;color:#D4A853;font-weight:700">56,148</td>
+              <td><div style="display:flex;align-items:center;gap:8px"><div style="width:80px;background:#F0EDE8;border-radius:3px;height:10px"><div style="height:10px;border-radius:3px;background:#D4A853;width:43%"></div></div><span style="font-weight:700;color:#E85D4C;font-size:14px">55.0%</span></div></td>
+              <td style="text-align:center;font-weight:700;font-size:15px;color:#D4A853">31 días</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-size:11px;color:#7a7a8a;margin-top:6px">Fuente: tpm_promocion_detalle · Estado: Liberado · Período: últimos 24 meses. El 57.5% de promos de Pastas y el 55.0% de Salsas duran 30+ días. El TPO recomienda 1–4 días porque optimiza el ROI marginal, no replica el formato de promo extendida tradicional.</div>
+      </div>
+
+    <!-- 2x2 GRID -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px">
+
+    <!-- PASTA 1 — Metro 4302106: Lunes concentrado, 1 día -->
     <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #2D9C9C">
-      <div style="background:#E8F6F6;padding:10px 14px;border-bottom:1px solid #E8E4DD">
-        <div style="font-size:9px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em">Metro · Pastas</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">4302106 · Spaghetti Don Vittorio 950G</div>
-        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Don Vittorio Clasico</div>
-      </div>
-      <div style="padding:10px 14px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#2D9C9C;font-family:'Space Grotesk',sans-serif">27.8%</div>
-            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+      <div style="background:#E8F6F6;padding:12px 16px;border-bottom:1px solid #E8E4DD">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div style="font-size:10px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em">Pastas · Metro</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin-top:2px">FID. Don Vittorio Spaghetti 950G</div>
+            <div style="font-size:10px;color:#7a7a8a;margin-top:2px">SKU 4302106 · Don Vittorio Clasico</div>
           </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">19.2%</div>
-            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 2.85</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
-          </div>
-          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
-            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 2.45</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:12px;font-weight:600;color:#3D3A36">Lunes</div>
-            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
-          </div>
-          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
-            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+194%</div>
-            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
-          </div>
+          <span style="background:#E8F6F6;color:#2D9C9C;border:1px solid #A7D7D7;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;flex-shrink:0">Perfil concentrado</span>
         </div>
-        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
-        <div style="position:relative;height:100px">
-          <canvas id="chartCMP"></canvas>
+      </div>
+      <div style="padding:14px 16px">
+        <div style="background:#F8F5F0;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:#3D3A36;line-height:1.6">
+          <strong>¿Por qué 1 día y lunes?</strong> El 48% del volumen semanal de este SKU ocurre los lunes en Metro. Una promo de 1 día el lunes captura casi la mitad de la semana al precio descontado, maximizando el ROI por sol invertido. Extender a 7 días diluiría la inversión en días de bajo volumen.
+        </div>
+        <table class="exec-table" style="font-size:12px">
+          <tr><td style="color:#7a7a8a;padding:4px 6px">% venta categoría</td><td style="font-weight:700;color:#2D9C9C;padding:4px 6px">27.8%</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">% volumen categoría</td><td style="font-weight:600;padding:4px 6px">19.2%</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">Precio lista → recomendado</td><td style="font-weight:600;color:#2D9C9C;padding:4px 6px">S/ 2.85 → S/ 2.45 (−14%)</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">Día óptimo · Duración</td><td style="font-weight:600;padding:4px 6px">Lunes · 1 día</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">ROI estimado</td><td style="padding:4px 6px"><span class="roi-badge roi-pos" style="font-size:11px">+194%</span></td></tr>
+        </table>
+        <div style="margin-top:10px;border-top:1px solid #F0EDE8;padding-top:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div>
+              <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Perfil diario (% volumen)</div>
+              <div style="display:flex;gap:3px;align-items:flex-end;height:60px;padding:0 0 16px"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#2D9C9C;border-radius:3px;height:43px"></div><div style="font-size:8px;font-weight:700;color:white">L</div><div style="font-size:7px;color:white;font-weight:700">48%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:11px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">M</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">13%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:4px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">X</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">3%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:9px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">J</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">11%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:4px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">V</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">3%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:4px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">S</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">5%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#D4A853;border-radius:3px;height:16px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">D</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">18%</div></div></div>
+              <div style="font-size:9px;color:#7a7a8a;margin-top:-8px">Lunes concentra el 48% del volumen</div>
+            </div>
+            <div>
+              <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Curva demanda predicha</div>
+              <div style="position:relative;height:72px;width:100%"><canvas id="chartCMP"></canvas></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- PASTA 2 — Tottus 4305084: Domingo distribuido, multi-día posible -->
     <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #2D9C9C">
-      <div style="background:#E8F6F6;padding:10px 14px;border-bottom:1px solid #E8E4DD">
-        <div style="font-size:9px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em">Plaza Vea · Pastas</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">4305042 · Nicolini Corbata 250G</div>
-        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Nicolini Clasico</div>
-      </div>
-      <div style="padding:10px 14px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#2D9C9C;font-family:'Space Grotesk',sans-serif">0.9%</div>
-            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+      <div style="background:#E8F6F6;padding:12px 16px;border-bottom:1px solid #E8E4DD">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div style="font-size:10px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em">Pastas · Tottus</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin-top:2px">Pasta Nicolini Codito Chico 250G</div>
+            <div style="font-size:10px;color:#7a7a8a;margin-top:2px">SKU 4305084 · Nicolini Clasico</div>
           </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">1.7%</div>
-            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 5.50</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
-          </div>
-          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
-            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 4.60</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:12px;font-weight:600;color:#3D3A36">Domingo</div>
-            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
-          </div>
-          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
-            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+623%</div>
-            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
-          </div>
+          <span style="background:#FDF8EC;color:#D4A853;border:1px solid #E6C88A;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;flex-shrink:0">Perfil distribuido</span>
         </div>
-        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
-        <div style="position:relative;height:100px">
-          <canvas id="chartCPP"></canvas>
+      </div>
+      <div style="padding:14px 16px">
+        <div style="background:#F8F5F0;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:#3D3A36;line-height:1.6">
+          <strong>¿Por qué domingo y más días?</strong> En Tottus este formato distribuye ventas más uniformemente a lo largo de la semana, con pico el domingo (29%). El modelo recomienda inicio domingo para capturar el pico de fin de semana, con duración de 2–4 días según la ventana de máximo ROI.
+        </div>
+        <table class="exec-table" style="font-size:12px">
+          <tr><td style="color:#7a7a8a;padding:4px 6px">% venta categoría</td><td style="font-weight:700;color:#2D9C9C;padding:4px 6px">0.9%</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">% volumen categoría</td><td style="font-weight:600;padding:4px 6px">2.0%</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">Precio lista → recomendado</td><td style="font-weight:600;color:#2D9C9C;padding:4px 6px">S/ 5.50 → S/ 4.60 (−16%)</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">Día óptimo · Duración</td><td style="font-weight:600;padding:4px 6px">Domingo · 1–4 días</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">ROI estimado</td><td style="padding:4px 6px"><span class="roi-badge roi-pos" style="font-size:11px">+541%</span></td></tr>
+        </table>
+        <div style="margin-top:10px;border-top:1px solid #F0EDE8;padding-top:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div>
+              <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Perfil diario (% volumen)</div>
+              <div style="display:flex;gap:3px;align-items:flex-end;height:60px;padding:0 0 16px"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:10px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">L</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">12%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#D4A853;border-radius:3px;height:15px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">M</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">17%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:9px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">X</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">11%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:9px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">J</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">10%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:9px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">V</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">11%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:9px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">S</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">10%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#2D9C9C;border-radius:3px;height:26px"></div><div style="font-size:8px;font-weight:700;color:white">D</div><div style="font-size:7px;color:white;font-weight:700">29%</div></div></div>
+              <div style="font-size:9px;color:#7a7a8a;margin-top:-8px">Domingo pico, volumen distribuido</div>
+            </div>
+            <div>
+              <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Curva demanda predicha</div>
+              <div style="position:relative;height:72px;width:100%"><canvas id="chartCTP"></canvas></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #2D9C9C">
-      <div style="background:#E8F6F6;padding:10px 14px;border-bottom:1px solid #E8E4DD">
-        <div style="font-size:9px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em">Tottus · Pastas</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">4305084 · Nicolini Codito Chico 250G</div>
-        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Nicolini Clasico</div>
-      </div>
-      <div style="padding:10px 14px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#2D9C9C;font-family:'Space Grotesk',sans-serif">0.9%</div>
-            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">2.0%</div>
-            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 5.50</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
-          </div>
-          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
-            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 4.60</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:12px;font-weight:600;color:#3D3A36">Domingo</div>
-            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
-          </div>
-          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
-            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+541%</div>
-            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
-          </div>
-        </div>
-        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
-        <div style="position:relative;height:100px">
-          <canvas id="chartCTP"></canvas>
-        </div>
-      </div>
-    </div>
+
+    <!-- SALSA 1 — Tottus 3305361: Viernes concentrado -->
     <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #D4A853">
-      <div style="background:#FDF8EC;padding:10px 14px;border-bottom:1px solid #E8E4DD">
-        <div style="font-size:9px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em">Metro · Salsas</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">3300076 · Mayonesa Alacena 475G</div>
-        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Alacena Mayonesa</div>
-      </div>
-      <div style="padding:10px 14px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#D4A853;font-family:'Space Grotesk',sans-serif">22.7%</div>
-            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+      <div style="background:#FDF8EC;padding:12px 16px;border-bottom:1px solid #E8E4DD">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div style="font-size:10px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em">Salsas · Tottus</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin-top:2px">Salsa Alacena Mayonesa 850G</div>
+            <div style="font-size:10px;color:#7a7a8a;margin-top:2px">SKU 3305361 · Alacena Mayonesa</div>
           </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">19.1%</div>
-            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 8.90</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
-          </div>
-          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
-            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 7.50</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:12px;font-weight:600;color:#3D3A36">Domingo</div>
-            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
-          </div>
-          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
-            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+547%</div>
-            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
-          </div>
+          <span style="background:#E8F6F6;color:#2D9C9C;border:1px solid #A7D7D7;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;flex-shrink:0">Perfil concentrado</span>
         </div>
-        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
-        <div style="position:relative;height:100px">
-          <canvas id="chartCMS"></canvas>
+      </div>
+      <div style="padding:14px 16px">
+        <div style="background:#F8F5F0;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:#3D3A36;line-height:1.6">
+          <strong>¿Por qué viernes?</strong> En Tottus la mayonesa 850G concentra el 35% de sus ventas semanales los viernes — comportamiento típico de compra de preparación para el fin de semana. El modelo identifica esto y arranca la promo el viernes para capturar ese pico.
+        </div>
+        <table class="exec-table" style="font-size:12px">
+          <tr><td style="color:#7a7a8a;padding:4px 6px">% venta categoría</td><td style="font-weight:700;color:#D4A853;padding:4px 6px">33.2%</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">% volumen categoría</td><td style="font-weight:600;padding:4px 6px">23.5%</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">Precio lista → recomendado</td><td style="font-weight:600;color:#2D9C9C;padding:4px 6px">S/ 12.90 → S/ 10.80 (−16%)</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">Día óptimo · Duración</td><td style="font-weight:600;padding:4px 6px">Viernes · 1 día</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">ROI estimado</td><td style="padding:4px 6px"><span class="roi-badge roi-pos" style="font-size:11px">+726%</span></td></tr>
+        </table>
+        <div style="margin-top:10px;border-top:1px solid #F0EDE8;padding-top:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div>
+              <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Perfil diario (% volumen)</div>
+              <div style="display:flex;gap:3px;align-items:flex-end;height:60px;padding:0 0 16px"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:10px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">L</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">12%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#D4A853;border-radius:3px;height:14px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">M</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">16%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#D4A853;border-radius:3px;height:17px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">X</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">19%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:4px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">J</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">3%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#2D9C9C;border-radius:3px;height:31px"></div><div style="font-size:8px;font-weight:700;color:white">V</div><div style="font-size:7px;color:white;font-weight:700">35%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:4px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">S</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">0%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#D4A853;border-radius:3px;height:14px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">D</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">16%</div></div></div>
+              <div style="font-size:9px;color:#7a7a8a;margin-top:-8px">Viernes concentra el 35% del volumen</div>
+            </div>
+            <div>
+              <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Curva demanda predicha</div>
+              <div style="position:relative;height:72px;width:100%"><canvas id="chartCTS"></canvas></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- SALSA 2 — Metro 3300076: Domingo, comportamiento normal -->
     <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #D4A853">
-      <div style="background:#FDF8EC;padding:10px 14px;border-bottom:1px solid #E8E4DD">
-        <div style="font-size:9px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em">Plaza Vea · Salsas</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">3300017 · Crema Aji Tari 85G</div>
-        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Alacena Tari</div>
-      </div>
-      <div style="padding:10px 14px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#D4A853;font-family:'Space Grotesk',sans-serif">1.5%</div>
-            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+      <div style="background:#FDF8EC;padding:12px 16px;border-bottom:1px solid #E8E4DD">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div style="font-size:10px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em">Salsas · Metro</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin-top:2px">Mayonesa Alacena 475G</div>
+            <div style="font-size:10px;color:#7a7a8a;margin-top:2px">SKU 3300076 · Alacena Mayonesa</div>
           </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">3.6%</div>
-            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 3.20</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
-          </div>
-          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
-            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 2.70</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:12px;font-weight:600;color:#3D3A36">Lunes</div>
-            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
-          </div>
-          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
-            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+628%</div>
-            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
-          </div>
+          <span style="background:#FDF8EC;color:#D4A853;border:1px solid #E6C88A;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;flex-shrink:0">Perfil distribuido</span>
         </div>
-        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
-        <div style="position:relative;height:100px">
-          <canvas id="chartCPS"></canvas>
+      </div>
+      <div style="padding:14px 16px">
+        <div style="background:#F8F5F0;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:#3D3A36;line-height:1.6">
+          <strong>Comportamiento normal.</strong> En Metro la mayonesa 475G distribuye ventas de forma relativamente uniforme, con leve pico los domingos (23%). Sin un día dominante, el modelo evalúa las 98 ventanas y encuentra que domingo + 1 día maximiza el ROI — capturando el pico sin sobreinvertir.
+        </div>
+        <table class="exec-table" style="font-size:12px">
+          <tr><td style="color:#7a7a8a;padding:4px 6px">% venta categoría</td><td style="font-weight:700;color:#D4A853;padding:4px 6px">22.7%</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">% volumen categoría</td><td style="font-weight:600;padding:4px 6px">19.1%</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">Precio lista → recomendado</td><td style="font-weight:600;color:#2D9C9C;padding:4px 6px">S/ 8.90 → S/ 7.50 (−16%)</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">Día óptimo · Duración</td><td style="font-weight:600;padding:4px 6px">Domingo · 1 día</td></tr>
+          <tr><td style="color:#7a7a8a;padding:4px 6px">ROI estimado</td><td style="padding:4px 6px"><span class="roi-badge roi-pos" style="font-size:11px">+547%</span></td></tr>
+        </table>
+        <div style="margin-top:10px;border-top:1px solid #F0EDE8;padding-top:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div>
+              <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Perfil diario (% volumen)</div>
+              <div style="display:flex;gap:3px;align-items:flex-end;height:60px;padding:0 0 16px"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:11px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">L</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">13%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#D4A853;border-radius:3px;height:17px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">M</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">19%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#D4A853;border-radius:3px;height:21px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">X</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">24%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:4px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">J</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">4%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#D4A853;border-radius:3px;height:16px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">V</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">18%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#E8E4DD;border-radius:3px;height:4px"></div><div style="font-size:8px;font-weight:700;color:#9CA3AF">S</div><div style="font-size:7px;color:#9CA3AF;font-weight:400">2%</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:#2D9C9C;border-radius:3px;height:20px"></div><div style="font-size:8px;font-weight:700;color:white">D</div><div style="font-size:7px;color:white;font-weight:700">23%</div></div></div>
+              <div style="font-size:9px;color:#7a7a8a;margin-top:-8px">Domingo leve pico, patrón normal</div>
+            </div>
+            <div>
+              <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Curva demanda predicha</div>
+              <div style="position:relative;height:72px;width:100%"><canvas id="chartCMS"></canvas></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #D4A853">
-      <div style="background:#FDF8EC;padding:10px 14px;border-bottom:1px solid #E8E4DD">
-        <div style="font-size:9px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em">Tottus · Salsas</div>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">3305361 · Mayonesa Alacena 850G</div>
-        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Alacena Mayonesa</div>
+
+  </div>
+
+  <!-- PORTFOLIO RECOMMENDATION CARD -->
+  <div style="background:linear-gradient(135deg,#E8F6F6,#FDF8EC);border:1px solid #A7D7D7;border-radius:12px;padding:20px 24px;margin-bottom:28px">
+    <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">💡 Recomendación de portafolio — enriquecer el perfil diario</div>
+    <p style="font-size:13px;color:#3D3A36;line-height:1.7;margin-bottom:14px">
+      El TPO recomienda el mejor día para cada SKU individualmente. Una estrategia de portafolio consiste en <strong>distribuir distintos SKUs en distintos días de la semana</strong> — así el perfil diario de ventas de toda la categoría queda enriquecido y el efecto incremental se sostiene más días.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
+      <div style="text-align:center;background:white;border-radius:8px;padding:8px 4px;border:1px solid #E8E4DD">
+        <div style="font-size:10px;font-weight:700;color:#7a7a8a">LUN</div>
+        <div style="font-size:11px;font-weight:700;color:#2D9C9C;margin:4px 0;line-height:1.3">Spaghetti DV</div>
+        <div style="font-size:9px;color:#9CA3AF">Metro Pastas</div>
       </div>
-      <div style="padding:10px 14px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#D4A853;font-family:'Space Grotesk',sans-serif">33.2%</div>
-            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">23.5%</div>
-            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 12.90</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
-          </div>
-          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
-            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 10.80</div>
-            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
-          </div>
-          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
-            <div style="font-size:12px;font-weight:600;color:#3D3A36">Viernes</div>
-            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
-          </div>
-          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
-            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+726%</div>
-            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
-          </div>
-        </div>
-        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
-        <div style="position:relative;height:100px">
-          <canvas id="chartCTS"></canvas>
-        </div>
+      <div style="text-align:center;background:white;border-radius:8px;padding:8px 4px;border:1px solid #E8E4DD">
+        <div style="font-size:10px;font-weight:700;color:#7a7a8a">MAR</div>
+        <div style="font-size:11px;font-weight:700;color:#7a7a8a;margin:4px 0;line-height:1.3">—</div>
+        <div style="font-size:9px;color:#E8E4DD">·</div>
       </div>
+      <div style="text-align:center;background:white;border-radius:8px;padding:8px 4px;border:1px solid #E8E4DD">
+        <div style="font-size:10px;font-weight:700;color:#7a7a8a">MIÉ</div>
+        <div style="font-size:11px;font-weight:700;color:#7a7a8a;margin:4px 0;line-height:1.3">—</div>
+        <div style="font-size:9px;color:#E8E4DD">·</div>
+      </div>
+      <div style="text-align:center;background:white;border-radius:8px;padding:8px 4px;border:1px solid #E8E4DD">
+        <div style="font-size:10px;font-weight:700;color:#7a7a8a">JUE</div>
+        <div style="font-size:11px;font-weight:700;color:#7a7a8a;margin:4px 0;line-height:1.3">—</div>
+        <div style="font-size:9px;color:#E8E4DD">·</div>
+      </div>
+      <div style="text-align:center;background:white;border-radius:8px;padding:8px 4px;border:1px solid #E8E4DD">
+        <div style="font-size:10px;font-weight:700;color:#7a7a8a">VIE</div>
+        <div style="font-size:11px;font-weight:700;color:#D4A853;margin:4px 0;line-height:1.3">Mayo 850G</div>
+        <div style="font-size:9px;color:#9CA3AF">Tottus Salsas</div>
+      </div>
+      <div style="text-align:center;background:white;border-radius:8px;padding:8px 4px;border:1px solid #E8E4DD">
+        <div style="font-size:10px;font-weight:700;color:#7a7a8a">SÁB</div>
+        <div style="font-size:11px;font-weight:700;color:#7a7a8a;margin:4px 0;line-height:1.3">—</div>
+        <div style="font-size:9px;color:#E8E4DD">·</div>
+      </div>
+      <div style="text-align:center;background:#E8F6F6;border-radius:8px;padding:8px 4px;border:1px solid #A7D7D7">
+        <div style="font-size:10px;font-weight:700;color:#2D9C9C">DOM</div>
+        <div style="font-size:10px;font-weight:700;color:#2D9C9C;margin:4px 0;line-height:1.3">Nicolini 250G<br>Mayo 475G</div>
+        <div style="font-size:9px;color:#9CA3AF">Tottus / Metro</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#7a7a8a;margin-top:10px">
+      Ejemplo ilustrativo. El calendario exacto debe cruzarse con el calendario de promos de la cadena y validar canibalización entre SKUs del mismo portafolio.
     </div>
   </div>
 
-  <div style="font-size:11px;color:#9CA3AF;margin-top:12px">
-    Precios referenciales — verificar con reporte _9_ para valores exactos. ⭐ en las curvas = precio recomendado. Línea verde = demanda base histórica.
-  </div>
+
+
+
 </section>
 
 <div class="divider"></div>
@@ -1298,29 +1329,7 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
       </table>
       <div style="font-size:11px;color:#7a7a8a;margin-top:8px">* Los SKUs con ROI negativo en el reporte final tienen problema de COGS (margen negativo). El modelo los recomienda porque la elasticidad es correcta, pero la inversión no se recupera con el COGS actual.</div>
 
-      <div style="margin-top:24px">
-        <div style="font-size:13px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Contexto de mercado — Promociones históricas por categoría (últimos 24 meses)</div>
-        <table class="exec-table">
-          <thead><tr><th>Categoría</th><th style="text-align:right">Total promos</th><th style="text-align:right">≥ 30 días</th><th>% sobre total</th><th style="text-align:center">Media días</th></tr></thead>
-          <tbody>
-            <tr>
-              <td style="font-weight:700">Pastas</td>
-              <td style="text-align:right">358,559</td>
-              <td style="text-align:right;color:#E85D4C;font-weight:700">205,998</td>
-              <td><div style="display:flex;align-items:center;gap:8px"><div style="width:80px;background:#F0EDE8;border-radius:3px;height:10px"><div style="height:10px;border-radius:3px;background:#E85D4C;width:59%"></div></div><span style="font-weight:700;color:#E85D4C;font-size:14px">57.5%</span></div></td>
-              <td style="text-align:center;font-weight:700;font-size:15px;color:#E85D4C">25 días</td>
-            </tr>
-            <tr style="background:#FDF8EC">
-              <td style="font-weight:700">Salsas</td>
-              <td style="text-align:right">102,117</td>
-              <td style="text-align:right;color:#D4A853;font-weight:700">56,148</td>
-              <td><div style="display:flex;align-items:center;gap:8px"><div style="width:80px;background:#F0EDE8;border-radius:3px;height:10px"><div style="height:10px;border-radius:3px;background:#D4A853;width:43%"></div></div><span style="font-weight:700;color:#E85D4C;font-size:14px">55.0%</span></div></td>
-              <td style="text-align:center;font-weight:700;font-size:15px;color:#D4A853">32 días</td>
-            </tr>
-          </tbody>
-        </table>
-        <div style="font-size:11px;color:#7a7a8a;margin-top:6px">Fuente: tpm_promocion_detalle · Estado: Liberado · Período: últimos 24 meses. El 57.5% de promos de Pastas y el 55.0% de Salsas duran 30+ días. El TPO recomienda 1–4 días porque optimiza el ROI marginal, no replica el formato de promo extendida tradicional.</div>
-      </div>
+
     </div>
 
     <!-- Next steps -->
@@ -1334,7 +1343,7 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
 
       <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:1px solid rgba(212,168,83,.3);border-radius:10px">
         <span style="background:#FEF3C7;color:#D4A853;border:1px solid #FCD34D;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0">ALTO</span>
-        <div><div style="font-size:13px;font-weight:600">Correr TPO con Detergentes</div><div style="font-size:12px;color:#7a7a8a;margin-top:3px">Score 33.7 — top categoría. Margen 70%, 220 SKUs activos. Modificar run_category.csv y ejecutar el pipeline.</div></div>
+        <div><div style="font-size:13px;font-weight:600">Correr TPO con Detergentes &nbsp;<span style="background:#FEF3C7;color:#D4A853;border:1px solid #FCD34D;padding:1px 8px;border-radius:20px;font-size:10px;font-weight:700">⏳ Validar en reunión</span></div><div style="font-size:12px;color:#7a7a8a;margin-top:3px">Score 33.7 — top categoría. Margen 70%, 220 SKUs activos. Modificar run_category.csv y ejecutar el pipeline.</div></div>
       </div>
 
       <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:1px solid rgba(45,156,156,.2);border-radius:10px">
@@ -1345,6 +1354,26 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
       <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:1px solid #E8E4DD;border-radius:10px">
         <span style="background:#F8F5F0;color:#7a7a8a;border:1px solid #E8E4DD;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0">BACKLOG</span>
         <div><div style="font-size:13px;font-weight:600">Incluir Suavizantes + Lavavajillas</div><div style="font-size:12px;color:#7a7a8a;margin-top:3px">Segunda ronda con márgenes 53–70% y señal promo consistente en las 3 cadenas.</div></div>
+      </div>
+
+      <div style="margin-top:20px;padding-top:16px;border-top:2px solid #E8E4DD;margin-bottom:8px">
+        <div style="font-size:12px;font-weight:700;color:#3D3A36;text-transform:uppercase;letter-spacing:.06em">Validación &amp; Riesgos</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:2px solid #2D9C9C;border-radius:10px">
+        <span style="background:#E8F6F6;color:#2D9C9C;border:1px solid #A7D7D7;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0">REVIEW 1</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#2D9C9C">Validación con negocio — Review 1</div>
+          <div style="font-size:12px;color:#7a7a8a;margin-top:3px">Presentar las 52 recomendaciones al equipo de trade: validar precios vs. precios negociados con cadenas, coherencia con calendario comercial, y alineación en los filtros del reporte (descuento 6–20%, elasticidad &lt; 0). Definir si se ejecuta con COGS actual o se espera corrección de cluster.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:2px solid #D4A853;border-radius:10px">
+        <span style="background:#FDF8EC;color:#D4A853;border:1px solid #E6C88A;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0">ANÁLISIS</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#D4A853">Canibalización de SKUs</div>
+          <div style="font-size:12px;color:#7a7a8a;margin-top:3px">El modelo optimiza cada SKU en forma independiente. Promos simultáneas en SKUs sustitutos (ej. Don Vittorio Spaghetti + Fettuccini en la misma semana en Metro) pueden generar traslado de demanda entre ellos, reduciendo el uplift incremental real. Cruzar el calendario de promos recomendadas antes de ejecutar.</div>
+        </div>
+      </div>
       </div>
     </div>
   </div></section>
@@ -1629,5 +1658,25 @@ function switchChain(chain) {
   });
 })();
 </script>
+
+<div class="coe-logo">
+  <svg viewBox="0 0 40 40" fill="none">
+    <rect width="40" height="40" rx="10" fill="url(#lgCOE2)"/>
+    <circle cx="12" cy="15" r="3" fill="white"/>
+    <circle cx="12" cy="20" r="3" fill="white"/>
+    <circle cx="12" cy="25" r="3" fill="white"/>
+    <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+    <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+    <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+    <defs>
+      <linearGradient id="lgCOE2" x1="0" y1="0" x2="40" y2="40">
+        <stop stop-color="#E85D4C"/>
+        <stop offset="1" stop-color="#C94A3A"/>
+      </linearGradient>
+    </defs>
+  </svg>
+  <div class="coe-logo-name">COE Advanced Analytics<br><span class="coe-logo-sub">Alicorp · TPO v3.0</span></div>
+</div>
+
 </body>
-                </html>
+</html>
