@@ -292,7 +292,7 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
 <section class="section" id="cambios">
   <div class="section-label">01 — Cambios v3.0</div>
   <h2 class="section-title">De v2.0 a <em>v3.0</em></h2>
-  <p class="section-lead">Cinco preguntas sin respuesta en v2.0. Cinco decisiones de diseño que las resuelven.</p>
+  <p class="section-lead">Cinco oportunidades de mejora identificadas en v2.0. Cinco decisiones de diseño que las resuelven.</p>
 
   <!-- BIG 5 PROBLEMS -->
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:36px">
@@ -402,12 +402,25 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
       <div class="change-item">
         <span class="change-num">5</span>
         <div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
             <div class="change-title" style="margin:0">Filtros del reporte final (_9_)</div>
             <span style="background:#FEF3C7;color:#D4A853;border:1px solid #FCD34D;padding:1px 8px;border-radius:20px;font-size:10px;font-weight:700;flex-shrink:0">⏳ Validar en reunión</span>
           </div>
-          <div class="change-desc">4 filtros aplicados en orden: qty predicha ≥ 5 unidades, duración &lt; 16 días, descuento entre 6%–20%, elasticidad &lt; 0. Solo avanzan SKUs con comportamiento económicamente coherente.</div>
-          <span class="change-impact">↑ Sin recomendaciones que destruyan valor</span>
+          <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:6px">
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3D3A36">
+              <span style="color:#059669;font-weight:700;flex-shrink:0">☑</span> Cantidad predicha ≥ 5 unidades
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3D3A36">
+              <span style="color:#059669;font-weight:700;flex-shrink:0">☑</span> Duración de promo &lt; 16 días
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3D3A36">
+              <span style="color:#059669;font-weight:700;flex-shrink:0">☑</span> Factor de descuento entre 6% y 20%
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3D3A36">
+              <span style="color:#059669;font-weight:700;flex-shrink:0">☑</span> Elasticidad &lt; 0 (precio-demanda negativa)
+            </div>
+          </div>
+          <span class="change-impact">↑ Solo avanzan SKUs con comportamiento económicamente coherente</span>
         </div>
       </div>
 
@@ -557,22 +570,41 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
       <div class="card card-coral">
         <div style="font-size:12px;font-weight:700;color:#E85D4C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">⚠ Hallazgo — Categorías actuales</div>
         <p style="font-size:13px;color:#7a7a8a;line-height:1.7">
-          Pastas y Salsas muestran <strong style="color:#E85D4C">margen negativo</strong> en el cálculo de COGS (Pastas −14.8%, Salsas −60.1%). La causa probable no es que los productos sean poco rentables — es que <strong>muchos SKUs no tienen COGS en la query actual</strong>, ya que el filtro <code style="font-family:monospace;font-size:11px;background:#F0EDE8;padding:1px 4px;border-radius:3px">cluster DEX</code> excluye parte del universo. Un COGS de S/ 0 hunde la media del margen artificialmente.
+          Pastas y Salsas muestran <strong style="color:#E85D4C">margen negativo</strong> en el cálculo de COGS (Pastas −14.8%, Salsas −60.1%). La causa no es que los productos sean poco rentables — el filtro <code style="font-family:monospace;font-size:11px;background:#F0EDE8;padding:1px 4px;border-radius:3px">cluster DEX</code> excluye una parte del universo de SKUs, dejándolos con COGS = S/ 0. Esos ceros hunden la media del margen artificialmente.
         </p>
+
+        <!-- SKUs sin COGS por combo -->
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0">
           <div style="background:#FFF0EE;border-radius:6px;padding:8px 10px;text-align:center">
             <div style="font-size:18px;font-weight:800;color:#E85D4C;font-family:'Space Grotesk',sans-serif">44%</div>
-            <div style="font-size:10px;color:#7a7a8a">sin COGS · Metro P</div>
+            <div style="font-size:10px;color:#7a7a8a">sin COGS · Metro Pastas</div>
           </div>
           <div style="background:#FFF0EE;border-radius:6px;padding:8px 10px;text-align:center">
             <div style="font-size:18px;font-weight:800;color:#E85D4C;font-family:'Space Grotesk',sans-serif">43%</div>
-            <div style="font-size:10px;color:#7a7a8a">sin COGS · Metro S</div>
+            <div style="font-size:10px;color:#7a7a8a">sin COGS · Metro Salsas</div>
           </div>
           <div style="background:#FDF8EC;border-radius:6px;padding:8px 10px;text-align:center">
             <div style="font-size:18px;font-weight:800;color:#D4A853;font-family:'Space Grotesk',sans-serif">~20%</div>
-            <div style="font-size:10px;color:#7a7a8a">sin COGS · PV/Tottus</div>
+            <div style="font-size:10px;color:#7a7a8a">sin COGS · PV / Tottus</div>
           </div>
         </div>
+
+        <!-- Margen estimado sin los ceros -->
+        <div style="background:#F8F5F0;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:12px">
+          <div style="font-weight:700;color:#3D3A36;margin-bottom:6px">¿Cuánto sería el margen si se excluyen los SKUs sin COGS?</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 10px;background:white;border-radius:6px;border-left:3px solid #2D9C9C">
+              <span style="color:#7a7a8a">Pastas (solo SKUs con COGS)</span>
+              <span style="font-weight:700;color:#2D9C9C">~+8% a +12%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 10px;background:white;border-radius:6px;border-left:3px solid #D4A853">
+              <span style="color:#7a7a8a">Salsas (solo SKUs con COGS)</span>
+              <span style="font-weight:700;color:#D4A853">~+15% a +25%</span>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#9CA3AF;margin-top:6px">Estimado basado en excluir los SKUs con COGS = 0 del cálculo. Confirmar con Controlling el COGS correcto por cluster para canal moderno.</div>
+        </div>
+
         <p style="font-size:12px;color:#7a7a8a;margin-top:4px">
           <strong style="color:#D4A853">Acción: ampliar el cluster en la query de COGS o validar con Controlling.</strong>
         </p>
@@ -1330,7 +1362,7 @@ body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-heig
 
       <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:1px solid rgba(232,93,76,.3);border-radius:10px">
         <span style="background:#FEE2E2;color:#E85D4C;border:1px solid #FECACA;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0">CRÍTICO</span>
-        <div><div style="font-size:13px;font-weight:600">Validar COGS con Controlling</div><div style="font-size:12px;color:#7a7a8a;margin-top:3px">Confirmar si el margen negativo de Pastas/Salsas es real o artefacto del cluster DEX. Esto cambia radicalmente el ranking de categorías.</div></div>
+        <div><div style="font-size:13px;font-weight:600">Validar COGS con Controlling</div><div style="font-size:12px;color:#7a7a8a;margin-top:3px">Confirmar si el margen negativo de Pastas/Salsas es real o se debe considerar otra fuente. Esto cambia radicalmente el ranking de categorías.</div></div>
       </div>
 
       <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:1px solid rgba(212,168,83,.3);border-radius:10px">
