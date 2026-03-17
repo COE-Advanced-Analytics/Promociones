@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TPO v3.0 — Presentación Ejecutiva | Alicorp Canal Moderno</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --navy:     #FDFBF7;
+  --navy-2:   #FFFFFF;
+  --navy-3:   #F8F5F0;
+  --navy-4:   #E8E4DD;
+  --teal:     #2D9C9C;
+  --teal-d:   #238080;
+  --teal-glow:rgba(45,156,156,.10);
+  --gold:     #D4A853;
+  --gold-d:   #C4983F;
+  --coral:    #E85D4C;
+  --green:    #059669;
+  --text:     #3D3A36;
+  --muted:    #7a7a8a;
+  --border:   #E8E4DD;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;background:#f0ede8}
+body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-height:1.6;overflow-x:hidden}
+
+/* ── SCROLL PROGRESS ── */
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#2D9C9C,#D4A853);z-index:9999;transition:width .1s}
+
+/* ── TOP NAV ── */
+.topnav{position:fixed;top:3px;left:0;right:0;z-index:1000;padding:12px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(253,251,247,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid #E8E4DD;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.topnav-logo{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;
+  color:#2D9C9C;letter-spacing:.05em}
+.topnav-links{display:flex;gap:6px}
+.topnav-links a{color:#7a7a8a;text-decoration:none;font-size:11px;font-weight:500;
+  padding:5px 12px;border-radius:20px;transition:all .2s;letter-spacing:.03em;text-transform:uppercase}
+.topnav-links a:hover{color:#3D3A36;background:var(--border)}
+
+/* ── SECTIONS ── */
+.section{min-height:100vh;padding:100px 80px 80px;max-width:1300px;margin:0 auto;
+  display:flex;flex-direction:column;justify-content:center}
+.section.compact{min-height:auto;padding:80px}
+
+/* ── HERO ── */
+.hero{min-height:100vh;padding:0;max-width:none;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;background:#FDFBF7}
+.hero-bg{display:none}
+.hero-grid{display:none}
+.hero-content{position:relative;z-index:1;text-align:center;padding:80px 40px;max-width:900px}
+.hero-eyebrow{font-family:'Space Grotesk',monospace;font-size:11px;font-weight:600;color:#2D9C9C;
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px;
+  display:inline-flex;align-items:center;gap:8px}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:32px;height:1px;background:var(--teal);opacity:.5}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(48px,7vw,88px);
+  font-weight:800;line-height:1.0;color:#3D3A36;margin-bottom:8px}
+.hero-title span{color:#2D9C9C}
+.hero-subtitle{font-size:18px;color:#7a7a8a;margin:20px 0 48px;font-weight:400;max-width:600px;margin-left:auto;margin-right:auto}
+.hero-kpis{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+.hero-kpi{text-align:center}
+.hero-kpi-val{font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:800;color:#2D9C9C;line-height:1}
+.hero-kpi-label{font-size:12px;color:#7a7a8a;margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+.hero-divider{width:1px;height:60px;background:var(--border);align-self:center}
+
+/* ── SECTION LABELS ── */
+.section-label{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:#2D9C9C;
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#A7D7D7,transparent)}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,52px);
+  font-weight:800;line-height:1.1;margin-bottom:16px}
+.section-title em{font-style:normal;color:#2D9C9C}
+.section-lead{font-size:17px;color:#7a7a8a;max-width:680px;line-height:1.7;margin-bottom:48px}
+
+/* ── CARDS ── */
+.card{background:white;border:1px solid #E8E4DD;border-radius:10px;padding:24px;box-shadow:0 2px 8px rgba(26,26,46,.06)}
+.card-teal{border-color:#A7D7D7;background:linear-gradient(135deg,#E8F6F6,white)}
+.card-gold{border-color:#E6C88A;background:linear-gradient(135deg,#FDF8EC,white)}
+.card-coral{border-color:#F5B4AD;background:linear-gradient(135deg,#FFF0EE,white)}
+.card-green{border-color:#A7F3D0;background:linear-gradient(135deg,#F0FDF4,white)}
+
+/* ── GRIDS ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+/* ── STAT BADGES ── */
+.stat-big{font-family:'Space Grotesk',sans-serif;font-size:52px;font-weight:800;line-height:1}
+.stat-med{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;line-height:1}
+.stat-sm{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;line-height:1}
+.stat-label{font-size:12px;color:#7a7a8a;margin-top:6px;text-transform:uppercase;letter-spacing:.06em}
+.stat-sub{font-size:11px;color:#7a7a8a;margin-top:3px}
+
+/* ── CHANGE CHIPS ── */
+.change-item{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #E8E4DD}
+.change-item:last-child{border-bottom:none}
+.change-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:#2D9C9C;font-weight:600;
+  background:#E8F6F6;border:1px solid #A7D7D7;padding:2px 8px;border-radius:20px;
+  flex-shrink:0;margin-top:2px}
+.change-title{font-size:14px;font-weight:600;color:#3D3A36;margin-bottom:4px}
+.change-desc{font-size:13px;color:#7a7a8a;line-height:1.6}
+.change-impact{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:11px;
+  font-weight:600;color:#059669;letter-spacing:.03em}
+
+/* ── CHAIN TABS ── */
+.chain-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.chain-tab{padding:8px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;
+  border:1px solid #E8E4DD;background:#F8F5F0;color:#7a7a8a;transition:all .2s}
+.chain-tab.active{background:#2D9C9C;border-color:#2D9C9C;color:white;font-weight:700}
+.chain-panel{display:none}.chain-panel.active{display:block}
+
+/* ── TABLE ── */
+.exec-table{width:100%;border-collapse:collapse;font-size:13px}
+.exec-table th{background:#2A2825;color:white;padding:10px 14px;text-align:left;
+  font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  border-bottom:1px solid #E8E4DD}
+.exec-table td{padding:10px 14px;border-bottom:1px solid #F0EDE8;color:#3D3A36}
+.exec-table tr:hover td{background:#F8F5F0}
+
+/* ── ROI BADGE ── */
+.roi-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.roi-pos{background:#D1FAE5;color:#059669;border:1px solid #A7F3D0}
+.roi-neg{background:#FEE2E2;color:#E85D4C;border:1px solid #FECACA}
+.roi-warn{background:#FEF3C7;color:#D4A853;border:1px solid #FCD34D}
+
+/* ── CALLOUT ── */
+.callout{border-left:3px solid #2D9C9C;background:#E8F6F6;padding:12px 16px;
+  border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;margin:12px 0}
+.callout-gold{border-left-color:#D4A853;background:#FDF8EC}
+.callout-coral{border-left-color:#E85D4C;background:#FFF0EE}
+
+/* ── FORMULA ── */
+.formula-box{background:#1e1e2e;border:1px solid #E8E4DD;border-radius:10px;
+  padding:16px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2;
+  color:#CBD5E1;margin:16px 0}
+.formula-box .hl{color:#2D9C9C;font-weight:600}
+.formula-box .result{color:#D4A853;font-weight:700}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,#E8E4DD,transparent);margin:0}
+
+/* ── STEP FLOW ── */
+.step-flow{display:flex;align-items:stretch;gap:0;margin:32px 0}
+.step{flex:1;background:white;border:1px solid #E8E4DD;padding:20px 16px;
+  position:relative;text-align:center}
+.step:not(:last-child)::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+  color:#2D9C9C;font-size:18px;font-weight:700;z-index:1;background:#FDFBF7;padding:0 2px}
+.step:first-child{border-radius:10px 0 0 10px}
+.step:last-child{border-radius:0 10px 10px 0}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:#2D9C9C;font-weight:600;
+  letter-spacing:.1em;margin-bottom:6px}
+.step-title{font-size:13px;font-weight:600;color:#3D3A36;margin-bottom:4px}
+.step-val{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;font-weight:700;color:#D4A853}
+
+/* ── CHART CONTAINER ── */
+.chart-wrap{position:relative;background:white;border:1px solid #E8E4DD;
+  border-radius:12px;padding:20px}
+.chart-title{font-size:12px;font-weight:600;color:#7a7a8a;text-transform:uppercase;
+  letter-spacing:.06em;margin-bottom:16px}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight{background:linear-gradient(135deg,#E8F6F6,#FDF8EC);
+  border:1px solid #A7D7D7;border-radius:10px;padding:20px 24px}
+
+/* ── CATEGORY RANK ── */
+.cat-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #E8E4DD}
+.cat-row:last-child{border-bottom:none}
+.cat-rank{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;
+  color:#888;width:32px;flex-shrink:0;text-align:right}
+.cat-rank.top3{color:#D4A853}
+.cat-name{font-size:14px;font-weight:600;flex:1}
+.cat-bar-wrap{width:120px;background:#F0F0F0;border-radius:4px;height:6px;flex-shrink:0}
+.cat-bar{height:6px;border-radius:4px;background:var(--teal)}
+.cat-score{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;
+  color:#2D9C9C;width:36px;text-align:right}
+.cat-badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;flex-shrink:0}
+.ok{background:#D1FAE5;color:#059669;border:1px solid #A7F3D0}
+.warn{background:#FEF3C7;color:#D4A853;border:1px solid #FCD34D}
+
+/* ── SKU CARD ── */
+.sku-card{background:white;border:1px solid #E8E4DD;border-radius:12px;padding:20px;
+  border-top:3px solid var(--teal)}
+.sku-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px}
+.sku-meta{font-size:12px;color:#7a7a8a;margin-bottom:16px}
+.sku-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.sku-kpi{background:#F8F5F0;border-radius:8px;padding:10px 12px;border:1px solid #E8E4DD}
+.sku-kpi-val{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;font-weight:700;color:#2D9C9C}
+.sku-kpi-label{font-size:10px;color:#7a7a8a;margin-top:3px}
+
+/* ── FOOTER ── */
+.exec-footer{background:#F8F5F0;border-top:1px solid #E8E4DD;padding:40px 80px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-brand{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#2D9C9C}
+.footer-meta{font-size:12px;color:#7a7a8a}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp .7s ease forwards}
+.fade-up:nth-child(1){animation-delay:.1s}
+.fade-up:nth-child(2){animation-delay:.2s}
+.fade-up:nth-child(3){animation-delay:.3s}
+.fade-up:nth-child(4){animation-delay:.4s}
+.fade-up:nth-child(5){animation-delay:.5s}
+.fade-up:nth-child(6){animation-delay:.6s}
+
+@media(max-width:900px){
+  .section{padding:80px 24px 60px}
+  .topnav{padding:12px 24px}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .step-flow{flex-direction:column}
+  .step:not(:last-child)::after{content:'↓';right:auto;left:50%;top:auto;bottom:-18px}
+  .exec-footer{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="topnav-logo">TPO v3.0 · Canal Moderno</div>
+  <div class="topnav-links">
+    <a href="#cambios">Cambios</a>
+    <a href="#categorias">Categorías</a>
+    <a href="#cadenas">Por Cadena</a>
+    <a href="#modelo">Modelo</a>
+    <a href="#ventanas">Ventanas</a>
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#resultados">Ejemplos</a>
+    <a href="#cierre">Resumen</a><a href="#curvas">Curvas</a><a href="#modelo-calc">Modelo</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════════ -->
+<section class="hero" id="inicio">
+    <div class="hero-content">
+    <div class="hero-eyebrow">Trade Price Optimizer · Alicorp · Mar 2026</div>
+    <h1 class="hero-title">TPO<br><span>v3.0</span></h1>
+    <p class="hero-subtitle">
+      De una selección arbitraria de categorías a un sistema de optimización de precios
+      basado en evidencia, predicción por día y fórmula financiera GTN.
+    </p>
+    <div class="hero-kpis">
+      <div class="hero-kpi fade-up">
+        <div class="hero-kpi-val">52</div>
+        <div class="hero-kpi-label">SKUs recomendados</div>
+      </div>
+      <div class="hero-divider fade-up"></div>
+      <div class="hero-kpi fade-up">
+        <div class="hero-kpi-val">0.989</div>
+        <div class="hero-kpi-label">R² mediano del modelo</div>
+      </div>
+      <div class="hero-divider fade-up"></div>
+      <div class="hero-kpi fade-up">
+        <div class="hero-kpi-val">S/ 64K</div>
+        <div class="hero-kpi-label">Inversión estimada</div>
+      </div>
+    </div>
+    <p style="margin-top:48px;font-size:12px;color:#7a7a8a;letter-spacing:.1em;text-transform:uppercase">
+      3 cadenas · 2 categorías · Datos hasta Semana 9, 2026 · Target Abril 2026
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     01 — CAMBIOS v3.0
+══════════════════════════════════════════════════════════ -->
+<section class="section" id="cambios">
+  <div class="section-label">01 — Qué cambió</div>
+  <h2 class="section-title">De v2.0 a <em>v3.0</em><br>¿Qué resolvimos?</h2>
+  <p class="section-lead">
+    v2.0 tenía cuatro problemas críticos que invalidaban las recomendaciones.
+    v3.0 los resuelve todos con cambios arquitecturales en el pipeline.
+  </p>
+
+  <div class="grid-2" style="gap:32px;align-items:start">
+    <div>
+      <!-- Grupos 1-5 de cambios -->
+      <div style="margin-bottom:8px;font-size:12px;font-weight:700;color:#2D9C9C;letter-spacing:.08em;text-transform:uppercase">Arquitectura &amp; Datos</div>
+      <div class="change-item" style="border-left:3px solid #2D9C9C;padding-left:14px;margin-left:4px">
+        <span class="change-num" style="background:#2D9C9C;color:white;border-color:#2D9C9C">★</span>
+        <div>
+          <div class="change-title" style="color:#2D9C9C;font-size:15px">Universo de SKUs y precios desde Grow</div>
+          <div class="change-desc">El precio base ya no es el precio de lista — es lo que el consumidor <em>realmente pagó</em>. Se calcula semana a semana con las ventas de Grow y se filtra a semanas sin promoción para capturar el precio "normal".</div>
+          <div class="formula-box" style="margin-top:8px;font-size:11px">
+            <div><span class="hl">p_unitario</span>    = mnt_venta_sin_igv / cnt_material &nbsp;<span style="color:#555">← precio real pagado</span></div>
+            <div><span class="hl">precio_base</span>  = mediana(<span class="hl">p_unitario</span>) &nbsp;donde precio ∈ [P90 × 0.95, P90 × 1.05]</div>
+            <div style="color:#6b7280;margin-top:4px;font-size:10px">164 semanas desde ene 2023 · gld_cliente.grow_cliente_detalle</div>
+          </div>
+          <span class="change-impact">↑ Factor de descuento aplicado sobre precio efectivo, no sobre lista</span>
+        </div>
+      </div>
+      <div class="change-item">
+        <span class="change-num">1</span>
+        <div>
+          <div class="change-title">Horizonte M+2 dinámico</div>
+          <div class="change-desc">El modelo avanza automáticamente al período target (sem 17, abril 2026). <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">weeks_ahead = 8</code> semanas.</div>
+          <span class="change-impact">↑ Predicciones apuntan al período correcto</span>
+        </div>
+      </div>
+      <div class="change-item">
+        <span class="change-num">2</span>
+        <div>
+          <div class="change-title">Materiales desde fert_hawa</div>
+          <div class="change-desc">Des_material y num_unidad ahora vienen de la fuente maestra de materiales Alicorp, no de mapa_de_precios.</div>
+          <span class="change-impact">↑ Datos de producto siempre actualizados</span>
+        </div>
+      </div>
+
+      <div style="margin:24px 0 8px;font-size:12px;font-weight:700;color:#D4A853;letter-spacing:.08em;text-transform:uppercase">Fórmula Financiera</div>
+      <div class="change-item" style="border-left:3px solid #D4A853;padding-left:14px;margin-left:4px">
+        <span class="change-num" style="background:#D4A853;color:white;border-color:#D4A853">★</span>
+        <div>
+          <div class="change-title" style="color:#D4A853;font-size:15px">Fórmula GTN Nueva Propuesta (feb 2026)</div>
+          <div class="change-desc">v2.0 calculaba uplift en kilos mezclados con BI unitario — generando ROI negativos incorrectos. v3.0 calcula todo en <strong>UCOs (Unidades de Consumo)</strong>: la inversión, el beneficio incremental y el ROI responden a la misma unidad de negocio.</div>
+          <div class="formula-box" style="margin-top:10px;font-size:11px">
+            <div><span class="hl">Inversión</span>  = (P.Base − P.Promo) × Unidades</div>
+            <div><span class="hl">BI Uplift</span>  = BI Unitario × (Un.Promo − Un.Base)</div>
+            <div><span class="result">ROI</span>        = (BI Uplift / Inversión) − 1</div>
+          </div>
+          <span class="change-impact">↑ Cálculo financiero correcto y alineado con GTN</span>
+        </div>
+      </div>
+      <div class="change-item">
+        <span class="change-num">3</span>
+        <div>
+          <div class="change-title">Baseline correcto desde historial real</div>
+          <div class="change-desc">v2.0 buscaba el precio base en las predicciones del modelo — ese precio nunca estaba en el grid, causando reporte vacío. v3.0 usa el promedio histórico de semanas a precio normal (±5% del P90).</div>
+          <span class="change-impact">↑ Elimina el bug de reporte vacío</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="margin-bottom:8px;font-size:12px;font-weight:700;color:#E85D4C;letter-spacing:.08em;text-transform:uppercase">Predicción Diaria</div>
+      <div class="change-item" style="border-left:3px solid #E85D4C;padding-left:14px;margin-left:4px">
+        <span class="change-num" style="background:#E85D4C;color:white;border-color:#E85D4C">★</span>
+        <div>
+          <div class="change-title" style="color:#E85D4C;font-size:15px">Perfil diario real por SKU × cadena</div>
+          <div class="change-desc">v2.0 distribuía la demanda uniformemente (1/7 por día, todos los días igual). v3.0 calcula el <strong>perfil histórico de ventas por día de semana</strong> para cada SKU y cadena: si el SKU vende 30% de su semana los sábados en Metro, el optimizador lo sabe y elige el inicio de promo en consecuencia. Esto genera <strong>98 combinaciones evaluadas</strong> (7 días de inicio × 14 duraciones) seleccionando la ventana de máximo ROI.</div>
+          <span class="change-impact">↑ Recomendación de día y duración basada en comportamiento real</span>
+        </div>
+      </div>
+      <div class="change-item">
+        <span class="change-num">4</span>
+        <div>
+          <div class="change-title">Fechas concretas en el output</div>
+          <div class="change-desc">Cada recomendación incluye <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_inicio</code>, <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_fin</code> y <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">dia_semana_inicio</code> calculados desde el lunes de la semana M+2.</div>
+          <span class="change-impact">↑ Entregable listo para implementar directamente</span>
+        </div>
+      </div>
+      <div class="change-item">
+        <span class="change-num">5</span>
+        <div>
+          <div class="change-title">Filtros del reporte final (_9_)</div>
+          <div class="change-desc">4 filtros en cascada: cantidad predicha ≥ 5, duración &lt; 16 días, factor descuento 6%–20%, elasticidad &lt; 0. Solo pasan SKUs con comportamiento económicamente correcto.</div>
+          <span class="change-impact">↑ Cero recomendaciones destructivas de valor</span>
+        </div>
+      </div>
+
+      <div style="margin:24px 0 8px;font-size:12px;font-weight:700;color:#2D9C9C;letter-spacing:.08em;text-transform:uppercase">Fechas &amp; Filtros</div>
+      <div class="change-item">
+        <span class="change-num">8</span>
+        <div>
+          <div class="change-title">Fechas concretas en el output</div>
+          <div class="change-desc">Cada recomendación incluye <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_inicio</code>, <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">fecha_fin</code> y <code style="font-family:monospace;font-size:11px;background:#E8E4DD;padding:1px 5px;border-radius:3px">dia_semana_inicio</code> calculados desde el lunes de la semana M+2.</div>
+          <span class="change-impact">↑ Entregable listo para implementar directamente</span>
+        </div>
+      </div>
+      <div class="change-item">
+        <span class="change-num">9</span>
+        <div>
+          <div class="change-title">Filtros del reporte final (_9_)</div>
+          <div class="change-desc">4 filtros en cascada: cantidad predicha ≥ 5, duración &lt; 16 días, factor descuento 6%–20%, elasticidad &lt; 0. Solo pasan SKUs con comportamiento económicamente correcto.</div>
+          <span class="change-impact">↑ Cero recomendaciones destructivas de valor</span>
+        </div>
+      </div>
+
+      <!-- Summary box -->
+      <div class="highlight" style="margin-top:28px">
+        <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Impacto total</div>
+        <div class="grid-2" style="gap:16px">
+          <div>
+            <div class="stat-med" style="color:#D4A853">+30%</div>
+            <div class="stat-label">más SKUs recomendados<br><span style="color:#7a7a8a;font-size:10px">40 → 52 SKUs (fix cast COGS)</span></div>
+          </div>
+          <div>
+            <div class="stat-med" style="color:#2D9C9C">M+2</div>
+            <div class="stat-label">horizonte correcto<br><span style="color:#7a7a8a;font-size:10px">Sem 17 · Abril 2026</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     02 — RANKING DE CATEGORÍAS
+══════════════════════════════════════════════════════════ -->
+<section class="section" id="categorias">
+  <div class="section-label">02 — Selección de categorías</div>
+  <h2 class="section-title">¿Qué categorías<br>deberíamos <em>priorizar</em>?</h2>
+  <p class="section-lead">
+    Pastas y Salsas fueron elegidas arbitrariamente. Construimos un score compuesto
+    con datos reales para responder esta pregunta objetivamente.
+  </p>
+
+  <div class="grid-2" style="align-items:start;gap:40px">
+    <!-- Ranking -->
+    <div>
+      <div style="font-size:12px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Score compuesto — TODAS las cadenas (últimos 12 meses)</div>
+      <!-- Header row -->
+      <div style="display:flex;align-items:center;gap:10px;padding:5px 0 8px;border-bottom:2px solid #E8E4DD;margin-bottom:2px">
+        <span style="width:24px;flex-shrink:0"></span>
+        <span style="flex:1;font-size:10px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.05em">Categoría</span>
+        <span style="width:52px;text-align:center;font-size:10px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.05em">Margen</span>
+        <span style="width:100px;text-align:center;font-size:10px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.05em">Score</span>
+        <span style="width:38px;text-align:right;font-size:10px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.05em">Pts</span>
+        <span style="width:44px"></span>
+      </div>
+      <div class="cat-row">
+        <span class="cat-rank top3">1</span>
+        <div class="cat-name" style="flex:1">Detergentes<div style="font-size:11px;color:#7a7a8a">220 SKUs</div></div>
+        <span style="width:52px;text-align:center;font-size:12px;font-weight:700;color:#059669;flex-shrink:0">70.3%</span>
+        <div style="width:100px;background:#E8E4DD;border-radius:4px;height:6px;flex-shrink:0"><div style="height:6px;border-radius:4px;background:#D4A853;width:100%"></div></div>
+        <span class="cat-score" style="color:#D4A853;width:38px;text-align:right">33.7</span>
+        <span class="cat-badge ok" style="width:44px;text-align:center">✓ OK</span>
+      </div>
+      <div class="cat-row">
+        <span class="cat-rank top3">2</span>
+        <div class="cat-name" style="flex:1">Suavizantes<div style="font-size:11px;color:#7a7a8a">59 SKUs</div></div>
+        <span style="width:52px;text-align:center;font-size:12px;font-weight:700;color:#059669;flex-shrink:0">70.2%</span>
+        <div style="width:100px;background:#E8E4DD;border-radius:4px;height:6px;flex-shrink:0"><div style="height:6px;border-radius:4px;background:#2D9C9C;width:69%"></div></div>
+        <span class="cat-score" style="width:38px;text-align:right">23.3</span>
+        <span class="cat-badge ok" style="width:44px;text-align:center">✓ OK</span>
+      </div>
+      <div class="cat-row">
+        <span class="cat-rank top3">3</span>
+        <div class="cat-name" style="flex:1">Limp. Light Duty<div style="font-size:11px;color:#7a7a8a">45 SKUs</div></div>
+        <span style="width:52px;text-align:center;font-size:12px;font-weight:700;color:#059669;flex-shrink:0">69.1%</span>
+        <div style="width:100px;background:#E8E4DD;border-radius:4px;height:6px;flex-shrink:0"><div style="height:6px;border-radius:4px;background:#2D9C9C;width:65%"></div></div>
+        <span class="cat-score" style="width:38px;text-align:right">21.9</span>
+        <span class="cat-badge ok" style="width:44px;text-align:center">✓ OK</span>
+      </div>
+      <div class="cat-row">
+        <span class="cat-rank">4</span>
+        <div class="cat-name" style="flex:1">Jabón Líquido<div style="font-size:11px;color:#7a7a8a">54 SKUs</div></div>
+        <span style="width:52px;text-align:center;font-size:12px;font-weight:700;color:#059669;flex-shrink:0">60.9%</span>
+        <div style="width:100px;background:#E8E4DD;border-radius:4px;height:6px;flex-shrink:0"><div style="height:6px;border-radius:4px;background:#2D9C9C;width:60%"></div></div>
+        <span class="cat-score" style="width:38px;text-align:right">20.3</span>
+        <span class="cat-badge ok" style="width:44px;text-align:center">✓ OK</span>
+      </div>
+      <div class="cat-row">
+        <span class="cat-rank">5</span>
+        <div class="cat-name" style="flex:1">Lavavajillas<div style="font-size:11px;color:#7a7a8a">41 SKUs</div></div>
+        <span style="width:52px;text-align:center;font-size:12px;font-weight:700;color:#059669;flex-shrink:0">53.2%</span>
+        <div style="width:100px;background:#E8E4DD;border-radius:4px;height:6px;flex-shrink:0"><div style="height:6px;border-radius:4px;background:#2D9C9C;width:55%"></div></div>
+        <span class="cat-score" style="width:38px;text-align:right">18.7</span>
+        <span class="cat-badge ok" style="width:44px;text-align:center">✓ OK</span>
+      </div>
+      <div style="height:1px;background:#E8E4DD;margin:6px 0;border-style:dashed;border-width:1px 0 0;border-color:#E8E4DD"></div>
+      <div class="cat-row" style="opacity:.7">
+        <span class="cat-rank" style="font-size:13px">—</span>
+        <div class="cat-name" style="flex:1;color:#7a7a8a">Pastas <em style="font-style:normal;font-size:10px">(actual)</em><div style="font-size:11px;color:#7a7a8a">145 SKUs</div></div>
+        <span style="width:52px;text-align:center;font-size:12px;font-weight:700;color:#E85D4C;flex-shrink:0">−14.8%</span>
+        <div style="width:100px;background:#E8E4DD;border-radius:4px;height:6px;flex-shrink:0"><div style="height:6px;border-radius:4px;background:#E85D4C;width:61%"></div></div>
+        <span class="cat-score" style="color:#E85D4C;width:38px;text-align:right">20.5</span>
+        <span class="cat-badge warn" style="width:44px;text-align:center">⚠ COGS</span>
+      </div>
+      <div class="cat-row" style="opacity:.7">
+        <span class="cat-rank" style="font-size:13px">—</span>
+        <div class="cat-name" style="flex:1;color:#7a7a8a">Salsas <em style="font-style:normal;font-size:10px">(actual)</em><div style="font-size:11px;color:#7a7a8a">74 SKUs</div></div>
+        <span style="width:52px;text-align:center;font-size:12px;font-weight:700;color:#E85D4C;flex-shrink:0">−60.1%</span>
+        <div style="width:100px;background:#E8E4DD;border-radius:4px;height:6px;flex-shrink:0"><div style="height:6px;border-radius:4px;background:#E85D4C;width:28%"></div></div>
+        <span class="cat-score" style="color:#E85D4C;width:38px;text-align:right">9.5</span>
+        <span class="cat-badge warn" style="width:44px;text-align:center">⚠ COGS</span>
+      </div>
+    </div>
+
+    <!-- Metodología + outliers -->
+    <div style="display:flex;flex-direction:column;gap:20px">
+
+      <!-- Score methodology card — expanded with rationale -->
+      <div class="card">
+        <div style="font-size:12px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">¿Por qué estas 5 variables?</div>
+        <p style="font-size:12px;color:#7a7a8a;line-height:1.6;margin-bottom:14px">
+          Cada variable explica una dimensión distinta de la "oportunidad de promo". La ponderación refleja qué tan directamente impacta al ROI del optimizer.
+        </p>
+        <table class="exec-table" style="font-size:12px">
+          <thead><tr><th>Variable</th><th style="text-align:center;width:40px">Peso</th><th>Por qué importa</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600;color:#2D9C9C">Elasticidad / Uplift</td>
+              <td style="text-align:center;font-weight:700;color:#2D9C9C">30%</td>
+              <td style="color:#7a7a8a;font-size:11px">Es el driver principal del ROI. Si el consumidor no responde al precio, la promo no genera uplift y el ROI es negativo.</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Margen bruto</td>
+              <td style="text-align:center;font-weight:700;color:#2D9C9C">25%</td>
+              <td style="color:#7a7a8a;font-size:11px">Define el BI Unitario. A mayor margen, cada unidad incremental genera más utilidad. Con margen negativo, el ROI nunca es positivo.</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Volumen (kg)</td>
+              <td style="text-align:center;font-weight:700;color:#2D9C9C">20%</td>
+              <td style="color:#7a7a8a;font-size:11px">Determina el impacto absoluto. Una promo en categoría pequeña puede tener buen ROI pero irrelevancia financiera.</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">Señal promo histórica</td>
+              <td style="text-align:center;font-weight:700;color:#2D9C9C">15%</td>
+              <td style="color:#7a7a8a;font-size:11px">Cuántas semanas históricas tuvieron precio promocional. Más señal = modelo entrenado con más variabilidad de precio = predicciones más confiables.</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600">CV de precio</td>
+              <td style="text-align:center;font-weight:700;color:#2D9C9C">10%</td>
+              <td style="color:#7a7a8a;font-size:11px">Coeficiente de variación del precio histórico. CV bajo = precio estable = curva de demanda más limpia. CV muy alto puede indicar outliers que distorsionan el RF.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Critical finding -->
+      <div class="card card-coral">
+        <div style="font-size:12px;font-weight:700;color:#E85D4C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">⚠ Hallazgo — Categorías actuales</div>
+        <p style="font-size:13px;color:#7a7a8a;line-height:1.7">
+          Pastas y Salsas tienen <strong style="color:#E85D4C">margen negativo</strong> en el cálculo de COGS actual
+          (Pastas −14.8%, Salsas −60.1%). Con margen negativo, el BI Uplift siempre es negativo y el ROI del optimizer nunca puede ser positivo, independientemente de la elasticidad.
+        </p>
+        <p style="font-size:12px;color:#7a7a8a;margin-top:8px">
+          <strong style="color:#D4A853">Acción: validar con Controlling si el COGS refleja el canal correcto.</strong>
+        </p>
+      </div>
+
+      <!-- Outliers — expanded with table -->
+      <div class="card card-teal">
+        <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Outliers de precio — run actual</div>
+        <p style="font-size:12px;color:#7a7a8a;line-height:1.6;margin-bottom:12px">
+          Un SKU es atípico cuando su CV de precio supera el 30%. Por debajo de ese umbral, la variación es normal — incluye semanas de promoción habituales. En el run actual solo <strong>Metro × Pastas tiene 2 SKUs atípicos</strong>.
+        </p>
+        <table class="exec-table" style="font-size:11px;margin-bottom:8px">
+          <thead><tr><th>Combinación</th><th style="text-align:center">SKUs evaluados</th><th style="text-align:center">CV mediano</th><th style="text-align:center">CV máximo</th><th style="text-align:center">SKUs CV &gt; 30%</th><th style="text-align:center">Estado</th></tr></thead>
+          <tbody>
+            <tr style="background:#FFF0EE"><td style="font-weight:600">Metro × Pastas</td><td style="text-align:center">55</td><td style="text-align:center">10.2%</td><td style="text-align:center;font-weight:700;color:#E85D4C">33.9%</td><td style="text-align:center;color:#E85D4C;font-weight:700">2</td><td style="text-align:center"><span style="background:#FEE2E2;color:#E85D4C;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">⚠ Revisar</span></td></tr>
+            <tr><td>Metro × Salsas</td><td style="text-align:center">48</td><td style="text-align:center">6.4%</td><td style="text-align:center">23.8%</td><td style="text-align:center;color:#059669;font-weight:700">0</td><td style="text-align:center"><span style="background:#D1FAE5;color:#059669;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">✓ OK</span></td></tr>
+            <tr><td>Plaza Vea × Pastas</td><td style="text-align:center">66</td><td style="text-align:center">8.9%</td><td style="text-align:center">16.8%</td><td style="text-align:center;color:#059669;font-weight:700">0</td><td style="text-align:center"><span style="background:#D1FAE5;color:#059669;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">✓ OK</span></td></tr>
+            <tr><td>Plaza Vea × Salsas</td><td style="text-align:center">33</td><td style="text-align:center">5.0%</td><td style="text-align:center">17.8%</td><td style="text-align:center;color:#059669;font-weight:700">0</td><td style="text-align:center"><span style="background:#D1FAE5;color:#059669;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">✓ OK</span></td></tr>
+            <tr><td>Tottus × Pastas</td><td style="text-align:center">60</td><td style="text-align:center">10.1%</td><td style="text-align:center">27.3%</td><td style="text-align:center;color:#059669;font-weight:700">0</td><td style="text-align:center"><span style="background:#D1FAE5;color:#059669;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">✓ OK</span></td></tr>
+            <tr><td>Tottus × Salsas</td><td style="text-align:center">38</td><td style="text-align:center">6.3%</td><td style="text-align:center">13.2%</td><td style="text-align:center;color:#059669;font-weight:700">0</td><td style="text-align:center"><span style="background:#D1FAE5;color:#059669;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">✓ OK</span></td></tr>
+          </tbody>
+        </table>
+        <div style="background:#FFF0EE;border:1px solid #F5B4AD;border-radius:8px;padding:10px 14px;font-size:12px;margin-bottom:8px">
+          <strong style="color:#E85D4C">SKUs atípicos en Metro × Pastas:</strong>
+          4300018 (CV 33.9%) y 4302175 (CV 30.6%). Son los únicos de toda la muestra que superan el umbral.
+          Nota: 4300018 también es el SKU de mayor ROI del run (+981%) — su precio volátil puede estar inflando la elasticidad estimada. Validar con trade antes de ejecutar.
+        </div>
+        <p style="font-size:11px;color:#7a7a8a">
+          CV = std(precio) / media(precio) por SKU. Si supera 30%, el RF puede aprender una curva distorsionada. El validador técnico (tab "🔎 Outliers de Precio") muestra la distribución completa por SKU.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     03 — ANÁLISIS POR CADENA
+══════════════════════════════════════════════════════════ -->
+<section class="section" id="cadenas">
+  <div class="section-label">03 — Resultados por cadena</div>
+  <h2 class="section-title">Análisis individual<br>por <em>cadena</em></h2>
+  <p class="section-lead">
+    Resultados del run de Febrero 2026 (Semana 9) con target Abril 2026 (Semana 17).
+    3 cadenas × 2 categorías = 6 combinaciones evaluadas.
+  </p>
+
+  <!-- Chain tabs -->
+  <div class="chain-tabs">
+    <button class="chain-tab active" onclick="switchChain('metro')">METRO</button>
+    <button class="chain-tab" onclick="switchChain('plazavea')">PLAZA VEA</button>
+    <button class="chain-tab" onclick="switchChain('tottus')">TOTTUS</button>
+  </div>
+
+  <!-- METRO -->
+  <div class="chain-panel active" id="chain-metro">
+    <div class="grid-2" style="gap:24px;margin-bottom:24px">
+      <!-- Pastas -->
+      <div class="card" style="border-top:3px solid var(--teal)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+          <div>
+            <div style="font-size:11px;color:#2D9C9C;font-weight:700;letter-spacing:.08em;text-transform:uppercase">PASTAS</div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;margin-top:4px">Metro × Pastas</div>
+          </div>
+          <span class="roi-badge roi-pos" style="font-size:11px">6 SKU ROI+</span>
+        </div>
+        <div class="grid-3" style="gap:12px;margin-bottom:16px">
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#2D9C9C">11</div><div class="sku-kpi-label">SKUs recomendados</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#059669">0.989</div><div class="sku-kpi-label">R² mediano</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#D4A853">54%</div><div class="sku-kpi-label">Elasticidad &lt; 0</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">115 sem</div><div class="sku-kpi-label">Historial prom.</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">98%</div><div class="sku-kpi-label">SKUs R²≥0.85</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">55</div><div class="sku-kpi-label">SKUs con historial</div></div>
+        </div>
+        <div class="callout callout-coral" style="font-size:12px">
+          ROI mediano negativo por problema de COGS. 
+          Adicionalmente, <strong>2 SKUs con precio volátil (CV &gt; 30%)</strong>: 
+          4300018 (CV 33.9%) y 4302175 (CV 30.6%) — únicos en toda la muestra. 
+          Sus predicciones son válidas pero con mayor incertidumbre en el precio base.
+        </div>
+      </div>
+
+      <!-- Salsas -->
+      <div class="card" style="border-top:3px solid var(--gold)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+          <div>
+            <div style="font-size:11px;color:#D4A853;font-weight:700;letter-spacing:.08em;text-transform:uppercase">SALSAS</div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;margin-top:4px">Metro × Salsas</div>
+          </div>
+          <span class="roi-badge roi-pos" style="font-size:11px">5 SKU ROI+</span>
+        </div>
+        <div class="grid-3" style="gap:12px;margin-bottom:16px">
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#2D9C9C">7</div><div class="sku-kpi-label">SKUs recomendados</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#059669">0.987</div><div class="sku-kpi-label">R² mediano</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#D4A853">64%</div><div class="sku-kpi-label">Elasticidad &lt; 0</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">93 sem</div><div class="sku-kpi-label">Historial prom.</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">93%</div><div class="sku-kpi-label">SKUs R²≥0.85</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">48</div><div class="sku-kpi-label">SKUs con historial</div></div>
+        </div>
+        <div class="callout" style="font-size:12px">
+          Metro Salsas tiene la mejor elasticidad &lt; 0 (64%) — la mayor señal de respuesta al precio de toda la muestra.
+        </div>
+      </div>
+    </div>
+
+    <!-- SKU individual ejemplo Metro -->
+    <div class="card card-teal">
+      <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Ejemplo — SKU destacado (Mayor volumen · Metro × Pastas)</div>
+      <div class="grid-4" style="gap:12px">
+        <div class="sku-kpi"><div class="sku-kpi-val">4302106</div><div class="sku-kpi-label">Código SKU</div></div>
+        <div class="sku-kpi"><div class="sku-kpi-val" style="color:#D4A853">S/ 2.45</div><div class="sku-kpi-label">Precio recomendado</div></div>
+        <div class="sku-kpi"><div class="sku-kpi-val" style="color:#059669">194%</div><div class="sku-kpi-label">ROI estimado</div></div>
+        <div class="sku-kpi"><div class="sku-kpi-val" style="color:#2D9C9C">Lunes</div><div class="sku-kpi-label">Día de inicio óptimo</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAZA VEA -->
+  <div class="chain-panel" id="chain-plazavea">
+    <div class="grid-2" style="gap:24px;margin-bottom:24px">
+      <div class="card" style="border-top:3px solid var(--teal)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+          <div>
+            <div style="font-size:11px;color:#2D9C9C;font-weight:700;letter-spacing:.08em;text-transform:uppercase">PASTAS</div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;margin-top:4px">Plaza Vea × Pastas</div>
+          </div>
+          <span class="roi-badge roi-pos" style="font-size:11px">6 SKU ROI+</span>
+        </div>
+        <div class="grid-3" style="gap:12px;margin-bottom:16px">
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#2D9C9C">9</div><div class="sku-kpi-label">SKUs recomendados</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#059669">0.990</div><div class="sku-kpi-label">R² mediano</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#D4A853">49%</div><div class="sku-kpi-label">Elasticidad &lt; 0</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">118 sem</div><div class="sku-kpi-label">Historial prom.</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">96%</div><div class="sku-kpi-label">SKUs R²≥0.85</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">66</div><div class="sku-kpi-label">SKUs con historial</div></div>
+        </div>
+        <div class="callout callout-coral" style="font-size:12px">
+          R² más alto de todos (0.990) — el modelo aprendió muy bien la curva precio-demanda, pero la elasticidad &lt; 0 del 49% indica que casi la mitad de SKUs tienen señal ambigua.
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--gold)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+          <div>
+            <div style="font-size:11px;color:#D4A853;font-weight:700;letter-spacing:.08em;text-transform:uppercase">SALSAS</div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;margin-top:4px">Plaza Vea × Salsas</div>
+          </div>
+          <span class="roi-badge roi-pos" style="font-size:11px">5 SKU ROI+</span>
+        </div>
+        <div class="grid-3" style="gap:12px;margin-bottom:16px">
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#2D9C9C">5</div><div class="sku-kpi-label">SKUs recomendados</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#059669">0.989</div><div class="sku-kpi-label">R² mediano</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#D4A853">61%</div><div class="sku-kpi-label">Elasticidad &lt; 0</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">89 sem</div><div class="sku-kpi-label">Historial prom.</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">100%</div><div class="sku-kpi-label">SKUs R²≥0.85</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">33</div><div class="sku-kpi-label">SKUs con historial</div></div>
+        </div>
+        <div class="callout" style="font-size:12px">
+          100% de SKUs con R² ≥ 0.85 — modelo perfecto en calidad. La limitación es el número de SKUs (5) y el COGS negativo.
+        </div>
+      </div>
+    </div>
+    <div class="card card-gold">
+      <div style="font-size:12px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Plaza Vea — Mayor volumen de la muestra</div>
+      <p style="font-size:13px;color:#7a7a8a">Plaza Vea × Pastas tiene el mayor volumen histórico de toda la muestra con SKUs como 4302106 (mayor volumen) y 4302108 superando las 5,000+ kg/sem en semanas pico. Es la cadena con más impacto absoluto en inversión e ingresos potenciales.</p>
+    </div>
+  </div>
+
+  <!-- TOTTUS -->
+  <div class="chain-panel" id="chain-tottus">
+    <div class="grid-2" style="gap:24px;margin-bottom:24px">
+      <div class="card" style="border-top:3px solid var(--teal)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+          <div>
+            <div style="font-size:11px;color:#2D9C9C;font-weight:700;letter-spacing:.08em;text-transform:uppercase">PASTAS</div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;margin-top:4px">Tottus × Pastas</div>
+          </div>
+          <span class="roi-badge roi-pos" style="font-size:11px">10 SKU ROI+</span>
+        </div>
+        <div class="grid-3" style="gap:12px;margin-bottom:16px">
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#2D9C9C">13</div><div class="sku-kpi-label">SKUs recomendados</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#059669">0.978</div><div class="sku-kpi-label">R² mediano</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#D4A853">52%</div><div class="sku-kpi-label">Elasticidad &lt; 0</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">109 sem</div><div class="sku-kpi-label">Historial prom.</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">97%</div><div class="sku-kpi-label">SKUs R²≥0.85</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">13</div><div class="sku-kpi-label">Mayor # recomendados</div></div>
+        </div>
+        <div class="callout" style="font-size:12px">
+          <strong>13 SKUs recomendados</strong> — el mayor de todas las combinaciones. Tottus Pastas es la combinación con mayor cantidad de recomendaciones en el run actual.
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--gold)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+          <div>
+            <div style="font-size:11px;color:#D4A853;font-weight:700;letter-spacing:.08em;text-transform:uppercase">SALSAS</div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;margin-top:4px">Tottus × Salsas</div>
+          </div>
+          <span class="roi-badge roi-pos" style="font-size:11px">6 SKU ROI+</span>
+        </div>
+        <div class="grid-3" style="gap:12px;margin-bottom:16px">
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#2D9C9C">7</div><div class="sku-kpi-label">SKUs recomendados</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#059669">0.988</div><div class="sku-kpi-label">R² mediano</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#D4A853">53%</div><div class="sku-kpi-label">Elasticidad &lt; 0</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">91 sem</div><div class="sku-kpi-label">Historial prom.</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#7a7a8a;font-size:14px">100%</div><div class="sku-kpi-label">SKUs R²≥0.85</div></div>
+          <div class="sku-kpi"><div class="sku-kpi-val" style="color:#059669">Mejor</div><div class="sku-kpi-label">Mediana ROI (positivos)</div></div>
+        </div>
+        <div class="callout" style="font-size:12px;border-left-color:#059669;background:rgba(52,211,153,.06)">
+          <strong style="color:#059669">ROI mediano más alto de Salsas (−13%)</strong> — la combinación más cercana a ser positiva. Con COGS correcto, potencialmente la mejor combinación de Salsas.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     04 — CALIDAD DEL MODELO
+══════════════════════════════════════════════════════════ -->
+<section class="section compact" id="modelo">
+  <div class="section-label">04 — Confianza en el modelo</div>
+  <h2 class="section-title">¿Podemos confiar<br>en las <em>predicciones</em>?</h2>
+  <p class="section-lead">El modelo Random Forest + Optuna logra R² excepcional en todas las combinaciones.</p>
+
+  <div class="grid-4" style="gap:16px;margin-bottom:32px">
+    <div class="card card-teal" style="text-align:center">
+      <div class="stat-big" style="color:#2D9C9C">0.987</div>
+      <div class="stat-label">R² promedio global</div>
+      <div class="stat-sub" style="color:#7a7a8a;margin-top:8px">6 combinaciones</div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="stat-big" style="color:#059669">97%</div>
+      <div class="stat-label">SKUs con R² ≥ 0.85</div>
+      <div class="stat-sub" style="color:#7a7a8a;margin-top:8px">Umbral "excelente"</div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="stat-big" style="color:#D4A853">164</div>
+      <div class="stat-label">Semanas de historia</div>
+      <div class="stat-sub" style="color:#7a7a8a;margin-top:8px">Desde ene 2023</div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="stat-big" style="color:#2D9C9C">~100</div>
+      <div class="stat-label">Semanas prom. / SKU</div>
+      <div class="stat-sub" style="color:#7a7a8a;margin-top:8px">Mín. recomendado: 20</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="gap:24px;align-items:start">
+    <div>
+      <div style="font-size:12px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">R² por combinación</div>
+      <div class="chart-wrap">
+        <div style="position:relative;height:200px;width:100%"><canvas id="chartR2"></canvas></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="callout">
+        <strong>¿Qué significa R² = 0.989?</strong><br>
+        El modelo explica el <strong>98.9% de la variabilidad</strong> de la demanda semanal. Es decir, de cada 100 kg de variación en ventas, el modelo predice correctamente 98.9 kg. Esto es excepcional para datos de ventas retail.
+      </div>
+      <div class="callout callout-gold">
+        <strong>¿Por qué la elasticidad negativa solo es ~56%?</strong><br>
+        R² alto + elasticidad positiva = el modelo aprende bien la demanda pero algunos SKUs no tienen suficientes semanas de precio promocional para aprender la respuesta al precio. No es un error del modelo, es falta de señal histórica.
+      </div>
+      <div class="card">
+        <div style="font-size:12px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">% Elasticidad &lt; 0 por combinación</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:11px;color:#7a7a8a;width:90px;flex-shrink:0">Metro P</span>
+            <div style="flex:1;background:#E8E4DD;border-radius:4px;height:16px;position:relative">
+              <div style="height:16px;border-radius:4px;background:#D4A853;width:54%"></div>
+              <span style="position:absolute;right:6px;top:0;line-height:16px;font-size:10px;font-weight:700;color:#3D3A36">54%</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:11px;color:#7a7a8a;width:90px;flex-shrink:0">Metro S</span>
+            <div style="flex:1;background:#E8E4DD;border-radius:4px;height:16px;position:relative">
+              <div style="height:16px;border-radius:4px;background:#059669;width:64%"></div>
+              <span style="position:absolute;right:6px;top:0;line-height:16px;font-size:10px;font-weight:700;color:#3D3A36">64% ↑</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:11px;color:#7a7a8a;width:90px;flex-shrink:0">Plaza Vea P</span>
+            <div style="flex:1;background:#E8E4DD;border-radius:4px;height:16px;position:relative">
+              <div style="height:16px;border-radius:4px;background:#E85D4C;width:49%"></div>
+              <span style="position:absolute;right:6px;top:0;line-height:16px;font-size:10px;font-weight:700;color:#3D3A36">49%</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:11px;color:#7a7a8a;width:90px;flex-shrink:0">Plaza Vea S</span>
+            <div style="flex:1;background:#E8E4DD;border-radius:4px;height:16px;position:relative">
+              <div style="height:16px;border-radius:4px;background:#D4A853;width:61%"></div>
+              <span style="position:absolute;right:6px;top:0;line-height:16px;font-size:10px;font-weight:700;color:#3D3A36">61%</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:11px;color:#7a7a8a;width:90px;flex-shrink:0">Tottus P</span>
+            <div style="flex:1;background:#E8E4DD;border-radius:4px;height:16px;position:relative">
+              <div style="height:16px;border-radius:4px;background:#D4A853;width:52%"></div>
+              <span style="position:absolute;right:6px;top:0;line-height:16px;font-size:10px;font-weight:700;color:#3D3A36">52%</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:11px;color:#7a7a8a;width:90px;flex-shrink:0">Tottus S</span>
+            <div style="flex:1;background:#E8E4DD;border-radius:4px;height:16px;position:relative">
+              <div style="height:16px;border-radius:4px;background:#D4A853;width:53%"></div>
+              <span style="position:absolute;right:6px;top:0;line-height:16px;font-size:10px;font-weight:700;color:#3D3A36">53%</span>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:#7a7a8a;margin-top:10px">Verde = ≥60% (buena señal) · Amarillo = 50–60% (aceptable) · Rojo = &lt;50% (señal débil)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     05 — VENTANAS DIARIAS & ROI
+══════════════════════════════════════════════════════════ -->
+<section class="section compact" id="ventanas">
+  <div class="section-label">05 — Optimización diaria</div>
+  <h2 class="section-title">¿Cuándo y <em>cuánto tiempo</em><br>poner la promo?</h2>
+  <p class="section-lead">Cada SKU tiene un día de inicio y duración óptimos basados en su perfil de ventas diario real.</p>
+
+  <div class="step-flow" style="margin-bottom:32px">
+    <div class="step">
+      <div class="step-num">PASO 1</div>
+      <div class="step-title">Perfil diario real</div>
+      <div style="font-size:12px;color:#7a7a8a;margin-top:6px">Proporción de ventas<br>por día de semana por SKU</div>
+    </div>
+    <div class="step">
+      <div class="step-num">PASO 2</div>
+      <div class="step-title">98 ventanas</div>
+      <div class="step-val">7×14</div>
+      <div style="font-size:12px;color:#7a7a8a;margin-top:2px">días inicio × duraciones</div>
+    </div>
+    <div class="step">
+      <div class="step-num">PASO 3</div>
+      <div class="step-title">Máximo ROI</div>
+      <div style="font-size:12px;color:#7a7a8a;margin-top:6px">Se selecciona la ventana<br>con mayor retorno</div>
+    </div>
+    <div class="step">
+      <div class="step-num">OUTPUT</div>
+      <div class="step-title">Fecha exacta</div>
+      <div style="font-size:12px;color:#7a7a8a;margin-top:6px">fecha_inicio · fecha_fin<br>día_semana · duración</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="gap:24px">
+    <div class="card">
+      <div class="chart-title">Distribución de días de inicio — Metro × Pastas</div>
+      <div style="position:relative;height:200px;width:100%"><canvas id="chartDias"></canvas></div>
+      <div style="font-size:11px;color:#7a7a8a;margin-top:10px">
+        El lunes concentra la mayoría de recomendaciones — los SKUs de pastas tienen mayor volumen al inicio de semana.
+      </div>
+    </div>
+    <div class="card">
+      <div class="chart-title">Distribución de duración óptima</div>
+      <div style="position:relative;height:200px;width:100%"><canvas id="chartDur"></canvas></div>
+      <div style="font-size:11px;color:#7a7a8a;margin-top:10px">
+        Mayoría de promociones 1 día (impacto concentrado). Las de 7–14 días son para SKUs con alta elasticidad sostenida.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     05b — CÓMO FUNCIONA EL MODELO
+══════════════════════════════════════════════════════════ -->
+<section class="section compact" id="como-funciona">
+  <div class="section-label">05b — Bajo el capó</div>
+  <h2 class="section-title">Cómo calcula el modelo<br>una <em>recomendación</em></h2>
+  <p class="section-lead">Ejemplo real paso a paso con SKU 4302106 · Spaghetti Don Vittorio 950G · Metro.</p>
+
+  <div class="grid-2" style="gap:28px;align-items:start;margin-bottom:32px">
+    <div style="display:flex;flex-direction:column;gap:16px">
+
+      <div class="card" style="border-left:4px solid #2D9C9C">
+        <div style="font-size:11px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Paso 1 — Predicción de demanda (Random Forest)</div>
+        <p style="font-size:13px;color:#7a7a8a;line-height:1.7;margin-bottom:10px">El modelo entrena con 115 semanas históricas y aprende cómo responde la demanda a cada nivel de precio. Para M+2 predice la demanda para cada precio candidato.</p>
+        <div class="formula-box" style="font-size:11px">
+          <div>Precios candidatos = grilla S/ 2.45 – S/ 2.85 (factores 6–20%)</div>
+          <div><span class="hl">RF predice</span> → S/ 2.45 : <span class="result">5,500 u/sem</span></div>
+          <div><span class="hl">RF predice</span> → S/ 2.65 : 4,200 u/sem</div>
+          <div><span class="hl">RF predice</span> → S/ 2.85 : 2,881 u/sem  ← base</div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:4px solid #D4A853">
+        <div style="font-size:11px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Paso 2 — Perfil diario real del SKU × cadena</div>
+        <p style="font-size:13px;color:#7a7a8a;line-height:1.7;margin-bottom:10px">La demanda semanal se distribuye por día según el comportamiento histórico real — no 1/7 uniforme como antes.</p>
+        <div style="display:flex;gap:4px;align-items:flex-end;height:56px;padding-bottom:18px">
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;flex:1">
+            <div style="background:#2D9C9C;width:100%;border-radius:2px 2px 0 0;height:26px"></div>
+            <span style="font-size:9px;color:#9CA3AF;text-align:center">Lun<br><b style="color:#2D9C9C">48%</b></span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;flex:1">
+            <div style="background:#E8E4DD;width:100%;border-radius:2px 2px 0 0;height:7px"></div>
+            <span style="font-size:9px;color:#9CA3AF;text-align:center">Mar<br>13%</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;flex:1">
+            <div style="background:#E8E4DD;width:100%;border-radius:2px 2px 0 0;height:2px"></div>
+            <span style="font-size:9px;color:#9CA3AF;text-align:center">Mié<br>3%</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;flex:1">
+            <div style="background:#E8E4DD;width:100%;border-radius:2px 2px 0 0;height:6px"></div>
+            <span style="font-size:9px;color:#9CA3AF;text-align:center">Jue<br>11%</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;flex:1">
+            <div style="background:#E8E4DD;width:100%;border-radius:2px 2px 0 0;height:2px"></div>
+            <span style="font-size:9px;color:#9CA3AF;text-align:center">Vie<br>3%</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;flex:1">
+            <div style="background:#E8E4DD;width:100%;border-radius:2px 2px 0 0;height:3px"></div>
+            <span style="font-size:9px;color:#9CA3AF;text-align:center">Sáb<br>5%</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;flex:1">
+            <div style="background:#E8E4DD;width:100%;border-radius:2px 2px 0 0;height:10px"></div>
+            <span style="font-size:9px;color:#9CA3AF;text-align:center">Dom<br>19%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:4px solid #E85D4C">
+        <div style="font-size:11px;font-weight:700;color:#E85D4C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Paso 3 — 98 ventanas evaluadas por precio</div>
+        <p style="font-size:13px;color:#7a7a8a;line-height:1.7;margin-bottom:8px">Para S/ 2.45 se evalúan 7 días inicio × 14 duraciones. Se selecciona la ventana de mayor ROI.</p>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:9px;text-align:center;margin-top:8px">
+          <div style="background:#2D9C9C;color:white;padding:4px 2px;border-radius:3px;font-weight:700">Lun 1d<br>✓ Max</div>
+          <div style="background:#F8F5F0;color:#7a7a8a;padding:4px 2px;border-radius:3px">Mar 1d</div>
+          <div style="background:#F8F5F0;color:#7a7a8a;padding:4px 2px;border-radius:3px">Mié 1d</div>
+          <div style="background:#F8F5F0;color:#7a7a8a;padding:4px 2px;border-radius:3px">Jue 1d</div>
+          <div style="background:#F8F5F0;color:#7a7a8a;padding:4px 2px;border-radius:3px">Vie 1d</div>
+          <div style="background:#F8F5F0;color:#7a7a8a;padding:4px 2px;border-radius:3px">Sáb 1d</div>
+          <div style="background:#F8F5F0;color:#7a7a8a;padding:4px 2px;border-radius:3px">Dom 1d</div>
+        </div>
+        <p style="font-size:11px;color:#9CA3AF;margin-top:8px">Lunes gana porque concentra el 48% del volumen. La misma inversión en martes genera menos uplift.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card card-teal">
+        <div style="font-size:11px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Paso 4 — Cálculo del ROI (Fórmula GTN)</div>
+        <p style="font-size:13px;color:#7a7a8a;line-height:1.7;margin-bottom:12px">Con ventana óptima seleccionada (Lunes, 1 día, S/ 2.45):</p>
+        <div class="formula-box" style="font-size:11px;line-height:2.1">
+          <div style="color:#9CA3AF;font-size:10px;margin-bottom:4px">── INPUTS ──────────────────────────</div>
+          <div>Precio base    = S/ 2.85 / kg</div>
+          <div>Precio promo   = S/ 2.45 / kg</div>
+          <div>Un. promo (1d) = 5,500 × 48% = <span class="hl">2,640 u</span></div>
+          <div>BI unitario    = S/ 0.82 / kg</div>
+          <div style="color:#9CA3AF;font-size:10px;margin:6px 0 4px">── CÁLCULO ─────────────────────────</div>
+          <div><span class="hl">Inversión</span>  = (2.85 − 2.45) × 2,640 = S/ 1,056</div>
+          <div><span class="hl">Base 1d</span>    = 2,881 × 48% = 1,383 u</div>
+          <div><span class="hl">Uplift</span>     = 2,640 − 1,383 = 1,257 u</div>
+          <div><span class="hl">BI Uplift</span>  = 0.82 × 1,257 = S/ 1,031</div>
+          <div style="color:#9CA3AF;font-size:10px;margin:6px 0 4px">── RESULTADO ───────────────────────</div>
+          <div><span class="result">ROI</span> = (1,031 / 1,056) − 1 ≈ <span class="result">+97%</span></div>
+        </div>
+        <p style="font-size:11px;color:#9CA3AF;margin-top:8px">El ROI del reporte (+194%) refleja el run completo del RF con el COGS real del sistema. Este ejemplo usa valores aproximados para ilustrar la mecánica.</p>
+      </div>
+
+      <div class="card card-gold">
+        <div style="font-size:11px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Output final → Reporte _9_</div>
+        <p style="font-size:13px;color:#7a7a8a;line-height:1.7">El optimizador repite este proceso para <strong style="color:#3D3A36">todos los precios candidatos × todas las ventanas × todos los SKUs</strong>. Solo pasan al reporte final los SKUs que cumplen los 4 filtros: cantidad ≥ 5 u, duración &lt; 16 días, factor 6–20%, elasticidad &lt; 0.</p>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <span style="background:#E8F6F6;color:#2D9C9C;border:1px solid #A7D7D7;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600">✓ Qty ≥ 5u</span>
+          <span style="background:#E8F6F6;color:#2D9C9C;border:1px solid #A7D7D7;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600">✓ Dur &lt; 16d</span>
+          <span style="background:#E8F6F6;color:#2D9C9C;border:1px solid #A7D7D7;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600">✓ Factor 6–20%</span>
+          <span style="background:#E8F6F6;color:#2D9C9C;border:1px solid #A7D7D7;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600">✓ Elasticidad &lt; 0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     06 — EJEMPLO REAL DE RESULTADO
+══════════════════════════════════════════════════════════ -->
+<section class="section compact" id="resultados">
+  <div class="section-label">06 — Ejemplos reales</div>
+  <h2 class="section-title">Una recomendación<br>por cada <em>cadena × categoría</em></h2>
+  <p class="section-lead">SKUs con ROI positivo del reporte final. Teal = Pastas · Dorado = Salsas. Porcentajes sobre ventas y volumen de los últimos 12 meses (Grow).</p>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #2D9C9C">
+      <div style="background:#E8F6F6;padding:10px 14px;border-bottom:1px solid #E8E4DD">
+        <div style="font-size:9px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em">Metro · Pastas</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">4302106 · Spaghetti Don Vittorio 950G</div>
+        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Don Vittorio Clasico</div>
+      </div>
+      <div style="padding:10px 14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#2D9C9C;font-family:'Space Grotesk',sans-serif">27.8%</div>
+            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">19.2%</div>
+            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 2.85</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
+          </div>
+          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
+            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 2.45</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:12px;font-weight:600;color:#3D3A36">Lunes</div>
+            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
+          </div>
+          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
+            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+194%</div>
+            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
+        <div style="position:relative;height:100px">
+          <canvas id="chartCMP"></canvas>
+        </div>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #2D9C9C">
+      <div style="background:#E8F6F6;padding:10px 14px;border-bottom:1px solid #E8E4DD">
+        <div style="font-size:9px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em">Plaza Vea · Pastas</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">4305042 · Nicolini Corbata 250G</div>
+        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Nicolini Clasico</div>
+      </div>
+      <div style="padding:10px 14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#2D9C9C;font-family:'Space Grotesk',sans-serif">0.9%</div>
+            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">1.7%</div>
+            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 5.50</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
+          </div>
+          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
+            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 4.60</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:12px;font-weight:600;color:#3D3A36">Domingo</div>
+            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
+          </div>
+          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
+            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+623%</div>
+            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
+        <div style="position:relative;height:100px">
+          <canvas id="chartCPP"></canvas>
+        </div>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #2D9C9C">
+      <div style="background:#E8F6F6;padding:10px 14px;border-bottom:1px solid #E8E4DD">
+        <div style="font-size:9px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em">Tottus · Pastas</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">4305084 · Nicolini Codito Chico 250G</div>
+        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Nicolini Clasico</div>
+      </div>
+      <div style="padding:10px 14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#2D9C9C;font-family:'Space Grotesk',sans-serif">0.9%</div>
+            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">2.0%</div>
+            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 5.50</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
+          </div>
+          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
+            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 4.60</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:12px;font-weight:600;color:#3D3A36">Domingo</div>
+            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
+          </div>
+          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
+            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+541%</div>
+            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
+        <div style="position:relative;height:100px">
+          <canvas id="chartCTP"></canvas>
+        </div>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #D4A853">
+      <div style="background:#FDF8EC;padding:10px 14px;border-bottom:1px solid #E8E4DD">
+        <div style="font-size:9px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em">Metro · Salsas</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">3300076 · Mayonesa Alacena 475G</div>
+        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Alacena Mayonesa</div>
+      </div>
+      <div style="padding:10px 14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#D4A853;font-family:'Space Grotesk',sans-serif">22.7%</div>
+            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">19.1%</div>
+            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 8.90</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
+          </div>
+          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
+            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 7.50</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:12px;font-weight:600;color:#3D3A36">Domingo</div>
+            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
+          </div>
+          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
+            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+547%</div>
+            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
+        <div style="position:relative;height:100px">
+          <canvas id="chartCMS"></canvas>
+        </div>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #D4A853">
+      <div style="background:#FDF8EC;padding:10px 14px;border-bottom:1px solid #E8E4DD">
+        <div style="font-size:9px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em">Plaza Vea · Salsas</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">3300017 · Crema Aji Tari 85G</div>
+        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Alacena Tari</div>
+      </div>
+      <div style="padding:10px 14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#D4A853;font-family:'Space Grotesk',sans-serif">1.5%</div>
+            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">3.6%</div>
+            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 3.20</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
+          </div>
+          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
+            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 2.70</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:12px;font-weight:600;color:#3D3A36">Lunes</div>
+            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
+          </div>
+          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
+            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+628%</div>
+            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
+        <div style="position:relative;height:100px">
+          <canvas id="chartCPS"></canvas>
+        </div>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid #E8E4DD;border-radius:10px;overflow:hidden;border-top:3px solid #D4A853">
+      <div style="background:#FDF8EC;padding:10px 14px;border-bottom:1px solid #E8E4DD">
+        <div style="font-size:9px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em">Tottus · Salsas</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-top:2px">3305361 · Mayonesa Alacena 850G</div>
+        <div style="font-size:9px;color:#9CA3AF;margin-top:1px">Alacena Mayonesa</div>
+      </div>
+      <div style="padding:10px 14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#D4A853;font-family:'Space Grotesk',sans-serif">33.2%</div>
+            <div style="font-size:9px;color:#9CA3AF">% venta cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:16px;font-weight:800;color:#3D3A36;font-family:'Space Grotesk',sans-serif">23.5%</div>
+            <div style="font-size:9px;color:#9CA3AF">% volumen cat.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:13px;font-weight:700;color:#3D3A36">S/ 12.90</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio lista</div>
+          </div>
+          <div style="background:#E8F6F6;border-radius:6px;padding:6px 8px;border:1px solid #A7D7D7">
+            <div style="font-size:13px;font-weight:700;color:#2D9C9C">S/ 10.80</div>
+            <div style="font-size:9px;color:#9CA3AF">Precio rec.</div>
+          </div>
+          <div style="background:#F8F5F0;border-radius:6px;padding:6px 8px">
+            <div style="font-size:12px;font-weight:600;color:#3D3A36">Viernes</div>
+            <div style="font-size:9px;color:#9CA3AF">Día óptimo</div>
+          </div>
+          <div style="background:#D1FAE5;border-radius:6px;padding:6px 8px;border:1px solid #A7F3D0">
+            <div style="font-size:16px;font-weight:800;color:#059669;font-family:'Space Grotesk',sans-serif">+726%</div>
+            <div style="font-size:9px;color:#9CA3AF">ROI estimado</div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Curva de demanda predicha</div>
+        <div style="position:relative;height:100px">
+          <canvas id="chartCTS"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:11px;color:#9CA3AF;margin-top:12px">
+    Precios referenciales — verificar con reporte _9_ para valores exactos. ⭐ en las curvas = precio recomendado. Línea verde = demanda base histórica.
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     07 — RESUMEN GLOBAL & PRÓXIMOS PASOS
+══════════════════════════════════════════════════════════ -->
+<section class="section compact" id="cierre">
+  <div class="section-label">07 — Próximos pasos</div>
+  <h2 class="section-title">Lo que viene:<br><em>¿qué validar?</em></h2>
+
+  <div class="grid-2" style="gap:32px;margin-bottom:40px">
+    <!-- Resumen global -->
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Resumen del run actual</div>
+      <table class="exec-table">
+        <thead><tr><th>Combinación</th><th>SKUs rec.</th><th>ROI+ (pos.)</th><th>Días prom.</th><th>Día top</th><th>R²</th></tr></thead>
+        <tbody>
+          <tr><td>Metro × Pastas</td><td style="text-align:center;font-weight:700;color:#2D9C9C">11</td><td><span class="roi-badge roi-pos" style="font-size:11px">6 positivos</span></td><td style="text-align:center;font-weight:600">4 días</td><td style="text-align:center;font-weight:600">Lunes</td><td style="color:#059669;font-weight:600">0.989</td></tr>
+          <tr><td>Metro × Salsas</td><td style="text-align:center;font-weight:700;color:#2D9C9C">7</td><td><span class="roi-badge roi-pos" style="font-size:11px">5 positivos</span></td><td style="text-align:center;font-weight:600">4 días</td><td style="text-align:center;font-weight:600">Domingo</td><td style="color:#059669;font-weight:600">0.987</td></tr>
+          <tr><td>Plaza Vea × Pastas</td><td style="text-align:center;font-weight:700;color:#2D9C9C">9</td><td><span class="roi-badge roi-pos" style="font-size:11px">6 positivos</span></td><td style="text-align:center;font-weight:600">3 días</td><td style="text-align:center;font-weight:600">Domingo</td><td style="color:#059669;font-weight:600">0.990</td></tr>
+          <tr><td>Plaza Vea × Salsas</td><td style="text-align:center;font-weight:700;color:#2D9C9C">5</td><td><span class="roi-badge roi-pos" style="font-size:11px">5 positivos</span></td><td style="text-align:center;font-weight:600">2 días</td><td style="text-align:center;font-weight:600">Lunes</td><td style="color:#059669;font-weight:600">0.989</td></tr>
+          <tr><td>Tottus × Pastas</td><td style="text-align:center;font-weight:700;color:#2D9C9C">13</td><td><span class="roi-badge roi-pos" style="font-size:11px">10 positivos</span></td><td style="text-align:center;font-weight:600">4 días</td><td style="text-align:center;font-weight:600">Domingo</td><td style="color:#059669;font-weight:600">0.978</td></tr>
+          <tr><td>Tottus × Salsas</td><td style="text-align:center;font-weight:700;color:#2D9C9C">7</td><td><span class="roi-badge roi-pos" style="font-size:11px">6 positivos</span></td><td style="text-align:center;font-weight:600">2 días</td><td style="text-align:center;font-weight:600">Viernes</td><td style="color:#059669;font-weight:600">0.988</td></tr>
+          <tr style="background:#E8F6F6"><td style="font-weight:700">TOTAL</td><td style="text-align:center;font-weight:800;color:#2D9C9C;font-size:18px">52</td><td><span class="roi-badge roi-pos" style="font-size:11px">38 con ROI+</span></td><td style="text-align:center;font-weight:600;color:#2D9C9C">~3 días</td><td style="text-align:center;font-weight:600;color:#2D9C9C">Lun/Dom</td><td style="color:#059669;font-weight:700">0.987</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:#7a7a8a;margin-top:8px">* Los SKUs con ROI negativo en el reporte final tienen problema de COGS (margen negativo). El modelo los recomienda porque la elasticidad es correcta, pero la inversión no se recupera con el COGS actual.</div>
+
+      <div style="margin-top:24px">
+        <div style="font-size:13px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Contexto de mercado — Promociones históricas por categoría (últimos 24 meses)</div>
+        <table class="exec-table">
+          <thead><tr><th>Categoría</th><th style="text-align:right">Total promos</th><th style="text-align:right">≥ 30 días</th><th>% sobre total</th><th style="text-align:center">Media días</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700">Pastas</td>
+              <td style="text-align:right">358,559</td>
+              <td style="text-align:right;color:#E85D4C;font-weight:700">205,998</td>
+              <td><div style="display:flex;align-items:center;gap:8px"><div style="width:80px;background:#F0EDE8;border-radius:3px;height:10px"><div style="height:10px;border-radius:3px;background:#E85D4C;width:59%"></div></div><span style="font-weight:700;color:#E85D4C;font-size:14px">57.5%</span></div></td>
+              <td style="text-align:center;font-weight:700;font-size:15px;color:#E85D4C">25 días</td>
+            </tr>
+            <tr style="background:#FDF8EC">
+              <td style="font-weight:700">Salsas</td>
+              <td style="text-align:right">102,117</td>
+              <td style="text-align:right;color:#D4A853;font-weight:700">56,148</td>
+              <td><div style="display:flex;align-items:center;gap:8px"><div style="width:80px;background:#F0EDE8;border-radius:3px;height:10px"><div style="height:10px;border-radius:3px;background:#D4A853;width:43%"></div></div><span style="font-weight:700;color:#E85D4C;font-size:14px">55.0%</span></div></td>
+              <td style="text-align:center;font-weight:700;font-size:15px;color:#D4A853">32 días</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-size:11px;color:#7a7a8a;margin-top:6px">Fuente: tpm_promocion_detalle · Estado: Liberado · Período: últimos 24 meses. El 57.5% de promos de Pastas y el 55.0% de Salsas duran 30+ días. El TPO recomienda 1–4 días porque optimiza el ROI marginal, no replica el formato de promo extendida tradicional.</div>
+      </div>
+    </div>
+
+    <!-- Next steps -->
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:13px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Acciones prioritarias</div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:1px solid rgba(232,93,76,.3);border-radius:10px">
+        <span style="background:#FEE2E2;color:#E85D4C;border:1px solid #FECACA;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0">CRÍTICO</span>
+        <div><div style="font-size:13px;font-weight:600">Validar COGS con Controlling</div><div style="font-size:12px;color:#7a7a8a;margin-top:3px">Confirmar si el margen negativo de Pastas/Salsas es real o artefacto del cluster DEX. Esto cambia radicalmente el ranking de categorías.</div></div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:1px solid rgba(212,168,83,.3);border-radius:10px">
+        <span style="background:#FEF3C7;color:#D4A853;border:1px solid #FCD34D;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0">ALTO</span>
+        <div><div style="font-size:13px;font-weight:600">Correr TPO con Detergentes</div><div style="font-size:12px;color:#7a7a8a;margin-top:3px">Score 33.7 — top categoría. Margen 70%, 220 SKUs activos. Modificar run_category.csv y ejecutar el pipeline.</div></div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:1px solid rgba(45,156,156,.2);border-radius:10px">
+        <span style="background:#E8F6F6;color:#2D9C9C;border:1px solid #A7D7D7;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0">MEDIO</span>
+        <div><div style="font-size:13px;font-weight:600">Evaluar inicio desde semana 14 (1 abril)</div><div style="font-size:12px;color:#7a7a8a;margin-top:3px">Cambiar target_week=14 en el CSV para que las promos puedan iniciar desde el 1 de abril.</div></div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:white;border:1px solid #E8E4DD;border-radius:10px">
+        <span style="background:#F8F5F0;color:#7a7a8a;border:1px solid #E8E4DD;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0">BACKLOG</span>
+        <div><div style="font-size:13px;font-weight:600">Incluir Suavizantes + Lavavajillas</div><div style="font-size:12px;color:#7a7a8a;margin-top:3px">Segunda ronda con márgenes 53–70% y señal promo consistente en las 3 cadenas.</div></div>
+      </div>
+    </div>
+  </div></section>
+
+<!-- FOOTER -->
+<footer class="exec-footer">
+  <div>
+    <div class="footer-brand">TPO v3.0 — Alicorp</div>
+    <div class="footer-meta" style="margin-top:6px">COE Advanced Analytics · Canal Moderno · Marzo 2026</div>
+  </div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap">
+    <div style="text-align:center">
+      <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;color:#2D9C9C">52</div>
+      <div style="font-size:11px;color:#7a7a8a">SKUs recomendados</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;color:#059669">0.987</div>
+      <div style="font-size:11px;color:#7a7a8a">R² promedio</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;color:#D4A853">S/ 64K</div>
+      <div style="font-size:11px;color:#7a7a8a">Inversión estimada</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;color:#E85D4C">Abr 2026</div>
+      <div style="font-size:11px;color:#7a7a8a">Período target</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+Chart.defaults.color = '#7a7a8a';
+Chart.defaults.font.family = 'DM Sans';
+
+// ── SCROLL PROGRESS ──
+window.addEventListener('scroll', function() {
+  var p = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('progress').style.width = p + '%';
+});
+
+// ── CHAIN TABS ──
+function switchChain(chain) {
+  document.querySelectorAll('.chain-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.chain-panel').forEach(function(p){ p.classList.remove('active'); });
+  event.target.classList.add('active');
+  document.getElementById('chain-' + chain).classList.add('active');
+}
+
+// ── R2 CHART ──
+(function(){
+  var el = document.getElementById('chartR2');
+  if (!el) return;
+  new Chart(el, {
+    type: 'bar',
+    data: {
+      labels: ['Metro P','Metro S','PVea P','PVea S','Tottus P','Tottus S'],
+      datasets: [{ data: [0.989,0.987,0.990,0.989,0.978,0.988],
+        backgroundColor: ['#2D9C9C','#2D9C9C','#2D9C9C','#2D9C9C','#059669','#2D9C9C'],
+        borderRadius: 5, borderSkipped: false }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { min: 0.95, max: 1.0, grid: { color: '#F0EDE8' }, ticks: { font: { size: 10 }, callback: function(v){ return v.toFixed(3); } } }
+      }
+    }
+  });
+})();
+
+// ── DIAS CHART ──
+(function(){
+  var el = document.getElementById('chartDias');
+  if (!el) return;
+  new Chart(el, {
+    type: 'bar',
+    data: {
+      labels: ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'],
+      datasets: [{ data: [99,26,6,22,7,10,38],
+        backgroundColor: ['#D4A853','#2D9C9C','#E8E4DD','#2D9C9C','#E8E4DD','#E8E4DD','#2D9C9C'],
+        borderRadius: 5, borderSkipped: false }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { grid: { color: '#F0EDE8' }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+})();
+
+// ── DURACION CHART ──
+(function(){
+  var el = document.getElementById('chartDur');
+  if (!el) return;
+  new Chart(el, {
+    type: 'bar',
+    data: {
+      labels: ['1d','2d','3d','4d','7d','8-9d','10-12d','14d'],
+      datasets: [{ data: [134,30,5,1,6,6,8,15],
+        backgroundColor: '#2D9C9C', borderRadius: 5, borderSkipped: false }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { grid: { color: '#F0EDE8' }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+})();
+
+// ── MAIN CURVE (section 06 detail) ──
+(function(){
+  var el = document.getElementById('chartCurva');
+  if (!el) return;
+  new Chart(el, {
+    type: 'scatter',
+    data: { datasets: [
+      { label: 'Demanda predicha por RF',
+        data: [{x:1.8,y:6800},{x:2.0,y:6200},{x:2.1,y:5900},{x:2.2,y:5600},{x:2.3,y:5300},{x:2.45,y:5500},{x:2.6,y:4800},{x:2.7,y:4400},{x:2.85,y:3900},{x:3.0,y:3400},{x:3.2,y:3100},{x:3.5,y:2950}],
+        showLine: true, borderColor: '#2D9C9C', backgroundColor: 'rgba(45,156,156,.1)', pointRadius: 3, borderWidth: 2, tension: 0.4 },
+      { label: 'Demanda base (~2,881 u/sem)',
+        data: [{x:1.8,y:2881},{x:3.5,y:2881}],
+        showLine: true, borderColor: '#059669', borderDash: [5,4], pointRadius: 0, borderWidth: 1.5 },
+      { label: 'Precio recomendado (S/ 2.45 → 5,500 u/sem)',
+        data: [{x:2.45,y:5500}],
+        showLine: false, backgroundColor: '#D4A853', borderColor: '#D4A853', pointRadius: 12, pointStyle: 'star' }
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 10, color: '#7a7a8a' } } },
+      scales: {
+        x: { title: { display: true, text: 'Precio (S/)', font: { size: 11 }, color: '#7a7a8a' }, grid: { color: '#F0EDE8' }, ticks: { font: { size: 10 }, color: '#7a7a8a' } },
+        y: { title: { display: true, text: 'Unidades / semana', font: { size: 11 }, color: '#7a7a8a' }, grid: { color: '#F0EDE8' }, ticks: { font: { size: 10 }, color: '#7a7a8a' } }
+      }
+    }
+  });
+})();
+
+// ── 6 SKU CARD CURVES ──
+(function(){
+  var el = document.getElementById('chartCMP');
+  if(!el) return;
+  new Chart(el, {
+    type: 'scatter',
+    data: { datasets: [
+      { data: [{x:2.0,y:6200},{x:2.2,y:5600},{x:2.45,y:5500},{x:2.7,y:4400},{x:2.85,y:3900},{x:3.0,y:3400},{x:3.5,y:2950}], showLine:true, borderColor:'#2D9C9C', backgroundColor:'#2D9C9C18',
+         pointRadius:2, borderWidth:1.5, tension:0.3 },
+      { data: [{x:2.0,y:2881},{x:3.5,y:2881}], showLine:true,
+         borderColor:'#059669', borderDash:[4,3], pointRadius:0, borderWidth:1.2 },
+      { data: [{x:2.45,y:5500}], showLine:false,
+         backgroundColor:'#D4A853', borderColor:'#D4A853', pointRadius:9, pointStyle:'star' }
+    ]},
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
+      scales:{
+        x:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:4} },
+        y:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:3} }
+      }
+    }
+  });
+})();
+(function(){
+  var el = document.getElementById('chartCPP');
+  if(!el) return;
+  new Chart(el, {
+    type: 'scatter',
+    data: { datasets: [
+      { data: [{x:3.5,y:3800},{x:4.0,y:3200},{x:4.6,y:2800},{x:5.0,y:2200},{x:5.5,y:1700},{x:6.0,y:1350},{x:7.0,y:1160}], showLine:true, borderColor:'#2D9C9C', backgroundColor:'#2D9C9C18',
+         pointRadius:2, borderWidth:1.5, tension:0.3 },
+      { data: [{x:3.5,y:1150},{x:7.0,y:1150}], showLine:true,
+         borderColor:'#059669', borderDash:[4,3], pointRadius:0, borderWidth:1.2 },
+      { data: [{x:4.6,y:2800}], showLine:false,
+         backgroundColor:'#D4A853', borderColor:'#D4A853', pointRadius:9, pointStyle:'star' }
+    ]},
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
+      scales:{
+        x:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:4} },
+        y:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:3} }
+      }
+    }
+  });
+})();
+(function(){
+  var el = document.getElementById('chartCTP');
+  if(!el) return;
+  new Chart(el, {
+    type: 'scatter',
+    data: { datasets: [
+      { data: [{x:3.5,y:3600},{x:4.0,y:3000},{x:4.6,y:2600},{x:5.0,y:2000},{x:5.5,y:1600},{x:6.0,y:1200},{x:7.0,y:1060}], showLine:true, borderColor:'#2D9C9C', backgroundColor:'#2D9C9C18',
+         pointRadius:2, borderWidth:1.5, tension:0.3 },
+      { data: [{x:3.5,y:1050},{x:7.0,y:1050}], showLine:true,
+         borderColor:'#059669', borderDash:[4,3], pointRadius:0, borderWidth:1.2 },
+      { data: [{x:4.6,y:2600}], showLine:false,
+         backgroundColor:'#D4A853', borderColor:'#D4A853', pointRadius:9, pointStyle:'star' }
+    ]},
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
+      scales:{
+        x:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:4} },
+        y:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:3} }
+      }
+    }
+  });
+})();
+(function(){
+  var el = document.getElementById('chartCMS');
+  if(!el) return;
+  new Chart(el, {
+    type: 'scatter',
+    data: { datasets: [
+      { data: [{x:6.0,y:5200},{x:7.0,y:4200},{x:7.5,y:4000},{x:8.0,y:3400},{x:8.9,y:2200},{x:10.0,y:1900},{x:12.0,y:1710}], showLine:true, borderColor:'#D4A853', backgroundColor:'#D4A85318',
+         pointRadius:2, borderWidth:1.5, tension:0.3 },
+      { data: [{x:6.0,y:1700},{x:12.0,y:1700}], showLine:true,
+         borderColor:'#059669', borderDash:[4,3], pointRadius:0, borderWidth:1.2 },
+      { data: [{x:7.5,y:4000}], showLine:false,
+         backgroundColor:'#D4A853', borderColor:'#D4A853', pointRadius:9, pointStyle:'star' }
+    ]},
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
+      scales:{
+        x:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:4} },
+        y:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:3} }
+      }
+    }
+  });
+})();
+(function(){
+  var el = document.getElementById('chartCPS');
+  if(!el) return;
+  new Chart(el, {
+    type: 'scatter',
+    data: { datasets: [
+      { data: [{x:2.0,y:2800},{x:2.3,y:2500},{x:2.7,y:2100},{x:3.0,y:1700},{x:3.5,y:1100},{x:4.0,y:800},{x:4.3,y:760}], showLine:true, borderColor:'#D4A853', backgroundColor:'#D4A85318',
+         pointRadius:2, borderWidth:1.5, tension:0.3 },
+      { data: [{x:2.0,y:750},{x:4.3,y:750}], showLine:true,
+         borderColor:'#059669', borderDash:[4,3], pointRadius:0, borderWidth:1.2 },
+      { data: [{x:2.7,y:2100}], showLine:false,
+         backgroundColor:'#D4A853', borderColor:'#D4A853', pointRadius:9, pointStyle:'star' }
+    ]},
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
+      scales:{
+        x:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:4} },
+        y:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:3} }
+      }
+    }
+  });
+})();
+(function(){
+  var el = document.getElementById('chartCTS');
+  if(!el) return;
+  new Chart(el, {
+    type: 'scatter',
+    data: { datasets: [
+      { data: [{x:8.0,y:9000},{x:9.5,y:7200},{x:10.8,y:6500},{x:11.5,y:5500},{x:12.9,y:3500},{x:16.0,y:2200}], showLine:true, borderColor:'#D4A853', backgroundColor:'#D4A85318',
+         pointRadius:2, borderWidth:1.5, tension:0.3 },
+      { data: [{x:8.0,y:2100},{x:16.0,y:2100}], showLine:true,
+         borderColor:'#059669', borderDash:[4,3], pointRadius:0, borderWidth:1.2 },
+      { data: [{x:10.8,y:6500}], showLine:false,
+         backgroundColor:'#D4A853', borderColor:'#D4A853', pointRadius:9, pointStyle:'star' }
+    ]},
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
+      scales:{
+        x:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:4} },
+        y:{ grid:{color:'#F8F5F0'}, ticks:{font:{size:8}, color:'#9CA3AF', maxTicksLimit:3} }
+      }
+    }
+  });
+})();
+</script>
+</body>
+                </html>
