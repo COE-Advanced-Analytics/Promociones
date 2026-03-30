@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo de Canibalización — TPO v3.1 | Alicorp Canal Moderno</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:     #FDFBF7;
+  --navy-2:   #FFFFFF;
+  --navy-3:   #F8F5F0;
+  --navy-4:   #E8E4DD;
+  --teal:     #2D9C9C;
+  --teal-d:   #238080;
+  --teal-glow:rgba(45,156,156,.10);
+  --gold:     #D4A853;
+  --gold-d:   #C4983F;
+  --coral:    #E85D4C;
+  --green:    #059669;
+  --text:     #3D3A36;
+  --muted:    #7a7a8a;
+  --border:   #E8E4DD;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;background:#f0ede8}
+body{font-family:'DM Sans',sans-serif;background:#FDFBF7;color:#3D3A36;line-height:1.6;overflow-x:hidden}
+
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#2D9C9C,#D4A853);z-index:9999;transition:width .1s}
+
+.topnav{position:fixed;top:3px;left:0;right:0;z-index:1000;padding:12px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(253,251,247,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid #E8E4DD;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.topnav-logo{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#2D9C9C;letter-spacing:.05em}
+.topnav-links{display:flex;gap:6px}
+.topnav-links a{color:#7a7a8a;text-decoration:none;font-size:11px;font-weight:500;
+  padding:5px 12px;border-radius:20px;transition:all .2s;letter-spacing:.03em;text-transform:uppercase}
+.topnav-links a:hover{color:#3D3A36;background:var(--border)}
+
+.section{min-height:100vh;padding:100px 80px 80px;max-width:1300px;margin:0 auto;
+  display:flex;flex-direction:column;justify-content:center}
+.section.compact{min-height:auto;padding:80px}
+
+.hero{min-height:100vh;padding:0;max-width:none;display:flex;align-items:center;
+  justify-content:center;position:relative;overflow:hidden;background:#FDFBF7}
+.hero-content{position:relative;z-index:1;text-align:center;padding:80px 40px;max-width:900px}
+.hero-eyebrow{font-family:'Space Grotesk',monospace;font-size:11px;font-weight:600;color:#2D9C9C;
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px;
+  display:inline-flex;align-items:center;gap:8px}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:32px;height:1px;background:var(--teal);opacity:.5}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(48px,7vw,88px);
+  font-weight:800;line-height:1.0;color:#3D3A36;margin-bottom:8px}
+.hero-title span{color:#2D9C9C}
+.hero-subtitle{font-size:18px;color:#7a7a8a;margin:20px auto 48px;font-weight:400;max-width:640px}
+.hero-kpis{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+.hero-kpi{text-align:center}
+.hero-kpi-val{font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:800;color:#2D9C9C;line-height:1}
+.hero-kpi-label{font-size:12px;color:#7a7a8a;margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+.hero-divider{width:1px;height:60px;background:var(--border);align-self:center}
+
+.section-label{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:#2D9C9C;
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#A7D7D7,transparent)}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,52px);
+  font-weight:800;line-height:1.1;margin-bottom:16px}
+.section-title em{font-style:normal;color:#2D9C9C}
+.section-lead{font-size:17px;color:#7a7a8a;max-width:680px;line-height:1.7;margin-bottom:48px}
+
+.card{background:white;border:1px solid #E8E4DD;border-radius:10px;padding:24px;box-shadow:0 2px 8px rgba(26,26,46,.06)}
+.card-teal{border-color:#A7D7D7;background:linear-gradient(135deg,#E8F6F6,white)}
+.card-gold{border-color:#E6C88A;background:linear-gradient(135deg,#FDF8EC,white)}
+.card-coral{border-color:#F5B4AD;background:linear-gradient(135deg,#FFF0EE,white)}
+.card-green{border-color:#A7F3D0;background:linear-gradient(135deg,#F0FDF4,white)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+.stat-big{font-family:'Space Grotesk',sans-serif;font-size:52px;font-weight:800;line-height:1}
+.stat-med{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;line-height:1}
+.stat-sm{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;line-height:1}
+.stat-label{font-size:12px;color:#7a7a8a;margin-top:6px;text-transform:uppercase;letter-spacing:.06em}
+
+.change-item{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #E8E4DD}
+.change-item:last-child{border-bottom:none}
+.change-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:#2D9C9C;font-weight:600;
+  background:#E8F6F6;border:1px solid #A7D7D7;padding:2px 8px;border-radius:20px;flex-shrink:0;margin-top:2px}
+.change-title{font-size:14px;font-weight:600;color:#3D3A36;margin-bottom:4px}
+.change-desc{font-size:13px;color:#7a7a8a;line-height:1.6}
+.change-impact{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:11px;
+  font-weight:600;color:#059669;letter-spacing:.03em}
+
+.chain-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.chain-tab{padding:8px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;
+  border:1px solid #E8E4DD;background:#F8F5F0;color:#7a7a8a;transition:all .2s}
+.chain-tab.active{background:#2D9C9C;border-color:#2D9C9C;color:white;font-weight:700}
+.chain-panel{display:none}.chain-panel.active{display:block}
+
+.exec-table{width:100%;border-collapse:collapse;font-size:13px}
+.exec-table th{background:#2A2825;color:white;padding:10px 14px;text-align:left;
+  font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid #E8E4DD}
+.exec-table td{padding:10px 14px;border-bottom:1px solid #F0EDE8;color:#3D3A36}
+.exec-table tr:hover td{background:#F8F5F0}
+
+.roi-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.roi-pos{background:#D1FAE5;color:#059669;border:1px solid #A7F3D0}
+.roi-neg{background:#FEE2E2;color:#E85D4C;border:1px solid #FECACA}
+.roi-warn{background:#FEF3C7;color:#D4A853;border:1px solid #FCD34D}
+.roi-grey{background:#F1F5F9;color:#64748b;border:1px solid #E2E8F0}
+
+.callout{border-left:3px solid #2D9C9C;background:#E8F6F6;padding:12px 16px;
+  border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;margin:12px 0}
+.callout-gold{border-left-color:#D4A853;background:#FDF8EC}
+.callout-coral{border-left-color:#E85D4C;background:#FFF0EE}
+
+.formula-box{background:#1e1e2e;border:1px solid #E8E4DD;border-radius:10px;
+  padding:16px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2;
+  color:#CBD5E1;margin:16px 0}
+.formula-box .hl{color:#2D9C9C;font-weight:600}
+.formula-box .result{color:#D4A853;font-weight:700}
+.formula-box .danger{color:#E85D4C;font-weight:600}
+.formula-box .cm{color:#4a5568;font-size:11px}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,#E8E4DD,transparent);margin:0}
+
+.step-flow{display:flex;align-items:stretch;gap:0;margin:32px 0}
+.step{flex:1;background:white;border:1px solid #E8E4DD;padding:20px 16px;
+  position:relative;text-align:center}
+.step:not(:last-child)::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+  color:#2D9C9C;font-size:18px;font-weight:700;z-index:1;background:#FDFBF7;padding:0 2px}
+.step:first-child{border-radius:10px 0 0 10px}
+.step:last-child{border-radius:0 10px 10px 0}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:#2D9C9C;font-weight:600;letter-spacing:.1em;margin-bottom:6px}
+.step-title{font-size:13px;font-weight:600;color:#3D3A36;margin-bottom:4px}
+.step-val{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#D4A853}
+
+.chart-wrap{position:relative;background:white;border:1px solid #E8E4DD;border-radius:12px;padding:20px}
+.chart-title{font-size:12px;font-weight:600;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+
+.highlight{background:linear-gradient(135deg,#E8F6F6,#FDF8EC);border:1px solid #A7D7D7;border-radius:10px;padding:20px 24px}
+
+.exec-footer{background:#F8F5F0;border-top:1px solid #E8E4DD;padding:40px 80px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-brand{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#2D9C9C}
+.footer-meta{font-size:12px;color:#7a7a8a}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp .7s ease forwards}
+.fade-up:nth-child(1){animation-delay:.1s}
+.fade-up:nth-child(2){animation-delay:.2s}
+.fade-up:nth-child(3){animation-delay:.3s}
+.fade-up:nth-child(4){animation-delay:.4s}
+
+@media(max-width:900px){
+  .section{padding:80px 24px 60px}
+  .topnav{padding:12px 24px}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .step-flow{flex-direction:column}
+  .step:not(:last-child)::after{content:'↓';right:auto;left:50%;top:auto;bottom:-18px}
+  .exec-footer{padding:32px 24px}
+}
+
+.coe-logo{position:fixed;bottom:28px;left:28px;z-index:9000;display:flex;align-items:center;
+  gap:9px;background:rgba(253,251,247,.92);backdrop-filter:blur(8px);
+  border:1px solid #E8E4DD;border-radius:100px;padding:6px 14px 6px 8px;
+  box-shadow:0 2px 12px rgba(26,26,46,.1)}
+.coe-logo svg{width:26px;height:26px;flex-shrink:0}
+.coe-logo-name{font-family:'Space Grotesk',sans-serif;font-size:10.5px;
+  font-weight:700;color:#3D3A36;line-height:1.2}
+.coe-logo-sub{font-size:9px;color:#7a7a8a;font-weight:400}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="topnav-logo">TPO v3.1 · Canal Moderno</div>
+  <div class="topnav-links">
+    <a href="#problema">Problema</a>
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#matriz">Matriz C_ij</a>
+    <a href="#output">Output</a>
+    <a href="#interpretacion">Interpretación</a>
+    <a href="#modelo">Modelo</a>
+    <a href="#integracion">Integración</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Trade Price Optimizer · Alicorp · Mar 2026</div>
+    <h1 class="hero-title">Módulo de<br><span>Canibalización</span></h1>
+    <p class="hero-subtitle">Corrección del uplift promocional por efectos de sustitución entre SKUs de la misma familia — sustentación técnica y de negocio.</p>
+    <div class="hero-kpis">
+      <div class="hero-kpi fade-up">
+        <div class="hero-kpi-val">C<sub style="font-size:24px">ij</sub></div>
+        <div class="hero-kpi-label">Coeficiente de impacto</div>
+      </div>
+      <div class="hero-divider fade-up"></div>
+      <div class="hero-kpi fade-up">
+        <div class="hero-kpi-val">Elastic<br><span style="font-size:28px">Net</span></div>
+        <div class="hero-kpi-label">Modelo seleccionado</div>
+      </div>
+      <div class="hero-divider fade-up"></div>
+      <div class="hero-kpi fade-up">
+        <div class="hero-kpi-val">4</div>
+        <div class="hero-kpi-label">columnas nuevas en _9_canib_</div>
+      </div>
+    </div>
+    <p style="margin-top:48px;font-size:12px;color:#7a7a8a;letter-spacing:.1em;text-transform:uppercase">
+      Familia × Subcadena · Elastic Net + Decay Temporal · Aditivo al pipeline actual
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     01 — EL PROBLEMA
+══════════════════════════════════════ -->
+<section class="section" id="problema">
+  <div class="section-label">01 — El Problema</div>
+  <h2 class="section-title">¿Por qué el uplift actual está <em>sobreestimado</em>?</h2>
+  <p class="section-lead">El modelo RF predice la demanda de cada SKU de forma aislada. No sabe que otros SKUs de la misma familia también entran en promoción el mismo mes.</p>
+
+  <!-- Banner principal -->
+  <div style="background:#E8F6F6;border:1.5px solid #A7D7D7;border-radius:12px;padding:20px 24px;margin-bottom:32px">
+    <div style="font-size:10px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px">⚠ Situación actual</div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:800;color:#3D3A36;margin-bottom:6px">El pipeline predice cada SKU como si fuera el único en promoción</div>
+    <div style="font-size:13px;color:#7a7a8a;line-height:1.6">Cuando Lavaggi 500g y Lavaggi 250g entran en promo el mismo mes, parte del uplift de uno son ventas robadas al otro — no son ventas incrementales reales para Alicorp. El ROI reportado hoy no descuenta ese efecto.</div>
+  </div>
+
+  <div class="grid-2" style="gap:24px;align-items:start">
+
+    <!-- SIN ajuste -->
+    <div class="card card-coral">
+      <div style="font-size:10px;font-weight:700;color:#E85D4C;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px">Sin ajuste — situación actual</div>
+      <div style="font-weight:700;font-size:15px;color:#3D3A36;margin-bottom:16px">TPO predice para Abril 2026 (METRO × PASTAS):</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:white;border:1px solid #F5B4AD;border-radius:8px">
+          <span style="font-size:13px;color:#3D3A36">Pasta Lavaggi 500g</span>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#E85D4C">+1,200 UN</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:white;border:1px solid #F5B4AD;border-radius:8px">
+          <span style="font-size:13px;color:#3D3A36">Pasta Lavaggi 250g</span>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#E85D4C">+850 UN</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:white;border:1px solid #F5B4AD;border-radius:8px">
+          <span style="font-size:13px;color:#3D3A36">Pasta Redondines 500g</span>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#E85D4C">+670 UN</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:#FFF0EE;border:1.5px solid #F5B4AD;border-radius:8px;margin-top:4px">
+          <span style="font-size:12px;font-weight:600;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em">Total uplift bruto</span>
+          <span class="stat-sm" style="color:#E85D4C">+2,720 UN</span>
+        </div>
+      </div>
+      <div class="callout-coral callout" style="margin-top:16px">
+        Parte de estas unidades son ventas trasladadas entre SKUs — no son incrementales reales para Alicorp.
+      </div>
+    </div>
+
+    <!-- CON ajuste -->
+    <div class="card card-teal">
+      <div style="font-size:10px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px">Con ajuste de canibalización</div>
+      <div style="font-weight:700;font-size:15px;color:#3D3A36;margin-bottom:16px">Mismo período con corrección aplicada:</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:white;border:1px solid #A7D7D7;border-radius:8px">
+          <div>
+            <div style="font-size:13px;color:#3D3A36">Pasta Lavaggi 500g</div>
+            <div style="font-size:10px;color:#D4A853;font-weight:600">factor 0.71 — Alta canibalización</div>
+          </div>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#2D9C9C">+852 UN</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:white;border:1px solid #A7D7D7;border-radius:8px">
+          <div>
+            <div style="font-size:13px;color:#3D3A36">Pasta Lavaggi 250g</div>
+            <div style="font-size:10px;color:#7a7a8a;font-weight:600">factor 0.78 — Moderada</div>
+          </div>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#2D9C9C">+663 UN</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:white;border:1px solid #A7D7D7;border-radius:8px">
+          <div>
+            <div style="font-size:13px;color:#3D3A36">Pasta Redondines 500g</div>
+            <div style="font-size:10px;color:#059669;font-weight:600">factor 0.97 — Ninguna</div>
+          </div>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#2D9C9C">+650 UN</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:#E8F6F6;border:1.5px solid #A7D7D7;border-radius:8px;margin-top:4px">
+          <span style="font-size:12px;font-weight:600;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em">Total uplift neto real</span>
+          <span class="stat-sm" style="color:#2D9C9C">+2,165 UN</span>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:16px">
+        <span style="color:#059669;font-weight:700">555 unidades</span> identificadas como traslado interno — el ROI real sobre esa porción es 0.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     02 — CÓMO FUNCIONA
+══════════════════════════════════════ -->
+<section class="section" id="como-funciona">
+  <div class="section-label">02 — Cómo Funciona</div>
+  <h2 class="section-title">Paso a <em>paso</em> del modelo</h2>
+  <p class="section-lead">El módulo se ejecuta después de generar el reporte 9, usando el historial de demanda ya disponible en el pipeline. No requiere datos nuevos ni tablas adicionales.</p>
+
+  <!-- Flujo -->
+  <div class="step-flow">
+    <div class="step">
+      <div class="step-num">INPUT</div>
+      <div class="step-title">demanda_ajustada</div>
+      <div style="font-size:11px;color:#7a7a8a">_1_ report<br>año · semana · precio · cantidad</div>
+    </div>
+    <div class="step">
+      <div class="step-num">PASO 1</div>
+      <div class="step-title">Agrupar por familia</div>
+      <div style="font-size:11px;color:#7a7a8a">des_familia × des_subcadena<br>min. 2 SKUs por familia</div>
+    </div>
+    <div class="step">
+      <div class="step-num">PASO 2</div>
+      <div class="step-title">Panel semanal</div>
+      <div style="font-size:11px;color:#7a7a8a">Y = demanda target<br>X = precios influencers</div>
+    </div>
+    <div class="step">
+      <div class="step-num">PASO 3</div>
+      <div class="step-title">Elastic Net + Decay</div>
+      <div style="font-size:11px;color:#7a7a8a">sample_weight temporal<br>regularización automática</div>
+    </div>
+    <div class="step">
+      <div class="step-num">PASO 4</div>
+      <div class="step-title">Matriz C_ij</div>
+      <div style="font-size:11px;color:#7a7a8a">Coeficientes de impacto<br>pares con coef ≠ 0</div>
+    </div>
+    <div class="step">
+      <div class="step-num">OUTPUT</div>
+      <div class="step-title">_9_canib_</div>
+      <div style="font-size:11px;color:#7a7a8a">Reporte 9 + 4 columnas<br>archivo adicional</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="chain-tabs" style="margin-top:16px">
+    <div class="chain-tab active" onclick="showTab('t1',this)">Paso 1 — Panel de datos</div>
+    <div class="chain-tab" onclick="showTab('t2',this)">Paso 2 — Elastic Net</div>
+    <div class="chain-tab" onclick="showTab('t3',this)">Paso 3 — Decay temporal</div>
+    <div class="chain-tab" onclick="showTab('t4',this)">Paso 4 — Enriquecimiento _9_</div>
+  </div>
+
+  <!-- T1 -->
+  <div id="t1" class="chain-panel active">
+    <div class="card">
+      <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Panel semanal — Familia PASTAS LARGAS · SKU target: Lavaggi 500g</div>
+      <p style="font-size:13px;color:#7a7a8a;margin-bottom:16px">Para cada SKU target se construye un panel donde las columnas X son los precios semanales de los demás SKUs de la misma familia. La variable Y es la demanda del target.</p>
+      <table class="exec-table">
+        <thead>
+          <tr>
+            <th>Año / Semana</th>
+            <th>Y: Demanda Lavaggi 500g</th>
+            <th>X1: Precio Lavaggi 250g</th>
+            <th>X2: Precio Redondines 500g</th>
+            <th>X3: Precio Don Vittorio</th>
+            <th>Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:'JetBrains Mono',monospace;font-size:12px">2023 · Sem 10</td>
+            <td>4,210</td><td>2.90</td><td>3.10</td><td>3.20</td>
+            <td><span class="roi-grey">0.25</span></td>
+          </tr>
+          <tr>
+            <td style="font-family:'JetBrains Mono',monospace;font-size:12px">2023 · Sem 11</td>
+            <td>3,890</td><td>2.90</td><td>3.10</td><td>3.20</td>
+            <td><span class="roi-grey">0.25</span></td>
+          </tr>
+          <tr style="background:#FFF0EE">
+            <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#E85D4C">2024 · Sem 10 ← promo</td>
+            <td style="color:#E85D4C;font-weight:700">2,100 ↓ baja</td>
+            <td style="color:#E85D4C;font-weight:700">2.35 ← promo</td>
+            <td>3.10</td><td>3.20</td>
+            <td><span class="roi-warn">0.50</span></td>
+          </tr>
+          <tr>
+            <td style="font-family:'JetBrains Mono',monospace;font-size:12px">2025 · Sem 10</td>
+            <td>4,450</td><td>2.90</td><td>3.10</td><td>3.20</td>
+            <td><span class="roi-pos">1.00</span></td>
+          </tr>
+          <tr style="background:#FFF0EE">
+            <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#E85D4C">2025 · Sem 14 ← dos en promo</td>
+            <td style="color:#E85D4C;font-weight:700">1,980 ↓ muy baja</td>
+            <td style="color:#E85D4C;font-weight:700">2.35 ← promo</td>
+            <td style="color:#D4A853;font-weight:700">2.80 ← promo</td>
+            <td>3.20</td>
+            <td><span class="roi-pos">1.00</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout" style="margin-top:16px">El modelo aprende que cuando el precio de Lavaggi 250g cae (promo), la demanda de Lavaggi 500g también cae. Los eventos del 2025 pesan 4× más que los del 2023.</div>
+    </div>
+  </div>
+
+  <!-- T2 -->
+  <div id="t2" class="chain-panel">
+    <div class="card">
+      <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Elastic Net aprende los coeficientes de impacto C_ij</div>
+      <p style="font-size:13px;color:#7a7a8a;margin-bottom:4px">Para el SKU target, el modelo estima cuánto cambia su demanda por cada cambio en el precio de los SKUs influencer. La regularización Lasso (l1_ratio=1.0) fuerza a cero los pares sin relación estadística real.</p>
+      <div class="formula-box">
+        <div><span class="hl">Demanda(Lavaggi 500g)</span> = β₀ +</div>
+        <div style="padding-left:24px">
+          <span class="hl">C₁₂</span> × Precio(Lavaggi 250g)   +<br>
+          <span class="hl">C₁₃</span> × Precio(Redondines 500g) +<br>
+          <span class="hl">C₁₄</span> × Precio(Don Vittorio)
+        </div>
+        <div style="margin-top:12px;border-top:1px solid #2a2a3a;padding-top:12px">
+          <span class="cm">-- Después de Elastic Net con regularización:</span><br>
+          <span class="hl">C₁₂</span> = <span class="danger">-0.29</span> <span class="cm">← alta canibalización (misma marca, distinto formato)</span><br>
+          <span class="hl">C₁₃</span> = <span style="color:#D4A853">-0.12</span> <span class="cm">← moderada (marca distinta, mismo segmento)</span><br>
+          <span class="hl">C₁₄</span> = <span style="color:#4a5568"> 0.00</span> <span class="cm">← regularizado a 0 (no hay relación significativa)</span>
+        </div>
+      </div>
+      <div class="highlight" style="margin-top:0">
+        <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Por qué l1_ratio = 1.0 (Lasso puro)</div>
+        <p style="font-size:13px;color:#7a7a8a">El Lasso tiene la propiedad de producir coeficientes exactamente cero para pares irrelevantes. Esto es ideal aquí: de 20 pares posibles en una familia de 5 SKUs, solo 3 o 4 suelen ser reales. El modelo selecciona automáticamente cuáles.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- T3 -->
+  <div id="t3" class="chain-panel">
+    <div class="card">
+      <div style="font-size:12px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Decay temporal — el historial reciente importa más</div>
+      <p style="font-size:13px;color:#7a7a8a;margin-bottom:4px">Los patrones de canibalización cambian con el tiempo (nuevos lanzamientos, cambios de portafolio). Se usa <strong style="color:#3D3A36">sample_weight con decaimiento exponencial por año</strong> para que los datos recientes dominen el aprendizaje.</p>
+      <div class="formula-box">
+        <span class="hl">weight(t)</span> = (1 − decay)<sup>año_max − año_t</sup><br><br>
+        <span class="cm">-- Con decay = 0.5:</span><br>
+        <span style="color:#D4A853">2025</span> (año más reciente) → weight = <span class="result">1.000</span><br>
+        <span style="color:#D4A853">2024</span>                    → weight = <span style="color:#CBD5E1">0.500</span><br>
+        <span style="color:#D4A853">2023</span>                    → weight = <span style="color:#4a5568">0.250</span>
+      </div>
+      <div class="grid-3" style="margin-top:16px;gap:12px">
+        <div class="card" style="text-align:center;padding:20px">
+          <div class="stat-med" style="color:#7a7a8a">0.25×</div>
+          <div class="stat-label">peso 2023</div>
+          <div style="font-size:12px;color:#7a7a8a;margin-top:6px">Historial base, mínima influencia</div>
+        </div>
+        <div class="card" style="text-align:center;padding:20px">
+          <div class="stat-med" style="color:#D4A853">0.50×</div>
+          <div class="stat-label">peso 2024</div>
+          <div style="font-size:12px;color:#7a7a8a;margin-top:6px">Peso intermedio — contexto reciente</div>
+        </div>
+        <div class="card card-teal" style="text-align:center;padding:20px">
+          <div class="stat-med" style="color:#2D9C9C">1.00×</div>
+          <div class="stat-label">peso 2025</div>
+          <div style="font-size:12px;color:#7a7a8a;margin-top:6px">Máximo peso — estructura actual</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- T4 -->
+  <div id="t4" class="chain-panel">
+    <div class="card">
+      <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Cómo se enriquece el reporte 9</div>
+      <p style="font-size:13px;color:#7a7a8a;margin-bottom:20px">La función <span style="font-family:'JetBrains Mono',monospace;background:#F8F5F0;padding:1px 6px;border-radius:3px;font-size:12px">enrich_top_roi_report()</span> cruza la matriz C_ij con los SKUs del reporte 9. La canibalización solo se activa cuando el influencer <strong style="color:#3D3A36">también está en promo ese mes</strong>.</p>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="change-item" style="border-left:3px solid #2D9C9C;padding-left:14px;margin-left:4px;border-bottom:none;padding-bottom:0">
+          <span class="change-num">1</span>
+          <div>
+            <div class="change-title">Identificar SKUs en promo</div>
+            <div class="change-desc">Se toma la lista de SKUs del _9_. Solo estos pueden canibalizarse entre sí este mes.</div>
+          </div>
+        </div>
+        <div class="change-item" style="border-left:3px solid #D4A853;padding-left:14px;margin-left:4px;border-bottom:none;padding-bottom:0">
+          <span class="change-num" style="background:#FDF8EC;border-color:#E6C88A;color:#D4A853">2</span>
+          <div>
+            <div class="change-title">Filtrar pares activos</div>
+            <div class="change-desc">De la matriz C_ij, se quedan solo los pares donde AMBOS (target e influencer) están en el _9_ y el coef es negativo (canibalización real, no efecto halo).</div>
+          </div>
+        </div>
+        <div class="change-item" style="border-left:3px solid #E85D4C;padding-left:14px;margin-left:4px;border-bottom:none;padding-bottom:0">
+          <span class="change-num" style="background:#FFF0EE;border-color:#F5B4AD;color:#E85D4C">3</span>
+          <div>
+            <div class="change-title">Sumar impactos por SKU target</div>
+            <div class="change-desc">Para cada target, se suman los valores absolutos de sus influencers activos → <span style="font-family:'JetBrains Mono',monospace;font-size:12px">canib_coef_total</span>. Si tiene dos influencers con coef -0.22 y -0.07 → total = 0.29</div>
+          </div>
+        </div>
+        <div class="change-item" style="border-left:3px solid #059669;padding-left:14px;margin-left:4px;border-bottom:none;padding-bottom:0">
+          <span class="change-num" style="background:#F0FDF4;border-color:#A7F3D0;color:#059669">4</span>
+          <div>
+            <div class="change-title">Calcular uplift_neto_factor y clasificar</div>
+            <div class="change-desc"><span style="font-family:'JetBrains Mono',monospace;font-size:12px">uplift_neto_factor = max(0, 1 − canib_coef_total)</span> → con total = 0.29 el factor es 0.71. Se clasifica y se guarda como _9_canib_ sin tocar el original.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     03 — MATRIZ C_ij
+══════════════════════════════════════ -->
+<section class="section compact" id="matriz">
+  <div class="section-label">03 — La Matriz C_ij</div>
+  <h2 class="section-title">Cómo leer los <em>coeficientes</em></h2>
+  <p class="section-lead">Cada celda C_ij indica el impacto del SKU columna (canibalizador) sobre el SKU fila (víctima). Valor normalizado sobre la demanda base del target.</p>
+
+  <div class="card" style="overflow-x:auto">
+    <table class="exec-table">
+      <thead>
+        <tr>
+          <th style="width:200px">Víctima ↓ / Canibalizador →</th>
+          <th>Lavaggi 500g</th>
+          <th>Lavaggi 250g</th>
+          <th>Redondines 500g</th>
+          <th>Don Vittorio 400g</th>
+          <th>Fideos Cabello 250g</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:600">Lavaggi 500g</td>
+          <td style="color:#E8E4DD;text-align:center">—</td>
+          <td style="text-align:center"><span class="roi-neg">-0.29</span></td>
+          <td style="text-align:center"><span class="roi-warn">-0.12</span></td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">Lavaggi 250g</td>
+          <td style="text-align:center"><span class="roi-neg">-0.22</span></td>
+          <td style="color:#E8E4DD;text-align:center">—</td>
+          <td style="text-align:center;color:#7a7a8a">-0.04</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">Redondines 500g</td>
+          <td style="text-align:center"><span class="roi-warn">-0.15</span></td>
+          <td style="text-align:center;color:#7a7a8a">-0.03</td>
+          <td style="color:#E8E4DD;text-align:center">—</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+          <td style="text-align:center"><span class="roi-pos">+0.08</span></td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">Don Vittorio 400g</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+          <td style="color:#E8E4DD;text-align:center">—</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600">Fideos Cabello 250g</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+          <td style="text-align:center"><span class="roi-pos">+0.11</span></td>
+          <td style="text-align:center;color:#C8C4BD">0.00</td>
+          <td style="color:#E8E4DD;text-align:center">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid-4" style="margin-top:24px">
+    <div class="card card-coral">
+      <div class="stat-sm" style="color:#E85D4C">-0.29</div>
+      <div style="font-size:13px;font-weight:600;color:#3D3A36;margin:8px 0 4px">Alta canibalización</div>
+      <div style="font-size:12px;color:#7a7a8a">Cuando Lavaggi 250g entra en promo, Lavaggi 500g pierde el 29% de su demanda esperada. Misma marca, formatos sustitutos directos.</div>
+    </div>
+    <div class="card card-gold">
+      <div class="stat-sm" style="color:#D4A853">-0.12</div>
+      <div style="font-size:13px;font-weight:600;color:#3D3A36;margin:8px 0 4px">Canibalización moderada</div>
+      <div style="font-size:12px;color:#7a7a8a">Redondines compite parcialmente con Lavaggi. Marcas distintas pero mismo segmento de precio y consumidor.</div>
+    </div>
+    <div class="card card-green">
+      <div class="stat-sm" style="color:#059669">+0.11</div>
+      <div style="font-size:13px;font-weight:600;color:#3D3A36;margin:8px 0 4px">Efecto halo (positivo)</div>
+      <div style="font-size:12px;color:#7a7a8a">Cuando Redondines está en promo, Fideos Cabello gana demanda. Son complementarios — el shopper compra ambos.</div>
+    </div>
+    <div class="card">
+      <div class="stat-sm" style="color:#E8E4DD">0.00</div>
+      <div style="font-size:13px;font-weight:600;color:#3D3A36;margin:8px 0 4px">Sin relación</div>
+      <div style="font-size:12px;color:#7a7a8a">Elastic Net regularizó el par a cero. Don Vittorio no tiene relación estadística con los demás — target de consumidor distinto.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     04 — OUTPUT _9_canib_
+══════════════════════════════════════ -->
+<section class="section compact" id="output">
+  <div class="section-label">04 — Output del Módulo</div>
+  <h2 class="section-title">Reporte <em>_9_canib_</em> enriquecido</h2>
+  <p class="section-lead">Las 4 columnas nuevas agregadas al reporte 9. El archivo original permanece intacto — este es un archivo adicional independiente.</p>
+
+  <div style="background:#E8F6F6;border:1.5px solid #A7D7D7;border-radius:12px;padding:16px 20px;margin-bottom:24px">
+    <div style="font-size:10px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px">Ejemplo — METRO × PASTAS · Abril 2026 · 6 SKUs en promo</div>
+  </div>
+
+  <div class="card" style="overflow-x:auto;padding:0">
+    <table class="exec-table">
+      <thead>
+        <tr>
+          <th>SKU / Descripción</th>
+          <th>Uplift bruto (UN)</th>
+          <th>canib_coef_total</th>
+          <th>uplift_neto_factor</th>
+          <th>clasificacion_canib</th>
+          <th>canib_skus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div style="font-weight:600;font-size:13px">Pasta Lavaggi 500g</div><div style="font-size:11px;color:#7a7a8a;font-family:'JetBrains Mono',monospace">11234</div></td>
+          <td style="font-family:'Space Grotesk',sans-serif;font-weight:700">1,200</td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#E85D4C;font-weight:700">0.29</span></td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#2D9C9C;font-weight:700">0.71</span></td>
+          <td><span class="roi-neg">Alta</span></td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7a7a8a">11567|12890</td>
+        </tr>
+        <tr>
+          <td><div style="font-weight:600;font-size:13px">Pasta Lavaggi 250g</div><div style="font-size:11px;color:#7a7a8a;font-family:'JetBrains Mono',monospace">11567</div></td>
+          <td style="font-family:'Space Grotesk',sans-serif;font-weight:700">850</td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#D4A853;font-weight:700">0.22</span></td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#2D9C9C;font-weight:700">0.78</span></td>
+          <td><span class="roi-warn">Moderada</span></td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7a7a8a">11234</td>
+        </tr>
+        <tr>
+          <td><div style="font-weight:600;font-size:13px">Pasta Redondines 500g</div><div style="font-size:11px;color:#7a7a8a;font-family:'JetBrains Mono',monospace">12890</div></td>
+          <td style="font-family:'Space Grotesk',sans-serif;font-weight:700">670</td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#D4A853;font-weight:700">0.15</span></td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#2D9C9C;font-weight:700">0.85</span></td>
+          <td><span class="roi-warn">Moderada</span></td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7a7a8a">11234</td>
+        </tr>
+        <tr>
+          <td><div style="font-weight:600;font-size:13px">Espagueti Don Vittorio</div><div style="font-size:11px;color:#7a7a8a;font-family:'JetBrains Mono',monospace">13001</div></td>
+          <td style="font-family:'Space Grotesk',sans-serif;font-weight:700">940</td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#7a7a8a;font-weight:700">0.07</span></td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#2D9C9C;font-weight:700">0.93</span></td>
+          <td><span class="roi-grey">Baja</span></td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7a7a8a">14502</td>
+        </tr>
+        <tr>
+          <td><div style="font-weight:600;font-size:13px">Fideos Cabello 250g</div><div style="font-size:11px;color:#7a7a8a;font-family:'JetBrains Mono',monospace">14502</div></td>
+          <td style="font-family:'Space Grotesk',sans-serif;font-weight:700">310</td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#059669;font-weight:700">0.00</span></td>
+          <td><span style="font-family:'JetBrains Mono',monospace;color:#2D9C9C;font-weight:700">1.00</span></td>
+          <td><span class="roi-pos">Ninguna</span></td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#C8C4BD">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Resumen numérico -->
+  <div class="highlight" style="margin-top:24px">
+    <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Resumen del ejemplo</div>
+    <div style="display:flex;gap:32px;align-items:center;flex-wrap:wrap">
+      <div>
+        <div class="stat-med" style="color:#E85D4C">3,970 UN</div>
+        <div class="stat-label">Uplift bruto total</div>
+      </div>
+      <div style="font-size:28px;color:#E8E4DD">→</div>
+      <div>
+        <div class="stat-med" style="color:#2D9C9C">3,284 UN</div>
+        <div class="stat-label">Uplift neto estimado</div>
+      </div>
+      <div style="border-left:2px solid #E8E4DD;padding-left:24px">
+        <div class="stat-sm" style="color:#E85D4C">686 UN</div>
+        <div class="stat-label">Traslado interno identificado</div>
+        <div style="font-size:11px;color:#7a7a8a;margin-top:2px">ventas robadas entre SKUs, ROI real = 0 sobre este volumen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     05 — INTERPRETACIÓN
+══════════════════════════════════════ -->
+<section class="section compact" id="interpretacion">
+  <div class="section-label">05 — Interpretación</div>
+  <h2 class="section-title">Cómo actuar según cada <em>clasificación</em></h2>
+  <p class="section-lead">Diseñado para que el área comercial tome decisiones rápidas sin interpretar coeficientes directamente.</p>
+
+  <div class="grid-4">
+    <div class="card card-green" style="text-align:center">
+      <div class="stat-sm" style="color:#059669">&lt; 0.05</div>
+      <div style="font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.1em;margin:8px 0 4px">Ninguna</div>
+      <div style="font-size:12px;color:#7a7a8a;line-height:1.5">Sin canibalización significativa. Promover libremente en cualquier semana del mes.</div>
+      <span class="roi-pos" style="margin-top:12px;display:inline-block">Sin restricción</span>
+    </div>
+    <div class="card" style="text-align:center;background:#F8F9FA">
+      <div class="stat-sm" style="color:#7a7a8a">0.05 – 0.15</div>
+      <div style="font-size:11px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.1em;margin:8px 0 4px">Baja</div>
+      <div style="font-size:12px;color:#7a7a8a;line-height:1.5">Impacto menor, aceptable. Monitorear pero no restringir la promoción.</div>
+      <span class="roi-grey" style="margin-top:12px;display:inline-block">Monitorear</span>
+    </div>
+    <div class="card card-gold" style="text-align:center">
+      <div class="stat-sm" style="color:#D4A853">0.15 – 0.33</div>
+      <div style="font-size:11px;font-weight:700;color:#D4A853;text-transform:uppercase;letter-spacing:.1em;margin:8px 0 4px">Moderada</div>
+      <div style="font-size:12px;color:#7a7a8a;line-height:1.5">Evaluar calendarizar en semanas alternas para separar el efecto de los influencers.</div>
+      <span class="roi-warn" style="margin-top:12px;display:inline-block">Semanas alternas</span>
+    </div>
+    <div class="card card-coral" style="text-align:center">
+      <div class="stat-sm" style="color:#E85D4C">&gt; 0.33</div>
+      <div style="font-size:11px;font-weight:700;color:#E85D4C;text-transform:uppercase;letter-spacing:.1em;margin:8px 0 4px">Alta</div>
+      <div style="font-size:12px;color:#7a7a8a;line-height:1.5">Considerar no promover simultáneamente. El ROI neto es significativamente menor al reportado.</div>
+      <span class="roi-neg" style="margin-top:12px;display:inline-block">Bloquear par</span>
+    </div>
+  </div>
+
+  <!-- Las 4 columnas -->
+  <div style="margin-top:36px;margin-bottom:16px;font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em">Las 4 columnas del reporte _9_canib_</div>
+  <div class="grid-2" style="gap:16px">
+    <div class="change-item" style="border-left:3px solid #2D9C9C;padding-left:14px;margin-left:4px">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;background:#E8F6F6;border:1px solid #A7D7D7;color:#2D9C9C;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px">canib_coef_total</div>
+        <div class="change-title">Suma de impactos negativos activos</div>
+        <div class="change-desc">Suma de |C_ij| donde el influencer también está en el reporte 9. Cuantifica el daño cruzado total del portafolio en promo.<br><br><em>Ej: dos influencers con coef -0.22 y -0.07 → total = 0.29</em></div>
+      </div>
+    </div>
+    <div class="change-item" style="border-left:3px solid #D4A853;padding-left:14px;margin-left:4px">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;background:#FDF8EC;border:1px solid #E6C88A;color:#D4A853;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px">uplift_neto_factor</div>
+        <div class="change-title">Factor de corrección del uplift</div>
+        <div class="change-desc">Complemento del coeficiente total, entre 0 y 1. Multiplicar el uplift bruto por este factor da el uplift neto estimado (ventas realmente incrementales).<br><br><em>Ej: 1,200 UN × 0.71 = 852 UN netas reales</em></div>
+      </div>
+    </div>
+    <div class="change-item" style="border-left:3px solid #E85D4C;padding-left:14px;margin-left:4px;border-bottom:none">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;background:#FFF0EE;border:1px solid #F5B4AD;color:#E85D4C;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px">canib_skus</div>
+        <div class="change-title">SKUs canibalizadores activos</div>
+        <div class="change-desc">Lista pipe-separated de los SKUs influencers cuyo coef negativo está activo este mes. Permite al equipo saber exactamente quién está robando la demanda.<br><br><em>Ej: "11567|12890" → los SKUs que reducen la demanda</em></div>
+      </div>
+    </div>
+    <div class="change-item" style="border-left:3px solid #059669;padding-left:14px;margin-left:4px;border-bottom:none">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;background:#F0FDF4;border:1px solid #A7F3D0;color:#059669;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px">clasificacion_canib</div>
+        <div class="change-title">Señal de alerta para el negocio</div>
+        <div class="change-desc">Categorización en 4 niveles para que el área comercial tome decisiones sin interpretar coeficientes. Directamente accionable.<br><br><em>Ninguna → Baja → Moderada → Alta</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     06 — POR QUÉ ELASTIC NET
+══════════════════════════════════════ -->
+<section class="section compact" id="modelo">
+  <div class="section-label">06 — Elección del Modelo</div>
+  <h2 class="section-title">¿Por qué <em>Elastic Net</em>?</h2>
+  <p class="section-lead">Se evaluaron cuatro alternativas. Elastic Net gana por su combinación de sparsidad automática, coeficientes directamente interpretables y robustez ante multicolinealidad — el problema más frecuente con muchos SKUs en una misma familia.</p>
+
+  <div class="grid-4">
+    <div class="card">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#7a7a8a;margin-bottom:6px">OLS</div>
+      <div style="font-size:12px;color:#7a7a8a;margin-bottom:10px">Regresión lineal clásica</div>
+      <div style="font-size:12px;color:#059669;margin-bottom:3px">+ Simple, interpretable</div>
+      <div style="font-size:12px;color:#E85D4C;margin-bottom:3px">− Explota con multicolinealidad</div>
+      <div style="font-size:12px;color:#E85D4C;margin-bottom:3px">− No elimina pares irrelevantes</div>
+      <div style="font-size:12px;color:#E85D4C">− Inestable con muchos SKUs</div>
+    </div>
+    <div class="card card-teal" style="border-width:2px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#2D9C9C">Elastic Net</div>
+        <span class="roi-pos">Elegido</span>
+      </div>
+      <div style="font-size:12px;color:#7a7a8a;margin-bottom:10px">Regularización L1+L2 con CV</div>
+      <div style="font-size:12px;color:#059669;margin-bottom:3px">+ Sparsidad: zeroes automáticos</div>
+      <div style="font-size:12px;color:#059669;margin-bottom:3px">+ Robusto a multicolinealidad</div>
+      <div style="font-size:12px;color:#059669;margin-bottom:3px">+ Coeficientes interpretables</div>
+      <div style="font-size:12px;color:#059669;margin-bottom:3px">+ Escala a 50+ SKUs/familia</div>
+      <div style="font-size:12px;color:#059669">+ sample_weight nativo</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#7a7a8a;margin-bottom:6px">XGBoost + SHAP</div>
+      <div style="font-size:12px;color:#7a7a8a;margin-bottom:10px">Gradient boosting</div>
+      <div style="font-size:12px;color:#059669;margin-bottom:3px">+ Captura no-linealidades</div>
+      <div style="font-size:12px;color:#E85D4C;margin-bottom:3px">− Coeficientes no directos</div>
+      <div style="font-size:12px;color:#E85D4C;margin-bottom:3px">− Requiere SHAP para interpretar</div>
+      <div style="font-size:12px;color:#E85D4C">− Overkill para este nivel</div>
+    </div>
+    <div class="card">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#7a7a8a;margin-bottom:6px">VAR</div>
+      <div style="font-size:12px;color:#7a7a8a;margin-bottom:10px">Vector Autoregression</div>
+      <div style="font-size:12px;color:#059669;margin-bottom:3px">+ Captura efectos temporales</div>
+      <div style="font-size:12px;color:#E85D4C;margin-bottom:3px">− Requiere series estacionarias</div>
+      <div style="font-size:12px;color:#E85D4C;margin-bottom:3px">− Muy complejo de mantener</div>
+      <div style="font-size:12px;color:#E85D4C">− Difícil de sustentar al negocio</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     07 — INTEGRACIÓN
+══════════════════════════════════════ -->
+<section class="section compact" id="integracion">
+  <div class="section-label">07 — Integración al Pipeline</div>
+  <h2 class="section-title">Módulo <em>aditivo</em> — cero cambios al código actual</h2>
+  <p class="section-lead">El módulo no modifica ningún archivo existente, no cambia la lógica del optimizador, y si falla por datos insuficientes devuelve el reporte 9 original con defaults.</p>
+
+  <!-- 3 propiedades -->
+  <div class="grid-3" style="margin-bottom:36px">
+    <div class="card card-teal" style="text-align:center">
+      <div style="font-size:32px;margin-bottom:8px">🔒</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#2D9C9C;margin-bottom:6px">_9_ original intacto</div>
+      <div style="font-size:13px;color:#7a7a8a">El reporte 9 existente no se toca. Se genera un archivo adicional independiente: _9_canib_</div>
+    </div>
+    <div class="card card-gold" style="text-align:center">
+      <div style="font-size:32px;margin-bottom:8px">⚡</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#D4A853;margin-bottom:6px">Datos ya disponibles</div>
+      <div style="font-size:13px;color:#7a7a8a">Usa demanda_ajustada (_1_) ya generada por el pipeline. No requiere nuevas tablas ni queries BQ.</div>
+    </div>
+    <div class="card card-green" style="text-align:center">
+      <div style="font-size:32px;margin-bottom:8px">🛡️</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#059669;margin-bottom:6px">Fallback seguro</div>
+      <div style="font-size:13px;color:#7a7a8a">Si una familia tiene pocos SKUs o datos insuficientes, factor = 1.0 y clasificación = Ninguna por defecto.</div>
+    </div>
+  </div>
+
+  <!-- Code snippet -->
+  <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Cambio en run_batch_optimizer.py — solo 8 líneas</div>
+  <div class="formula-box" style="font-size:12px">
+    <span class="cm">import cannibalization_model  <span style="color:#2D9C9C"># añadir al inicio del archivo</span></span><br><br>
+    <span class="cm"># ... dentro del loop, después del output_factory del reporte 9:</span><br>
+    <span class="hl">df_canib</span> = cannibalization_model.<span style="color:#D4A853">enrich_top_roi_report</span>(<br>
+    &nbsp;&nbsp;df_top_roi       = output_optimizer._derived_tables[<span style="color:#059669">"top_roi_report"</span>],<br>
+    &nbsp;&nbsp;demanda_ajustada = input_data_factory._derived_tables[<span style="color:#059669">"demanda_ajustada"</span>],<br>
+    )<br>
+    output_factory.<span style="color:#D4A853">get_intermediate_report</span>(<br>
+    &nbsp;&nbsp;df=<span class="hl">df_canib</span>, number=<span style="color:#D4A853">9</span>, name=<span style="color:#059669">'top_roi_report_canib'</span>,<br>
+    &nbsp;&nbsp;subchain=_subchain, category=_category, output_path=REPORTS_FOLDER<br>
+    )<br>
+    <span class="cm"># → Genera: _9_report_top_roi_report_canib_METRO_PASTAS.csv</span><br>
+    <span class="cm"># → El _9_ original no se toca</span>
+  </div>
+
+  <div class="highlight" style="margin-top:24px">
+    <div style="font-size:12px;font-weight:700;color:#2D9C9C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Dependencias — todas ya instaladas en moderno_env</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;background:white;border:1px solid #E8E4DD;padding:4px 10px;border-radius:6px">scikit-learn (ElasticNetCV)</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;background:white;border:1px solid #E8E4DD;padding:4px 10px;border-radius:6px">pandas</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;background:white;border:1px solid #E8E4DD;padding:4px 10px;border-radius:6px">numpy</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer class="exec-footer">
+  <div class="footer-brand">TPO v3.1 · Canal Moderno</div>
+  <div class="footer-meta">
+    Módulo de Canibalización · Elastic Net Regression · Familia × Subcadena<br>
+    Alicorp · Mar 2026 · Datos hasta Semana 9, 2026 · Target Abril 2026
+  </div>
+</footer>
+
+<div class="coe-logo">
+  <svg viewBox="0 0 40 40" fill="none">
+    <rect width="40" height="40" rx="10" fill="url(#lgCOE)"/>
+    <circle cx="12" cy="15" r="3" fill="white"/>
+    <circle cx="12" cy="20" r="3" fill="white"/>
+    <circle cx="12" cy="25" r="3" fill="white"/>
+    <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+    <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+    <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+    <defs>
+      <linearGradient id="lgCOE" x1="0" y1="0" x2="40" y2="40">
+        <stop stop-color="#E85D4C"/>
+        <stop offset="1" stop-color="#C94A3A"/>
+      </linearGradient>
+    </defs>
+  </svg>
+  <div class="coe-logo-name">COE Advanced Analytics<br><span class="coe-logo-sub">Alicorp · TPO v3.1</span></div>
+</div>
+
+<script>
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    bar.style.width = pct + '%';
+  });
+  function showTab(id, el) {
+    document.querySelectorAll('.chain-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.chain-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+</script>
+</body>
+</html>
