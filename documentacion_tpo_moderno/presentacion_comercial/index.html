@@ -746,7 +746,7 @@ function showMatDetail(d) {
 
   if (facData.length) {
     var maxF = Math.max.apply(null, facData.map(function(r){ return Math.abs(r.med || 0); }));
-    chartsHtml += '<div style="margin-bottom:20px"><div style="font-size:11px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">' + facTitle + '</div>';
+    chartsHtml += '<div style="margin-bottom:20px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="width:80px;flex-shrink:0"></span><div style="flex:1;font-size:10px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em">' + facTitle + '</div><span style="width:34px;text-align:right;font-size:9px;font-weight:800;color:#2D9C9C;text-transform:uppercase;letter-spacing:.05em"># SKU</span></div>';
     facData.forEach(function(r) {
       var val = r.med || 0, n = r.n || 0;
       var w = maxF > 0 ? Math.round(Math.abs(val) / maxF * 100) : 0;
@@ -756,14 +756,14 @@ function showMatDetail(d) {
         '<div style="flex:1;background:#F0EDE8;border-radius:4px;height:22px">' +
         '<div style="height:22px;border-radius:4px;background:' + col + ';width:' + w + '%;display:flex;align-items:center;padding-left:8px">' +
         (w > 15 ? '<span style="font-size:10px;font-weight:700;color:white">' + val.toFixed(2) + '</span>' : '') +
-        '</div></div><span style="width:34px;font-size:10px;color:#9a9a9a;text-align:right">' + n + '</span></div>';
+        '</div></div><span style="width:34px;font-size:11px;font-weight:700;color:#3D3A36;text-align:right">' + n + '</span></div>';
     });
     chartsHtml += '</div>';
   }
 
   if (d.by_dur && d.by_dur.length) {
     var maxD = Math.max.apply(null, d.by_dur.map(function(r){ return Math.abs(r.med || 0); }));
-    chartsHtml += '<div><div style="font-size:11px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Por duraci\u00f3n de promoci\u00f3n</div>';
+    chartsHtml += '<div><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="width:30px;flex-shrink:0"></span><div style="flex:1;font-size:10px;font-weight:700;color:#7a7a8a;text-transform:uppercase;letter-spacing:.06em">Por duración de promoción</div><span style="width:34px;text-align:right;font-size:9px;font-weight:800;color:#2D9C9C;text-transform:uppercase;letter-spacing:.05em"># SKU</span></div>';
     d.by_dur.slice(0, 12).forEach(function(r) {
       var val = r.med || 0, n = r.n || 0;
       var w = maxD > 0 ? Math.round(Math.abs(val) / maxD * 100) : 0;
@@ -772,7 +772,7 @@ function showMatDetail(d) {
         '<div style="flex:1;background:#F0EDE8;border-radius:4px;height:18px">' +
         '<div style="height:18px;border-radius:4px;background:#2D9C9C;width:' + w + '%;display:flex;align-items:center;padding-left:6px">' +
         (w > 15 ? '<span style="font-size:10px;font-weight:700;color:white">' + val.toFixed(2) + '</span>' : '') +
-        '</div></div><span style="width:34px;font-size:10px;color:#9a9a9a;text-align:right">' + n + '</span></div>';
+        '</div></div><span style="width:34px;font-size:11px;font-weight:700;color:#3D3A36;text-align:right">' + n + '</span></div>';
     });
     chartsHtml += '</div>';
   }
