@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hallazgos TPO · Junio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#2D9C9C; --teal-lt:#E8F4F4; --teal-dk:#1f7070;
+  --gold:#D4A853; --gold-lt:#FBF4E5;
+  --coral:#E85D4C; --coral-lt:#FDECEA;
+  --vi:#7C5CBF;   --vi-lt:#EDE9F8;
+  --green:#1a7a1a; --green-lt:#e8f5e8;
+  --bg:#F0EDE8;   --card:#FFFFFF;
+  --ink:#222220;  --gray:#6B6864; --muted:#A09E9B; --line:#E2DDD8;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:13px;line-height:1.4;min-width:900px}
+.shell{max-width:1080px;margin:0 auto;padding:20px 24px 36px;display:flex;flex-direction:column;gap:12px}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.tb-badge{display:inline-block;background:var(--teal);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:8px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:5px}
+.tb-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--ink);line-height:1.1}
+.tb-title em{color:var(--teal);font-style:normal}
+.tb-sub{font-size:10px;color:var(--gray);margin-top:3px}
+.coe{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:40px;padding:6px 14px 6px 7px;box-shadow:0 1px 5px rgba(0,0,0,.06);flex-shrink:0}
+.coe svg{width:26px;height:26px}
+.coe-name{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:var(--ink);line-height:1.3}
+.coe-sub{font-size:8.5px;color:var(--gray)}
+.acline{height:2px;border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--teal) 50%,transparent)}
+
+/* BANNER */
+.banner{background:var(--teal);color:#fff;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.banner-icon{font-size:20px;flex-shrink:0}
+.banner b{font-size:12px;font-weight:600;display:block;line-height:1.4}
+.banner small{font-size:9.5px;opacity:.82;margin-top:3px;display:block}
+
+/* KPI STRIP */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.kpi{background:var(--card);border-radius:8px;padding:12px 13px 10px;box-shadow:0 1px 4px rgba(0,0,0,.05);border-top:2.5px solid var(--teal)}
+.kpi.rd{border-top-color:var(--coral)}.kpi.au{border-top-color:var(--gold)}.kpi.vi{border-top-color:var(--vi)}
+.kpi-lbl{font-size:7.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.kpi-nums{display:flex;align-items:flex-end;gap:8px}
+.kpi-n{display:flex;flex-direction:column}
+.kpi-tag{font-size:7.5px;font-weight:500;color:var(--muted);margin-bottom:2px}
+.kpi-v{font-size:22px;font-weight:700;line-height:1}
+.neg{color:var(--coral)}.tl{color:var(--teal)}.au{color:var(--gold)}.vi{color:var(--vi)}
+.kpi-arr{font-size:12px;color:var(--line);padding-bottom:3px}
+.kpi-chip{display:inline-block;margin-top:7px;font-size:8px;font-weight:500;padding:2px 9px;border-radius:20px}
+.ch-tl{background:var(--teal-lt);color:var(--teal-dk)}.ch-rd{background:var(--coral-lt);color:var(--coral)}.ch-au{background:var(--gold-lt);color:#8a6010}.ch-vi{background:var(--vi-lt);color:var(--vi)}
+
+/* TABLE */
+.tbl-card{background:var(--card);border-radius:10px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.tbl-hd{margin-bottom:12px}
+.tbl-title{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--ink)}
+.tbl-note{font-size:8.5px;color:var(--gray);margin-top:5px;line-height:1.7;border-left:3px solid var(--teal-lt);padding-left:10px}
+
+table{width:100%;border-collapse:collapse}
+.grp{font-size:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;text-align:center;border-bottom:1px solid}
+.g-base{background:#f7f5f1;color:var(--muted);border-color:var(--line)}
+.g-hist{background:#fffbf0;color:#9a7020;border-color:#e8d5a0}
+.g-tpo {background:#eefafa;color:var(--teal-dk);border-color:#bce4e4}
+
+th{font-size:7.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:5px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.th-h{background:#fffdf5;color:#9a7020}
+.th-t{background:#f4fafa;color:var(--teal-dk)}
+
+/* separator */
+.sep td{padding:10px 9px 5px;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;background:var(--bg)}
+.lbl-neg{color:var(--coral)}.lbl-pos{color:var(--green)}
+.sep-desc{font-size:8.5px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--gray);margin-left:8px}
+.n-badge{display:inline-block;font-size:7px;font-weight:600;padding:1px 5px;border-radius:10px;background:rgba(0,0,0,.07);color:var(--gray);margin-left:6px;letter-spacing:0;text-transform:none}
+
+/* data rows */
+tbody td{padding:7px 9px;border-bottom:1px solid #edeae4;vertical-align:middle;white-space:nowrap;font-size:10.5px;font-weight:400;color:var(--ink)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:not(.sep):hover td{background:#f8f5f0}
+
+.td-prod{font-weight:500;white-space:normal;line-height:1.3;max-width:210px;font-size:10px}
+.tag{display:inline-block;font-size:7.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.tm{background:#d5efef;color:#0e5a5a}
+.tt{background:var(--gold-lt);color:#7a5a0a}
+
+.ph-neg{color:var(--coral);font-weight:500}
+.ph-pos{color:var(--green);font-weight:500}
+.pl{color:var(--gray)}
+.po{color:var(--teal-dk);font-weight:600}
+.fct{font-weight:500}
+.dim{color:var(--gray);font-size:10px}
+.arr{color:var(--muted);text-align:center;padding:7px 3px;font-size:10px}
+
+.r-neg{display:inline-block;background:var(--coral-lt);color:var(--coral);font-size:9px;font-weight:600;padding:2px 8px;border-radius:5px}
+.r-pos{display:inline-block;background:var(--teal-lt);color:var(--teal-dk);font-size:9px;font-weight:600;padding:2px 8px;border-radius:5px}
+.r-ok {display:inline-block;background:var(--green-lt);color:var(--green);font-size:9px;font-weight:600;padding:2px 8px;border-radius:5px}
+.upl{font-weight:600}
+.delta{display:inline-block;font-size:7.5px;font-weight:600;padding:1px 5px;border-radius:10px;background:var(--green-lt);color:var(--green);margin-left:4px}
+
+.footer{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--line)}
+.footer span{font-size:8.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="topbar">
+    <div>
+      <div class="tb-badge">📊 Reporte Ejecutivo · Canal Moderno</div>
+      <div class="tb-title">Hallazgos TPO <em>Junio 2026</em></div>
+      <div class="tb-sub">ROI promedio histórico vs. recomendaciones TPO v3.1 · Limpiadores Light Duty · Suavizantes · Metro · Tottus</div>
+    </div>
+    <div class="coe">
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="10" fill="url(#gC)"/>
+        <circle cx="12" cy="15" r="3" fill="white"/>
+        <circle cx="12" cy="20" r="3" fill="white"/>
+        <circle cx="12" cy="25" r="3" fill="white"/>
+        <circle cx="20" cy="17" r="3" fill="white" fill-opacity=".7"/>
+        <circle cx="20" cy="23" r="3" fill="white" fill-opacity=".7"/>
+        <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+        <defs><linearGradient id="gC" x1="0" y1="0" x2="40" y2="40">
+          <stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/>
+        </linearGradient></defs>
+      </svg>
+      <div>
+        <div class="coe-name">COE Advanced Analytics</div>
+        <div class="coe-sub">Alicorp · TPO v3.1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="acline"></div>
+
+  <div class="banner">
+    <span class="banner-icon">🔄</span>
+    <div>
+      <b>TPO v3.1 elimina la destrucción de valor: corrige precio y duración para convertir promos históricamente negativas en rentables, y mejora aún más las que ya eran positivas.</b>
+      <small>874 promos históricas 2025 analizadas · ROI histórico calculado como promedio por SKU+cadena · Metro/CENCOSUD · Tottus · Limpiadores Light Duty · Suavizantes</small>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-lbl">ROI Ponderado por Inversión</div>
+      <div class="kpi-nums">
+        <div class="kpi-n"><span class="kpi-tag">Histórico</span><span class="kpi-v neg">+136%</span></div>
+        <span class="kpi-arr">→</span>
+        <div class="kpi-n"><span class="kpi-tag">TPO</span><span class="kpi-v tl">+114%</span></div>
+      </div>
+      <span class="kpi-chip ch-tl">Optimizado y controlado</span>
+    </div>
+    <div class="kpi rd">
+      <div class="kpi-lbl">Promos con ROI Negativo</div>
+      <div class="kpi-nums">
+        <div class="kpi-n"><span class="kpi-tag">Histórico</span><span class="kpi-v neg">39%</span></div>
+        <span class="kpi-arr">→</span>
+        <div class="kpi-n"><span class="kpi-tag">TPO</span><span class="kpi-v tl">0%</span></div>
+      </div>
+      <span class="kpi-chip ch-rd">−39 pp — eliminadas</span>
+    </div>
+    <div class="kpi au">
+      <div class="kpi-lbl">Inversión Promedio por Promo</div>
+      <div class="kpi-nums">
+        <div class="kpi-n"><span class="kpi-tag">Histórico (prom.)</span><span class="kpi-v neg">S/ 813</span></div>
+        <span class="kpi-arr">→</span>
+        <div class="kpi-n"><span class="kpi-tag">TPO (prom.)</span><span class="kpi-v au">S/ 261</span></div>
+      </div>
+      <span class="kpi-chip ch-au">−68% reducción</span>
+    </div>
+    <div class="kpi vi">
+      <div class="kpi-lbl">Uplift Incremental</div>
+      <div class="kpi-nums">
+        <div class="kpi-n"><span class="kpi-tag">Histórico (UCO)</span><span class="kpi-v neg">97</span></div>
+        <span class="kpi-arr">→</span>
+        <div class="kpi-n"><span class="kpi-tag">TPO (UN)</span><span class="kpi-v vi">119</span></div>
+      </div>
+      <span class="kpi-chip ch-vi">+23% unidades/tanda</span>
+    </div>
+  </div>
+
+  <div class="tbl-card">
+    <div class="tbl-hd">
+      <div class="tbl-title">Precio &amp; ROI Promedio Histórico vs. TPO Optimizado — Productos sin repetición</div>
+      <div class="tbl-note">
+        <strong>ROI histórico = promedio de todas las tandas registradas por SKU+cadena</strong> en el consolidado 2025.<br>
+        <strong>Grupo 1:</strong> SKUs cuyo ROI promedio histórico era negativo → TPO los hace rentables ajustando precio y duración.<br>
+        <strong>Grupo 2:</strong> SKUs cuyo ROI promedio histórico ya era positivo → TPO lo mejora aún más con el precio óptimo. La mejora se indica en verde (+pp).
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="grp g-base" colspan="4">SKU</th>
+          <th class="grp g-hist" colspan="2">── Histórico (Promedio) ──</th>
+          <th class="grp g-base" style="width:20px"></th>
+          <th class="grp g-tpo"  colspan="3">── TPO Optimizado ──</th>
+          <th class="grp g-base" colspan="2">Resultado</th>
+        </tr>
+        <tr>
+          <th>Producto</th><th>Cadena</th><th>Categoría</th><th>P. Lista</th>
+          <th class="th-h">P. Oferta Prom.</th>
+          <th class="th-h">ROI Prom. Hist.</th>
+          <th></th>
+          <th class="th-t">P. Oferta</th>
+          <th class="th-t">Factor</th>
+          <th class="th-t">ROI TPO</th>
+          <th>Uplift (UN)</th>
+          <th>Duración</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- GRUPO 1 -->
+        <tr class="sep">
+          <td colspan="12">
+            <span class="lbl-neg">▼ Grupo 1 — ROI Promedio Histórico Negativo → TPO Positivo</span>
+            <span class="sep-desc">SKUs cuyas promos históricas destruían valor en promedio</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="td-prod">LIMPIATODO FLORAL SAPOLIO 1800ML 6UND</td>
+          <td><span class="tag tt">Tottus</span></td><td class="dim">Limp. L.D.</td>
+          <td class="pl">S/ 6.40</td>
+          <td class="ph-neg">S/ 5.75</td>
+          <td><span class="r-neg">▼ −70%</span> <span class="n-badge">4 promos</span></td>
+          <td class="arr">→</td><td class="po">S/ 6.14</td><td class="fct">−4%</td>
+          <td><span class="r-pos">▲ +299%</span></td>
+          <td class="upl">531</td><td class="dim">14d · Lun</td>
+        </tr>
+        <tr>
+          <td class="td-prod">LIMPIATODO FLORAL SAPOLIO 900ML 12UND</td>
+          <td><span class="tag tm">Metro</span></td><td class="dim">Limp. L.D.</td>
+          <td class="pl">S/ 3.50</td>
+          <td class="ph-neg">S/ 2.90</td>
+          <td><span class="r-neg">▼ −46%</span> <span class="n-badge">3 promos</span></td>
+          <td class="arr">→</td><td class="po">S/ 3.32</td><td class="fct">−5%</td>
+          <td><span class="r-pos">▲ +26%</span></td>
+          <td class="upl">31</td><td class="dim">3d · Lun</td>
+        </tr>
+        <tr>
+          <td class="td-prod">SAP. LIMPIA TODO AB COCO 4.9L FR 4UND</td>
+          <td><span class="tag tt">Tottus</span></td><td class="dim">Limp. L.D.</td>
+          <td class="pl">S/ 15.10</td>
+          <td class="ph-neg">S/ 13.34</td>
+          <td><span class="r-neg">▼ −10%</span> <span class="n-badge">17 promos</span></td>
+          <td class="arr">→</td><td class="po">S/ 13.89</td><td class="fct">−8%</td>
+          <td><span class="r-pos">▲ +9%</span></td>
+          <td class="upl">341</td><td class="dim">13d · Lun</td>
+        </tr>
+        <tr>
+          <td class="td-prod">LIMPIATODO LAVANDA SAPOLIO 1800ML 6UND</td>
+          <td><span class="tag tt">Tottus</span></td><td class="dim">Limp. L.D.</td>
+          <td class="pl">S/ 6.40</td>
+          <td class="ph-neg">S/ 5.75</td>
+          <td><span class="r-neg">▼ −100%</span> <span class="n-badge">4 promos</span></td>
+          <td class="arr">→</td><td class="po">S/ 6.02</td><td class="fct">−6%</td>
+          <td><span class="r-pos">▲ +12%</span></td>
+          <td class="upl">40</td><td class="dim">2d · Lun</td>
+        </tr>
+
+        <!-- GRUPO 2 -->
+        <tr class="sep">
+          <td colspan="12">
+            <span class="lbl-pos">▲ Grupo 2 — ROI Promedio Histórico Positivo → TPO lo mejora aún más</span>
+            <span class="sep-desc">SKUs que ya eran rentables; TPO maximiza el ROI con el precio exacto</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="td-prod">SAP. LIMPIA TODO AB BEBÉ 4.9L FR 4UND</td>
+          <td><span class="tag tm">Metro</span></td><td class="dim">Limp. L.D.</td>
+          <td class="pl">S/ 15.90</td>
+          <td class="ph-pos">S/ 14.21</td>
+          <td><span class="r-ok">▲ +135%</span> <span class="n-badge">5 promos</span></td>
+          <td class="arr">→</td><td class="po">S/ 15.26</td><td class="fct">−4%</td>
+          <td><span class="r-pos">▲ +418% <span class="delta">+283pp</span></span></td>
+          <td class="upl">434</td><td class="dim">15d · Lun</td>
+        </tr>
+        <tr>
+          <td class="td-prod">SAP. LIMPIA TODO AB FLORAL 4.9L FR 4UND</td>
+          <td><span class="tag tm">Metro</span></td><td class="dim">Limp. L.D.</td>
+          <td class="pl">S/ 15.90</td>
+          <td class="ph-pos">S/ 14.21</td>
+          <td><span class="r-ok">▲ +193%</span> <span class="n-badge">5 promos</span></td>
+          <td class="arr">→</td><td class="po">S/ 15.10</td><td class="fct">−5%</td>
+          <td><span class="r-pos">▲ +282% <span class="delta">+89pp</span></span></td>
+          <td class="upl">156</td><td class="dim">5d · Lun</td>
+        </tr>
+        <tr>
+          <td class="td-prod">SUAV. BOLIVAR AROMA ACTIVO 1.5L</td>
+          <td><span class="tag tm">Metro</span></td><td class="dim">Suavizantes</td>
+          <td class="pl">S/ 15.90</td>
+          <td class="ph-pos">S/ 5.00</td>
+          <td><span class="r-ok">▲ +12%</span> <span class="n-badge">3 promos</span></td>
+          <td class="arr">→</td><td class="po">S/ 14.79</td><td class="fct">−7%</td>
+          <td><span class="r-pos">▲ +90% <span class="delta">+78pp</span></span></td>
+          <td class="upl">298</td><td class="dim">5d · Lun</td>
+        </tr>
+        <tr>
+          <td class="td-prod">SAP. LIMPIA TODO AB LAVANDA 4.9L FR 4UND</td>
+          <td><span class="tag tm">Metro</span></td><td class="dim">Limp. L.D.</td>
+          <td class="pl">S/ 15.90</td>
+          <td class="ph-pos">S/ 14.25</td>
+          <td><span class="r-ok">▲ +197%</span> <span class="n-badge">4 promos</span></td>
+          <td class="arr">→</td><td class="po">S/ 15.10</td><td class="fct">−5%</td>
+          <td><span class="r-pos">▲ +202% <span class="delta">+5pp</span></span></td>
+          <td class="upl">492</td><td class="dim">15d · Lun</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <span>📊 Alicorp · COE Advanced Analytics · Junio 2026 · TPO v3.1 · Fuente: consolidado_base_2025.xlsx + promos_similares_junio2026.xlsx</span>
+    <span>ROI = (Margen Bruto Incremental − Inversión) / Inversión &nbsp;·&nbsp; Target Abril 2026 · Semana 9 · Febrero 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
