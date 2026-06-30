@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mayoristas & CODIS — Análisis de canales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16181D; --ink-soft:#5B616E; --ink-faint:#9AA0AC;
+  --canvas:#F3F2ED; --surface:#FFFFFF; --line:#E5E3DB; --line-soft:#EFEDE6;
+  --accent:#4B45A8; --accent-soft:#ECEBFA; --accent-deep:#322E78;
+  --pos:#1F8A5B; --warn:#C0552B;
+  --r:14px; --r-sm:9px;
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 8px 24px rgba(22,24,29,.05);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--canvas); color:var(--ink);
+  font-variant-numeric:tabular-nums; line-height:1.45;
+  -webkit-font-smoothing:antialiased; padding:0 0 80px;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Space Grotesk',sans-serif}
+
+/* transición de acento al cambiar canal */
+.app,.kpi,.cat-row,.mini,.seg{transition:border-color .35s ease, background .35s ease, color .25s ease}
+
+/* ---------- Header ---------- */
+header{padding:48px 0 26px}
+.eyebrow{
+  font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12.5px;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--accent-deep);
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--accent);display:inline-block}
+h1{
+  font-family:'Space Grotesk',sans-serif; font-weight:700;
+  font-size:clamp(34px,6vw,52px); line-height:1.03; letter-spacing:-.02em;
+  margin:14px 0 10px;
+}
+h1 .amp{color:var(--accent); font-weight:500}
+.sub{color:var(--ink-soft); font-size:15px; max-width:60ch}
+.scope{
+  margin-top:16px; display:flex; flex-wrap:wrap; gap:8px 18px;
+  font-size:12.5px; color:var(--ink-faint); font-family:'Space Grotesk',sans-serif;
+}
+.scope b{color:var(--ink-soft); font-weight:600}
+
+/* ---------- Segmented toggle ---------- */
+.toolbar{
+  position:sticky; top:0; z-index:40; background:var(--canvas);
+  padding:14px 0 18px; margin-bottom:6px;
+  border-bottom:1px solid var(--line); 
+}
+.toolbar-inner{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap}
+.seg{
+  display:inline-flex; background:var(--surface); border:1px solid var(--line);
+  border-radius:999px; padding:5px; gap:4px; box-shadow:var(--shadow);
+}
+.seg button{
+  font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
+  border:0; background:transparent; color:var(--ink-soft); cursor:pointer;
+  padding:9px 20px; border-radius:999px; display:flex; align-items:center; gap:8px;
+  transition:all .2s ease;
+}
+.seg button .dot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.55}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--accent); color:#fff}
+.seg button[aria-pressed="true"] .dot{opacity:1;background:#fff}
+.seg button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.ch-tag{font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--ink-faint)}
+.ch-tag b{color:var(--accent-deep)}
+
+/* ---------- Section ---------- */
+.sect{margin-top:42px}
+.sect-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.sect-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:var(--accent);
+  border:1.5px solid var(--accent-soft);background:var(--accent-soft);border-radius:7px;padding:3px 9px}
+.sect-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:21px;letter-spacing:-.01em}
+.sect-note{margin-left:auto;font-size:13px;color:var(--ink-faint)}
+
+/* ---------- KPI cards ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:20px 20px 18px; position:relative; overflow:hidden;
+}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
+.kpi .klabel{font-size:12.5px;color:var(--ink-soft);font-weight:500;letter-spacing:.01em;display:flex;align-items:center;gap:7px}
+.kpi .kicon{width:15px;height:15px;color:var(--accent)}
+.kpi .kval{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-.02em;margin:10px 0 2px;line-height:1}
+.kpi .kunit{font-size:14px;color:var(--ink-faint);font-weight:500}
+.kpi .ksub{font-size:12.5px;color:var(--ink-soft);margin-top:8px;display:flex;align-items:center;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:11.5px;padding:3px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent-deep)}
+
+/* ---------- Ticket band (promedio por cliente-mes) ---------- */
+.ticketband{margin-top:14px;background:var(--accent-soft);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px 20px;transition:background .35s ease}
+.tb-head{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:var(--accent-deep);
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.tb-head .def{font-family:'Inter',sans-serif;font-weight:400;font-size:12px;color:var(--ink-soft)}
+.tcards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 18px;display:flex;align-items:center;gap:15px}
+.tcard .ti{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0}
+.tcard .ti svg{width:20px;height:20px}
+.tcard .tv{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:27px;letter-spacing:-.02em;line-height:1}
+.tcard .tl{font-size:12.5px;color:var(--ink-soft);margin-top:4px}
+.tcard .tl b{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--ink)}
+
+/* ---------- Mini charts (small multiples) ---------- */
+.minis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 16px 12px}
+.mini .mtitle{font-size:12.5px;color:var(--ink-soft);font-weight:600;margin-bottom:2px}
+.mini .mlast{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.01em}
+.mini .mdelta{font-size:11.5px;font-weight:600;margin-left:7px}
+.mini .up{color:var(--pos)} .mini .down{color:var(--warn)}
+.mini .bars{display:flex;align-items:flex-end;gap:5px;height:64px;margin-top:12px;padding:0 1px}
+.mini .bcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:0}
+.mini .blabel{font-family:'Space Grotesk',sans-serif;font-size:8.5px;font-weight:600;color:var(--ink-soft);
+  margin-bottom:3px;white-space:nowrap;line-height:1;letter-spacing:-.02em}
+.mini .bfill{width:100%;max-width:22px;background:var(--accent);border-radius:2px 2px 0 0;min-height:2px;
+  transition:height .45s cubic-bezier(.2,.7,.3,1)}
+.mini .bcol.dim .bfill{opacity:.42}
+.mini .bcol:hover .bfill{opacity:1}
+.mini .mx{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--ink-faint);font-family:'Space Grotesk',sans-serif}
+.mini .mx span{flex:1;text-align:center}
+
+/* ---------- Category section ---------- */
+.cat-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px 8px 4px}
+.cat-row{display:grid;grid-template-columns:30px minmax(140px,1.3fr) 2.4fr auto 20px;gap:14px;align-items:center;
+  padding:13px 14px;border-radius:var(--r-sm);transition:background .15s;cursor:pointer}
+.cat-row:hover{background:var(--accent-soft)}
+.cat-row + .cat-row{border-top:1px solid var(--line-soft)}
+.cat-rank{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--ink-faint);text-align:right}
+.cat-rank.t1{color:var(--accent)}
+.cat-name{font-weight:600;font-size:14.5px}
+.cat-meta{font-size:12px;color:var(--ink-soft);margin-top:3px;display:flex;flex-wrap:wrap;gap:3px 11px}
+.cat-meta .promo{color:var(--warn);font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.cat-meta .nopromo{color:var(--ink-faint)}
+.barbox{display:flex;flex-direction:column;gap:5px;min-width:120px}
+.bar-track{height:11px;background:var(--accent-soft);border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;background:var(--accent);border-radius:6px;transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.bar-cap{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-faint);font-family:'Space Grotesk',sans-serif}
+.cat-right{text-align:right;min-width:96px}
+.cat-venta{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15.5px;letter-spacing:-.01em}
+.cat-share{font-size:11.5px;color:var(--ink-soft);font-weight:600;margin-top:2px}
+.star{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px}
+
+/* full table */
+.tbl-toggle{margin-top:16px}
+.tbtn{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;cursor:pointer;
+  background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:10px 16px;color:var(--ink);
+  display:inline-flex;align-items:center;gap:8px;transition:.15s}
+.tbtn:hover{border-color:var(--accent);color:var(--accent-deep)}
+.tbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tbtn .chev{transition:transform .25s}
+.tbtn.open .chev{transform:rotate(180deg)}
+.tbl-box{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  overflow:auto;max-height:0;opacity:0;transition:max-height .4s ease,opacity .3s}
+.tbl-box.show{max-height:920px;opacity:1}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:840px}
+thead th{position:sticky;top:0;background:var(--surface);text-align:right;font-family:'Space Grotesk',sans-serif;
+  font-weight:600;font-size:11.5px;color:var(--ink-soft);letter-spacing:.02em;text-transform:uppercase;
+  padding:13px 14px;border-bottom:1.5px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none}
+thead th:first-child,thead th:nth-child(2){text-align:left}
+thead th:hover{color:var(--accent-deep)}
+thead th.sorted{color:var(--accent)}
+tbody td{padding:11px 14px;text-align:right;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+tbody td:first-child{color:var(--ink-faint);font-family:'Space Grotesk',sans-serif;font-weight:600}
+tbody td:nth-child(2){text-align:left;font-weight:600}
+tbody tr:hover{background:var(--accent-soft)}
+.tg{display:inline-flex;align-items:center;gap:5px;font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:11px;padding:2px 8px;border-radius:6px;background:#FBEEE6;color:var(--warn)}
+.tg.no{background:var(--line-soft);color:var(--ink-faint)}
+
+/* ---------- Insights ---------- */
+.ins-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ins{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;
+  border-left:3px solid var(--accent)}
+.ins h4{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:var(--accent-deep);
+  letter-spacing:.04em;text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.ins p{font-size:14px;color:var(--ink);line-height:1.55}
+.ins p b{font-family:'Space Grotesk',sans-serif;font-weight:600}
+.ins .big{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:var(--accent-deep)}
+
+footer{margin-top:54px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--ink-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+/* ---------- Category drill-in modal ---------- */
+.cat-go{display:flex;align-items:center;justify-content:center;color:var(--ink-faint);
+  opacity:.35;transition:opacity .15s,color .15s}
+.cat-row:hover .cat-go{opacity:1;color:var(--accent)}
+tbody tr{cursor:pointer}
+.modal-bg{position:fixed;inset:0;background:rgba(22,24,29,.55);backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);z-index:80;display:flex;align-items:flex-start;justify-content:center;
+  padding:5vh 20px;overflow-y:auto;opacity:0;animation:fadeIn .18s forwards}
+.modal-bg[hidden]{display:none}
+.modal{background:var(--canvas);border:1px solid var(--line);border-radius:18px;max-width:760px;width:100%;
+  position:relative;box-shadow:0 24px 70px rgba(22,24,29,.32);transform:translateY(14px);
+  animation:slideUp .28s cubic-bezier(.2,.7,.3,1) forwards}
+.modal-x{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:9px;border:1px solid var(--line);
+  background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--ink-soft);z-index:3;transition:.15s}
+.modal-x:hover{border-color:var(--accent);color:var(--accent-deep)}
+.modal-x:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.modal-head{padding:26px 56px 20px 28px;border-bottom:1px solid var(--line);
+  background:var(--accent-soft);border-radius:18px 18px 0 0;transition:background .3s}
+.modal-eyebrow{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent-deep);margin-bottom:9px}
+.modal-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:25px;letter-spacing:-.02em;
+  display:flex;align-items:center;gap:11px;flex-wrap:wrap;line-height:1.1}
+.modal-badges{display:flex;gap:7px;margin-top:13px;flex-wrap:wrap}
+.mbadge{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11.5px;padding:4px 10px;border-radius:7px;
+  background:var(--surface);color:var(--accent-deep);border:1px solid var(--line)}
+.mbadge.promo{background:#FBEEE6;color:var(--warn);border-color:#F1D8CA}
+.modal-inner{padding:22px 28px 28px}
+.mstats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.mstat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.mstat .ml{font-size:11px;color:var(--ink-soft);margin-bottom:5px}
+.mstat .mv{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.01em}
+.modal-sect-t{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;margin-bottom:14px;
+  display:flex;align-items:center;gap:9px;color:var(--ink)}
+.modal-sect-t::before{content:"";width:18px;height:2px;background:var(--accent)}
+.modal-minis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes slideUp{to{transform:translateY(0)}}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:#fff;font-size:12px;
+  font-family:'Space Grotesk',sans-serif;padding:6px 10px;border-radius:7px;opacity:0;transition:opacity .12s;
+  z-index:99;white-space:nowrap;transform:translate(-50%,-130%)}
+
+@media(max-width:880px){
+  .kpis,.minis{grid-template-columns:repeat(2,1fr)}
+  .ins-grid{grid-template-columns:1fr}
+  .cat-row{grid-template-columns:26px 1fr;gap:8px}
+  .barbox,.cat-right{grid-column:2}
+  .cat-right{text-align:left;margin-top:2px}
+  .cat-go{display:none}
+  .mstats{grid-template-columns:repeat(2,1fr)}
+  .modal-minis{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .wrap{padding:0 16px}
+  .kpis,.minis,.tcards{grid-template-columns:1fr}
+  header{padding:34px 0 18px}
+  .modal-bg{padding:0}
+  .modal{border-radius:0;min-height:100vh}
+  .modal-head{border-radius:0;padding:24px 50px 18px 20px}
+  .modal-inner{padding:20px}
+  .mstats{grid-template-columns:1fr 1fr;gap:8px}
+  .modal-minis{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Análisis exploratorio de canales</div>
+    <h1>Mayoristas <span class="amp">&</span> CODIS</h1>
+    <p class="sub">Desempeño comparado de venta, volumen, cobertura de clientes e inversión promocional. Cambia el canal para re-leer todo el tablero; cada categoría señala si concentra inversión promocional.</p>
+    <div class="scope" id="scope"></div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-inner wrap" style="max-width:none;padding:0">
+      <div class="seg" role="group" aria-label="Seleccionar canal">
+        <button data-ch="TOTAL" aria-pressed="true"><span class="dot"></span>Total</button>
+        <button data-ch="MA" aria-pressed="false"><span class="dot"></span>Mayoristas</button>
+        <button data-ch="CODIS" aria-pressed="false"><span class="dot"></span>CODIS</button>
+      </div>
+      <div class="ch-tag" id="chtag"></div>
+    </div>
+  </div>
+
+  <div class="app" id="app">
+
+    <!-- 1. KPIs -->
+    <section class="sect">
+      <div class="sect-head">
+        <span class="sect-num">01</span>
+        <span class="sect-title">Vista general</span>
+        <span class="sect-note" id="gen-note"></span>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div class="ticketband" id="ticketband"></div>
+    </section>
+
+    <!-- 2. Evolución mensual -->
+    <section class="sect">
+      <div class="sect-head">
+        <span class="sect-num">02</span>
+        <span class="sect-title">Evolución últimos 6 meses</span>
+        <span class="sect-note">Δ = último mes vs. primero</span>
+      </div>
+      <div class="minis" id="minis"></div>
+    </section>
+
+    <!-- 3. Categorías -->
+    <section class="sect">
+      <div class="sect-head">
+        <span class="sect-num">03</span>
+        <span class="sect-title">Top 10 categorías por venta</span>
+        <span class="sect-note"><span class="star">★</span> = entre las 5 de mayor gasto promocional</span>
+      </div>
+      <div class="cat-wrap" id="cats"></div>
+
+      <div class="tbl-toggle">
+        <button class="tbtn" id="tblBtn" aria-expanded="false">
+          <span id="tblBtnTxt">Ver todas las categorías</span>
+          <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="tbl-box" id="tblBox">
+          <table id="fullTbl">
+            <thead><tr>
+              <th data-k="rank_venta">#</th>
+              <th data-k="categoria">Categoría</th>
+              <th data-k="venta" class="sorted">Venta S/</th>
+              <th data-k="venta_pct">% venta</th>
+              <th data-k="ton">Ton</th>
+              <th data-k="clientes">Clientes</th>
+              <th data-k="ticket_venta">Ticket S/</th>
+              <th data-k="ticket_ton">Ticket t</th>
+              <th data-k="gasto">Gasto promo S/</th>
+              <th data-k="gasto_pct_cat">% inv</th>
+              <th data-k="en_top5_gasto">Top-5 promo</th>
+            </tr></thead>
+            <tbody id="tblBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Insights -->
+    <section class="sect">
+      <div class="sect-head">
+        <span class="sect-num">04</span>
+        <span class="sect-title">Lectura rápida</span>
+      </div>
+      <div class="ins-grid" id="insights"></div>
+    </section>
+
+  </div>
+
+  <footer>
+    <span>Fuente: Resumen_.xlsx · ventana Nov 2025 – Abr 2026</span>
+    <span id="genline"></span>
+  </footer>
+</div>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+  <div class="modal" id="modal">
+    <button class="modal-x" id="modalX" aria-label="Cerrar evolutivo">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA = {"meta": {"periodo": "Nov 2025 – Abr 2026", "meses": ["Nov '25", "Dic '25", "Ene '26", "Feb '26", "Mar '26", "Abr '26"], "filas": 22276, "generado": "18/06/2026"}, "canales": {"TOTAL": {"kpis": {"venta": 751774905.28, "ton": 134371.856217, "clientes": 394, "gasto": 968350.1499999999, "cantidad": 18811368.215, "n_categorias": 39, "cliente_mes": 2048, "gasto_pct": 0.1288085227637834, "venta_x_cliente": 1908058.1352284264, "ticket_venta": 367077.59046875, "ticket_ton": 65.61125791845703, "meses_activos": 5.197969543147208}, "mensual": [{"mes": "Nov '25", "venta": 134914063.6, "ton": 22776.820478, "clientes": 335, "gasto": 362293.34, "ticket_venta": 402728.54805970145, "ticket_ton": 67.99050888955225}, {"mes": "Dic '25", "venta": 128094106.50999999, "ton": 22488.996719000002, "clientes": 335, "gasto": 360759.20999999996, "ticket_venta": 382370.4671940298, "ticket_ton": 67.13133348955225}, {"mes": "Ene '26", "venta": 112517047.59, "ton": 21087.872989, "clientes": 350, "gasto": 39744.880000000005, "ticket_venta": 321477.27882857143, "ticket_ton": 60.25106568285714}, {"mes": "Feb '26", "venta": 124339202.9, "ton": 22416.184196000002, "clientes": 342, "gasto": 87627.14000000001, "ticket_venta": 363564.92076023394, "ticket_ton": 65.54439823391813}, {"mes": "Mar '26", "venta": 129938152.96000001, "ton": 23404.07929, "clientes": 342, "gasto": 89928.64, "ticket_venta": 379936.1197660819, "ticket_ton": 68.43298038011696}, {"mes": "Abr '26", "venta": 121972331.72, "ton": 22197.902544999997, "clientes": 344, "gasto": 27996.940000000002, "ticket_venta": 354570.731744186, "ticket_ton": 64.52878646802324}], "categorias": [{"categoria": "Detergentes", "venta": 212245373.7, "ton": 47764.687136, "clientes": 284, "gasto": 132.0, "cantidad": 4597207.751, "cliente_mes": 1440, "ticket_venta": 147392.62062499998, "ticket_ton": 33.16992162222222, "venta_pct": 28.23256964409431, "gasto_pct_cat": 6.219216829035648e-05, "rank_venta": 1, "rank_gasto": 8, "en_top5_gasto": false, "ev": {"venta": [35382013.4, 34357211.87, 36225962.75, 36066012.73, 35523346.11, 34690826.84], "ton": [7996.426, 7697.01, 8042.448, 8128.157, 8038.869, 7861.777], "clientes": [235, 243, 235, 241, 240, 246], "gasto": [0.0, 132.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [150561.76, 141387.7, 154153.03, 149651.51, 148013.94, 141019.62], "tk_t": [34.0273, 31.6749, 34.2232, 33.7268, 33.4953, 31.9584]}}, {"categoria": "Aceites", "venta": 90803493.96, "ton": 12474.109124999999, "clientes": 215, "gasto": 863150.99, "cantidad": 1324053.0, "cliente_mes": 1021, "ticket_venta": 88935.84129285013, "ticket_ton": 12.217540768854064, "venta_pct": 12.07854815613725, "gasto_pct_cat": 0.9505702394890533, "rank_venta": 2, "rank_gasto": 1, "en_top5_gasto": true, "ev": {"venta": [18189747.9, 18231512.47, 10647504.19, 12543276.54, 17506689.47, 13684763.39], "ton": [2440.926, 2428.647, 1485.711, 1762.456, 2475.605, 1880.764], "clientes": [168, 174, 167, 166, 174, 172], "gasto": [349045.92, 350421.51, 21114.03, 87487.48, 44076.54, 11005.51], "tk_v": [108272.31, 104778.81, 63757.51, 75561.91, 100613.16, 79562.58], "tk_t": [14.5293, 13.9577, 8.8965, 10.6172, 14.2276, 10.9347]}}, {"categoria": "Pastas", "venta": 69514383.02, "ton": 21677.50299, "clientes": 205, "gasto": 69714.74, "cantidad": 2770381.75, "cliente_mes": 982, "ticket_venta": 70788.57741344195, "ticket_ton": 22.074850295315684, "venta_pct": 9.246701709750372, "gasto_pct_cat": 0.10028822377657062, "rank_venta": 3, "rank_gasto": 2, "en_top5_gasto": true, "ev": {"venta": [11527910.74, 13195740.64, 10258191.55, 11368611.44, 12469524.7, 10694403.95], "ton": [3582.417, 4012.841, 3226.101, 3514.556, 3910.587, 3431.0], "clientes": [162, 176, 157, 158, 166, 163], "gasto": [345.48, 212.87, 13885.16, 139.66, 45852.1, 9279.47], "tk_v": [71159.94, 74975.8, 65338.8, 71953.24, 75117.62, 65609.84], "tk_t": [22.1137, 22.8002, 20.5484, 22.244, 23.5578, 21.0491]}}, {"categoria": "Galletas", "venta": 52264770.61, "ton": 5459.426658, "clientes": 205, "gasto": 16714.57, "cantidad": 3044321.264, "cliente_mes": 916, "ticket_venta": 57057.60983624454, "ticket_ton": 5.960072770742358, "venta_pct": 6.952183458495982, "gasto_pct_cat": 0.031980567033813675, "rank_venta": 4, "rank_gasto": 3, "en_top5_gasto": true, "ev": {"venta": [9607565.4, 8607170.09, 7740931.6, 8869066.87, 7819622.81, 9620413.84], "ton": [997.517, 920.622, 811.719, 920.156, 829.403, 980.01], "clientes": [152, 159, 148, 153, 148, 156], "gasto": [5401.09, 3601.52, 0.0, 0.0, 0.0, 7711.96], "tk_v": [63207.67, 54133.15, 52303.59, 57967.76, 52835.29, 61669.32], "tk_t": [6.5626, 5.7901, 5.4846, 6.0141, 5.6041, 6.2821]}}, {"categoria": "Salsas", "venta": 50006362.81, "ton": 2364.117315, "clientes": 190, "gasto": 0.0, "cantidad": 802408.0, "cliente_mes": 894, "ticket_venta": 55935.52887024609, "ticket_ton": 2.6444265268456375, "venta_pct": 6.65177335114359, "gasto_pct_cat": 0.0, "rank_venta": 5, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [10022589.06, 9814488.79, 6944246.63, 8296682.61, 8271798.37, 6656557.35], "ton": [480.776, 468.712, 319.657, 395.662, 382.423, 316.888], "clientes": [148, 145, 152, 149, 156, 144], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [67720.2, 67686.13, 45685.83, 55682.43, 53024.35, 46226.09], "tk_t": [3.2485, 3.2325, 2.103, 2.6555, 2.4514, 2.2006]}}, {"categoria": "Jabones de Lavar", "venta": 39014564.14, "ton": 4804.288225, "clientes": 232, "gasto": 2389.1, "cantidad": 589360.0, "cliente_mes": 1039, "ticket_venta": 37550.10985563041, "ticket_ton": 4.623954018286814, "venta_pct": 5.189660344603942, "gasto_pct_cat": 0.006123610637881138, "rank_venta": 6, "rank_gasto": 5, "en_top5_gasto": true, "ev": {"venta": [5465822.57, 5076393.69, 6126629.64, 7483267.47, 7074084.06, 7788366.71], "ton": [691.359, 634.159, 750.433, 894.024, 878.364, 955.949], "clientes": [168, 162, 176, 174, 184, 175], "gasto": [2389.1, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [32534.66, 31335.76, 34810.4, 43007.28, 38446.11, 44504.95], "tk_t": [4.1152, 3.9146, 4.2638, 5.1381, 4.7737, 5.4626]}}, {"categoria": "Conservas", "venta": 28101529.45, "ton": 1094.29177, "clientes": 152, "gasto": 0.0, "cantidad": 162796.0, "cliente_mes": 553, "ticket_venta": 50816.508951175405, "ticket_ton": 1.978827793851718, "venta_pct": 3.73802440765611, "gasto_pct_cat": 0.0, "rank_venta": 7, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [5094490.56, 4557819.26, 2885192.55, 5588967.45, 5920664.43, 4054395.2], "ton": [196.49, 175.806, 111.586, 216.928, 233.352, 160.129], "clientes": [103, 101, 88, 96, 90, 75], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [49461.07, 45126.92, 32786.28, 58218.41, 65785.16, 54058.6], "tk_t": [1.9077, 1.7407, 1.268, 2.2597, 2.5928, 2.1351]}}, {"categoria": "Cereales", "venta": 27578628.72, "ton": 1728.275932, "clientes": 138, "gasto": 915.1199999999999, "cantidad": 471218.033, "cliente_mes": 547, "ticket_venta": 50417.96840950639, "ticket_ton": 3.159553806215722, "venta_pct": 3.668468916201491, "gasto_pct_cat": 0.00331822154499058, "rank_venta": 8, "rank_gasto": 6, "en_top5_gasto": false, "ev": {"venta": [3994898.16, 4270288.99, 3775890.05, 4143704.29, 5479162.9, 5914684.33], "ton": [246.873, 270.313, 241.62, 262.719, 341.857, 364.894], "clientes": [88, 84, 86, 97, 91, 101], "gasto": [625.81, 289.31, 0.0, 0.0, 0.0, 0.0], "tk_v": [45396.57, 50836.77, 43905.7, 42718.6, 60210.58, 58561.23], "tk_t": [2.8054, 3.218, 2.8095, 2.7084, 3.7567, 3.6128]}}, {"categoria": "Lavavajillas", "venta": 22449859.19, "ton": 5043.032669, "clientes": 217, "gasto": 0.0, "cantidad": 916293.0, "cliente_mes": 997, "ticket_venta": 22517.41142427282, "ticket_ton": 5.058207290872618, "venta_pct": 2.986247483432359, "gasto_pct_cat": 0.0, "rank_venta": 9, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [3562977.7, 3522139.51, 3874598.27, 3894903.24, 3685763.24, 3909477.23], "ton": [787.001, 788.784, 857.255, 894.131, 832.578, 883.284], "clientes": [160, 162, 170, 173, 168, 164], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [22268.61, 21741.6, 22791.75, 22513.89, 21939.07, 23838.28], "tk_t": [4.9188, 4.869, 5.0427, 5.1684, 4.9558, 5.3859]}}, {"categoria": "Lejias", "venta": 21475946.5, "ton": 13502.42218, "clientes": 206, "gasto": 0.0, "cantidad": 1142743.0, "cliente_mes": 946, "ticket_venta": 22701.84619450317, "ticket_ton": 14.27317355179704, "venta_pct": 2.8566990397213705, "gasto_pct_cat": 0.0, "rank_venta": 10, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [3352566.79, 3538359.77, 3505182.62, 3779621.74, 3564258.72, 3735956.86], "ton": [2116.996, 2206.757, 2208.883, 2363.07, 2255.474, 2351.242], "clientes": [151, 149, 162, 157, 162, 165], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [22202.43, 23747.38, 21636.93, 24074.02, 22001.6, 22642.16], "tk_t": [14.0198, 14.8105, 13.6351, 15.0514, 13.9227, 14.25]}}, {"categoria": "Insecticidas", "venta": 16118004.8, "ton": 804.485999, "clientes": 185, "gasto": 0.0, "cantidad": 242323.0, "cliente_mes": 779, "ticket_venta": 20690.635173299102, "ticket_ton": 1.0327163016688061, "venta_pct": 2.143993459584398, "gasto_pct_cat": 0.0, "rank_venta": 11, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [2381748.74, 3582901.6, 2886641.96, 2454570.9, 2538284.7, 2273856.9], "ton": [118.92, 179.698, 144.073, 120.669, 125.604, 115.523], "clientes": [121, 121, 134, 137, 130, 136], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [19683.87, 29610.76, 21542.1, 17916.58, 19525.27, 16719.54], "tk_t": [0.9828, 1.4851, 1.0752, 0.8808, 0.9662, 0.8494]}}, {"categoria": "Untables Domesticos", "venta": 15549144.75, "ton": 923.83658, "clientes": 157, "gasto": 0.0, "cantidad": 440960.0, "cliente_mes": 731, "ticket_venta": 21271.059849521203, "ticket_ton": 1.2637983310533516, "venta_pct": 2.0683245265028756, "gasto_pct_cat": 0.0, "rank_venta": 12, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [3353221.13, 2604747.82, 2671153.5, 2061874.26, 2349769.48, 2508378.56], "ton": [201.301, 160.322, 157.237, 123.147, 135.14, 146.691], "clientes": [120, 125, 124, 118, 125, 119], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [27943.51, 20837.98, 21541.56, 17473.51, 18798.16, 21078.81], "tk_t": [1.6775, 1.2826, 1.268, 1.0436, 1.0811, 1.2327]}}, {"categoria": "Suavizantes", "venta": 14339924.39, "ton": 2149.221298, "clientes": 213, "gasto": 0.0, "cantidad": 201549.666, "cliente_mes": 934, "ticket_venta": 15353.238104925054, "ticket_ton": 2.3010934668094216, "venta_pct": 1.9074758001743977, "gasto_pct_cat": 0.0, "rank_venta": 13, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [2590044.35, 2354320.23, 2202406.69, 2672791.21, 2267755.85, 2252606.06], "ton": [387.671, 354.383, 329.354, 396.558, 344.395, 336.861], "clientes": [152, 157, 155, 161, 151, 158], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [17039.77, 14995.67, 14209.08, 16601.19, 15018.25, 14257.0], "tk_t": [2.5505, 2.2572, 2.1249, 2.4631, 2.2808, 2.132]}}, {"categoria": "Cuidado del aire", "venta": 10480119.89, "ton": 593.51998, "clientes": 176, "gasto": 0.0, "cantidad": 217344.0, "cliente_mes": 823, "ticket_venta": 12734.04603888214, "ticket_ton": 0.721166439854192, "venta_pct": 1.39405024248537, "gasto_pct_cat": 0.0, "rank_venta": 14, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [1592041.46, 1775732.97, 1771660.59, 1619878.06, 1981551.42, 1739255.39], "ton": [90.576, 100.101, 99.439, 90.851, 114.746, 97.806], "clientes": [128, 136, 135, 139, 136, 149], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [12437.82, 13056.86, 13123.41, 11653.8, 14570.23, 11672.85], "tk_t": [0.7076, 0.736, 0.7366, 0.6536, 0.8437, 0.6564]}}, {"categoria": "Limpiadores Light Duty", "venta": 9556938.92, "ton": 4793.502432, "clientes": 172, "gasto": 0.0, "cantidad": 445018.0, "cliente_mes": 805, "ticket_venta": 11871.973813664596, "ticket_ton": 5.95466140621118, "venta_pct": 1.2712500580796189, "gasto_pct_cat": 0.0, "rank_venta": 15, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [1436733.25, 1520544.75, 1643706.88, 1574584.26, 1738272.27, 1643097.51], "ton": [720.415, 761.934, 823.539, 789.491, 872.453, 825.671], "clientes": [130, 127, 145, 133, 133, 137], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [11051.79, 11972.79, 11335.91, 11838.98, 13069.72, 11993.41], "tk_t": [5.5417, 5.9995, 5.6796, 5.936, 6.5598, 6.0268]}}, {"categoria": "Pasta Dental", "venta": 8847094.3, "ton": 408.265598, "clientes": 158, "gasto": 15157.24, "cantidad": 46441.0, "cliente_mes": 638, "ticket_venta": 13866.918965517243, "ticket_ton": 0.6399147304075236, "venta_pct": 1.1768275633921144, "gasto_pct_cat": 0.1713244991635276, "rank_venta": 16, "rank_gasto": 4, "en_top5_gasto": true, "ev": {"venta": [1441637.47, 1301788.03, 1598405.68, 1588247.75, 1481749.99, 1435265.38], "ton": [68.436, 60.092, 74.651, 73.093, 66.119, 65.874], "clientes": [100, 103, 107, 104, 111, 113], "gasto": [4485.94, 6102.0, 4569.3, 0.0, 0.0, 0.0], "tk_v": [14416.37, 12638.72, 14938.37, 15271.61, 13349.1, 12701.46], "tk_t": [0.6844, 0.5834, 0.6977, 0.7028, 0.5957, 0.583]}}, {"categoria": "Postres", "venta": 8662202.27, "ton": 587.56437, "clientes": 159, "gasto": 0.0, "cantidad": 253432.0, "cliente_mes": 677, "ticket_venta": 12794.981196454948, "ticket_ton": 0.8678941949778435, "venta_pct": 1.1522334955798699, "gasto_pct_cat": 0.0, "rank_venta": 17, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [1624078.68, 1971828.46, 1293356.55, 1059518.53, 1395515.63, 1317904.42], "ton": [107.251, 126.438, 86.739, 75.309, 100.747, 91.081], "clientes": [111, 125, 107, 103, 110, 121], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [14631.34, 15774.63, 12087.44, 10286.59, 12686.51, 10891.77], "tk_t": [0.9662, 1.0115, 0.8106, 0.7312, 0.9159, 0.7527]}}, {"categoria": "Harinas", "venta": 7680609.03, "ton": 1636.050231, "clientes": 161, "gasto": 0.0, "cantidad": 198190.75, "cliente_mes": 708, "ticket_venta": 10848.317838983052, "ticket_ton": 2.310805411016949, "venta_pct": 1.0216633963246409, "gasto_pct_cat": 0.0, "rank_venta": 18, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [1440551.07, 1375062.81, 973324.25, 1112437.34, 1462772.31, 1316461.25], "ton": [304.574, 291.916, 208.38, 238.504, 310.923, 281.753], "clientes": [115, 113, 119, 118, 130, 113], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [12526.53, 12168.7, 8179.2, 9427.44, 11252.09, 11650.1], "tk_t": [2.6485, 2.5833, 1.7511, 2.0212, 2.3917, 2.4934]}}, {"categoria": "Quitamanchas", "venta": 7345676.83, "ton": 2061.235548, "clientes": 172, "gasto": 0.0, "cantidad": 241637.0, "cliente_mes": 763, "ticket_venta": 9627.361507208389, "ticket_ton": 2.701488267365662, "venta_pct": 0.9771112042193121, "gasto_pct_cat": 0.0, "rank_venta": 19, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [1270062.64, 1140099.76, 1356960.19, 1021112.74, 1195302.38, 1362139.12], "ton": [357.302, 318.448, 378.926, 279.793, 341.556, 385.21], "clientes": [132, 126, 130, 121, 124, 130], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [9621.69, 9048.41, 10438.16, 8438.95, 9639.54, 10477.99], "tk_t": [2.7068, 2.5274, 2.9148, 2.3123, 2.7545, 2.9632]}}, {"categoria": "Panetones", "venta": 6036838.07, "ton": 508.20491, "clientes": 63, "gasto": 0.0, "cantidad": 112693.0, "cliente_mes": 156, "ticket_venta": 38697.67993589744, "ticket_ton": 3.257723782051282, "venta_pct": 0.803011383806642, "gasto_pct_cat": 0.0, "rank_venta": 20, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [7364609.24, 995970.31, -1967950.41, -95.61, -360561.56, 4866.1], "ton": [436.829, 68.262, 0.076, 0.0, 3.037, 0.0], "clientes": [47, 32, 50, 3, 23, 1], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [156693.81, 31124.07, -39359.01, -31.87, -15676.59, 4866.1], "tk_t": [9.2942, 2.1332, 0.0015, 0.0, 0.132, 0.0]}}, {"categoria": "Jabon Liquido", "venta": 5653297.64, "ton": 707.23834, "clientes": 172, "gasto": 0.0, "cantidad": 112913.0, "cliente_mes": 726, "ticket_venta": 7786.911349862258, "ticket_ton": 0.9741574931129476, "venta_pct": 0.751993395934707, "gasto_pct_cat": 0.0, "rank_venta": 21, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [576993.02, 682538.96, 1027916.07, 1354140.43, 1274087.27, 737621.89], "ton": [73.293, 87.014, 128.716, 167.826, 158.625, 91.764], "clientes": [105, 112, 126, 132, 129, 122], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [5495.17, 6094.1, 8158.06, 10258.64, 9876.65, 6046.08], "tk_t": [0.698, 0.7769, 1.0216, 1.2714, 1.2297, 0.7522]}}, {"categoria": "Lavavajillas JW", "venta": 5018590.91, "ton": 938.7061199999999, "clientes": 86, "gasto": 0.0, "cantidad": 106457.0, "cliente_mes": 198, "ticket_venta": 25346.418737373737, "ticket_ton": 4.740939999999999, "venta_pct": 0.6675656336428012, "gasto_pct_cat": 0.0, "rank_venta": 22, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [0.0, 0.0, 1047756.53, 1575772.64, 1437244.15, 957817.59], "ton": [0.0, 0.0, 194.571, 296.396, 268.923, 178.815], "clientes": [0, 0, 41, 54, 50, 53], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [0.0, 0.0, 25555.04, 29180.97, 28744.88, 18072.03], "tk_t": [0.0, 0.0, 4.7456, 5.4888, 5.3785, 3.3739]}}, {"categoria": "Limpiadores Especializados", "venta": 4702719.8, "ton": 472.732564, "clientes": 150, "gasto": 0.0, "cantidad": 71807.0, "cliente_mes": 677, "ticket_venta": 6946.4103397341205, "ticket_ton": 0.6982755745937962, "venta_pct": 0.6255489198922466, "gasto_pct_cat": 0.0, "rank_venta": 23, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [789550.7, 751434.4, 824848.19, 858132.14, 779790.48, 698963.89], "ton": [77.94, 78.479, 83.637, 83.171, 79.232, 70.275], "clientes": [110, 111, 116, 120, 109, 111], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [7177.73, 6769.68, 7110.76, 7151.1, 7154.04, 6296.97], "tk_t": [0.7085, 0.707, 0.721, 0.6931, 0.7269, 0.6331]}}, {"categoria": "Cuidado de Piso", "venta": 4289819.6, "ton": 371.414929, "clientes": 146, "gasto": 0.0, "cantidad": 42359.0, "cliente_mes": 624, "ticket_venta": 6874.710897435897, "ticket_ton": 0.5952162323717948, "venta_pct": 0.570625538292243, "gasto_pct_cat": 0.0, "rank_venta": 24, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [639818.04, 852470.06, 862915.94, 701040.61, 754866.37, 478708.58], "ton": [55.002, 73.327, 74.697, 60.313, 65.216, 42.86], "clientes": [106, 100, 111, 105, 107, 95], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [6036.02, 8524.7, 7774.02, 6676.58, 7054.83, 5039.04], "tk_t": [0.5189, 0.7333, 0.6729, 0.5744, 0.6095, 0.4512]}}, {"categoria": "Shampoo", "venta": 2838640.09, "ton": 154.22293200000001, "clientes": 140, "gasto": 158.41, "cantidad": 30272.0, "cliente_mes": 524, "ticket_venta": 5417.252080152672, "ticket_ton": 0.294318572519084, "venta_pct": 0.37759175919057086, "gasto_pct_cat": 0.005580489071441248, "rank_venta": 25, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [292833.85, 387532.64, 499789.47, 602685.93, 487932.36, 567865.84], "ton": [20.118, 21.466, 25.952, 31.464, 25.538, 29.685], "clientes": [81, 83, 80, 97, 91, 92], "gasto": [0.0, 0.0, 158.41, 0.0, 0.0, 0.0], "tk_v": [3615.23, 4669.07, 6247.37, 6213.26, 5361.89, 6172.45], "tk_t": [0.2484, 0.2586, 0.3244, 0.3244, 0.2806, 0.3227]}}, {"categoria": "Refrescos", "venta": 2780301.3, "ton": 62.696867, "clientes": 138, "gasto": 0.0, "cantidad": 49977.001, "cliente_mes": 500, "ticket_venta": 5560.602599999999, "ticket_ton": 0.125393734, "venta_pct": 0.36983161854338187, "gasto_pct_cat": 0.0, "rank_venta": 26, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [554526.18, 409736.96, 458953.06, 574866.5, 428803.24, 353415.36], "ton": [12.519, 9.224, 10.297, 12.986, 9.691, 7.98], "clientes": [79, 79, 85, 91, 81, 85], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [7019.32, 5186.54, 5399.45, 6317.21, 5293.87, 4157.83], "tk_t": [0.1585, 0.1168, 0.1211, 0.1427, 0.1196, 0.0939]}}, {"categoria": "Limpiadores Heavy Duty", "venta": 2390344.06, "ton": 846.759333, "clientes": 147, "gasto": 0.0, "cantidad": 69119.0, "cliente_mes": 642, "ticket_venta": 3723.277352024922, "ticket_ton": 1.3189397710280373, "venta_pct": 0.317960075976427, "gasto_pct_cat": 0.0, "rank_venta": 27, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [353625.82, 381665.11, 424371.19, 423944.17, 341320.13, 465417.64], "ton": [125.179, 131.51, 145.853, 151.924, 126.464, 165.829], "clientes": [105, 106, 103, 110, 106, 112], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3367.86, 3600.61, 4120.11, 3854.04, 3220.0, 4155.51], "tk_t": [1.1922, 1.2407, 1.4161, 1.3811, 1.1931, 1.4806]}}, {"categoria": "Cepillos", "venta": 2348073.2, "ton": 29.901328, "clientes": 124, "gasto": 0.0, "cantidad": 22640.0, "cliente_mes": 469, "ticket_venta": 5006.552665245203, "ticket_ton": 0.06375549680170575, "venta_pct": 0.3123372679120562, "gasto_pct_cat": 0.0, "rank_venta": 28, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [293015.88, 299948.96, 411409.76, 435967.19, 445247.56, 462483.85], "ton": [3.708, 3.805, 5.299, 5.571, 5.617, 5.901], "clientes": [75, 72, 79, 83, 82, 78], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3906.88, 4165.96, 5207.72, 5252.62, 5429.85, 5929.28], "tk_t": [0.0494, 0.0528, 0.0671, 0.0671, 0.0685, 0.0756]}}, {"categoria": "Salsas Culinarias", "venta": 1377047.76, "ton": 128.32399, "clientes": 117, "gasto": 0.0, "cantidad": 37574.0, "cliente_mes": 434, "ticket_venta": 3172.9211059907834, "ticket_ton": 0.2956773963133641, "venta_pct": 0.18317288197949572, "gasto_pct_cat": 0.0, "rank_venta": 29, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [321106.81, 211568.04, 211363.23, 170676.15, 207769.46, 254564.07], "ton": [29.609, 19.943, 19.752, 15.863, 19.118, 24.041], "clientes": [74, 75, 71, 68, 71, 75], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [4339.28, 2820.91, 2976.95, 2509.94, 2926.33, 3394.19], "tk_t": [0.4001, 0.2659, 0.2782, 0.2333, 0.2693, 0.3205]}}, {"categoria": "Rellenos y Cobertura", "venta": 795146.88, "ton": 75.13056, "clientes": 102, "gasto": 0.0, "cantidad": 5492.0, "cliente_mes": 293, "ticket_venta": 2713.811877133106, "ticket_ton": 0.2564182935153584, "venta_pct": 0.10576927673634517, "gasto_pct_cat": 0.0, "rank_venta": 30, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [137508.79, 116877.54, 119957.38, 151089.53, 134082.81, 135630.83], "ton": [12.969, 11.094, 11.313, 14.255, 12.709, 12.791], "clientes": [44, 49, 47, 53, 49, 51], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3125.2, 2385.26, 2552.28, 2850.75, 2736.38, 2659.43], "tk_t": [0.2947, 0.2264, 0.2407, 0.269, 0.2594, 0.2508]}}, {"categoria": "Semolas", "venta": 775536.76, "ton": 145.326, "clientes": 69, "gasto": 0.0, "cantidad": 29463.0, "cliente_mes": 241, "ticket_venta": 3217.994854771784, "ticket_ton": 0.6030124481327801, "venta_pct": 0.10316076721278025, "gasto_pct_cat": 0.0, "rank_venta": 31, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [141365.81, 104640.08, 110965.29, 131081.4, 144995.55, 142488.63], "ton": [25.988, 19.556, 21.682, 23.8, 28.132, 26.168], "clientes": [46, 31, 33, 47, 39, 45], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3073.17, 3375.49, 3362.58, 2788.97, 3717.83, 3166.41], "tk_t": [0.565, 0.6308, 0.657, 0.5064, 0.7213, 0.5815]}}, {"categoria": "Enjuague Bucal", "venta": 439110.1, "ton": 35.737772, "clientes": 72, "gasto": 0.0, "cantidad": 6785.0, "cliente_mes": 255, "ticket_venta": 1722.0003921568627, "ticket_ton": 0.1401481254901961, "venta_pct": 0.058409784220777174, "gasto_pct_cat": 0.0, "rank_venta": 32, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [63247.59, 69294.67, 68880.63, 95514.67, 78867.69, 63304.85], "ton": [5.101, 5.625, 5.628, 7.761, 6.429, 5.194], "clientes": [41, 40, 43, 48, 44, 39], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [1542.62, 1732.37, 1601.88, 1989.89, 1792.45, 1623.2], "tk_t": [0.1244, 0.1406, 0.1309, 0.1617, 0.1461, 0.1332]}}, {"categoria": "Pre Mezclas", "venta": 155583.15, "ton": 15.369, "clientes": 35, "gasto": 0.0, "cantidad": 1648.0, "cliente_mes": 109, "ticket_venta": 1427.368348623853, "ticket_ton": 0.141, "venta_pct": 0.020695443397655413, "gasto_pct_cat": 0.0, "rank_venta": 33, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [39686.69, 12010.27, 12641.48, 36060.85, 37930.87, 17252.99], "ton": [3.999, 1.206, 1.149, 3.501, 3.741, 1.773], "clientes": [17, 16, 12, 21, 24, 19], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [2334.51, 750.64, 1053.46, 1717.18, 1580.45, 908.05], "tk_t": [0.2352, 0.0754, 0.0958, 0.1667, 0.1559, 0.0933]}}, {"categoria": "Ayudas Culinarias", "venta": 81191.23, "ton": 8.04612, "clientes": 39, "gasto": 0.0, "cantidad": 3821.0, "cliente_mes": 127, "ticket_venta": 639.3010236220472, "ticket_ton": 0.06335527559055118, "venta_pct": 0.010799938842034128, "gasto_pct_cat": 0.0, "rank_venta": 34, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [11854.96, 11669.46, 12546.02, 14059.91, 12204.43, 18856.45], "ton": [1.203, 1.187, 1.162, 1.485, 1.124, 1.885], "clientes": [20, 18, 22, 25, 19, 23], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [592.75, 648.3, 570.27, 562.4, 642.34, 819.85], "tk_t": [0.0601, 0.066, 0.0528, 0.0594, 0.0592, 0.0819]}}, {"categoria": "Productos para Peinar", "venta": 54513.77, "ton": 2.014732, "clientes": 41, "gasto": 17.98, "cantidad": 675.0, "cliente_mes": 98, "ticket_venta": 556.2629591836734, "ticket_ton": 0.02055848979591837, "venta_pct": 0.007251342072890321, "gasto_pct_cat": 0.032982492313409995, "rank_venta": 35, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [3647.41, 8678.41, 8435.4, 12560.41, 7683.31, 13508.83], "ton": [0.141, 0.317, 0.32, 0.455, 0.289, 0.492], "clientes": [11, 16, 17, 18, 17, 19], "gasto": [0.0, 0.0, 17.98, 0.0, 0.0, 0.0], "tk_v": [331.58, 542.4, 496.2, 697.8, 451.96, 710.99], "tk_t": [0.0128, 0.0198, 0.0188, 0.0253, 0.017, 0.0259]}}, {"categoria": "Jabon de Tocador IDE", "venta": 3632.81, "ton": 0.19871999999999998, "clientes": 4, "gasto": 0.0, "cantidad": 24.0, "cliente_mes": 6, "ticket_venta": 605.4683333333334, "ticket_ton": 0.03312, "venta_pct": 0.00048323108080429385, "gasto_pct_cat": 0.0, "rank_venta": 36, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [0.0, 0.0, 302.22, 2576.55, 0.0, 754.04], "ton": [0.0, 0.0, 0.017, 0.141, 0.0, 0.041], "clientes": [0, 0, 1, 3, 0, 2], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [0.0, 0.0, 302.22, 858.85, 0.0, 377.02], "tk_t": [0.0, 0.0, 0.0166, 0.0469, 0.0, 0.0207]}}, {"categoria": "Auxiliares de Limpieza", "venta": -6.19, "ton": -0.000204, "clientes": 1, "gasto": 0.0, "cantidad": -2.0, "cliente_mes": 1, "ticket_venta": -6.19, "ticket_ton": -0.000204, "venta_pct": -8.233847600558738e-07, "gasto_pct_cat": -0.0, "rank_venta": 37, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [-6.19, 0.0, 0.0, 0.0, 0.0, 0.0], "ton": [-0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "clientes": [1, 0, 0, 0, 0, 0], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [-6.19, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_t": [-0.0002, 0.0, 0.0, 0.0, 0.0, 0.0]}}, {"categoria": "Cuidado de Auto", "venta": -27.61, "ton": -0.001585, "clientes": 1, "gasto": 0.0, "cantidad": -5.0, "cliente_mes": 2, "ticket_venta": -13.805, "ticket_ton": -0.0007925, "venta_pct": -3.672641878052128e-06, "gasto_pct_cat": -0.0, "rank_venta": 38, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [-22.07, -5.54, 0.0, 0.0, 0.0, 0.0], "ton": [-0.001, -0.0, 0.0, 0.0, 0.0, 0.0], "clientes": [1, 1, 0, 0, 0, 0], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [-22.07, -5.54, 0.0, 0.0, 0.0, 0.0], "tk_t": [-0.0013, -0.0003, 0.0, 0.0, 0.0, 0.0]}}, {"categoria": "Desodorantes", "venta": -75.33, "ton": -0.002247, "clientes": 1, "gasto": 0.0, "cantidad": -21.0, "cliente_mes": 1, "ticket_venta": -75.33, "ticket_ton": -0.002247, "venta_pct": -1.002028658723893e-05, "gasto_pct_cat": -0.0, "rank_venta": 39, "rank_gasto": 10, "en_top5_gasto": false, "ev": {"venta": [0.0, -75.33, 0.0, 0.0, 0.0, 0.0], "ton": [0.0, -0.002, 0.0, 0.0, 0.0, 0.0], "clientes": [0, 1, 0, 0, 0, 0], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [0.0, -75.33, 0.0, 0.0, 0.0, 0.0], "tk_t": [0.0, -0.0022, 0.0, 0.0, 0.0, 0.0]}}], "insights": {"top_cat": "Detergentes", "top_cat_pct": 28.23256964409431, "conc_top5": 63.1617763196215, "cat_mas_gasto": "Aceites", "cat_mas_gasto_val": 863150.99, "top10_sin_gasto": ["Salsas", "Conservas", "Lavavajillas", "Lejias"]}}, "MA": {"kpis": {"venta": 300474212.28, "ton": 42143.185316999996, "clientes": 212, "gasto": 731963.56, "cantidad": 6010331.785, "n_categorias": 36, "cliente_mes": 1100, "gasto_pct": 0.24360278855408476, "venta_x_cliente": 1417331.19, "ticket_venta": 273158.3748, "ticket_ton": 38.31198665181818, "meses_activos": 5.188679245283019}, "mensual": [{"mes": "Nov '25", "venta": 56820600.760000005, "ton": 7307.756905, "clientes": 179, "gasto": 289081.17, "ticket_venta": 317433.5237988827, "ticket_ton": 40.8254575698324}, {"mes": "Dic '25", "venta": 54943571.07, "ton": 7620.9982629999995, "clientes": 182, "gasto": 305505.82999999996, "ticket_venta": 301887.75313186814, "ticket_ton": 41.873616829670326}, {"mes": "Ene '26", "venta": 42262914.17, "ton": 6503.459352, "clientes": 191, "gasto": 21200.52, "ticket_venta": 221271.80193717277, "ticket_ton": 34.04952540314136}, {"mes": "Feb '26", "venta": 48843399.97, "ton": 6807.246054, "clientes": 180, "gasto": 40166.0, "ticket_venta": 271352.22205555555, "ticket_ton": 37.818033633333336}, {"mes": "Mar '26", "venta": 51171349.95, "ton": 7326.983415999999, "clientes": 182, "gasto": 48965.670000000006, "ticket_venta": 281161.2634615385, "ticket_ton": 40.25815063736263}, {"mes": "Abr '26", "venta": 46432376.36, "ton": 6576.741327, "clientes": 186, "gasto": 27044.370000000003, "ticket_venta": 249636.43204301075, "ticket_ton": 35.358824338709674}], "categorias": [{"categoria": "Aceites", "venta": 62120081.82, "ton": 8203.881802, "clientes": 139, "gasto": 664446.88, "cantidad": 871900.0, "cliente_mes": 655, "ticket_venta": 94839.81957251909, "ticket_ton": 12.525010384732825, "venta_pct": 20.674014368365416, "gasto_pct_cat": 1.0696168783636029, "rank_venta": 1, "rank_gasto": 1, "en_top5_gasto": true, "ev": {"venta": [12767948.01, 13614274.29, 7106314.57, 7806206.35, 11268297.35, 9557041.25], "ton": [1638.581, 1762.375, 954.937, 1048.306, 1527.391, 1272.292], "clientes": [105, 114, 109, 103, 114, 110], "gasto": [283608.98, 303233.47, 6201.58, 40026.34, 20371.0, 11005.51], "tk_v": [121599.5, 119423.46, 65195.55, 75788.41, 98844.71, 86882.19], "tk_t": [15.6055, 15.4594, 8.7609, 10.1777, 13.3982, 11.5663]}}, {"categoria": "Detergentes", "venta": 58246397.95, "ton": 9982.009052, "clientes": 157, "gasto": 132.0, "cantidad": 905795.75, "cliente_mes": 762, "ticket_venta": 76438.84245406825, "ticket_ton": 13.09974941207349, "venta_pct": 19.384824244325664, "gasto_pct_cat": 0.0002266234559488326, "rank_venta": 2, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [9139632.14, 10011034.66, 10728852.46, 9900224.27, 9149673.08, 9316981.34], "ton": [1560.455, 1671.133, 1867.944, 1709.643, 1567.149, 1605.685], "clientes": [119, 125, 127, 128, 130, 133], "gasto": [0.0, 132.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [76803.63, 80088.28, 84479.15, 77345.5, 70382.1, 70052.49], "tk_t": [13.1131, 13.3691, 14.7082, 13.3566, 12.055, 12.0728]}}, {"categoria": "Pastas", "venta": 33426439.46, "ton": 9660.4611, "clientes": 140, "gasto": 52457.31, "cantidad": 1251320.75, "cliente_mes": 657, "ticket_venta": 50877.38121765602, "ticket_ton": 14.703898173515983, "venta_pct": 11.124561807271242, "gasto_pct_cat": 0.15693358565088403, "rank_venta": 3, "rank_gasto": 2, "en_top5_gasto": true, "ev": {"venta": [5624501.04, 6825047.21, 5133221.26, 5251282.81, 6179441.94, 4412945.2], "ton": [1622.9, 1935.218, 1490.9, 1514.914, 1814.531, 1281.998], "clientes": [105, 119, 105, 103, 114, 111], "gasto": [345.48, 212.87, 13885.16, 139.66, 28594.67, 9279.47], "tk_v": [53566.68, 57353.34, 48887.82, 50983.33, 54205.63, 39756.26], "tk_t": [15.4562, 16.2623, 14.1991, 14.7079, 15.9169, 11.5495]}}, {"categoria": "Salsas", "venta": 28643566.41, "ton": 1349.54569, "clientes": 135, "gasto": 0.0, "cantidad": 441557.0, "cliente_mes": 638, "ticket_venta": 44895.87211598746, "ticket_ton": 2.1152753761755485, "venta_pct": 9.532786921264377, "gasto_pct_cat": 0.0, "rank_venta": 4, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [5581896.89, 5498454.45, 3781851.7, 5084218.49, 5070331.53, 3626813.35], "ton": [264.033, 261.749, 171.847, 245.347, 233.378, 173.192], "clientes": [105, 105, 109, 102, 112, 105], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [53160.92, 52366.23, 34695.89, 49845.28, 45270.82, 34541.08], "tk_t": [2.5146, 2.4928, 1.5766, 2.4054, 2.0837, 1.6494]}}, {"categoria": "Conservas", "venta": 23998182.27, "ton": 930.8663, "clientes": 126, "gasto": 0.0, "cantidad": 138511.0, "cliente_mes": 433, "ticket_venta": 55423.05374133949, "ticket_ton": 2.149806697459584, "venta_pct": 7.986769343000072, "gasto_pct_cat": 0.0, "rank_venta": 5, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [4414965.43, 3954336.3, 2210236.93, 4816220.93, 5424231.26, 3178191.42], "ton": [170.466, 152.584, 86.05, 186.93, 213.642, 121.194], "clientes": [82, 86, 67, 74, 70, 54], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [53841.04, 45980.65, 32988.61, 65084.07, 77489.02, 58855.4], "tk_t": [2.0789, 1.7742, 1.2843, 2.5261, 3.052, 2.2443]}}, {"categoria": "Jabones de Lavar", "venta": 18955014.2, "ton": 1960.57808, "clientes": 129, "gasto": 2223.6, "cantidad": 227293.0, "cliente_mes": 539, "ticket_venta": 35167.00222634508, "ticket_ton": 3.637436141001855, "venta_pct": 6.308366383979925, "gasto_pct_cat": 0.011730932915893041, "rank_venta": 6, "rank_gasto": 4, "en_top5_gasto": true, "ev": {"venta": [2351813.98, 2336358.91, 3084924.47, 4025045.97, 3194168.31, 3962702.56], "ton": [252.957, 238.887, 318.328, 415.914, 334.26, 400.231], "clientes": [81, 83, 100, 90, 94, 91], "gasto": [2223.6, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [29034.74, 28148.9, 30849.24, 44722.73, 33980.51, 43546.18], "tk_t": [3.1229, 2.8782, 3.1833, 4.6213, 3.556, 4.3981]}}, {"categoria": "Galletas", "venta": 15469392.41, "ton": 1560.356356, "clientes": 118, "gasto": 10579.36, "cantidad": 716087.285, "cliente_mes": 506, "ticket_venta": 30571.92175889328, "ticket_ton": 3.0837082134387352, "venta_pct": 5.148326138412399, "gasto_pct_cat": 0.068388982059574, "rank_venta": 7, "rank_gasto": 3, "en_top5_gasto": true, "ev": {"venta": [2926521.84, 2262190.69, 2342988.36, 2836338.48, 1904190.89, 3197162.15], "ton": [279.39, 221.281, 245.659, 287.109, 214.009, 312.908], "clientes": [79, 89, 84, 84, 83, 87], "gasto": [2404.55, 1415.42, 0.0, 0.0, 0.0, 6759.39], "tk_v": [37044.58, 25417.87, 27892.72, 33765.93, 22942.06, 36748.99], "tk_t": [3.5366, 2.4863, 2.9245, 3.418, 2.5784, 3.5966]}}, {"categoria": "Untables Domesticos", "venta": 9096622.54, "ton": 538.0381600000001, "clientes": 126, "gasto": 0.0, "cantidad": 257849.0, "cliente_mes": 584, "ticket_venta": 15576.408458904109, "ticket_ton": 0.9212982191780823, "venta_pct": 3.027422044299501, "gasto_pct_cat": 0.0, "rank_venta": 8, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [2065350.2, 1745591.58, 1294488.31, 1197722.93, 1357042.28, 1436427.24], "ton": [124.281, 108.215, 75.269, 70.576, 76.871, 82.825], "clientes": [96, 102, 101, 91, 99, 95], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [21514.06, 17113.64, 12816.72, 13161.79, 13707.5, 15120.29], "tk_t": [1.2946, 1.0609, 0.7452, 0.7756, 0.7765, 0.8718]}}, {"categoria": "Postres", "venta": 7144311.17, "ton": 467.62482, "clientes": 121, "gasto": 0.0, "cantidad": 206406.0, "cliente_mes": 538, "ticket_venta": 13279.38879182156, "ticket_ton": 0.8691911152416357, "venta_pct": 2.3776786419669516, "gasto_pct_cat": 0.0, "rank_venta": 9, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [1354696.37, 1688300.34, 1073363.77, 847867.22, 1142156.01, 1037927.46], "ton": [86.867, 105.537, 67.71, 59.422, 78.497, 69.591], "clientes": [89, 98, 84, 80, 90, 97], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [15221.31, 17227.55, 12778.14, 10598.34, 12690.62, 10700.28], "tk_t": [0.976, 1.0769, 0.8061, 0.7428, 0.8722, 0.7174]}}, {"categoria": "Suavizantes", "venta": 6104137.9799999995, "ton": 892.11906, "clientes": 124, "gasto": 0.0, "cantidad": 83127.0, "cliente_mes": 501, "ticket_venta": 12183.908143712573, "ticket_ton": 1.7806767664670657, "venta_pct": 2.031501450218229, "gasto_pct_cat": 0.0, "rank_venta": 10, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [1113304.42, 944868.48, 988747.12, 1163511.66, 948892.69, 944813.61], "ton": [161.689, 138.244, 143.235, 169.612, 142.79, 136.549], "clientes": [83, 83, 82, 85, 82, 86], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [13413.31, 11383.96, 12057.89, 13688.37, 11571.86, 10986.2], "tk_t": [1.9481, 1.6656, 1.7468, 1.9954, 1.7413, 1.5878]}}, {"categoria": "Harinas", "venta": 5495145.04, "ton": 1148.724521, "clientes": 123, "gasto": 0.0, "cantidad": 129471.0, "cliente_mes": 541, "ticket_venta": 10157.384547134936, "ticket_ton": 2.1233355286506472, "venta_pct": 1.8288241770575944, "gasto_pct_cat": 0.0, "rank_venta": 11, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [1000992.33, 1057571.93, 701255.46, 731992.47, 1020192.51, 983140.34], "ton": [207.51, 221.073, 148.302, 152.875, 211.794, 207.17], "clientes": [85, 90, 91, 88, 100, 87], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [11776.38, 11750.8, 7706.1, 8318.1, 10201.93, 11300.46], "tk_t": [2.4413, 2.4564, 1.6297, 1.7372, 2.1179, 2.3813]}}, {"categoria": "Lavavajillas", "venta": 4831013.84, "ton": 1031.081788, "clientes": 105, "gasto": 0.0, "cantidad": 190823.0, "cliente_mes": 394, "ticket_venta": 12261.456446700508, "ticket_ton": 2.616958852791878, "venta_pct": 1.6077964905348248, "gasto_pct_cat": 0.0, "rank_venta": 12, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [621055.07, 680936.07, 920208.31, 869440.19, 810155.4, 929218.8], "ton": [132.687, 145.884, 192.011, 190.676, 173.267, 196.557], "clientes": [58, 62, 72, 71, 68, 63], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [10707.85, 10982.84, 12780.67, 12245.64, 11914.05, 14749.5], "tk_t": [2.2877, 2.353, 2.6668, 2.6856, 2.548, 3.12]}}, {"categoria": "Panetones", "venta": 4030955.43, "ton": 338.76191, "clientes": 43, "gasto": 0.0, "cantidad": 75053.0, "cliente_mes": 107, "ticket_venta": 37672.48065420561, "ticket_ton": 3.165999158878505, "venta_pct": 1.3415312413711273, "gasto_pct_cat": 0.0, "rank_venta": 13, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [4614512.76, 1027893.68, -1288726.84, -95.61, -322628.56, 0.0], "ton": [270.203, 65.522, 0.0, 0.0, 3.037, 0.0], "clientes": [30, 23, 32, 3, 19, 0], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [153817.09, 44691.03, -40272.71, -31.87, -16980.45, 0.0], "tk_t": [9.0068, 2.8488, 0.0, 0.0, 0.1598, 0.0]}}, {"categoria": "Lejias", "venta": 2780164.23, "ton": 1755.04716, "clientes": 101, "gasto": 0.0, "cantidad": 128189.0, "cliente_mes": 382, "ticket_venta": 7277.916832460733, "ticket_ton": 4.594364293193718, "venta_pct": 0.9252588463096709, "gasto_pct_cat": 0.0, "rank_venta": 14, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [322900.77, 407216.88, 486065.1, 557824.04, 511396.69, 494760.75], "ton": [206.044, 258.489, 308.921, 348.748, 321.322, 311.524], "clientes": [53, 55, 72, 63, 68, 71], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [6092.47, 7403.94, 6750.9, 8854.35, 7520.54, 6968.46], "tk_t": [3.8876, 4.6998, 4.2906, 5.5357, 4.7253, 4.3877]}}, {"categoria": "Insecticidas", "venta": 2566610.53, "ton": 123.80008, "clientes": 82, "gasto": 0.0, "cantidad": 37493.0, "cliente_mes": 277, "ticket_venta": 9265.741985559565, "ticket_ton": 0.4469316967509025, "venta_pct": 0.8541866240448871, "gasto_pct_cat": 0.0, "rank_venta": 15, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [329303.58, 313704.42, 479761.27, 584087.03, 457691.36, 402062.87], "ton": [15.713, 15.379, 23.151, 27.939, 21.767, 19.852], "clientes": [36, 38, 49, 53, 47, 54], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [9147.32, 8255.38, 9791.05, 11020.51, 9738.11, 7445.61], "tk_t": [0.4365, 0.4047, 0.4725, 0.5271, 0.4631, 0.3676]}}, {"categoria": "Cuidado del aire", "venta": 2518452.5, "ton": 139.463016, "clientes": 75, "gasto": 0.0, "cantidad": 51054.0, "cliente_mes": 297, "ticket_venta": 8479.638047138047, "ticket_ton": 0.46957244444444446, "venta_pct": 0.8381592819197256, "gasto_pct_cat": 0.0, "rank_venta": 16, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [324343.88, 408146.82, 511835.45, 418712.56, 426776.57, 428637.22], "ton": [17.943, 22.357, 28.568, 22.991, 23.734, 23.87], "clientes": [40, 46, 51, 53, 50, 57], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [8108.6, 8872.76, 10035.99, 7900.24, 8535.53, 7519.95], "tk_t": [0.4486, 0.486, 0.5602, 0.4338, 0.4747, 0.4188]}}, {"categoria": "Refrescos", "venta": 2126348.43, "ton": 48.0336, "clientes": 106, "gasto": 0.0, "cantidad": 38364.0, "cliente_mes": 375, "ticket_venta": 5670.26248, "ticket_ton": 0.1280896, "venta_pct": 0.7076641998210949, "gasto_pct_cat": 0.0, "rank_venta": 17, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [436801.23, 296260.66, 348751.79, 417831.02, 354580.4, 272123.33], "ton": [9.874, 6.691, 7.855, 9.427, 8.035, 6.152], "clientes": [59, 59, 63, 69, 62, 63], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [7403.41, 5021.37, 5535.74, 6055.52, 5719.04, 4319.42], "tk_t": [0.1674, 0.1134, 0.1247, 0.1366, 0.1296, 0.0976]}}, {"categoria": "Pasta Dental", "venta": 1900250.85, "ton": 84.08088, "clientes": 67, "gasto": 1948.02, "cantidad": 11102.0, "cliente_mes": 211, "ticket_venta": 9005.928199052134, "ticket_ton": 0.3984875829383886, "venta_pct": 0.6324172831940836, "gasto_pct_cat": 0.10251383389724572, "rank_venta": 18, "rank_gasto": 5, "en_top5_gasto": true, "ev": {"venta": [246736.41, 255290.32, 423195.21, 323824.49, 389481.72, 261722.7], "ton": [11.546, 10.989, 19.547, 14.041, 16.828, 11.13], "clientes": [28, 35, 39, 35, 40, 34], "gasto": [498.56, 512.07, 937.39, 0.0, 0.0, 0.0], "tk_v": [8812.01, 7294.01, 10851.16, 9252.13, 9737.04, 7697.73], "tk_t": [0.4124, 0.314, 0.5012, 0.4012, 0.4207, 0.3274]}}, {"categoria": "Quitamanchas", "venta": 1385976.71, "ton": 385.090776, "clientes": 71, "gasto": 0.0, "cantidad": 42726.0, "cliente_mes": 259, "ticket_venta": 5351.261428571428, "ticket_ton": 1.486836972972973, "venta_pct": 0.4612631145558884, "gasto_pct_cat": 0.0, "rank_venta": 19, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [210720.62, 218672.68, 275468.05, 175538.64, 209331.36, 296245.36], "ton": [58.29, 60.749, 75.816, 48.294, 59.512, 82.43], "clientes": [45, 41, 48, 39, 40, 46], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [4682.68, 5333.48, 5738.92, 4500.99, 5233.28, 6440.12], "tk_t": [1.2953, 1.4817, 1.5795, 1.2383, 1.4878, 1.7919]}}, {"categoria": "Limpiadores Light Duty", "venta": 1328835.06, "ton": 651.64176, "clientes": 72, "gasto": 0.0, "cantidad": 60379.0, "cliente_mes": 271, "ticket_venta": 4903.450405904059, "ticket_ton": 2.404582140221402, "venta_pct": 0.442245958452405, "gasto_pct_cat": 0.0, "rank_venta": 20, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [190878.97, 194479.83, 271307.36, 226280.45, 243727.37, 202161.08], "ton": [93.445, 95.347, 132.911, 111.438, 119.379, 99.122], "clientes": [40, 37, 58, 43, 46, 47], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [4771.97, 5256.21, 4677.71, 5262.34, 5298.42, 4301.3], "tk_t": [2.3361, 2.5769, 2.2916, 2.5916, 2.5952, 2.109]}}, {"categoria": "Limpiadores Especializados", "venta": 1235506.21, "ton": 110.4879, "clientes": 58, "gasto": 0.0, "cantidad": 18658.0, "cliente_mes": 236, "ticket_venta": 5235.195805084745, "ticket_ton": 0.46816906779661016, "venta_pct": 0.4111854393842892, "gasto_pct_cat": 0.0, "rank_venta": 21, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [213764.57, 174555.91, 228245.03, 216423.35, 211492.22, 191025.13], "ton": [19.628, 16.881, 20.895, 17.299, 19.66, 16.124], "clientes": [34, 36, 42, 43, 42, 39], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [6287.19, 4848.78, 5434.41, 5033.1, 5035.53, 4898.08], "tk_t": [0.5773, 0.4689, 0.4975, 0.4023, 0.4681, 0.4134]}}, {"categoria": "Jabon Liquido", "venta": 1166892.71, "ton": 145.31304, "clientes": 70, "gasto": 0.0, "cantidad": 22272.0, "cliente_mes": 240, "ticket_venta": 4862.052958333333, "ticket_ton": 0.605471, "venta_pct": 0.3883503682880509, "gasto_pct_cat": 0.0, "rank_venta": 22, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [96228.51, 142382.64, 216715.1, 343130.47, 227181.62, 141254.37], "ton": [12.147, 18.064, 26.967, 41.95, 28.403, 17.782], "clientes": [28, 32, 46, 51, 44, 39], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3436.73, 4449.46, 4711.2, 6728.05, 5163.22, 3621.91], "tk_t": [0.4338, 0.5645, 0.5862, 0.8226, 0.6455, 0.4559]}}, {"categoria": "Cereales", "venta": 1097696.23, "ton": 66.366503, "clientes": 59, "gasto": 0.0, "cantidad": 17954.0, "cliente_mes": 177, "ticket_venta": 6201.673615819209, "ticket_ton": 0.3749519943502825, "venta_pct": 0.36532127721399943, "gasto_pct_cat": 0.0, "rank_venta": 23, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [152586.62, 195878.11, 181123.43, 195170.27, 99472.36, 273465.44], "ton": [9.733, 12.34, 10.646, 11.412, 6.264, 15.972], "clientes": [24, 23, 30, 35, 27, 38], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [6357.78, 8516.44, 6037.45, 5576.29, 3684.16, 7196.46], "tk_t": [0.4055, 0.5365, 0.3549, 0.326, 0.232, 0.4203]}}, {"categoria": "Shampoo", "venta": 746439.45, "ton": 38.038134, "clientes": 69, "gasto": 158.41, "cantidad": 7274.0, "cliente_mes": 218, "ticket_venta": 3424.0341743119266, "ticket_ton": 0.17448685321100918, "venta_pct": 0.24842046987527255, "gasto_pct_cat": 0.021222083050406834, "rank_venta": 24, "rank_gasto": 6, "en_top5_gasto": false, "ev": {"venta": [81867.98, 118968.6, 139406.09, 137031.44, 120948.72, 148216.62], "ton": [4.236, 6.093, 7.17, 6.906, 6.118, 7.516], "clientes": [29, 35, 34, 41, 35, 44], "gasto": [0.0, 0.0, 158.41, 0.0, 0.0, 0.0], "tk_v": [2823.03, 3399.1, 4100.18, 3342.23, 3455.68, 3368.56], "tk_t": [0.1461, 0.1741, 0.2109, 0.1684, 0.1748, 0.1708]}}, {"categoria": "Semolas", "venta": 649907.16, "ton": 120.22, "clientes": 62, "gasto": 0.0, "cantidad": 24877.0, "cliente_mes": 215, "ticket_venta": 3022.824, "ticket_ton": 0.5591627906976744, "venta_pct": 0.21629382271060826, "gasto_pct_cat": 0.0, "rank_venta": 25, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [119679.35, 91106.9, 76122.94, 117893.86, 119473.49, 125630.62], "ton": [21.764, 16.822, 14.39, 21.22, 23.342, 22.682], "clientes": [41, 27, 28, 43, 36, 40], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [2919.01, 3374.33, 2718.68, 2741.72, 3318.71, 3140.77], "tk_t": [0.5308, 0.623, 0.5139, 0.4935, 0.6484, 0.5671]}}, {"categoria": "Rellenos y Cobertura", "venta": 627070.88, "ton": 59.95944, "clientes": 82, "gasto": 0.0, "cantidad": 4383.0, "cliente_mes": 218, "ticket_venta": 2876.4719266055044, "ticket_ton": 0.2750433027522936, "venta_pct": 0.20869374288122183, "gasto_pct_cat": 0.0, "rank_venta": 26, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [110426.37, 98377.64, 83378.32, 124242.61, 101053.01, 109592.93], "ton": [10.547, 9.426, 7.975, 11.847, 9.699, 10.465], "clientes": [32, 39, 31, 40, 36, 40], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3450.82, 2522.5, 2689.62, 3106.07, 2807.03, 2739.82], "tk_t": [0.3296, 0.2417, 0.2573, 0.2962, 0.2694, 0.2616]}}, {"categoria": "Salsas Culinarias", "venta": 614983.45, "ton": 57.81576, "clientes": 82, "gasto": 0.0, "cantidad": 16255.0, "cliente_mes": 276, "ticket_venta": 2228.2009057971013, "ticket_ton": 0.2094773913043478, "venta_pct": 0.20467095839390076, "gasto_pct_cat": 0.0, "rank_venta": 27, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [147377.65, 137518.31, 61916.89, 75537.83, 95267.34, 97365.43], "ton": [13.713, 13.057, 5.826, 7.155, 8.945, 9.119], "clientes": [47, 50, 45, 43, 43, 48], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3135.69, 2750.37, 1375.93, 1756.69, 2215.52, 2028.45], "tk_t": [0.2918, 0.2611, 0.1295, 0.1664, 0.208, 0.19]}}, {"categoria": "Lavavajillas JW", "venta": 540565.25, "ton": 102.05985, "clientes": 45, "gasto": 0.0, "cantidad": 10472.0, "cliente_mes": 89, "ticket_venta": 6073.766853932584, "ticket_ton": 1.1467398876404493, "venta_pct": 0.17990404098181598, "gasto_pct_cat": 0.0, "rank_venta": 28, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [0.0, 0.0, 84436.64, 109092.09, 162016.5, 185020.02], "ton": [0.0, 0.0, 15.787, 20.395, 30.78, 35.099], "clientes": [0, 0, 18, 21, 24, 26], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [0.0, 0.0, 4690.92, 5194.86, 6750.69, 7116.15], "tk_t": [0.0, 0.0, 0.877, 0.9712, 1.2825, 1.35]}}, {"categoria": "Cuidado de Piso", "venta": 537529.68, "ton": 45.308504, "clientes": 54, "gasto": 0.0, "cantidad": 5166.0, "cliente_mes": 188, "ticket_venta": 2859.2004255319152, "ticket_ton": 0.24100268085106383, "venta_pct": 0.17889378124040056, "gasto_pct_cat": 0.0, "rank_venta": 29, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [82685.65, 93811.26, 110562.68, 94589.5, 92691.22, 63189.37], "ton": [6.581, 7.858, 9.481, 8.26, 7.886, 5.242], "clientes": [27, 27, 40, 33, 31, 30], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3062.43, 3474.49, 2764.07, 2866.35, 2990.04, 2106.31], "tk_t": [0.2437, 0.291, 0.237, 0.2503, 0.2544, 0.1747]}}, {"categoria": "Limpiadores Heavy Duty", "venta": 391345.5, "ton": 113.867436, "clientes": 57, "gasto": 0.0, "cantidad": 9709.0, "cliente_mes": 223, "ticket_venta": 1754.9125560538116, "ticket_ton": 0.5106163049327355, "venta_pct": 0.13024262449361898, "gasto_pct_cat": 0.0, "rank_venta": 30, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [66653.04, 61259.53, 76143.94, 66719.65, 61170.11, 59399.23], "ton": [19.08, 18.541, 20.573, 19.741, 17.868, 18.065], "clientes": [32, 40, 35, 39, 38, 39], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [2082.91, 1531.49, 2175.54, 1710.76, 1609.74, 1523.06], "tk_t": [0.5962, 0.4635, 0.5878, 0.5062, 0.4702, 0.4632]}}, {"categoria": "Cepillos", "venta": 368203.01, "ton": 4.500756, "clientes": 44, "gasto": 0.0, "cantidad": 3420.0, "cliente_mes": 129, "ticket_venta": 2854.2868992248063, "ticket_ton": 0.03488958139534884, "venta_pct": 0.12254063575242397, "gasto_pct_cat": 0.0, "rank_venta": 31, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [57834.45, 44043.33, 84252.44, 57362.08, 72314.64, 52396.07], "ton": [0.669, 0.539, 1.059, 0.71, 0.895, 0.628], "clientes": [17, 20, 28, 24, 21, 19], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3402.03, 2202.17, 3009.02, 2390.09, 3443.55, 2757.69], "tk_t": [0.0394, 0.0269, 0.0378, 0.0296, 0.0426, 0.0331]}}, {"categoria": "Enjuague Bucal", "venta": 164047.66, "ton": 13.050192000000001, "clientes": 23, "gasto": 0.0, "cantidad": 2527.0, "cliente_mes": 86, "ticket_venta": 1907.5309302325581, "ticket_ton": 0.15174641860465118, "venta_pct": 0.054596252621882405, "gasto_pct_cat": 0.0, "rank_venta": 32, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [15379.97, 29652.89, 26918.55, 37466.31, 31942.93, 22687.01], "ton": [1.182, 2.334, 2.166, 3.009, 2.517, 1.842], "clientes": [11, 12, 15, 17, 17, 14], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [1398.18, 2471.07, 1794.57, 2203.9, 1879.0, 1620.5], "tk_t": [0.1074, 0.1945, 0.1444, 0.177, 0.148, 0.1316]}}, {"categoria": "Pre Mezclas", "venta": 119099.19, "ton": 11.535, "clientes": 27, "gasto": 0.0, "cantidad": 1305.0, "cliente_mes": 85, "ticket_venta": 1401.1669411764706, "ticket_ton": 0.13570588235294118, "venta_pct": 0.03963707537371499, "gasto_pct_cat": 0.0, "rank_venta": 33, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [32041.19, 8271.41, 9683.41, 26809.34, 31061.23, 11232.61], "ton": [3.108, 0.804, 0.936, 2.595, 3.003, 1.089], "clientes": [14, 11, 11, 16, 18, 15], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [2288.66, 751.95, 880.31, 1675.58, 1725.62, 748.84], "tk_t": [0.222, 0.0731, 0.0851, 0.1622, 0.1668, 0.0726]}}, {"categoria": "Ayudas Culinarias", "venta": 33144.98, "ton": 2.9562600000000003, "clientes": 30, "gasto": 0.0, "cantidad": 1405.0, "cliente_mes": 85, "ticket_venta": 389.94094117647063, "ticket_ton": 0.03477952941176471, "venta_pct": 0.011030890054922086, "gasto_pct_cat": 0.0, "rank_venta": 34, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [5199.47, 4902.79, 6047.79, 4601.34, 4191.13, 8202.46], "ton": [0.493, 0.461, 0.492, 0.414, 0.345, 0.75], "clientes": [14, 10, 16, 16, 13, 16], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [371.39, 490.28, 377.99, 287.58, 322.39, 512.65], "tk_t": [0.0352, 0.0461, 0.0308, 0.0258, 0.0266, 0.0469]}}, {"categoria": "Productos para Peinar", "venta": 12679.289999999999, "ton": 0.434391, "clientes": 13, "gasto": 17.98, "cantidad": 146.0, "cliente_mes": 23, "ticket_venta": 551.2734782608695, "ticket_ton": 0.018886565217391304, "venta_pct": 0.004219759793624043, "gasto_pct_cat": 0.14180604749950512, "rank_venta": 35, "rank_gasto": 8, "en_top5_gasto": false, "ev": {"venta": [0.0, 2211.55, 3850.81, 2353.34, 1943.27, 2320.32], "ton": [0.0, 0.075, 0.133, 0.081, 0.066, 0.078], "clientes": [0, 4, 4, 4, 3, 8], "gasto": [0.0, 0.0, 17.98, 0.0, 0.0, 0.0], "tk_v": [0.0, 552.89, 962.7, 588.34, 647.76, 290.04], "tk_t": [0.0, 0.0189, 0.0333, 0.0203, 0.0221, 0.0098]}}, {"categoria": "Jabon de Tocador IDE", "venta": 1202.8, "ton": 0.06624, "clientes": 2, "gasto": 0.0, "cantidad": 8.0, "cliente_mes": 2, "ticket_venta": 601.4, "ticket_ton": 0.03312, "venta_pct": 0.00040030057517187473, "gasto_pct_cat": 0.0, "rank_venta": 36, "rank_gasto": 9, "en_top5_gasto": false, "ev": {"venta": [0.0, 0.0, 0.0, 902.1, 0.0, 300.7], "ton": [0.0, 0.0, 0.0, 0.05, 0.0, 0.017], "clientes": [0, 0, 0, 1, 0, 1], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [0.0, 0.0, 0.0, 902.1, 0.0, 300.7], "tk_t": [0.0, 0.0, 0.0, 0.0497, 0.0, 0.0166]}}], "insights": {"top_cat": "Aceites", "top_cat_pct": 20.674014368365416, "conc_top5": 68.70295668422676, "cat_mas_gasto": "Aceites", "cat_mas_gasto_val": 664446.88, "top10_sin_gasto": ["Salsas", "Conservas", "Untables Domesticos", "Postres", "Suavizantes"]}}, "CODIS": {"kpis": {"venta": 451300693.0, "ton": 92228.6709, "clientes": 182, "gasto": 236386.59000000003, "cantidad": 12801036.43, "n_categorias": 39, "cliente_mes": 948, "gasto_pct": 0.05237895568664683, "venta_x_cliente": 2479674.1373626376, "ticket_venta": 476055.5833333333, "ticket_ton": 97.28762753164557, "meses_activos": 5.208791208791209}, "mensual": [{"mes": "Nov '25", "venta": 78093462.84, "ton": 15469.063573000001, "clientes": 156, "gasto": 73212.17, "ticket_venta": 500599.12076923077, "ticket_ton": 99.16066392948719}, {"mes": "Dic '25", "venta": 73150535.44, "ton": 14867.998456000001, "clientes": 153, "gasto": 55253.380000000005, "ticket_venta": 478108.0747712418, "ticket_ton": 97.17646049673203}, {"mes": "Ene '26", "venta": 70254133.42, "ton": 14584.413637, "clientes": 159, "gasto": 18544.36, "ticket_venta": 441849.8957232704, "ticket_ton": 91.7258719308176}, {"mes": "Feb '26", "venta": 75495802.93, "ton": 15608.938141999999, "clientes": 162, "gasto": 47461.14, "ticket_venta": 466023.4748765433, "ticket_ton": 96.35147001234567}, {"mes": "Mar '26", "venta": 78766803.01, "ton": 16077.095874, "clientes": 160, "gasto": 40962.969999999994, "ticket_venta": 492292.51881250006, "ticket_ton": 100.48184921250001}, {"mes": "Abr '26", "venta": 75539955.36000001, "ton": 15621.161218, "clientes": 158, "gasto": 952.57, "ticket_venta": 478100.9832911393, "ticket_ton": 98.86810897468354}], "categorias": [{"categoria": "Detergentes", "venta": 153998975.75, "ton": 37782.678084, "clientes": 127, "gasto": 0.0, "cantidad": 3691412.001, "cliente_mes": 678, "ticket_venta": 227137.13237463127, "ticket_ton": 55.726663840707964, "venta_pct": 34.12336345559301, "gasto_pct_cat": 0.0, "rank_venta": 1, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [26242381.26, 24346177.21, 25497110.29, 26165788.46, 26373673.03, 25373845.5], "ton": [6435.971, 6025.877, 6174.504, 6418.514, 6471.72, 6256.092], "clientes": [116, 118, 108, 113, 110, 113], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [226227.42, 206323.54, 236084.35, 231555.65, 239760.66, 224547.31], "tk_t": [55.4825, 51.0668, 57.1713, 56.801, 58.8338, 55.3636]}}, {"categoria": "Galletas", "venta": 36795378.2, "ton": 3899.070302, "clientes": 87, "gasto": 6135.21, "cantidad": 2328233.979, "cliente_mes": 410, "ticket_venta": 89744.82487804879, "ticket_ton": 9.509927565853658, "venta_pct": 8.153184511063891, "gasto_pct_cat": 0.01667386041434954, "rank_venta": 2, "rank_gasto": 4, "en_top5_gasto": true, "ev": {"venta": [6681043.56, 6344979.4, 5397943.24, 6032728.39, 5915431.92, 6423251.69], "ton": [718.127, 699.341, 566.059, 633.047, 615.394, 667.102], "clientes": [73, 70, 64, 69, 65, 69], "gasto": [2996.54, 2186.1, 0.0, 0.0, 0.0, 952.57], "tk_v": [91521.14, 90642.56, 84342.86, 87430.85, 91006.64, 93090.6], "tk_t": [9.8374, 9.9906, 8.8447, 9.1746, 9.4676, 9.6681]}}, {"categoria": "Pastas", "venta": 36087943.56, "ton": 12017.04189, "clientes": 65, "gasto": 17257.43, "cantidad": 1519061.0, "cliente_mes": 325, "ticket_venta": 111039.82633846154, "ticket_ton": 36.97551350769231, "venta_pct": 7.996429901338529, "gasto_pct_cat": 0.047820486006102586, "rank_venta": 3, "rank_gasto": 2, "en_top5_gasto": true, "ev": {"venta": [5903409.7, 6370693.43, 5124970.29, 6117328.63, 6290082.76, 6281458.75], "ton": [1959.517, 2077.623, 1735.201, 1999.642, 2096.056, 2149.002], "clientes": [57, 57, 52, 55, 52, 52], "gasto": [0.0, 0.0, 0.0, 0.0, 17257.43, 0.0], "tk_v": [103568.59, 111766.55, 98557.12, 111224.16, 120963.13, 120797.28], "tk_t": [34.3775, 36.4495, 33.3692, 36.3571, 40.3088, 41.327]}}, {"categoria": "Aceites", "venta": 28683412.14, "ton": 4270.227323, "clientes": 76, "gasto": 198704.11000000002, "cantidad": 452153.0, "cliente_mes": 366, "ticket_venta": 78369.97852459016, "ticket_ton": 11.667287767759563, "venta_pct": 6.355720827576926, "gasto_pct_cat": 0.6927492065105474, "rank_venta": 4, "rank_gasto": 1, "en_top5_gasto": true, "ev": {"venta": [5421799.89, 4617238.18, 3541189.62, 4737070.19, 6238392.12, 4127722.14], "ton": [802.344, 666.273, 530.774, 714.15, 948.213, 608.473], "clientes": [63, 60, 58, 63, 60, 62], "gasto": [65436.94, 47188.04, 14912.45, 47461.14, 23705.54, 0.0], "tk_v": [86060.32, 76953.97, 61054.99, 75191.59, 103973.2, 66576.16], "tk_t": [12.7356, 11.1045, 9.1513, 11.3357, 15.8036, 9.8141]}}, {"categoria": "Cereales", "venta": 26480932.49, "ton": 1661.909429, "clientes": 79, "gasto": 915.1199999999999, "cantidad": 453264.033, "cliente_mes": 370, "ticket_venta": 71570.0878108108, "ticket_ton": 4.491647105405406, "venta_pct": 5.867691519365781, "gasto_pct_cat": 0.003455769544163812, "rank_venta": 5, "rank_gasto": 5, "en_top5_gasto": true, "ev": {"venta": [3842311.54, 4074410.88, 3594766.62, 3948534.02, 5379690.54, 5641218.89], "ton": [237.14, 257.973, 230.974, 251.307, 335.593, 348.922], "clientes": [64, 61, 56, 62, 64, 63], "gasto": [625.81, 289.31, 0.0, 0.0, 0.0, 0.0], "tk_v": [60036.12, 66793.62, 64192.26, 63686.03, 84057.66, 89543.16], "tk_t": [3.7053, 4.2291, 4.1245, 4.0533, 5.2436, 5.5384]}}, {"categoria": "Salsas", "venta": 21362796.4, "ton": 1014.571625, "clientes": 55, "gasto": 0.0, "cantidad": 360851.0, "cliente_mes": 256, "ticket_venta": 83448.4234375, "ticket_ton": 3.96317041015625, "venta_pct": 4.733605937538411, "gasto_pct_cat": 0.0, "rank_venta": 6, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [4440692.17, 4316034.34, 3162394.93, 3212464.12, 3201466.84, 3029744.0], "ton": [216.742, 206.963, 147.81, 150.315, 149.045, 143.697], "clientes": [43, 40, 43, 47, 44, 39], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [103271.91, 107900.86, 73544.07, 68350.3, 72760.61, 77685.74], "tk_t": [5.0405, 5.1741, 3.4374, 3.1982, 3.3874, 3.6845]}}, {"categoria": "Jabones de Lavar", "venta": 20059549.94, "ton": 2843.710145, "clientes": 103, "gasto": 165.5, "cantidad": 362067.0, "cliente_mes": 500, "ticket_venta": 40119.09988, "ticket_ton": 5.68742029, "venta_pct": 4.444830298543327, "gasto_pct_cat": 0.0008250434356454958, "rank_venta": 7, "rank_gasto": 6, "en_top5_gasto": false, "ev": {"venta": [3114008.59, 2740034.78, 3041705.17, 3458221.5, 3879915.75, 3825664.15], "ton": [438.402, 395.272, 432.105, 478.109, 544.104, 555.718], "clientes": [87, 79, 76, 84, 90, 84], "gasto": [165.5, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [35793.2, 34683.98, 40022.44, 41169.3, 43110.18, 45543.62], "tk_t": [5.0391, 5.0034, 5.6856, 5.6918, 6.0456, 6.6157]}}, {"categoria": "Lejias", "venta": 18695782.27, "ton": 11747.37502, "clientes": 105, "gasto": 0.0, "cantidad": 1014554.0, "cliente_mes": 564, "ticket_venta": 33148.55012411348, "ticket_ton": 20.828679113475175, "venta_pct": 4.142644263566419, "gasto_pct_cat": 0.0, "rank_venta": 8, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [3029666.02, 3131142.89, 3019117.52, 3221797.7, 3052862.03, 3241196.11], "ton": [1910.952, 1948.269, 1899.962, 2014.323, 1934.151, 2039.718], "clientes": [98, 94, 90, 94, 94, 94], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [30914.96, 33310.03, 33545.75, 34274.44, 32477.26, 34480.81], "tk_t": [19.4995, 20.7263, 21.1107, 21.429, 20.5761, 21.6991]}}, {"categoria": "Lavavajillas", "venta": 17618845.35, "ton": 4011.950881, "clientes": 112, "gasto": 0.0, "cantidad": 725470.0, "cliente_mes": 603, "ticket_venta": 29218.649004975126, "ticket_ton": 6.653318210613599, "venta_pct": 3.904014689824552, "gasto_pct_cat": 0.0, "rank_venta": 9, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [2941922.63, 2841203.44, 2954389.96, 3025463.05, 2875607.84, 2980258.43], "ton": [654.314, 642.9, 665.245, 703.455, 659.311, 686.727], "clientes": [102, 100, 98, 102, 100, 101], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [28842.38, 28412.03, 30146.84, 29661.4, 28756.08, 29507.51], "tk_t": [6.4148, 6.429, 6.7882, 6.8966, 6.5931, 6.7993]}}, {"categoria": "Insecticidas", "venta": 13551394.27, "ton": 680.685919, "clientes": 103, "gasto": 0.0, "cantidad": 204830.0, "cliente_mes": 502, "ticket_venta": 26994.809302788843, "ticket_ton": 1.355948045816733, "venta_pct": 3.0027417374251626, "gasto_pct_cat": 0.0, "rank_venta": 10, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [2052445.16, 3269197.18, 2406880.69, 1870483.87, 2080593.34, 1871794.03], "ton": [103.207, 164.319, 120.922, 92.73, 103.836, 95.672], "clientes": [85, 83, 85, 84, 83, 82], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [24146.41, 39387.92, 28316.24, 22267.67, 25067.39, 22826.76], "tk_t": [1.2142, 1.9797, 1.4226, 1.1039, 1.251, 1.1667]}}, {"categoria": "Suavizantes", "venta": 8235786.41, "ton": 1257.102238, "clientes": 89, "gasto": 0.0, "cantidad": 118422.666, "cliente_mes": 433, "ticket_venta": 19020.29193995381, "ticket_ton": 2.903238424942263, "venta_pct": 1.8249000140578113, "gasto_pct_cat": 0.0, "rank_venta": 11, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [1476739.93, 1409451.75, 1213659.57, 1509279.55, 1318863.16, 1307792.45], "ton": [225.982, 216.139, 186.118, 226.945, 201.606, 200.312], "clientes": [69, 74, 73, 76, 69, 72], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [21402.03, 19046.65, 16625.47, 19858.94, 19113.96, 18163.78], "tk_t": [3.2751, 2.9208, 2.5496, 2.9861, 2.9218, 2.7821]}}, {"categoria": "Limpiadores Light Duty", "venta": 8228103.86, "ton": 4141.860672, "clientes": 100, "gasto": 0.0, "cantidad": 384639.0, "cliente_mes": 534, "ticket_venta": 15408.434194756555, "ticket_ton": 7.756293393258426, "venta_pct": 1.8231977011389167, "gasto_pct_cat": 0.0, "rank_venta": 12, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [1245854.28, 1326064.92, 1372399.52, 1348303.81, 1494544.9, 1440936.43], "ton": [626.97, 666.587, 690.628, 678.053, 753.074, 726.548], "clientes": [90, 90, 87, 90, 87, 90], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [13842.83, 14734.05, 15774.71, 14981.15, 17178.68, 16010.4], "tk_t": [6.9663, 7.4065, 7.9382, 7.5339, 8.656, 8.0728]}}, {"categoria": "Cuidado del aire", "venta": 7961667.39, "ton": 454.056964, "clientes": 101, "gasto": 0.0, "cantidad": 166290.0, "cliente_mes": 526, "ticket_venta": 15136.249790874524, "ticket_ton": 0.8632261673003803, "venta_pct": 1.7641602402768746, "gasto_pct_cat": 0.0, "rank_venta": 13, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [1267697.58, 1367586.15, 1259825.14, 1201165.5, 1554774.85, 1310618.17], "ton": [72.633, 77.744, 70.871, 67.86, 91.012, 73.937], "clientes": [88, 90, 84, 86, 86, 92], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [14405.65, 15195.4, 14997.92, 13967.04, 18078.78, 14245.85], "tk_t": [0.8254, 0.8638, 0.8437, 0.7891, 1.0583, 0.8037]}}, {"categoria": "Pasta Dental", "venta": 6946843.45, "ton": 324.184718, "clientes": 91, "gasto": 13209.22, "cantidad": 35339.0, "cliente_mes": 427, "ticket_venta": 16268.954215456675, "ticket_ton": 0.7592147962529273, "venta_pct": 1.539293769708437, "gasto_pct_cat": 0.19014708039807632, "rank_venta": 14, "rank_gasto": 3, "en_top5_gasto": true, "ev": {"venta": [1194901.06, 1046497.71, 1175210.47, 1264423.26, 1092268.27, 1173542.68], "ton": [56.89, 49.103, 55.104, 59.052, 49.291, 54.744], "clientes": [72, 68, 68, 69, 71, 79], "gasto": [3987.38, 5589.93, 3631.91, 0.0, 0.0, 0.0], "tk_v": [16595.85, 15389.67, 17282.51, 18324.97, 15384.06, 14854.97], "tk_t": [0.7901, 0.7221, 0.8104, 0.8558, 0.6942, 0.693]}}, {"categoria": "Untables Domesticos", "venta": 6452522.21, "ton": 385.79842, "clientes": 31, "gasto": 0.0, "cantidad": 183111.0, "cliente_mes": 147, "ticket_venta": 43894.70891156462, "ticket_ton": 2.624479047619048, "venta_pct": 1.4297612013638101, "gasto_pct_cat": 0.0, "rank_venta": 15, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [1287870.93, 859156.24, 1376665.19, 864151.33, 992727.2, 1071951.32], "ton": [77.02, 52.106, 81.968, 52.57, 58.269, 63.865], "clientes": [24, 23, 23, 27, 26, 24], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [53661.29, 37354.62, 59855.01, 32005.6, 38181.82, 44664.64], "tk_t": [3.2092, 2.2655, 3.5638, 1.947, 2.2411, 2.6611]}}, {"categoria": "Quitamanchas", "venta": 5959700.12, "ton": 1676.144772, "clientes": 101, "gasto": 0.0, "cantidad": 198911.0, "cliente_mes": 504, "ticket_venta": 11824.801825396826, "ticket_ton": 3.325684071428572, "venta_pct": 1.320560817308561, "gasto_pct_cat": 0.0, "rank_venta": 16, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [1059342.02, 921427.08, 1081492.14, 845574.1, 985971.02, 1065893.76], "ton": [299.012, 257.699, 303.111, 231.498, 282.044, 302.781], "clientes": [87, 85, 82, 82, 84, 84], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [12176.35, 10840.32, 13188.93, 10311.88, 11737.75, 12689.21], "tk_t": [3.4369, 3.0318, 3.6965, 2.8231, 3.3577, 3.6045]}}, {"categoria": "Jabon Liquido", "venta": 4486404.93, "ton": 561.9253, "clientes": 102, "gasto": 0.0, "cantidad": 90641.0, "cliente_mes": 486, "ticket_venta": 9231.28586419753, "ticket_ton": 1.1562248971193416, "venta_pct": 0.9941054821291843, "gasto_pct_cat": 0.0, "rank_venta": 17, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [480764.51, 540156.32, 811200.97, 1011009.96, 1046905.65, 596367.52], "ton": [61.146, 68.95, 101.748, 125.876, 130.223, 73.983], "clientes": [77, 80, 80, 81, 85, 83], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [6243.69, 6751.95, 10140.01, 12481.6, 12316.54, 7185.15], "tk_t": [0.7941, 0.8619, 1.2719, 1.554, 1.532, 0.8914]}}, {"categoria": "Lavavajillas JW", "venta": 4478025.66, "ton": 836.64627, "clientes": 41, "gasto": 0.0, "cantidad": 95985.0, "cliente_mes": 109, "ticket_venta": 41082.80422018349, "ticket_ton": 7.675653853211009, "venta_pct": 0.9922487887693096, "gasto_pct_cat": 0.0, "rank_venta": 18, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [0.0, 0.0, 963319.89, 1466680.55, 1275227.65, 772797.57], "ton": [0.0, 0.0, 178.785, 276.001, 238.144, 143.716], "clientes": [0, 0, 23, 33, 26, 27], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [0.0, 0.0, 41883.47, 44444.87, 49047.22, 28622.13], "tk_t": [0.0, 0.0, 7.7733, 8.3637, 9.1594, 5.3228]}}, {"categoria": "Conservas", "venta": 4103347.18, "ton": 163.42547, "clientes": 26, "gasto": 0.0, "cantidad": 24285.0, "cliente_mes": 120, "ticket_venta": 34194.55983333333, "ticket_ton": 1.3618789166666665, "venta_pct": 0.9092268732678415, "gasto_pct_cat": 0.0, "rank_venta": 19, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [679525.13, 603482.96, 674955.62, 772746.52, 496433.17, 876203.78], "ton": [26.024, 23.222, 25.536, 29.998, 19.71, 38.936], "clientes": [21, 15, 21, 22, 20, 21], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [32358.34, 40232.2, 32140.74, 35124.84, 24821.66, 41723.99], "tk_t": [1.2392, 1.5481, 1.216, 1.3635, 0.9855, 1.8541]}}, {"categoria": "Cuidado de Piso", "venta": 3752289.92, "ton": 326.106425, "clientes": 92, "gasto": 0.0, "cantidad": 37193.0, "cliente_mes": 436, "ticket_venta": 8606.169541284404, "ticket_ton": 0.7479505160550459, "venta_pct": 0.8314389891707966, "gasto_pct_cat": 0.0, "rank_venta": 20, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [557132.39, 758658.8, 752353.26, 606451.11, 662175.15, 415519.21], "ton": [48.421, 65.469, 65.216, 52.052, 57.33, 37.619], "clientes": [79, 73, 71, 72, 76, 65], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [7052.31, 10392.59, 10596.52, 8422.93, 8712.83, 6392.6], "tk_t": [0.6129, 0.8968, 0.9185, 0.7229, 0.7543, 0.5787]}}, {"categoria": "Limpiadores Especializados", "venta": 3467213.59, "ton": 362.244664, "clientes": 92, "gasto": 0.0, "cantidad": 53149.0, "cliente_mes": 441, "ticket_venta": 7862.162335600907, "ticket_ton": 0.8214164716553288, "venta_pct": 0.7682712753999693, "gasto_pct_cat": 0.0, "rank_venta": 21, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [575786.13, 576878.49, 596603.16, 641708.79, 568298.26, 507938.76], "ton": [58.311, 61.598, 62.742, 65.872, 59.572, 54.151], "clientes": [76, 75, 74, 77, 67, 72], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [7576.13, 7691.71, 8062.2, 8333.88, 8482.06, 7054.7], "tk_t": [0.7673, 0.8213, 0.8479, 0.8555, 0.8891, 0.7521]}}, {"categoria": "Harinas", "venta": 2185463.9899999998, "ton": 487.32571, "clientes": 38, "gasto": 0.0, "cantidad": 68719.75, "cliente_mes": 167, "ticket_venta": 13086.610718562873, "ticket_ton": 2.918118023952096, "venta_pct": 0.48425894839031414, "gasto_pct_cat": 0.0, "rank_venta": 22, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [439558.74, 317490.88, 272068.79, 380444.87, 442579.8, 333320.91], "ton": [97.064, 70.843, 60.078, 85.629, 99.128, 74.583], "clientes": [30, 23, 28, 30, 30, 26], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [14651.96, 13803.95, 9716.74, 12681.5, 14752.66, 12820.04], "tk_t": [3.2355, 3.0801, 2.1456, 2.8543, 3.3043, 2.8686]}}, {"categoria": "Shampoo", "venta": 2092200.64, "ton": 116.184798, "clientes": 71, "gasto": 0.0, "cantidad": 22998.0, "cliente_mes": 306, "ticket_venta": 6837.256993464052, "ticket_ton": 0.3796888823529412, "venta_pct": 0.46359349153492213, "gasto_pct_cat": 0.0, "rank_venta": 23, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [210965.87, 268564.04, 360383.38, 465654.49, 366983.64, 419649.22], "ton": [15.882, 15.373, 18.783, 24.558, 19.421, 22.169], "clientes": [52, 48, 46, 56, 56, 48], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [4057.04, 5595.08, 7834.42, 8315.26, 6553.28, 8742.69], "tk_t": [0.3054, 0.3203, 0.4083, 0.4385, 0.3468, 0.4619]}}, {"categoria": "Panetones", "venta": 2005882.6400000001, "ton": 169.443, "clientes": 20, "gasto": 0.0, "cantidad": 37640.0, "cliente_mes": 49, "ticket_venta": 40936.38040816327, "ticket_ton": 3.4580204081632657, "venta_pct": 0.4444669975279653, "gasto_pct_cat": 0.0, "rank_venta": 24, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [2750096.48, -31923.37, -679223.57, 0.0, -37933.0, 4866.1], "ton": [166.626, 2.74, 0.076, 0.0, 0.0, 0.0], "clientes": [17, 9, 18, 0, 4, 1], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [161770.38, -3547.04, -37734.64, 0.0, -9483.25, 4866.1], "tk_t": [9.8015, 0.3045, 0.0043, 0.0, 0.0, 0.0]}}, {"categoria": "Limpiadores Heavy Duty", "venta": 1998998.56, "ton": 732.891897, "clientes": 90, "gasto": 0.0, "cantidad": 59410.0, "cliente_mes": 419, "ticket_venta": 4770.879618138425, "ticket_ton": 1.7491453389021479, "venta_pct": 0.442941610993715, "gasto_pct_cat": 0.0, "rank_venta": 25, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [286972.78, 320405.58, 348227.25, 357224.52, 280150.02, 406018.41], "ton": [106.1, 112.968, 125.281, 132.183, 108.596, 147.764], "clientes": [73, 66, 68, 71, 68, 73], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [3931.13, 4854.63, 5120.99, 5031.33, 4119.85, 5561.9], "tk_t": [1.4534, 1.7116, 1.8424, 1.8617, 1.597, 2.0242]}}, {"categoria": "Cepillos", "venta": 1979870.19, "ton": 25.400572, "clientes": 80, "gasto": 0.0, "cantidad": 19220.0, "cliente_mes": 340, "ticket_venta": 5823.147617647059, "ticket_ton": 0.07470756470588236, "venta_pct": 0.4387031131813484, "gasto_pct_cat": 0.0, "rank_venta": 26, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [235181.43, 255905.63, 327157.32, 378605.11, 372932.92, 410087.78], "ton": [3.039, 3.266, 4.24, 4.86, 4.722, 5.272], "clientes": [58, 52, 51, 59, 61, 59], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [4054.85, 4921.26, 6414.85, 6417.04, 6113.65, 6950.64], "tk_t": [0.0524, 0.0628, 0.0831, 0.0824, 0.0774, 0.0894]}}, {"categoria": "Postres", "venta": 1517891.1, "ton": 119.93955, "clientes": 38, "gasto": 0.0, "cantidad": 47026.0, "cliente_mes": 139, "ticket_venta": 10920.079856115108, "ticket_ton": 0.8628744604316546, "venta_pct": 0.3363369752237451, "gasto_pct_cat": 0.0, "rank_venta": 27, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [269382.31, 283528.12, 219992.78, 211651.31, 253359.62, 279976.96], "ton": [20.384, 20.901, 19.028, 15.887, 22.25, 21.49], "clientes": [22, 27, 23, 23, 20, 24], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [12244.65, 10501.04, 9564.9, 9202.23, 12667.98, 11665.71], "tk_t": [0.9265, 0.7741, 0.8273, 0.6907, 1.1125, 0.8954]}}, {"categoria": "Salsas Culinarias", "venta": 762064.3099999999, "ton": 70.50823, "clientes": 35, "gasto": 0.0, "cantidad": 21319.0, "cliente_mes": 158, "ticket_venta": 4823.191835443037, "ticket_ton": 0.44625462025316454, "venta_pct": 0.1688595479289459, "gasto_pct_cat": 0.0, "rank_venta": 28, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [173729.16, 74049.73, 149446.34, 95138.32, 112502.12, 157198.64], "ton": [15.895, 6.885, 13.926, 8.708, 10.172, 14.922], "clientes": [27, 25, 26, 25, 28, 27], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [6434.41, 2961.99, 5747.94, 3805.53, 4017.93, 5822.17], "tk_t": [0.5887, 0.2754, 0.5356, 0.3483, 0.3633, 0.5527]}}, {"categoria": "Refrescos", "venta": 653952.87, "ton": 14.663267, "clientes": 32, "gasto": 0.0, "cantidad": 11613.001, "cliente_mes": 125, "ticket_venta": 5231.62296, "ticket_ton": 0.11730613599999999, "venta_pct": 0.14490402521938958, "gasto_pct_cat": 0.0, "rank_venta": 29, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [117724.95, 113476.3, 110201.27, 157035.48, 74222.84, 81292.03], "ton": [2.646, 2.533, 2.442, 3.559, 1.657, 1.828], "clientes": [20, 20, 22, 22, 19, 22], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [5886.25, 5673.82, 5009.15, 7137.98, 3906.47, 3695.09], "tk_t": [0.1323, 0.1266, 0.111, 0.1618, 0.0872, 0.0831]}}, {"categoria": "Enjuague Bucal", "venta": 275062.44, "ton": 22.68758, "clientes": 49, "gasto": 0.0, "cantidad": 4258.0, "cliente_mes": 169, "ticket_venta": 1627.5884023668639, "ticket_ton": 0.13424603550295858, "venta_pct": 0.060948818441100866, "gasto_pct_cat": 0.0, "rank_venta": 30, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [47867.62, 39641.78, 41962.08, 58048.36, 46924.76, 40617.84], "ton": [3.919, 3.291, 3.462, 4.752, 3.913, 3.351], "clientes": [30, 28, 28, 31, 27, 25], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [1595.59, 1415.78, 1498.65, 1872.53, 1737.95, 1624.71], "tk_t": [0.1306, 0.1175, 0.1237, 0.1533, 0.1449, 0.1341]}}, {"categoria": "Rellenos y Cobertura", "venta": 168076.0, "ton": 15.17112, "clientes": 20, "gasto": 0.0, "cantidad": 1109.0, "cliente_mes": 75, "ticket_venta": 2241.0133333333333, "ticket_ton": 0.2022816, "venta_pct": 0.037242575206947445, "gasto_pct_cat": 0.0, "rank_venta": 31, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [27082.42, 18499.9, 36579.06, 26846.92, 33029.8, 26037.9], "ton": [2.421, 1.669, 3.338, 2.408, 3.01, 2.326], "clientes": [12, 10, 16, 13, 13, 11], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [2256.87, 1849.99, 2286.19, 2065.15, 2540.75, 2367.08], "tk_t": [0.2018, 0.1669, 0.2086, 0.1852, 0.2315, 0.2114]}}, {"categoria": "Semolas", "venta": 125629.6, "ton": 25.105999999999998, "clientes": 7, "gasto": 0.0, "cantidad": 4586.0, "cliente_mes": 26, "ticket_venta": 4831.907692307693, "ticket_ton": 0.9656153846153845, "venta_pct": 0.02783722736273308, "gasto_pct_cat": 0.0, "rank_venta": 32, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [21686.46, 13533.18, 34842.35, 13187.54, 25522.06, 16858.01], "ton": [4.224, 2.734, 7.292, 2.58, 4.79, 3.486], "clientes": [5, 4, 5, 4, 3, 5], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [4337.29, 3383.29, 6968.47, 3296.88, 8507.35, 3371.6], "tk_t": [0.8448, 0.6835, 1.4584, 0.645, 1.5967, 0.6972]}}, {"categoria": "Ayudas Culinarias", "venta": 48046.25, "ton": 5.08986, "clientes": 9, "gasto": 0.0, "cantidad": 2416.0, "cliente_mes": 42, "ticket_venta": 1143.9583333333333, "ticket_ton": 0.12118714285714285, "venta_pct": 0.01064617244006758, "gasto_pct_cat": 0.0, "rank_venta": 33, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [6655.49, 6766.67, 6498.23, 9458.57, 8013.3, 10653.99], "ton": [0.709, 0.726, 0.67, 1.072, 0.779, 1.134], "clientes": [6, 8, 6, 9, 6, 7], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [1109.25, 845.83, 1083.04, 1050.95, 1335.55, 1522.0], "tk_t": [0.1182, 0.0907, 0.1116, 0.1191, 0.1298, 0.162]}}, {"categoria": "Productos para Peinar", "venta": 41834.48, "ton": 1.580341, "clientes": 28, "gasto": 0.0, "cantidad": 529.0, "cliente_mes": 75, "ticket_venta": 557.7930666666667, "ticket_ton": 0.021071213333333335, "venta_pct": 0.00926975753613567, "gasto_pct_cat": 0.0, "rank_venta": 34, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [3647.41, 6466.86, 4584.59, 10207.07, 5740.04, 11188.51], "ton": [0.141, 0.242, 0.186, 0.374, 0.223, 0.414], "clientes": [11, 12, 13, 14, 14, 11], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [331.58, 538.9, 352.66, 729.08, 410.0, 1017.14], "tk_t": [0.0128, 0.0201, 0.0143, 0.0267, 0.0159, 0.0377]}}, {"categoria": "Pre Mezclas", "venta": 36483.96, "ton": 3.834, "clientes": 8, "gasto": 0.0, "cantidad": 343.0, "cliente_mes": 24, "ticket_venta": 1520.165, "ticket_ton": 0.15975, "venta_pct": 0.008084179919484413, "gasto_pct_cat": 0.0, "rank_venta": 35, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [7645.5, 3738.86, 2958.07, 9251.51, 6869.64, 6020.38], "ton": [0.891, 0.402, 0.213, 0.906, 0.738, 0.684], "clientes": [3, 5, 1, 5, 6, 4], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [2548.5, 747.77, 2958.07, 1850.3, 1144.94, 1505.09], "tk_t": [0.297, 0.0804, 0.213, 0.1812, 0.123, 0.171]}}, {"categoria": "Jabon de Tocador IDE", "venta": 2430.0099999999998, "ton": 0.13248, "clientes": 2, "gasto": 0.0, "cantidad": 16.0, "cliente_mes": 4, "ticket_venta": 607.5024999999999, "ticket_ton": 0.03312, "venta_pct": 0.0005384458826877981, "gasto_pct_cat": 0.0, "rank_venta": 36, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [0.0, 0.0, 302.22, 1674.45, 0.0, 453.34], "ton": [0.0, 0.0, 0.017, 0.091, 0.0, 0.025], "clientes": [0, 0, 1, 2, 0, 1], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [0.0, 0.0, 302.22, 837.22, 0.0, 453.34], "tk_t": [0.0, 0.0, 0.0166, 0.0455, 0.0, 0.0248]}}, {"categoria": "Auxiliares de Limpieza", "venta": -6.19, "ton": -0.000204, "clientes": 1, "gasto": 0.0, "cantidad": -2.0, "cliente_mes": 1, "ticket_venta": -6.19, "ticket_ton": -0.000204, "venta_pct": -1.3715910691056706e-06, "gasto_pct_cat": -0.0, "rank_venta": 37, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [-6.19, 0.0, 0.0, 0.0, 0.0, 0.0], "ton": [-0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "clientes": [1, 0, 0, 0, 0, 0], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [-6.19, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_t": [-0.0002, 0.0, 0.0, 0.0, 0.0, 0.0]}}, {"categoria": "Cuidado de Auto", "venta": -27.61, "ton": -0.001585, "clientes": 1, "gasto": 0.0, "cantidad": -5.0, "cliente_mes": 2, "ticket_venta": -13.805, "ticket_ton": -0.0007925, "venta_pct": -6.117872280776666e-06, "gasto_pct_cat": -0.0, "rank_venta": 38, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [-22.07, -5.54, 0.0, 0.0, 0.0, 0.0], "ton": [-0.001, -0.0, 0.0, 0.0, 0.0, 0.0], "clientes": [1, 1, 0, 0, 0, 0], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [-22.07, -5.54, 0.0, 0.0, 0.0, 0.0], "tk_t": [-0.0013, -0.0003, 0.0, 0.0, 0.0, 0.0]}}, {"categoria": "Desodorantes", "venta": -75.33, "ton": -0.002247, "clientes": 1, "gasto": 0.0, "cantidad": -21.0, "cliente_mes": 1, "ticket_venta": -75.33, "ticket_ton": -0.002247, "venta_pct": -1.669175367297741e-05, "gasto_pct_cat": -0.0, "rank_venta": 39, "rank_gasto": 7, "en_top5_gasto": false, "ev": {"venta": [0.0, -75.33, 0.0, 0.0, 0.0, 0.0], "ton": [0.0, -0.002, 0.0, 0.0, 0.0, 0.0], "clientes": [0, 1, 0, 0, 0, 0], "gasto": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "tk_v": [0.0, -75.33, 0.0, 0.0, 0.0, 0.0], "tk_t": [0.0, -0.0022, 0.0, 0.0, 0.0, 0.0]}}], "insights": {"top_cat": "Detergentes", "top_cat_pct": 34.12336345559301, "conc_top5": 62.49639021493814, "cat_mas_gasto": "Aceites", "cat_mas_gasto_val": 198704.11000000002, "top10_sin_gasto": ["Detergentes", "Salsas", "Lejias", "Lavavajillas", "Insecticidas"]}}}};
+
+const ACCENTS = {
+  TOTAL:{a:'#4B45A8',s:'#ECEBFA',d:'#322E78',name:'Total (MA + CODIS)'},
+  MA:{a:'#D9772A',s:'#FAEEDF',d:'#9A4E14',name:'Mayoristas'},
+  CODIS:{a:'#138086',s:'#DCF0EF',d:'#0B5A5E',name:'CODIS'},
+};
+
+let cur='TOTAL';
+let sortK='venta', sortDir=-1;
+
+// ---- formatters ----
+const nf = (n,d=0)=>Number(n).toLocaleString('es-PE',{minimumFractionDigits:d,maximumFractionDigits:d});
+function soles(v){return 'S/ '+nf(Math.round(v));}
+function solesAbbr(v){
+  const a=Math.abs(v);
+  if(a>=1e6) return 'S/ '+nf(v/1e6,1)+'M';
+  if(a>=1e3) return 'S/ '+nf(v/1e3,0)+'k';
+  return 'S/ '+nf(v,0);
+}
+function ton(v){return nf(Math.round(v))+' t';}
+function pct(v,d=1){return nf(v,d)+'%';}
+
+// ---- icons ----
+const IC={
+  venta:'<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/>',
+  ton:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/>',
+  cli:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 11a3 3 0 100-6"/><path d="M21 20c0-2.5-2-4-4-4.3"/>',
+  gasto:'<path d="M12 2v20"/><path d="M17 6c0-2-2.5-3-5-3S7 4 7 6s2 3 5 3 5 1 5 3-2.5 3-5 3-5-1-5-3"/>',
+};
+
+function setAccent(ch){
+  const c=ACCENTS[ch], r=document.documentElement.style;
+  r.setProperty('--accent',c.a); r.setProperty('--accent-soft',c.s); r.setProperty('--accent-deep',c.d);
+}
+
+function renderScope(){
+  const m=DATA.meta;
+  document.getElementById('scope').innerHTML=
+    `<span><b>Ventana</b> ${m.periodo}</span>`+
+    `<span><b>${nf(m.filas)}</b> registros</span>`+
+    `<span><b>${DATA.canales.TOTAL.kpis.n_categorias}</b> categorías</span>`+
+    `<span><b>${DATA.canales.TOTAL.kpis.clientes}</b> clientes activos</span>`;
+  document.getElementById('genline').textContent='Generado '+m.generado;
+}
+
+function renderKPIs(){
+  const k=DATA.canales[cur].kpis;
+  const cards=[
+    {l:'Venta',ic:IC.venta,v:solesAbbr(k.venta),u:'',sub:`<span class="chip">${solesAbbr(k.venta_x_cliente)} / cliente</span>`},
+    {l:'Volumen',ic:IC.ton,v:nf(Math.round(k.ton)),u:'toneladas',sub:`<span style="color:var(--ink-soft)">${nf(Math.round(k.ton/k.clientes))} t por cliente</span>`},
+    {l:'Clientes activos',ic:IC.cli,v:nf(k.clientes),u:'únicos',sub:`<span style="color:var(--ink-soft)">${k.n_categorias} categorías compradas</span>`},
+    {l:'Inversión promocional',ic:IC.gasto,v:solesAbbr(k.gasto),u:'',sub:`<span class="chip">${pct(k.gasto_pct,2)} de la venta</span>`},
+  ];
+  document.getElementById('kpis').innerHTML=cards.map(c=>`
+    <div class="kpi">
+      <div class="klabel"><svg class="kicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${c.ic}</svg>${c.l}</div>
+      <div class="kval">${c.v} <span class="kunit">${c.u}</span></div>
+      <div class="ksub">${c.sub}</div>
+    </div>`).join('');
+  document.getElementById('gen-note').textContent='Canal: '+ACCENTS[cur].name;
+}
+
+function renderTicket(){
+  const k=DATA.canales[cur].kpis;
+  document.getElementById('ticketband').innerHTML=`
+    <div class="tb-head">Ticket promedio por cliente-mes <span class="def">venta ÷ clientes-mes activos (un cliente compra ~${nf(k.meses_activos,1)} de los 6 meses)</span></div>
+    <div class="tcards">
+      <div class="tcard">
+        <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${IC.gasto}</svg></div>
+        <div><div class="tv">${solesAbbr(k.ticket_venta)}</div><div class="tl">de <b>venta</b> por cliente cada mes</div></div>
+      </div>
+      <div class="tcard">
+        <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${IC.ton}</svg></div>
+        <div><div class="tv">${nf(k.ticket_ton,1)} t</div><div class="tl">de <b>volumen</b> por cliente cada mes</div></div>
+      </div>
+    </div>`;
+}
+
+function compact(v){
+  const a=Math.abs(v);
+  if(a>=1e6) return nf(v/1e6, a>=1e7?0:1)+'M';
+  if(a>=1e3) return nf(Math.round(v/1e3),0)+'K';
+  if(a>=10)  return nf(Math.round(v),0);
+  if(a>=1)   return nf(v, Number.isInteger(v)?0:1);
+  return nf(v, a>0?1:0);
+}
+
+function miniChart(title, vals, fmt, fmtLast){
+  const n=vals.length;
+  const max=Math.max(...vals,1), base=Math.min(...vals,0), range=(max-base)||1;
+  const AREA=46;
+  const lastV=vals[n-1], firstV=vals[0];
+  const delta = firstV!==0 ? ((lastV-firstV)/Math.abs(firstV)*100) : 0;
+  const dCls=delta>=0?'up':'down', dSym=delta>=0?'▲':'▼';
+  let bars='';
+  vals.forEach((v,i)=>{
+    const h=Math.max((v-base)/range*AREA, v>0?2:1);
+    const dim = i<n-1 ? 'dim':'';
+    bars+=`<div class="bcol ${dim}" data-tip="${DATA.meta.meses[i]}: ${fmt(v)}">
+      <div class="blabel">${compact(v)}</div>
+      <div class="bfill" style="height:${h}px"></div>
+    </div>`;
+  });
+  const labels=DATA.meta.meses.map(m=>`<span>${m.split(" ")[0]}</span>`).join('');
+  return `<div class="mini">
+    <div class="mtitle">${title}</div>
+    <div><span class="mlast">${fmtLast(lastV)}</span><span class="mdelta ${dCls}">${dSym} ${pct(Math.abs(delta),0)}</span></div>
+    <div class="bars">${bars}</div>
+    <div class="mx">${labels}</div>
+  </div>`;
+}
+
+function renderMinis(){
+  const mm=DATA.canales[cur].mensual;
+  const html=[
+    miniChart('Venta', mm.map(x=>x.venta), solesAbbr, solesAbbr),
+    miniChart('Volumen (t)', mm.map(x=>x.ton), v=>nf(Math.round(v))+' t', v=>nf(Math.round(v))+' t'),
+    miniChart('Clientes', mm.map(x=>x.clientes), v=>nf(v), v=>nf(v)),
+    miniChart('Gasto promo', mm.map(x=>x.gasto), solesAbbr, solesAbbr),
+    miniChart('Ticket S/ · cli-mes', mm.map(x=>x.ticket_venta), solesAbbr, solesAbbr),
+    miniChart('Ticket t · cli-mes', mm.map(x=>x.ticket_ton), v=>nf(v,1)+' t', v=>nf(v,1)+' t'),
+  ].join('');
+  document.getElementById('minis').innerHTML=html;
+  bindTips();
+}
+
+function renderCats(){
+  const cats=DATA.canales[cur].categorias;
+  const top=cats.slice(0,10);
+  const maxV=Math.max(...top.map(c=>c.venta));
+  document.getElementById('cats').innerHTML=top.map((c,i)=>{
+    const w=Math.max(c.venta/maxV*100,1);
+    const promo = c.en_top5_gasto
+      ? `<span class="promo"><svg class="star" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .9-5 4.8 1.3 7L12 18l-6.6 3.2L6.7 14l-5-4.8 7-.9z"/></svg>Top-5 gasto · ${solesAbbr(c.gasto)} · ${pct(c.gasto_pct_cat,2)} inv</span>`
+      : (c.gasto>0
+          ? `<span class="nopromo">Gasto ${solesAbbr(c.gasto)} · ${pct(c.gasto_pct_cat,2)} inv</span>`
+          : `<span class="nopromo">Sin inversión promocional</span>`);
+    return `<div class="cat-row" data-cat="${c.categoria.replace(/"/g,'&quot;')}" role="button" tabindex="0" aria-label="Ver evolutivo de ${c.categoria}">
+      <div class="cat-rank ${i===0?'t1':''}">${i+1}</div>
+      <div>
+        <div class="cat-name">${c.categoria}</div>
+        <div class="cat-meta"><span>${ton(c.ton)}</span><span>${nf(c.clientes)} clientes</span><span>${solesAbbr(c.ticket_venta)}/cli-mes</span>${promo}</div>
+      </div>
+      <div class="barbox">
+        <div class="bar-track"><div class="bar-fill" style="width:${w}%"></div></div>
+        <div class="bar-cap"><span>${pct(c.venta_pct)} del canal</span><span>#${c.rank_venta} venta</span></div>
+      </div>
+      <div class="cat-right">
+        <div class="cat-venta">${solesAbbr(c.venta)}</div>
+        <div class="cat-share">${pct(c.venta_pct)}</div>
+      </div>
+      <div class="cat-go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>`;
+  }).join('');
+}
+
+function renderTable(){
+  const cats=[...DATA.canales[cur].categorias];
+  cats.sort((a,b)=>{
+    let x=a[sortK], y=b[sortK];
+    if(typeof x==='string') return sortDir*x.localeCompare(y);
+    return sortDir*(x-y);
+  });
+  document.getElementById('tblBody').innerHTML=cats.map(c=>`
+    <tr data-cat="${c.categoria.replace(/"/g,'&quot;')}" title="Ver evolutivo de ${c.categoria}">
+      <td>${c.rank_venta}</td>
+      <td>${c.categoria}</td>
+      <td>${soles(c.venta)}</td>
+      <td>${pct(c.venta_pct)}</td>
+      <td>${nf(Math.round(c.ton))}</td>
+      <td>${nf(c.clientes)}</td>
+      <td>${soles(c.ticket_venta)}</td>
+      <td>${nf(c.ticket_ton,1)}</td>
+      <td>${c.gasto>0?soles(c.gasto):'—'}</td>
+      <td>${c.gasto>0?pct(c.gasto_pct_cat,2):'—'}</td>
+      <td>${c.en_top5_gasto?'<span class="tg">★ Sí</span>':'<span class="tg no">No</span>'}</td>
+    </tr>`).join('');
+  document.querySelectorAll('thead th').forEach(th=>th.classList.toggle('sorted',th.dataset.k===sortK));
+}
+
+function renderInsights(){
+  const b=DATA.canales[cur], ins=b.insights, k=b.kpis;
+  const sinPromo = ins.top10_sin_gasto.length;
+  const c1 = b.categorias[0];
+  const cards=[
+    {h:'Concentración de venta',
+     p:`Las <span class="big">5 categorías top</span> reúnen <b>${pct(ins.conc_top5)}</b> de la venta del canal. <b>${ins.top_cat}</b> lidera con ${pct(ins.top_cat_pct)} (${solesAbbr(c1.venta)}).`},
+    {h:'Dónde va el gasto',
+     p:`El mayor gasto promocional es <b>${ins.cat_mas_gasto}</b> con <span class="big">${solesAbbr(ins.cat_mas_gasto_val)}</span>. El canal invierte <b>${pct(k.gasto_pct,2)}</b> de su venta en promoción.`},
+    {h:'Venta sin respaldo promocional',
+     p: sinPromo>0
+        ? `<b>${sinPromo}</b> de las 10 categorías top venden fuerte <b>sin inversión promocional</b>: ${ins.top10_sin_gasto.slice(0,4).join(', ')}${sinPromo>4?'…':''}. Venta orgánica que sostiene el canal.`
+        : `Todas las categorías top del canal reciben algo de inversión promocional.`},
+    {h:'Ticket por cliente-mes',
+     p:`Cada cliente activo factura en promedio <span class="big">${solesAbbr(k.ticket_venta)}</span> y mueve <b>${nf(k.ticket_ton,1)} t</b> por mes. Se movieron ${nf(Math.round(k.ton))} t totales entre ${k.clientes} clientes, activos ~${nf(k.meses_activos,1)} de los 6 meses.`},
+  ];
+  document.getElementById('insights').innerHTML=cards.map(c=>`
+    <div class="ins"><h4>${c.h}</h4><p>${c.p}</p></div>`).join('');
+}
+
+// ---- category drill-in ----
+function openCat(name){
+  const c=DATA.canales[cur].categorias.find(x=>x.categoria===name);
+  if(!c) return;
+  const ev=c.ev;
+  const promo = c.en_top5_gasto ? '<span class="mbadge promo">★ Top-5 gasto promo</span>' : '';
+  const gastoTxt = c.gasto>0 ? `${solesAbbr(c.gasto)} · ${pct(c.gasto_pct_cat,2)}` : 'Sin inversión';
+  const stats=[
+    ['Venta total', solesAbbr(c.venta)],
+    ['% del canal', pct(c.venta_pct)],
+    ['Volumen', nf(Math.round(c.ton))+' t'],
+    ['Clientes', nf(c.clientes)],
+    ['Ticket S/ · cli-mes', solesAbbr(c.ticket_venta)],
+    ['Ticket t · cli-mes', nf(c.ticket_ton,1)+' t'],
+    ['Gasto promo', gastoTxt],
+    ['Rank gasto', '#'+c.rank_gasto],
+  ];
+  const minis=[
+    miniChart('Venta', ev.venta, solesAbbr, solesAbbr),
+    miniChart('Volumen (t)', ev.ton, v=>nf(Math.round(v))+' t', v=>nf(Math.round(v))+' t'),
+    miniChart('Clientes', ev.clientes, v=>nf(v), v=>nf(v)),
+    miniChart('Gasto promo', ev.gasto, solesAbbr, solesAbbr),
+    miniChart('Ticket S/·cli-mes', ev.tk_v, solesAbbr, solesAbbr),
+    miniChart('Ticket t·cli-mes', ev.tk_t, v=>nf(v,1)+' t', v=>nf(v,1)+' t'),
+  ].join('');
+  document.getElementById('modalBody').innerHTML=`
+    <div class="modal-head">
+      <div class="modal-eyebrow">Evolutivo · ${ACCENTS[cur].name} · ${DATA.meta.periodo}</div>
+      <div class="modal-title" id="modalTitle">${c.categoria} ${promo}</div>
+      <div class="modal-badges">
+        <span class="mbadge">#${c.rank_venta} en venta</span>
+        <span class="mbadge">${pct(c.venta_pct)} del canal</span>
+        <span class="mbadge">${nf(c.cliente_mes)} pares cliente-mes</span>
+      </div>
+    </div>
+    <div class="modal-inner">
+      <div class="mstats">${stats.map(s=>`<div class="mstat"><div class="ml">${s[0]}</div><div class="mv">${s[1]}</div></div>`).join('')}</div>
+      <div class="modal-sect-t">Evolución mensual · ${DATA.meta.meses.length} meses</div>
+      <div class="modal-minis">${minis}</div>
+    </div>`;
+  document.getElementById('modalBg').hidden=false;
+  document.body.style.overflow='hidden';
+  bindTips();
+  document.getElementById('modalX').focus();
+}
+function closeCat(){
+  document.getElementById('modalBg').hidden=true;
+  document.body.style.overflow='';
+}
+
+// ---- tooltip ----
+const tip=document.getElementById('tip');
+function bindTips(){
+  document.querySelectorAll('[data-tip]').forEach(el=>{
+    el.addEventListener('mousemove',e=>{tip.textContent=el.dataset.tip;tip.style.opacity=1;
+      tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px';});
+    el.addEventListener('mouseleave',()=>tip.style.opacity=0);
+  });
+}
+
+function renderAll(){
+  setAccent(cur);
+  document.getElementById('chtag').innerHTML='Mostrando: <b>'+ACCENTS[cur].name+'</b>';
+  renderKPIs(); renderTicket(); renderMinis(); renderCats(); renderTable(); renderInsights();
+  if(typeof updateTblBtn==='function') updateTblBtn();
+}
+
+// ---- events ----
+document.querySelectorAll('.seg button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    cur=btn.dataset.ch;
+    document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed', b===btn?'true':'false'));
+    closeCat();
+    renderAll();
+  });
+});
+
+// drill-in: top10 + tabla
+document.getElementById('cats').addEventListener('click',e=>{
+  const row=e.target.closest('.cat-row'); if(row&&row.dataset.cat) openCat(row.dataset.cat);
+});
+document.getElementById('cats').addEventListener('keydown',e=>{
+  if(e.key==='Enter'||e.key===' '){const row=e.target.closest('.cat-row');
+    if(row&&row.dataset.cat){e.preventDefault();openCat(row.dataset.cat);}}
+});
+document.getElementById('tblBody').addEventListener('click',e=>{
+  const tr=e.target.closest('tr'); if(tr&&tr.dataset.cat) openCat(tr.dataset.cat);
+});
+document.getElementById('modalX').addEventListener('click',closeCat);
+document.getElementById('modalBg').addEventListener('click',e=>{ if(e.target.id==='modalBg') closeCat(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !document.getElementById('modalBg').hidden) closeCat(); });
+const tblBtn=document.getElementById('tblBtn'), tblBox=document.getElementById('tblBox');
+let tblOpen=false;
+function updateTblBtn(){
+  const n=DATA.canales[cur].kpis.n_categorias;
+  document.getElementById('tblBtnTxt').textContent = tblOpen ? 'Ocultar tabla completa' : `Ver las ${n} categorías completas`;
+}
+tblBtn.addEventListener('click',()=>{
+  tblOpen=tblBox.classList.toggle('show');
+  tblBtn.classList.toggle('open',tblOpen);
+  tblBtn.setAttribute('aria-expanded',tblOpen);
+  updateTblBtn();
+});
+document.querySelectorAll('thead th').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const k=th.dataset.k;
+    if(k===sortK) sortDir*=-1; else {sortK=k; sortDir = (k==='categoria')?1:-1;}
+    renderTable();
+  });
+});
+
+renderScope();
+renderAll();
+</script>
+</body>
+</html>
