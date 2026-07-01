@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Resultados TPO Moderno · Mayo–Junio 2026</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet"><style>
+:root{--cream:#FDFBF7;--warm:#F8F5F0;--card:#FFFFFF;
+--ink:#3D3A36;--sec:#4a4a5a;--mut:#7a7a8a;
+--coral:#E85D4C;--coral-d:#C94A3A;--coral-l:#FFF0EE;
+--teal:#2D9C9C;--teal-d:#238080;--teal-l:#E8F6F6;
+--gold:#D4A853;--gold-d:#C4983F;--gold-l:#FDF8EC;
+--border:#E8E4DD;--line:#ECE7DF;--pos:#1F9D6B;--neg:#C24436;
+--sh-sm:0 2px 6px rgba(26,26,46,.07);--sh-md:0 6px 22px rgba(26,26,46,.10);
+--fdisp:'Space Grotesk','DM Sans',system-ui,sans-serif;
+--fbody:'DM Sans',-apple-system,"Segoe UI",system-ui,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:#f0ede8}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--fbody);line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+section{padding:56px 0;position:relative}
+.eyebrow{font-family:var(--fdisp);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);font-weight:700;margin:0 0 14px}
+h1{font-family:var(--fdisp);font-size:clamp(32px,4.6vw,50px);line-height:1.06;font-weight:700;margin:0;letter-spacing:-.01em}
+h1 em,h2 em{font-style:normal;color:var(--coral)}
+h2{font-family:var(--fdisp);font-size:clamp(25px,3.2vw,34px);line-height:1.12;font-weight:700;margin:0 0 14px;letter-spacing:-.005em}
+h3{font-family:var(--fdisp);font-weight:700}
+.lead{font-size:16.5px;color:var(--mut);max-width:62ch;margin:16px 0 0}
+.sec-lead{font-size:15.5px;color:var(--mut);max-width:66ch;margin:0 0 26px}
+.divider{height:1px;background:var(--border);max-width:1080px;margin:0 auto}
+p{margin:0}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(253,251,247,.82);backdrop-filter:saturate(1.3) blur(9px);border-bottom:1px solid var(--border)}
+.topbar .wrap{display:flex;align-items:center;gap:11px;padding:11px 28px}
+.brand{display:flex;align-items:center;gap:9px}
+.brand b{font-family:var(--fdisp);font-weight:700;font-size:13px;letter-spacing:.2px}.brand span{color:var(--mut);font-size:12.5px}
+.badge{margin-left:auto;font-family:var(--fdisp);font-size:11px;font-weight:700;color:var(--coral);border:1px solid var(--border);background:var(--card);border-radius:999px;padding:5px 13px;letter-spacing:.3px}
+.hero{padding-top:50px;padding-bottom:32px;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:40px;width:220px;height:220px;background:radial-gradient(circle,var(--coral-l) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
+.hero::after{content:'';position:absolute;top:120px;right:320px;width:170px;height:170px;background:radial-gradient(circle,var(--teal-l) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:var(--sh-sm)}
+.kpi .big{font-family:var(--fdisp);font-size:33px;font-weight:700;letter-spacing:-.01em;line-height:1}
+.kpi .lbl{font-size:12.5px;color:var(--sec);margin-top:9px;font-weight:700}
+.kpi .sub{font-size:12px;color:var(--mut);margin-top:6px;line-height:1.35}
+.kpi.pos .big{color:var(--pos)}.kpi.coral .big{color:var(--coral)}.kpi.teal .big{color:var(--teal-d)}.kpi.mut .big{color:var(--mut)}
+.kpi .tag{display:inline-block;margin-top:8px;font-size:11px;font-weight:700;color:var(--coral-d);background:var(--coral-l);border-radius:6px;padding:2px 7px}
+.status{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:6px}
+.scard{border:1px solid var(--border);border-radius:14px;padding:19px;background:var(--card);box-shadow:var(--sh-sm)}
+.scard h4{margin:0 0 10px;font-size:15.5px;font-weight:700;display:flex;align-items:center;gap:8px}
+.scard .swatch{width:10px;height:10px;border-radius:3px;flex:none}
+.scard p{font-size:12.5px;color:var(--mut);line-height:1.45}
+.pill{display:inline-block;font-family:var(--fdisp);font-size:10.5px;font-weight:700;border-radius:999px;padding:3px 11px;margin-bottom:10px;letter-spacing:.4px;text-transform:uppercase}
+.pill-ok{color:#12855A;background:#E4F6EE;border:1px solid #BEE7D4}
+.pill-mid{color:var(--teal-d);background:var(--teal-l);border:1px solid #BFE4E4}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;box-shadow:var(--sh-md);margin-top:22px}
+.phead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.phead h3{margin:0;font-size:19px;font-weight:700}
+.phead .sku{font-size:12.5px;color:var(--mut)}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 6px}
+.tags .t{font-size:11.5px;font-weight:500;color:var(--sec);background:var(--warm);border:1px solid var(--border);border-radius:999px;padding:3px 10px}
+.chartbox{max-width:600px;margin:8px 0 4px}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-family:var(--fdisp)}
+.ax{font-size:10px;fill:var(--mut)}.mo{font-size:12px;fill:var(--sec);font-weight:500}
+.val{font-size:11px;fill:var(--ink);font-weight:700}.valm{font-size:11px;fill:var(--mut);font-weight:500}
+.vpos{font-size:11.5px;fill:var(--pos);font-weight:700}.vneg{font-size:11.5px;fill:var(--neg);font-weight:700}
+.na{font-size:10.5px;fill:var(--mut);font-weight:700;font-style:italic}.leg{font-size:11.5px;fill:var(--sec)}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:16px;border:1px solid var(--border);border-radius:12px}
+.mtx{width:100%;border-collapse:collapse;font-size:12.5px;min-width:520px}
+.mtx th,.mtx td{padding:8px 14px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.mtx thead th{font-family:var(--fdisp);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);font-weight:700;background:var(--card)}
+.mtx td.mlab,.mtx thead th.mlab{text-align:left;position:sticky;left:0;background:var(--card);font-weight:500;border-right:1px solid var(--line);z-index:2}
+.mtx thead th.mlab{z-index:3}
+.mtx tr:hover td{background:#FCFAF6}.mtx tr:hover td.mlab{background:#FCFAF6}
+.mtx .grplab{font-family:var(--fdisp);text-align:left;background:var(--warm);color:var(--coral-d);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:7px 14px;position:sticky;left:0}
+.mtx td.pos{color:var(--pos);font-weight:700}.mtx td.neg{color:var(--neg);font-weight:700}
+.alertwrap{display:inline-flex;vertical-align:-2px;margin-left:5px}
+.tblnote{font-size:12.5px;color:var(--mut);margin-top:11px;line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+.tblnote .ic{flex:none;margin-top:1px}
+.summary{margin-top:20px}
+.sumwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.summary h4{font-family:var(--fdisp);margin:0 0 4px;font-size:14px;font-weight:700}
+.summary p.h{font-size:12.5px;color:var(--mut);margin:0 0 12px;max-width:64ch}
+.sumtbl{border-collapse:collapse;font-size:13px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.sumtbl th,.sumtbl td{padding:9px 16px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.sumtbl thead th{font-family:var(--fdisp);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.sumtbl th:first-child,.sumtbl td:first-child{text-align:left;font-weight:700}
+.sumtbl tr:last-child td{border-bottom:none}.sumtbl .hl{background:var(--coral-l);font-weight:700}.sumtbl td.pos{color:var(--pos)}
+.callout{margin-top:16px;background:var(--gold-l);border:1px solid #EAD8A8;border-left:4px solid var(--gold);border-radius:10px;padding:13px 15px;font-size:13px;color:#6a5322;line-height:1.5}
+.callout b{color:#54410f}
+.infonote{margin:18px 0 0;background:var(--teal-l);border:1px solid #BFE4E4;border-left:4px solid var(--teal);border-radius:10px;padding:13px 15px;font-size:13.5px;color:#215a5a;line-height:1.5}
+.infonote b{color:#164545}
+.formula{display:inline-block;max-width:100%;font-family:var(--fdisp);background:var(--ink);color:#fff;border-radius:12px;padding:14px 20px;font-size:15px;font-weight:500;margin:6px 0}
+.note{font-size:13.5px;color:var(--mut);max-width:66ch;margin-top:14px;line-height:1.55}
+table.ops{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}
+table.ops th,table.ops td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.ops thead th{font-family:var(--fdisp);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-weight:700}
+table.ops tbody tr:hover{background:var(--warm)}table.ops tbody tr:last-child td{border-bottom:none}
+table.ops tbody tr.tpm-note td{background:var(--gold-l);color:#6a5322;white-space:normal;font-size:13px;border-bottom:none}
+table.ops tbody tr.tpm-note:hover td{background:var(--gold-l)}
+table.ops tbody tr.tpm-note td b{color:#54410f}
+.tpmb{display:inline-block;font-family:var(--fdisp);font-size:10.5px;font-weight:700;border-radius:999px;padding:2px 9px;letter-spacing:.2px;white-space:nowrap}
+.tpmb.yes{color:#12855A;background:#E4F6EE;border:1px solid #BEE7D4}
+.tpmb.no{color:var(--gold-d);background:var(--gold-l);border:1px solid #EAD8A8}
+table.ops tr.opsgrp td{background:var(--warm);font-family:var(--fdisp);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--coral-d);font-weight:700;padding:7px 14px}
+table.ops tr.opsgrp:hover td{background:var(--warm)}
+td .src{font-size:11px;font-weight:700;color:var(--coral-d);background:var(--coral-l);border-radius:6px;padding:2px 8px}
+.tnote{font-size:12.5px;color:var(--mut);margin-top:12px}
+.cathead{display:flex;align-items:center;gap:11px}
+.cattag{font-family:var(--fdisp);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:6px;padding:3px 9px}
+footer{padding:38px 0 60px;color:var(--mut);font-size:13px}
+.next{background:linear-gradient(135deg,var(--card),var(--warm));border:1px solid var(--border);border-radius:18px;padding:24px 28px;display:flex;gap:18px;align-items:center;box-shadow:var(--sh-sm)}
+.next .dot{width:10px;height:10px;border-radius:50%;background:var(--coral);flex:none;box-shadow:0 0 0 5px var(--coral-l)}
+.next h3{margin:0 0 4px;font-size:16.5px;font-weight:700;color:var(--ink)}.next p{font-size:13.5px}
+.foot{display:flex;align-items:center;gap:10px;margin-top:24px}.foot b{font-family:var(--fdisp);color:var(--ink);font-weight:700}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+:focus-visible{outline:2px solid var(--coral);outline-offset:3px;border-radius:4px}
+@media (max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.status{grid-template-columns:1fr}section{padding:44px 0}.hero::after{display:none}}
+@media (max-width:520px){.kpis{grid-template-columns:1fr}.wrap{padding:0 18px}.topbar .wrap{padding:11px 18px}}
+</style></head><body>
+<div class="topbar"><div class="wrap">
+  <div class="brand"><svg viewBox="0 0 40 40" fill="none" width="28" height="28" aria-hidden="true"><rect width="40" height="40" rx="10" fill="url(#coeLg)"/><circle cx="12" cy="15" r="3" fill="#fff"/><circle cx="12" cy="20" r="3" fill="#fff"/><circle cx="12" cy="25" r="3" fill="#fff"/><circle cx="20" cy="17" r="3" fill="#fff" fill-opacity="0.7"/><circle cx="20" cy="23" r="3" fill="#fff" fill-opacity="0.7"/><circle cx="28" cy="20" r="4" fill="#D4A853"/><defs><linearGradient id="coeLg" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient></defs></svg><div><b>COE Advanced Analytics</b> &nbsp;<span>TPO Moderno</span></div></div>
+  <div class="badge">Mayo &ndash; Junio 2026</div>
+</div></div>
+
+<section class="hero"><div class="wrap reveal">
+  <p class="eyebrow">Resultados de tandas &middot; Canal Moderno</p>
+  <h1>Resultados de las<br>tandas <em>TPO</em></h1>
+  <p class="lead">Resultados de las promociones ejecutadas bajo recomendación del TPO en Canal Moderno, por categoría. Medición con metodología AA: se compara el desempeño <b>por día con promoción</b> frente a los días <b>sin promoción</b> para aislar el efecto incremental.</p>
+  <div class="kpis">
+    <div class="kpi pos"><div class="big">+71%</div><div class="lbl">ROI Pasta Dental Metro &middot; Mayo</div><div class="sub">de −225% en marzo a positivo</div><div class="tag">+232% con baseline del modelo</div></div>
+    <div class="kpi coral"><div class="big">+275</div><div class="lbl">Uplift Pasta Dental Metro</div><div class="sub">unidades incrementales sobre la base</div></div>
+    <div class="kpi"><div class="big">2</div><div class="lbl">Categorías con datos</div><div class="sub">Pasta Dental y Enjuague Bucal</div></div>
+    <div class="kpi mut"><div class="big">—</div><div class="lbl">ROI Enjuague Bucal</div><div class="sub">sin gasto promocional para calcularlo</div></div>
+  </div>
+</div></section>
+
+<div class="divider"></div>
+
+<section><div class="wrap reveal">
+  <p class="eyebrow">Estado por categoría</p>
+  <div class="status">
+    <div class="scard">
+      <div class="pill pill-ok">Con ROI</div>
+      <h4><span class="swatch" style="background:var(--coral)"></span>Pasta Dental</h4>
+      <p>Resultados con ROI de febrero a mayo (Metro y Plaza Vea). En el TPM de Moderno está cargado <b>todo mayo</b>; junio aún no, por lo que sus resultados quedan pendientes.</p>
+    </div>
+    <div class="scard">
+      <div class="pill pill-mid">En medición</div>
+      <h4><span class="swatch" style="background:var(--teal)"></span>Enjuague Bucal</h4>
+      <p>Datos de volumen de marzo a junio en Cencosud/Metro y Tottus. Aún no se calcula el ROI: no se cuenta con el gasto promocional real ni con una forma de estimarlo.</p>
+    </div>
+  </div>
+</div></section>
+
+<div class="divider"></div>
+
+<section><div class="wrap reveal">
+  <p class="eyebrow">01 &middot; Cómo se mide</p>
+  <h2>No comparamos ventas totales:<br>aíslamos el <em>efecto incremental</em></h2>
+  <p class="sec-lead">Para cada mes se calcula el desempeño por día con y sin promoción. La diferencia sobre el baseline es el <b>uplift</b>, y el ROI mide cuánto beneficio incremental (BI) genera cada sol invertido, expresado en porcentaje.</p>
+  <div class="formula">ROI (AA) = ( BI del uplift &divide; Inversión &minus; 1 ) &times; 100</div>
+  <p class="note">Un ROI de <b>+71%</b> significa que por cada S/1 invertido se generan S/1.71 de beneficio incremental (S/0.71 netos). El ROI solo se calcula cuando se tiene la <b>inversión promocional real</b> y una <b>promoción óptima con la cual comparar</b>. Cuando falta alguno de esos insumos, se reporta solo el volumen.</p>
+</div></section>
+
+<div class="divider"></div>
+
+<section><div class="wrap reveal">
+  <div class="cathead"><span class="cattag" style="color:var(--coral-d);background:var(--coral-l)">Categoría</span><p class="eyebrow" style="margin:0">02 &middot; Pasta Dental</p></div>
+  <h2 style="margin-top:14px">Pasta Dental &middot; <em>con ROI</em></h2>
+  <p class="sec-lead">Detalle de las tandas ejecutadas y el desempeño completo por SKU y cadena. La medición con ROI llega hasta mayo.</p>
+  <h3 style="margin:22px 0 0;font-size:17px">Detalle de promociones</h3>
+  <div class="tablewrap"><table class="ops">
+    <thead><tr><th>Cadena</th><th>Presentación</th><th>Precio</th><th>Ventana</th><th>Días</th><th>¿En TPM?</th></tr></thead>
+    <tbody>
+      <tr class="opsgrp"><td colspan="6">Mayo</td></tr>
+      <tr><td>Metro</td><td>Sixpack 80g</td><td>S/17.5</td><td>01 – 03 May</td><td>3</td><td><span class="tpmb yes">Sí</span></td></tr>
+      <tr><td>Metro</td><td>Sixpack 80g</td><td>S/17.5</td><td>08 – 10 May</td><td>3</td><td><span class="tpmb yes">Sí</span></td></tr>
+      <tr><td>Metro</td><td>Sixpack 80g</td><td>S/17.5</td><td>12 – 24 May</td><td>13</td><td><span class="tpmb yes">Sí</span></td></tr>
+      <tr><td>Metro</td><td>Sixpack 80g</td><td>S/17.5</td><td>29 – 31 May</td><td>3</td><td><span class="tpmb yes">Sí</span></td></tr>
+      <tr><td>Plaza Vea</td><td>Tripack 80g</td><td>S/9.0</td><td>11 – 31 May</td><td>21</td><td><span class="tpmb yes">Sí</span></td></tr>
+      <tr class="opsgrp"><td colspan="6">Junio</td></tr>
+      <tr><td>Metro</td><td>Sixpack 80g</td><td>S/17.5</td><td>04 – 07 Jun</td><td>4</td><td><span class="tpmb no">No</span></td></tr>
+      <tr><td>Metro</td><td>Sixpack 80g</td><td>S/17.5</td><td>15 – 21 Jun</td><td>7</td><td><span class="tpmb no">No</span></td></tr>
+      <tr><td>Metro</td><td>Sixpack 80g</td><td>S/17.5</td><td>25 – 28 Jun</td><td>4</td><td><span class="tpmb no">No</span></td></tr>
+      <tr><td>Plaza Vea</td><td>Tripack 80g</td><td>S/9.0</td><td>04 – 07 Jun</td><td>4</td><td><span class="tpmb no">No</span></td></tr>
+      <tr><td>Plaza Vea</td><td>Tripack 80g</td><td>S/9.0</td><td>15 – 21 Jun</td><td>7</td><td><span class="tpmb no">No</span></td></tr>
+      <tr><td>Plaza Vea</td><td>Tripack 80g</td><td>S/9.0</td><td>25 – 28 Jun</td><td>4</td><td><span class="tpmb no">No</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">En el TPM de Moderno está cargado <b>todo mayo</b>; <b>junio no</b> — por eso los resultados de volumen y ROI llegan hasta mayo y las tandas de junio quedan pendientes de resultados. Días con promo — Metro: 22 en mayo + 15 en junio; Plaza Vea: 21 + 15.</p>
+
+  <div class="panel">
+    <div class="phead"><h3>Metro &middot; Cencosud</h3><span class="sku">Crema Dental Triple Acción Sixpack 80g</span></div>
+    <div class="tags"><span class="t">Precio S/17.5</span><span class="t">Factor 6.4%</span><span class="t">4 ventanas cortas</span></div>
+    <div class="chartbox"><svg viewBox="0 0 520 272" role="img" class="chart" xmlns="http://www.w3.org/2000/svg"><line x1="44" y1="120.0" x2="506" y2="120.0" stroke="#EFEBE3" stroke-width="1"/><text x="36" y="123.5" text-anchor="end" class="ax">75</text><line x1="44" y1="28.0" x2="506" y2="28.0" stroke="#EFEBE3" stroke-width="1"/><text x="36" y="31.5" text-anchor="end" class="ax">150</text><line x1="44" y1="212" x2="506" y2="212" stroke="#DED8CE" stroke-width="1.2"/><text x="36" y="215.5" text-anchor="end" class="ax">0</text><rect x="66.8" y="56.1" width="30" height="155.9" rx="3" fill="#E85D4C"/><text x="81.8" y="50.1" text-anchor="middle" class="val">127</text><rect x="106.8" y="108.7" width="30" height="103.3" rx="3" fill="#CDC7BC"/><text x="121.8" y="102.7" text-anchor="middle" class="valm">84</text><text x="101.8" y="230.0" text-anchor="middle" class="mo">Feb</text><rect x="182.2" y="90.4" width="30" height="121.6" rx="3" fill="#E85D4C"/><text x="197.2" y="84.4" text-anchor="middle" class="val">99</text><rect x="222.2" y="65.0" width="30" height="147.0" rx="3" fill="#CDC7BC"/><text x="237.2" y="59.0" text-anchor="middle" class="valm">120</text><text x="217.2" y="230.0" text-anchor="middle" class="mo">Mar</text><rect x="297.8" y="78.4" width="30" height="133.6" rx="3" fill="#E85D4C"/><text x="312.8" y="72.4" text-anchor="middle" class="val">109</text><rect x="337.8" y="94.8" width="30" height="117.2" rx="3" fill="#CDC7BC"/><text x="352.8" y="88.8" text-anchor="middle" class="valm">96</text><text x="332.8" y="230.0" text-anchor="middle" class="mo">Abr</text><rect x="413.2" y="77.6" width="30" height="134.4" rx="3" fill="#E85D4C"/><text x="428.2" y="71.6" text-anchor="middle" class="val">110</text><rect x="453.2" y="100.0" width="30" height="112.0" rx="3" fill="#CDC7BC"/><text x="468.2" y="94.0" text-anchor="middle" class="valm">91</text><text x="448.2" y="230.0" text-anchor="middle" class="mo">May</text><rect x="44" y="248" width="11" height="11" rx="2.5" fill="#E85D4C"/><text x="60" y="257" class="leg">Con promo / día</text><rect x="194" y="248" width="11" height="11" rx="2.5" fill="#CDC7BC"/><text x="210" y="257" class="leg">Sin promo / día</text></svg></div>
+    <div class="tablewrap"><table class="mtx"><thead><tr><th class="mlab">Métrica</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th></tr></thead><tbody><tr class="grp"><td class="grplab" colspan="5">Cobertura</td></tr><tr><td class="mlab">Días con promo</td><td>20</td><td>16</td><td>18</td><td>22</td></tr><tr><td class="mlab">Días sin promo</td><td>8</td><td>15</td><td>12</td><td>9</td></tr><tr class="grp"><td class="grplab" colspan="5">Volumen — toneladas</td></tr><tr><td class="mlab">Total TN</td><td>1.544</td><td>1.624</td><td>1.492</td><td>1.551</td></tr><tr><td class="mlab">TN con promo</td><td>1.220</td><td>0.761</td><td>0.941</td><td>1.157</td></tr><tr><td class="mlab">TN sin promo</td><td>0.324</td><td>0.863</td><td>0.551</td><td>0.394</td></tr><tr><td class="mlab">TN/día con promo</td><td>0.061</td><td>0.048</td><td>0.052</td><td>0.053</td></tr><tr><td class="mlab">TN/día sin promo</td><td>0.040</td><td>0.058</td><td>0.046</td><td>0.044</td></tr><tr class="grp"><td class="grplab" colspan="5">Volumen — unidades</td></tr><tr><td class="mlab">Total unidades</td><td>3,216</td><td>3,383</td><td>3,108</td><td>3,232</td></tr><tr><td class="mlab">Unidades con promo</td><td>2,542</td><td>1,586</td><td>1,961</td><td>2,410</td></tr><tr><td class="mlab">Unidades sin promo</td><td>674</td><td>1,797</td><td>1,147</td><td>822</td></tr><tr><td class="mlab">Un/día con promo</td><td>127.1</td><td>99.1</td><td>108.9</td><td>109.5</td></tr><tr><td class="mlab">Un/día sin promo</td><td>84.2</td><td>119.8</td><td>95.6</td><td>91.3</td></tr><tr class="grp"><td class="grplab" colspan="5">Precio e inversión</td></tr><tr><td class="mlab">Precio lista</td><td>S/18.7</td><td>S/18.7</td><td>S/18.7</td><td>S/18.7</td></tr><tr><td class="mlab">Precio descuento</td><td>S/15.5</td><td>S/15.5</td><td>S/16.9</td><td>S/17.5</td></tr><tr><td class="mlab">Factor descuento</td><td>17.1%</td><td>17.1%</td><td>9.6%</td><td>6.4%</td></tr><tr><td class="mlab">Inversión</td><td>S/4,258</td><td>S/3,824</td><td>S/3,109</td><td>S/1,909</td></tr><tr><td class="mlab">Inversión diaria</td><td>S/213</td><td>S/239</td><td>S/173</td><td>S/87</td></tr><tr class="grp"><td class="grplab" colspan="5">Resultado económico</td></tr><tr><td class="mlab">Baseline (un)</td><td>704 <span class="alertwrap" title="Baseline atípico — ver nota"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L22.5 20.5 H1.5 Z" fill="#C4983F"/><rect x="11" y="9" width="2" height="6.5" rx="1" fill="#fff"/><rect x="11" y="17" width="2" height="2" rx="1" fill="#fff"/></svg></span></td><td>2,053</td><td>1,813</td><td>2,135</td></tr><tr><td class="mlab">Uplift (un)</td><td class="pos">+1,838</td><td class="neg">−467</td><td class="pos">+148</td><td class="pos">+275</td></tr><tr><td class="mlab">Venta</td><td>S/47,535</td><td>S/29,658</td><td>S/36,671</td><td>S/45,067</td></tr><tr><td class="mlab">Costo</td><td>S/15,382</td><td>S/9,597</td><td>S/11,866</td><td>S/14,583</td></tr><tr><td class="mlab">BI total</td><td>S/27,896</td><td>S/16,237</td><td>S/21,696</td><td>S/28,575</td></tr><tr><td class="mlab">BI unitario</td><td>S/10.97</td><td>S/10.24</td><td>S/11.06</td><td>S/11.86</td></tr><tr><td class="mlab">BI del uplift</td><td class="pos">+S/20,169</td><td class="neg">−S/4,778</td><td class="pos">+S/1,640</td><td class="pos">+S/3,260</td></tr><tr><td class="mlab">ROI</td><td class="pos">+373.7%</td><td class="neg">−224.9%</td><td class="neg">−47.2%</td><td class="pos">+70.8%</td></tr></tbody></table></div>
+    <p class="tblnote"><span class="ic"><span class="alertwrap" title="Baseline atípico — ver nota"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L22.5 20.5 H1.5 Z" fill="#C4983F"/><rect x="11" y="9" width="2" height="6.5" rx="1" fill="#fff"/><rect x="11" y="17" width="2" height="2" rx="1" fill="#fff"/></svg></span></span><span><b>Baseline de febrero (704 un):</b> atípicamente bajo frente al resto de meses (~1,800–2,100 un). Eso infla el uplift y el ROI de febrero (+374%), por lo que no es directamente comparable con los demás meses.</span></p>
+    <div class="summary">
+      <h4>Mayo &middot; baseline del modelo</h4>
+      <p class="h">El mismo mes de mayo, comparando el baseline empírico contra el que estima el modelo. Venta, costo y BI total son idénticos; cambia solo el baseline usado, lo que eleva el uplift y el ROI.</p>
+      <div class="sumwrap"><table class="sumtbl"><thead><tr><th>Mayo</th><th>Baseline real</th><th class="hl">Baseline del modelo</th></tr></thead><tbody><tr><td>Baseline</td><td>2,135 un</td><td class="hl">1,876 un</td></tr><tr><td>Uplift</td><td>+275 un</td><td class="hl">+534 un</td></tr><tr><td>BI del uplift</td><td>+S/3,260</td><td class="hl">+S/6,332</td></tr><tr><td>ROI</td><td class="pos">+70.8%</td><td class="hl pos">+231.7%</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="phead"><h3>Plaza Vea &middot; SPSA</h3><span class="sku">Crema Dental Triple Acción Tripack 80g</span></div>
+    <div class="tags"><span class="t">Precio S/9.0</span><span class="t">Factor 6.3%</span><span class="t">1 ventana de 21 días</span></div>
+    <div class="chartbox"><svg viewBox="0 0 520 272" role="img" class="chart" xmlns="http://www.w3.org/2000/svg"><line x1="44" y1="120.0" x2="506" y2="120.0" stroke="#EFEBE3" stroke-width="1"/><text x="36" y="123.5" text-anchor="end" class="ax">225</text><line x1="44" y1="28.0" x2="506" y2="28.0" stroke="#EFEBE3" stroke-width="1"/><text x="36" y="31.5" text-anchor="end" class="ax">450</text><line x1="44" y1="212" x2="506" y2="212" stroke="#DED8CE" stroke-width="1.2"/><text x="36" y="215.5" text-anchor="end" class="ax">0</text><rect x="66.8" y="71.8" width="30" height="140.2" rx="3" fill="#2D9C9C"/><text x="81.8" y="65.8" text-anchor="middle" class="val">343</text><rect x="106.8" y="93.6" width="30" height="118.4" rx="3" fill="#CDC7BC"/><text x="121.8" y="87.6" text-anchor="middle" class="valm">290</text><text x="101.8" y="230.0" text-anchor="middle" class="mo">Feb</text><rect x="182.2" y="73.5" width="30" height="138.5" rx="3" fill="#2D9C9C"/><text x="197.2" y="67.5" text-anchor="middle" class="val">339</text><rect x="222.2" y="71.1" width="30" height="140.9" rx="3" fill="#CDC7BC"/><text x="237.2" y="65.1" text-anchor="middle" class="valm">345</text><text x="217.2" y="230.0" text-anchor="middle" class="mo">Mar</text><rect x="297.8" y="85.6" width="30" height="126.4" rx="3" fill="#2D9C9C"/><text x="312.8" y="79.6" text-anchor="middle" class="val">309</text><rect x="337.8" y="80.2" width="30" height="131.8" rx="3" fill="#CDC7BC"/><text x="352.8" y="74.2" text-anchor="middle" class="valm">322</text><text x="332.8" y="230.0" text-anchor="middle" class="mo">Abr</text><rect x="413.2" y="65.0" width="30" height="147.0" rx="3" fill="#2D9C9C"/><text x="428.2" y="59.0" text-anchor="middle" class="val">360</text><rect x="453.2" y="77.2" width="30" height="134.8" rx="3" fill="#CDC7BC"/><text x="468.2" y="71.2" text-anchor="middle" class="valm">330</text><text x="448.2" y="230.0" text-anchor="middle" class="mo">May</text><rect x="44" y="248" width="11" height="11" rx="2.5" fill="#2D9C9C"/><text x="60" y="257" class="leg">Con promo / día</text><rect x="194" y="248" width="11" height="11" rx="2.5" fill="#CDC7BC"/><text x="210" y="257" class="leg">Sin promo / día</text></svg></div>
+    <div class="tablewrap"><table class="mtx"><thead><tr><th class="mlab">Métrica</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th></tr></thead><tbody><tr class="grp"><td class="grplab" colspan="5">Cobertura</td></tr><tr><td class="mlab">Días con promo</td><td>16</td><td>16</td><td>15</td><td>21</td></tr><tr><td class="mlab">Días sin promo</td><td>12</td><td>15</td><td>15</td><td>10</td></tr><tr class="grp"><td class="grplab" colspan="5">Volumen — toneladas</td></tr><tr><td class="mlab">Total TN</td><td>2.150</td><td>2.541</td><td>2.274</td><td>2.603</td></tr><tr><td class="mlab">TN con promo</td><td>1.317</td><td>1.301</td><td>1.113</td><td>1.812</td></tr><tr><td class="mlab">TN sin promo</td><td>0.833</td><td>1.240</td><td>1.161</td><td>0.791</td></tr><tr><td class="mlab">TN/día con promo</td><td>0.082</td><td>0.081</td><td>0.074</td><td>0.086</td></tr><tr><td class="mlab">TN/día sin promo</td><td>0.069</td><td>0.083</td><td>0.077</td><td>0.079</td></tr><tr class="grp"><td class="grplab" colspan="5">Volumen — unidades</td></tr><tr><td class="mlab">Total unidades</td><td>8,960</td><td>10,587</td><td>9,473</td><td>10,846</td></tr><tr><td class="mlab">Unidades con promo</td><td>5,486</td><td>5,419</td><td>4,638</td><td>7,550</td></tr><tr><td class="mlab">Unidades sin promo</td><td>3,474</td><td>5,168</td><td>4,835</td><td>3,296</td></tr><tr><td class="mlab">Un/día con promo</td><td>342.9</td><td>338.7</td><td>309.2</td><td>359.5</td></tr><tr><td class="mlab">Un/día sin promo</td><td>289.5</td><td>344.5</td><td>322.3</td><td>329.6</td></tr><tr class="grp"><td class="grplab" colspan="5">Precio e inversión</td></tr><tr><td class="mlab">Precio lista</td><td>S/9.5</td><td>S/9.5</td><td>S/9.5</td><td>S/9.5</td></tr><tr><td class="mlab">Precio descuento</td><td>—</td><td>S/8.0</td><td>S/8.0</td><td>S/8.9</td></tr><tr><td class="mlab">Factor descuento</td><td>—</td><td>15.8%</td><td>15.8%</td><td>6.3%</td></tr><tr><td class="mlab">Inversión</td><td>S/4,747</td><td>S/8,708</td><td>S/8,164</td><td>S/4,286</td></tr><tr><td class="mlab">Inversión diaria</td><td>S/297</td><td>S/544</td><td>S/544</td><td>S/204</td></tr><tr class="grp"><td class="grplab" colspan="5">Resultado económico</td></tr><tr><td class="mlab">Baseline (un)</td><td>5,189</td><td>5,616</td><td>3,785</td><td>—</td></tr><tr><td class="mlab">Uplift (un)</td><td class="pos">+297</td><td class="neg">−197</td><td class="pos">+853</td><td>—</td></tr><tr><td class="mlab">Venta</td><td>S/52,117</td><td>S/51,480</td><td>S/44,061</td><td>—</td></tr><tr><td class="mlab">Costo</td><td>S/18,378</td><td>S/18,154</td><td>S/15,537</td><td>—</td></tr><tr><td class="mlab">BI total</td><td>S/28,992</td><td>S/24,619</td><td>S/20,360</td><td>—</td></tr><tr><td class="mlab">BI unitario</td><td>S/5.29</td><td>S/4.54</td><td>S/4.39</td><td>—</td></tr><tr><td class="mlab">BI del uplift</td><td class="pos">+S/1,570</td><td class="neg">−S/896</td><td class="pos">+S/3,746</td><td>—</td></tr><tr><td class="mlab">ROI</td><td class="neg">−66.9%</td><td class="neg">−110.3%</td><td class="neg">−54.1%</td><td>—</td></tr></tbody></table></div>
+    <div class="callout"><b>ROI no calculable en mayo.</b> La tanda corrió 21 días y el modelo no recomienda promociones a esa duración, por lo que no existe una promo óptima con la cual comparar. Se reportan todas las demás métricas; baseline, uplift y ROI quedan sin dato.</div>
+  </div>
+
+  <h3 style="margin:40px 0 0;font-size:17px">Evolución del ROI &middot; Feb–May</h3>
+  <p class="sec-lead" style="margin-top:8px">La malla previa venía destruyendo margen — marzo negativo en ambas cadenas. En mayo, Metro recupera con las tandas TPO.</p>
+  <div class="panel" style="box-shadow:none;background:var(--warm);margin-top:12px"><svg viewBox="0 0 560 322" role="img" class="chart" xmlns="http://www.w3.org/2000/svg"><rect x="54" y="171.5" width="492.0" height="88.5" fill="#FBEEEA"/><line x1="54" y1="100.8" x2="546" y2="100.8" stroke="#EFEBE3" stroke-width="1" stroke-dasharray="3 4"/><text x="46" y="104.3" text-anchor="end" class="ax">+200%</text><line x1="54" y1="242.3" x2="546" y2="242.3" stroke="#EFEBE3" stroke-width="1" stroke-dasharray="3 4"/><text x="46" y="245.8" text-anchor="end" class="ax">−200%</text><line x1="54" y1="171.5" x2="546" y2="171.5" stroke="#CDBFB4" stroke-width="1.4"/><text x="46" y="175.0" text-anchor="end" class="ax">0%</text><rect x="81.5" y="39.3" width="28" height="132.2" rx="3" fill="#E85D4C" opacity="1"/><text x="95.5" y="33.3" text-anchor="middle" class="vpos">+374%</text><rect x="121.5" y="171.5" width="28" height="23.7" rx="3" fill="#2D9C9C" opacity="0.92"/><text x="135.5" y="209.2" text-anchor="middle" class="vneg">−67%</text><text x="115.5" y="278.0" text-anchor="middle" class="mo">Feb</text><rect x="204.5" y="171.5" width="28" height="79.6" rx="3" fill="#E85D4C" opacity="0.92"/><text x="218.5" y="265.1" text-anchor="middle" class="vneg">−225%</text><rect x="244.5" y="171.5" width="28" height="39.0" rx="3" fill="#2D9C9C" opacity="0.92"/><text x="258.5" y="224.6" text-anchor="middle" class="vneg">−110%</text><text x="238.5" y="278.0" text-anchor="middle" class="mo">Mar</text><rect x="327.5" y="171.5" width="28" height="16.7" rx="3" fill="#E85D4C" opacity="0.92"/><text x="341.5" y="202.3" text-anchor="middle" class="vneg">−47%</text><rect x="367.5" y="171.5" width="28" height="19.1" rx="3" fill="#2D9C9C" opacity="0.92"/><text x="381.5" y="204.7" text-anchor="middle" class="vneg">−54%</text><text x="361.5" y="278.0" text-anchor="middle" class="mo">Abr</text><rect x="450.5" y="146.5" width="28" height="25.0" rx="3" fill="#E85D4C" opacity="1"/><text x="464.5" y="140.5" text-anchor="middle" class="vpos">+71%</text><text x="504.5" y="165.5" text-anchor="middle" class="na">n/a</text><text x="484.5" y="278.0" text-anchor="middle" class="mo">May</text><rect x="54" y="300" width="11" height="11" rx="2.5" fill="#E85D4C"/><text x="70" y="309" class="leg">Metro / Cencosud</text><rect x="219" y="300" width="11" height="11" rx="2.5" fill="#2D9C9C"/><text x="235" y="309" class="leg">Plaza Vea / SPSA</text></svg></div>
+  <p class="note">Plaza Vea mayo no aparece porque su ROI no se calcula (tanda de 21 días). El febrero de Metro (+374%) responde al baseline atípico señalado arriba.</p>
+</div></section>
+
+<div class="divider"></div>
+
+<section><div class="wrap reveal">
+  <div class="cathead"><span class="cattag" style="color:var(--teal-d);background:var(--teal-l)">Categoría</span><p class="eyebrow" style="margin:0;color:var(--teal-d)">03 &middot; Enjuague Bucal</p></div>
+  <h2 style="margin-top:14px">Enjuague Bucal &middot; <em style="color:var(--teal-d)">en medición</em></h2>
+  <p class="sec-lead">Volumen de marzo a junio en las dos cadenas con información disponible. Todavía no se calcula el ROI.</p>
+  <div class="callout"><b>ROI no calculable.</b> No se cuenta con el gasto promocional real de estas promociones ni con una forma de estimarlo, y sin la inversión no es posible calcular el ROI. Por eso esta categoría reporta por ahora solo el volumen (unidades y toneladas, con y sin promoción).</div>
+
+  <h3 style="margin:30px 0 0;font-size:17px">Detalle de promociones</h3>
+  <div class="tablewrap"><table class="ops">
+    <thead><tr><th>Cadena</th><th>Presentación</th><th>Precio</th><th>Ventana</th><th>Días</th><th>¿En TPM?</th></tr></thead>
+    <tbody>
+      <tr><td>Metro</td><td>980 ml</td><td>S/17.5</td><td>15 – 21 Jun</td><td>7</td><td><span class="tpmb yes">Sí</span></td></tr>
+      <tr><td>Tottus</td><td>980 ml</td><td>S/17.5</td><td>25 – 30 Jun</td><td>6</td><td><span class="tpmb yes">Sí</span></td></tr>
+      <tr><td>Plaza Vea</td><td>500 ml</td><td>S/11.5</td><td>15 – 21 Jun</td><td>7</td><td><span class="tpmb no">No</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote">Promociones de junio (fuente TPO). Plaza Vea (SPSA) no está cargada en el TPM de Moderno; Metro y Tottus sí. Se mantiene sin ROI por no contar con el gasto promocional.</p>
+
+  <div class="panel">
+    <div class="phead"><h3>Metro &middot; Cencosud</h3><span class="sku">Enjuague Bucal 980ml</span></div>
+    <div class="tags"><span class="t">Promos desde mayo</span><span class="t">May 3 días &middot; Jun 7 días</span></div>
+    <div class="chartbox"><svg viewBox="0 0 520 272" role="img" class="chart" xmlns="http://www.w3.org/2000/svg"><line x1="44" y1="120.0" x2="506" y2="120.0" stroke="#EFEBE3" stroke-width="1"/><text x="36" y="123.5" text-anchor="end" class="ax">30</text><line x1="44" y1="28.0" x2="506" y2="28.0" stroke="#EFEBE3" stroke-width="1"/><text x="36" y="31.5" text-anchor="end" class="ax">60</text><line x1="44" y1="212" x2="506" y2="212" stroke="#DED8CE" stroke-width="1.2"/><text x="36" y="215.5" text-anchor="end" class="ax">0</text><rect x="106.8" y="60.2" width="30" height="151.8" rx="3" fill="#CDC7BC"/><text x="121.8" y="54.2" text-anchor="middle" class="valm">50</text><text x="101.8" y="230.0" text-anchor="middle" class="mo">Mar</text><rect x="222.2" y="65.4" width="30" height="146.6" rx="3" fill="#CDC7BC"/><text x="237.2" y="59.4" text-anchor="middle" class="valm">48</text><text x="217.2" y="230.0" text-anchor="middle" class="mo">Abr</text><rect x="297.8" y="83.2" width="30" height="128.8" rx="3" fill="#E85D4C"/><text x="312.8" y="77.2" text-anchor="middle" class="val">42</text><rect x="337.8" y="63.0" width="30" height="149.0" rx="3" fill="#CDC7BC"/><text x="352.8" y="57.0" text-anchor="middle" class="valm">49</text><text x="332.8" y="230.0" text-anchor="middle" class="mo">May</text><rect x="413.2" y="76.1" width="30" height="135.9" rx="3" fill="#E85D4C"/><text x="428.2" y="70.1" text-anchor="middle" class="val">44</text><rect x="453.2" y="77.7" width="30" height="134.3" rx="3" fill="#CDC7BC"/><text x="468.2" y="71.7" text-anchor="middle" class="valm">44</text><text x="448.2" y="230.0" text-anchor="middle" class="mo">Jun</text><rect x="44" y="248" width="11" height="11" rx="2.5" fill="#E85D4C"/><text x="60" y="257" class="leg">Con promo / día</text><rect x="194" y="248" width="11" height="11" rx="2.5" fill="#CDC7BC"/><text x="210" y="257" class="leg">Sin promo / día</text></svg></div>
+    <div class="tablewrap"><table class="mtx"><thead><tr><th class="mlab">Métrica</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th></tr></thead><tbody><tr class="grp"><td class="grplab" colspan="5">Cobertura</td></tr><tr><td class="mlab">Días con promo</td><td>0</td><td>0</td><td>3</td><td>7</td></tr><tr><td class="mlab">Días sin promo</td><td>31</td><td>30</td><td>28</td><td>24</td></tr><tr class="grp"><td class="grplab" colspan="5">Volumen — toneladas</td></tr><tr><td class="mlab">Total TN</td><td>1.6</td><td>1.5</td><td>1.5</td><td>1.4</td></tr><tr><td class="mlab">TN con promo</td><td>—</td><td>—</td><td>0.131</td><td>0.322</td></tr><tr><td class="mlab">TN sin promo</td><td>1.6</td><td>1.5</td><td>1.4</td><td>1.1</td></tr><tr><td class="mlab">TN/día con promo</td><td>—</td><td>—</td><td>0.044</td><td>0.046</td></tr><tr><td class="mlab">TN/día sin promo</td><td>0.052</td><td>0.050</td><td>0.050</td><td>0.046</td></tr><tr class="grp"><td class="grplab" colspan="5">Volumen — unidades</td></tr><tr><td class="mlab">Total unidades</td><td>1,533</td><td>1,434</td><td>1,486</td><td>1,361</td></tr><tr><td class="mlab">Unidades con promo</td><td>—</td><td>—</td><td>126</td><td>310</td></tr><tr><td class="mlab">Unidades sin promo</td><td>1,533</td><td>1,434</td><td>1,360</td><td>1,051</td></tr><tr><td class="mlab">Un/día con promo</td><td>—</td><td>—</td><td>42.0</td><td>44.3</td></tr><tr><td class="mlab">Un/día sin promo</td><td>49.5</td><td>47.8</td><td>48.6</td><td>43.8</td></tr></tbody></table></div>
+    <p class="note">Sin promoción en marzo y abril. Las primeras promociones aparecen en mayo (3 días) y junio (7 días).</p>
+  </div>
+
+  <div class="panel">
+    <div class="phead"><h3>Tottus</h3><span class="sku">Enjuague Bucal 980ml</span></div>
+    <div class="tags"><span class="t">Solo promociones WEB</span><span class="t">Jun 6 días</span></div>
+    <div class="chartbox"><svg viewBox="0 0 520 272" role="img" class="chart" xmlns="http://www.w3.org/2000/svg"><line x1="44" y1="120.0" x2="506" y2="120.0" stroke="#EFEBE3" stroke-width="1"/><text x="36" y="123.5" text-anchor="end" class="ax">42</text><line x1="44" y1="28.0" x2="506" y2="28.0" stroke="#EFEBE3" stroke-width="1"/><text x="36" y="31.5" text-anchor="end" class="ax">85</text><line x1="44" y1="212" x2="506" y2="212" stroke="#DED8CE" stroke-width="1.2"/><text x="36" y="215.5" text-anchor="end" class="ax">0</text><rect x="106.8" y="71.9" width="30" height="140.1" rx="3" fill="#CDC7BC"/><text x="121.8" y="65.9" text-anchor="middle" class="valm">65</text><text x="101.8" y="230.0" text-anchor="middle" class="mo">Mar</text><rect x="222.2" y="67.4" width="30" height="144.6" rx="3" fill="#CDC7BC"/><text x="237.2" y="61.4" text-anchor="middle" class="valm">67</text><text x="217.2" y="230.0" text-anchor="middle" class="mo">Abr</text><rect x="337.8" y="54.6" width="30" height="157.4" rx="3" fill="#CDC7BC"/><text x="352.8" y="48.6" text-anchor="middle" class="valm">73</text><text x="332.8" y="230.0" text-anchor="middle" class="mo">May</text><rect x="413.2" y="98.4" width="30" height="113.6" rx="3" fill="#D4A853"/><text x="428.2" y="92.4" text-anchor="middle" class="val">52</text><rect x="453.2" y="99.0" width="30" height="113.0" rx="3" fill="#CDC7BC"/><text x="468.2" y="93.0" text-anchor="middle" class="valm">52</text><text x="448.2" y="230.0" text-anchor="middle" class="mo">Jun</text><rect x="44" y="248" width="11" height="11" rx="2.5" fill="#D4A853"/><text x="60" y="257" class="leg">Con promo / día</text><rect x="194" y="248" width="11" height="11" rx="2.5" fill="#CDC7BC"/><text x="210" y="257" class="leg">Sin promo / día</text></svg></div>
+    <div class="tablewrap"><table class="mtx"><thead><tr><th class="mlab">Métrica</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th></tr></thead><tbody><tr class="grp"><td class="grplab" colspan="5">Cobertura</td></tr><tr><td class="mlab">Días con promo</td><td>0</td><td>0</td><td>0</td><td>6</td></tr><tr><td class="mlab">Días sin promo</td><td>31</td><td>30</td><td>31</td><td>25</td></tr><tr class="grp"><td class="grplab" colspan="5">Volumen — toneladas</td></tr><tr><td class="mlab">Total TN</td><td>2.1</td><td>2.1</td><td>2.3</td><td>1.7</td></tr><tr><td class="mlab">TN con promo</td><td>—</td><td>—</td><td>—</td><td>0.328</td></tr><tr><td class="mlab">TN sin promo</td><td>2.1</td><td>2.1</td><td>2.3</td><td>1.4</td></tr><tr><td class="mlab">TN/día con promo</td><td>—</td><td>—</td><td>—</td><td>0.055</td></tr><tr><td class="mlab">TN/día sin promo</td><td>0.068</td><td>0.070</td><td>0.074</td><td>0.056</td></tr><tr class="grp"><td class="grplab" colspan="5">Volumen — unidades</td></tr><tr><td class="mlab">Total unidades</td><td>2,006</td><td>2,003</td><td>2,253</td><td>1,620</td></tr><tr><td class="mlab">Unidades con promo</td><td>—</td><td>—</td><td>—</td><td>315</td></tr><tr><td class="mlab">Unidades sin promo</td><td>2,006</td><td>2,003</td><td>2,253</td><td>1,305</td></tr><tr><td class="mlab">Un/día con promo</td><td>—</td><td>—</td><td>—</td><td>52.5</td></tr><tr><td class="mlab">Un/día sin promo</td><td>64.7</td><td>66.8</td><td>72.7</td><td>52.2</td></tr></tbody></table></div>
+    <p class="note">La única actividad promocional es WEB, en junio (6 días, 315 unidades). Sin promociones en el resto del período.</p>
+  </div>
+</div></section>
+
+<div class="divider"></div>
+
+<footer><div class="wrap reveal">
+  <div class="next"><span class="dot"></span><div>
+    <h3>Alcance de esta entrega</h3>
+    <p>Pasta Dental con ROI (febrero–mayo) y Enjuague Bucal en medición de volumen (marzo–junio). En Pasta Dental, junio no está cargado en el TPM y sus resultados quedan pendientes. El estado en el TPM de cada promoción está en su tabla.</p>
+  </div></div>
+  <div class="foot"><svg viewBox="0 0 40 40" fill="none" width="28" height="28" aria-hidden="true"><rect width="40" height="40" rx="10" fill="url(#coeLg)"/><circle cx="12" cy="15" r="3" fill="#fff"/><circle cx="12" cy="20" r="3" fill="#fff"/><circle cx="12" cy="25" r="3" fill="#fff"/><circle cx="20" cy="17" r="3" fill="#fff" fill-opacity="0.7"/><circle cx="20" cy="23" r="3" fill="#fff" fill-opacity="0.7"/><circle cx="28" cy="20" r="4" fill="#D4A853"/><defs><linearGradient id="coeLg" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient></defs></svg><div><b>COE Advanced Analytics</b> &middot; TPO Moderno Inhouse &middot; Draft de resultados</div></div>
+</div></footer>
+
+<script>
+(function(){var els=document.querySelectorAll('.reveal');
+if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.08});
+els.forEach(function(e){io.observe(e)});})();
+</script>
+</body></html>
