@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Promociones Kikiriki · Efecto en canales — COE Advanced Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root{
+    --teal:#2D9C9C; --teal-l:#E8F6F6; --teal-d:#1F6F6F; --teal-m:#5EBABA; --teal-soft:#8FCFCF;
+    --gold:#D4A853; --gold-l:#FDF8EC; --gold-d:#E0BC7A;
+    --coral:#E85D4C; --coral-l:#FEF0EE; --coral-d:#C94A3A;
+    --green:#059669; --green-l:#ECFDF5;
+    --cat:#2D9C9C; --cat-l:#E8F6F6; --cat-border:#A7E0E0;
+    --text:#3D3A36; --text2:#7a7a8a; --text3:#9CA3AF;
+    --bg:#FDFBF7; --bg2:#F8F5F0; --bg3:#F0EDE8; --border:#E8E4DD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;background:#E8E4DD}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3{margin:0}
+
+  #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cat),var(--teal-m));z-index:9999;width:0;transition:width .1s}
+
+  .nav{position:fixed;top:3px;left:0;right:0;z-index:1000;padding:10px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(253,251,247,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 2px 14px rgba(0,0,0,.06)}
+  .brand{text-decoration:none;display:flex;align-items:center;gap:8px;background:white;border:1px solid var(--border);border-radius:40px;padding:6px 14px 6px 7px;box-shadow:0 1px 5px rgba(0,0,0,.06)}
+  .brand-t{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--text);line-height:1.3}
+  .brand-s{font-size:10px;color:var(--text2)}
+  .nav-links{display:flex;gap:4px;flex-wrap:wrap}
+  .nav-links a{color:var(--text2);text-decoration:none;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;transition:all .2s;letter-spacing:.04em;text-transform:uppercase}
+  .nav-links a:hover{color:var(--text);background:var(--border)}
+
+  .section{padding:72px 72px 52px;max-width:1240px;margin:0 auto}
+
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:80px 40px 60px}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 80% 40%,var(--teal-l),transparent),radial-gradient(ellipse 40% 60% at 10% 70%,var(--coral-l),transparent);opacity:.7}
+  .hero-inner{text-align:center;max-width:940px;position:relative;z-index:1}
+  .hero-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;color:var(--cat);letter-spacing:.22em;text-transform:uppercase;margin-bottom:20px;display:inline-flex;align-items:center;gap:10px}
+  .hero-eyebrow::before,.hero-eyebrow::after{content:'';width:32px;height:1px;background:var(--cat);opacity:.5}
+  .hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(48px,7.5vw,92px);font-weight:800;line-height:1.02;color:var(--text);margin-bottom:6px}
+  .hero-title .hl{color:var(--cat)}
+  .hero-cat-badge{display:inline-flex;align-items:center;gap:10px;background:var(--cat-l);border:2px solid var(--cat-border);border-radius:40px;padding:8px 22px;margin:20px auto 26px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--cat)}
+  .hero-sub{font-size:16px;color:var(--text2);max-width:780px;margin:0 auto 40px;line-height:1.75}
+  .hero-sub b{color:var(--text);font-weight:600}
+  .hero-kpis{display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
+  .kpi{text-align:center}
+  .kpi-v{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:800;line-height:1}
+  .kpi-l{font-size:11px;color:var(--text2);margin-top:6px;text-transform:uppercase;letter-spacing:.08em;line-height:1.4}
+  .kpi-div{width:1px;height:52px;background:var(--border);align-self:center}
+
+  .sec-label{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:var(--cat);letter-spacing:.22em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--cat-border),transparent)}
+  .sec-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,3vw,40px);font-weight:800;line-height:1.1;margin-bottom:12px}
+  .sec-title em{font-style:normal;color:var(--cat)}
+  .sec-lead{font-size:15px;color:var(--text2);max-width:860px;line-height:1.75;margin-bottom:28px}
+  .sec-lead b{color:var(--text);font-weight:600}
+
+  .card{background:white;border:1px solid var(--border);border-radius:12px;padding:24px;box-shadow:0 2px 10px rgba(26,26,46,.05)}
+  .card + .card{margin-top:18px}
+  .card-h{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}
+  .card-p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px}
+
+  .chart-box{position:relative;width:100%}
+  .h-hero{height:300px}
+  .h-md{height:300px}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:10px;font-size:12px;color:var(--text2)}
+  .legend span{display:flex;align-items:center;gap:6px}
+
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+  .pc{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px;box-shadow:0 2px 8px rgba(26,26,46,.04)}
+  .pc-l{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:8px}
+  .pc-v{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;line-height:1;margin-bottom:6px}
+  .pc-prev{font-size:11px;color:var(--text2)}
+
+  .callout{border-left:3px solid var(--teal);background:var(--teal-l);padding:14px 18px;border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;margin:8px 0}
+  .callout b{color:var(--text)}
+  .callout-gold{border-left:3px solid var(--gold);background:var(--gold-l);padding:14px 18px;border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;margin:8px 0}
+  .callout-coral{border-left:3px solid var(--coral);background:var(--coral-l);padding:14px 18px;border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;margin:8px 0}
+  .callout-green{border-left:3px solid var(--green);background:var(--green-l);padding:14px 18px;border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;margin:8px 0}
+
+  .tbl-wrap{background:white;border:1px solid var(--border);border-radius:12px;overflow-x:auto;box-shadow:0 2px 10px rgba(26,26,46,.05)}
+  .tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+  .tbl th{text-align:left;padding:11px 12px;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--border);background:var(--bg2);white-space:nowrap}
+  .tbl td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .num{text-align:right;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono',monospace}
+  .tbl th.num{text-align:right}
+  .tbl tr:hover td{background:var(--bg2)}
+  .tbl .hot{color:var(--coral);font-weight:700}
+  .tbl .chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;background:var(--teal-l);color:var(--teal-d);padding:2px 7px;border-radius:5px}
+  .tbl tr.tot td{background:var(--bg2);font-weight:700}
+
+  /* pasos metodología */
+  .steps{counter-reset:st;display:grid;gap:10px}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;background:white;border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:16px 18px}
+  .step .n{counter-increment:st;font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--teal);font-size:13px;padding-top:2px}
+  .step .n::before{content:counter(st,decimal-leading-zero)}
+  .step h4{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;margin-bottom:2px}
+  .step p{font-size:12.5px;color:var(--text2);margin:0;line-height:1.55}
+
+  /* insights ejecutivos */
+  .ins-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .ins{background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:0 2px 10px rgba(26,26,46,.05);border-top:4px solid var(--teal)}
+  .ins.c-coral{border-top-color:var(--coral)}
+  .ins.c-gold{border-top-color:var(--gold)}
+  .ins.c-green{border-top-color:var(--green)}
+  .ins-n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:8px}
+  .ins-h{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;line-height:1.25;margin-bottom:8px}
+  .ins-p{font-size:13px;color:var(--text2);line-height:1.6}
+  .ins-p b{color:var(--text)}
+  .ins-imp{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;line-height:1.55}
+  .ins-imp .tag{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-d);background:var(--teal-l);padding:2px 8px;border-radius:6px;margin-right:6px}
+  .ins.c-coral .ins-imp .tag{color:var(--coral-d);background:var(--coral-l)}
+  .ins.c-gold .ins-imp .tag{color:#8a6a1f;background:var(--gold-l)}
+  .ins.c-green .ins-imp .tag{color:#065f46;background:var(--green-l)}
+
+  /* veredicto band */
+  .verdict{background:linear-gradient(135deg,var(--teal-d),#0f4f4f);color:#eafaf7;border-radius:16px;padding:36px 34px;box-shadow:0 4px 20px rgba(31,111,111,.2)}
+  .verdict .vl{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal-soft);margin-bottom:12px}
+  .verdict h3{font-family:'Space Grotesk',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:12px;max-width:26ch}
+  .verdict p{color:#cdeeea;max-width:68ch;margin-bottom:8px;font-size:14.5px}
+  .verdict .pnl{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);display:flex;gap:14px;align-items:flex-start}
+  .verdict .pnl .tag{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#0f4f4f;background:var(--gold-d);padding:4px 10px;border-radius:6px;white-space:nowrap;margin-top:2px}
+  .verdict .pnl p{margin:0}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .list-card{background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:0 2px 10px rgba(26,26,46,.04)}
+  .list-card h4{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .list-card ul{list-style:none;margin:0;padding:0}
+  .list-card li{position:relative;padding-left:18px;margin:9px 0;font-size:12.5px;color:var(--text2);line-height:1.55}
+  .list-card li::before{content:'▸';position:absolute;left:0;color:var(--coral);font-weight:700}
+  .list-card.next li::before{color:var(--teal)}
+
+  .divider{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:8px auto;max-width:1240px}
+
+  .footer{background:var(--text);color:#fff;padding:30px 72px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-top:56px}
+  .footer-kpi-v{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:20px;color:#fff;line-height:1}
+  .footer-kpi-l{font-size:10px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+  .footer-meta{font-size:11px;color:var(--text3);max-width:40ch;line-height:1.5}
+
+  @media (max-width:900px){
+    .g2,.g3,.g4,.ins-grid,.cols{grid-template-columns:1fr}
+    .section{padding:56px 24px 40px}
+    .nav{padding:10px 20px}.nav-links{display:none}
+    .footer{padding:26px 24px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav class="nav">
+  <a href="#top" class="brand">
+    <svg width="26" height="26" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect width="40" height="40" rx="10" fill="url(#gCOE)"/><circle cx="12" cy="15" r="3" fill="white"/><circle cx="12" cy="20" r="3" fill="white"/><circle cx="12" cy="25" r="3" fill="white"/><circle cx="20" cy="17" r="3" fill="white" fill-opacity=".7"/><circle cx="20" cy="23" r="3" fill="white" fill-opacity=".7"/><circle cx="28" cy="20" r="4" fill="#D4A853"/><defs><linearGradient id="gCOE" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient></defs></svg>
+    <div><div class="brand-t">COE Advanced Analytics</div><div class="brand-s">Alicorp · Data &amp; IA</div></div>
+  </a>
+  <div class="nav-links">
+    <a href="#descriptivo">Descriptivo</a>
+    <a href="#pregunta">Pregunta</a>
+    <a href="#metodo">Método</a>
+    <a href="#bodegas">Bodegas</a>
+    <a href="#mayoristas">Mayoristas</a>
+    <a href="#proximidad">Proximidad</a>
+    <a href="#insights">Insights</a>
+    <a href="#veredicto">Veredicto</a>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Pre-reunión Negocio · Julio 2026</div>
+    <h1 class="hero-title">Promociones <span class="hl">Kikiriki</span></h1>
+    <div class="hero-cat-badge">🐟 Atún Primor 3201024 · ¿TAMBO canibaliza a los demás canales?</div>
+    <p class="hero-sub">
+      Los descuentos agresivos de TAMBO liberan mucho producto en un día. La pregunta de negocio:
+      ¿eso hace que <b>mayoristas, CODIS y bodegas</b> se abastezcan ahí y nos compren menos, y perdemos volumen?
+      Analizamos <b>3 eventos</b> (abr–jun 2026) en dos canales, con foco en Lima. Respuesta corta:
+      <b>no hay evidencia de canibalización</b>.
+    </p>
+    <div class="hero-kpis">
+      <div class="kpi"><div class="kpi-v" style="color:var(--teal)">22.2 t</div><div class="kpi-l">Liberadas por promo<br>(2 días)</div></div>
+      <div class="kpi-div"></div>
+      <div class="kpi"><div class="kpi-v">~1,000×</div><div class="kpi-l">Venta día promo<br>vs día normal</div></div>
+      <div class="kpi-div"></div>
+      <div class="kpi"><div class="kpi-v" style="color:var(--green)">Sin efecto</div><div class="kpi-l">Canibalización<br>detectada</div></div>
+      <div class="kpi-div"></div>
+      <div class="kpi"><div class="kpi-v" style="color:var(--coral)">3</div><div class="kpi-l">Canales<br>analizados</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 1 · DESCRIPTIVO TAMBO -->
+<section class="section" id="descriptivo">
+  <div class="sec-label">Hallazgo 01 · La venta promocional</div>
+  <h2 class="sec-title">Los descuentos mueven <em>22 toneladas</em> en dos días</h2>
+  <p class="sec-lead">Punto de partida: dimensionar exactamente cuánto producto libera cada promo. Ese volumen es el <b>techo</b> de todo lo demás — ningún otro canal pudo abastecerse de más de lo que TAMBO vendió. Fuera de esos dos días, la SKU prácticamente no existe en la cadena.</p>
+
+  <div class="g4" style="margin-bottom:20px">
+    <div class="pc"><div class="pc-l">Latas 20-abr</div><div class="pc-v" style="color:var(--coral)">84,754</div><div class="pc-prev">74,078 el 25-may</div></div>
+    <div class="pc"><div class="pc-l">Volumen 2 días</div><div class="pc-v" style="color:var(--teal)">22.2 t</div><div class="pc-prev">11.9 t + 10.4 t</div></div>
+    <div class="pc"><div class="pc-l">Día promo vs típico</div><div class="pc-v">~1,000×</div><div class="pc-prev">día normal ≈ 80 latas</div></div>
+    <div class="pc"><div class="pc-l">% del mes en 1 día</div><div class="pc-v" style="color:var(--gold-d)">97%</div><div class="pc-prev">la SKU es vehículo de promo</div></div>
+  </div>
+
+  <div class="card">
+    <h3 class="card-h">La SKU casi no rota sin promo — el día de descuento revienta la escala</h3>
+    <p class="card-p">Venta diaria (latas 140g), eje recortado a ~450 latas para ver la rotación real. El producto vende ~80 latas/día en toda la cadena (el aumento de inicios de abril es la vigilia de Semana Santa). Los dos días de promo (barras coral) se salen ~200× del tope — de ahí el contraste.</p>
+    <div class="chart-box h-md"><canvas id="c_tambo_norm" role="img" aria-label="Venta diaria del atún Primor 3201024 en TAMBO con el eje recortado a 450 latas. La rotación normal ronda 80 latas por día, con un pequeño aumento a inicios de abril por Semana Santa. Los dos días de promo (84,754 y 74,078 latas) se salen completamente de esta escala."></canvas></div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3 class="card-h">Qué locales concentran la venta en los días de promo</h3>
+    <p class="card-p">Top 15 tiendas TAMBO por unidades vendidas el 20-abr y el 25-may. Los mismos locales de alta rotación (J-Chávez VES, Revolución, Jardines, Bocanegra…) lideran ambos eventos.</p>
+    <div class="legend">
+      <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#E85D4C"/></svg>20-abr</span>
+      <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#F0A78F"/></svg>25-may</span>
+    </div>
+    <div class="chart-box" style="height:480px"><canvas id="c_locales" role="img" aria-label="Top 15 tiendas TAMBO por unidades vendidas en los días de promoción. J-Chávez VES lidera con 1022 unidades el 20 de abril, y los mismos locales encabezan ambos eventos."></canvas></div>
+  </div>
+
+  <div class="g2" style="margin-top:20px">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Promo</th><th>Fecha</th><th class="num">Inversión S/</th></tr></thead>
+        <tbody>
+          <tr><td><span class="chip">T-00094821</span></td><td>20 abr 2026</td><td class="num">197,139</td></tr>
+          <tr><td><span class="chip">T-00097460</span></td><td>25 may 2026</td><td class="num">176,142</td></tr>
+          <tr><td><span class="chip">T-00102931</span></td><td>29 jun 2026</td><td class="num">188,298</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Métrica</th><th class="num">20 abr</th><th class="num">25 may</th><th class="num">Típico</th></tr></thead>
+        <tbody>
+          <tr><td>Latas (140g)</td><td class="num hot">84,754</td><td class="num hot">74,078</td><td class="num">~80</td></tr>
+          <tr><td>Volumen (t)</td><td class="num">11.87</td><td class="num">10.37</td><td class="num">~0.01</td></tr>
+          <tr><td>Venta s/IGV</td><td class="num">247,878</td><td class="num">217,464</td><td class="num">~500</td></tr>
+          <tr><td>% del mes</td><td class="num">97.2%</td><td class="num">97.3%</td><td class="num">—</td></tr>
+          <tr class="tot"><td>Total 2 días</td><td class="num" colspan="2">158,832 latas · 22.2 t</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:18px"><b>Retail distribuido, no un movimiento mayorista disfrazado:</b> las 84,754 latas del 20-abr se reparten entre cientos de tiendas; la más grande es apenas ~1.2% del día. Y el conteo es de latas individuales (11,865,560 g ÷ 84,754 = 140 g exactos).</div>
+</section>
+
+<hr class="divider">
+
+<!-- 2 · PREGUNTA -->
+<section class="section" id="pregunta">
+  <div class="sec-label">El riesgo a evaluar</div>
+  <h2 class="sec-title">La hipótesis de <em>canibalización</em></h2>
+  <div class="callout-coral" style="font-size:17px;line-height:1.55;font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--text)">
+    ¿Un descuento tan agresivo hace que mayoristas y bodegas se abastezcan del producto barato en TAMBO y dejen de comprarnos — y perdemos cantidad o volumen de venta en esos canales?
+  </div>
+  <p class="sec-lead" style="margin-top:20px">La firma que confirmaría el arbitraje no es una sola cosa: es un <b>hueco rezagado</b> (días o semanas después, no el mismo día), específico de esta SKU y concentrado en las zonas con TAMBO. Se buscó en ese orden.</p>
+</section>
+
+<!-- 3 · MÉTODO -->
+<section class="section" id="metodo">
+  <div class="sec-label">Enfoque · Cómo se probó</div>
+  <h2 class="sec-title">Metodología en <em>cuatro pasos</em></h2>
+  <div class="steps">
+    <div class="step"><span class="n"></span><div><h4>Gate de materialidad</h4><p>¿Las 22 t que TAMBO liberó son grandes frente a lo que cada canal mueve al mes? Si el canal es enorme, un arbitraje pequeño sería indetectable; el ratio manda.</p></div></div>
+    <div class="step"><span class="n"></span><div><h4>Diff-in-diff Lima vs Resto (semanal)</h4><p>Tratamiento = zonas con TAMBO (Lima); control = resto del país. Si TAMBO roba venta, Lima debería caer más que el resto tras la promo.</p></div></div>
+    <div class="step"><span class="n"></span><div><h4>Event-study diario (día 0 = día de promo)</h4><p>La promo es un shock de un día; el grano semanal difumina el rezago. El diario revela si la venta sube el mismo día (movimiento planificado, no reactivo al descuento) o cae en los días siguientes (la firma del arbitraje).</p></div></div>
+    <div class="step"><span class="n"></span><div><h4>Tres eventos apilados</h4><p>Abril, mayo y junio para ganar poder y separar el efecto de la promo de la estacionalidad — Semana Santa infla el atún a inicios de abril (vigilia).</p></div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- 4 · BODEGAS -->
+<section class="section" id="bodegas">
+  <div class="sec-label">Hallazgo 02 · Canal tradicional</div>
+  <h2 class="sec-title">Bodegas y puestos de mercado: <em>demanda plana</em></h2>
+  <p class="sec-lead">Venta al consumidor final. Materialidad alta (22 t ≈ 36% de un mes de bodegas Lima), así que el test tiene poder. Aun así, no aparece ningún efecto de la promo: Lima incluso <b>gana participación</b>.</p>
+
+  <div class="card">
+    <h3 class="card-h">Volumen semanal — Lima no cae tras la promo</h3>
+    <p class="card-p">Bodegas + PM · kg · línea punteada gris = semana de promo.</p>
+    <div class="legend">
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#2D9C9C" stroke-width="3"/></svg>Lima (con Tambo)</span>
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#D4A853" stroke-width="3" stroke-dasharray="5 3"/></svg>Resto (sin Tambo)</span>
+    </div>
+    <div class="chart-box h-md"><canvas id="c_bod_sem" role="img" aria-label="Volumen semanal en kg de bodegas y puestos de mercado, Lima contra resto. Ambas suben en Semana Santa y bajan después; Lima no muestra caída tras las promos."></canvas></div>
+  </div>
+
+  <div class="card">
+    <h3 class="card-h">Diario, eventos de abril y mayo — sin pico ni hueco en el día de promo</h3>
+    <p class="card-p">Bodegas + PM · Lima · kg · día relativo a cada promo (día 0 marcado).</p>
+    <div class="legend">
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#2D9C9C" stroke-width="3"/></svg>Abril (promo 20)</span>
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#E85D4C" stroke-width="3"/></svg>Mayo (promo 25)</span>
+    </div>
+    <div class="chart-box h-md"><canvas id="c_bod_dia" role="img" aria-label="Venta diaria en kg de bodegas en Lima alineada por día relativo a cada promo. Abril y mayo se mantienen planos entre 1,000 y 1,900 kg, sin pico ni hueco en el día 0."></canvas></div>
+  </div>
+
+  <div class="g2" style="margin-top:18px">
+    <div class="callout-green"><b>Lima gana share, no lo pierde.</b> Participación de Lima antes de la promo de abril: 42.9%; después: 46.2% (<b>+3.4 pts</b>). Canibalización se vería como Lima cayendo <b>más</b> que el resto — cae menos (−17% vs −28%). Es la geo más resiliente.</div>
+    <div class="callout"><b>Demanda de consumidor, indiferente al descuento.</b> El día 0 apenas roza la base (1,544 vs ~1,340 en abril; 1,428 en mayo). El shopper de bodega no migra a TAMBO por la promo — son ocasiones de compra distintas.</div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- 5 · MAYORISTAS -->
+<section class="section" id="mayoristas">
+  <div class="sec-label">Hallazgo 03 · Canal mayorista</div>
+  <h2 class="sec-title">Mayoristas y CODIS: donde debía haber hueco, hay <em>pico</em></h2>
+  <p class="sec-lead">El canal más probable para el arbitraje (mueven volumen de verdad) y el que sí tiene geografía real del cliente. El resultado voltea la hipótesis: el sell-in <b>pica el mismo día de la promo</b> y no deja hueco rezagado.</p>
+
+  <div class="card">
+    <h3 class="card-h">Volumen semanal — Lima pica justo en la promo</h3>
+    <p class="card-p">Sell-in · kg · línea punteada gris = semana de promo.</p>
+    <div class="legend">
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#2D9C9C" stroke-width="3"/></svg>Lima (ubigeo 15)</span>
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#D4A853" stroke-width="3" stroke-dasharray="5 3"/></svg>Resto</span>
+    </div>
+    <div class="chart-box h-md"><canvas id="c_may_sem" role="img" aria-label="Sell-in semanal en kg de mayoristas y CODIS, Lima contra resto. Lima alcanza sus dos máximos justo en la semana de promo del 20 de abril y la siguiente."></canvas></div>
+  </div>
+
+  <div class="card">
+    <h3 class="card-h">Diario, eventos de abril y mayo — pico en día 0, sin hueco sostenido</h3>
+    <p class="card-p">Sell-in · Lima · kg · día relativo a cada promo (día 0 marcado). Mismo formato de líneas que bodegas para comparación directa.</p>
+    <div class="legend">
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#2D9C9C" stroke-width="3"/></svg>Abril (promo 20)</span>
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#E85D4C" stroke-width="3"/></svg>Mayo (promo 25)</span>
+    </div>
+    <div class="chart-box h-md"><canvas id="c_may_dia" role="img" aria-label="Sell-in diario de mayoristas en Lima alineado por día relativo a cada promo. El día 0 pica en ambos eventos (12.4 t en abril, 7 t en mayo); la semana siguiente se recupera con fuerza, sin hueco sostenido."></canvas></div>
+  </div>
+
+  <div class="g2" style="margin-top:18px">
+    <div class="callout-coral"><b>El pico cae el MISMO día de la promo.</b> El 20-abr mayoristas Lima compró 12.4 t en un día. Un arbitraje reactivo —un revendedor que ve el descuento y va a abastecerse— no puede colocar su pedido más grande el mismo día que arranca la promo. Sea cual sea la causa, el patrón es incompatible con un desabastecimiento del canal hacia TAMBO.</div>
+    <div class="callout"><b>No hay hueco: hay inundación.</b> En abril, tras el día 0 llega una segunda ola aún mayor (+8 = 11.1 t, +9 = 14.2 t). En mayo hay una pausa breve la primera semana, pero se revierte hasta 16.9 t al +14 — el día más alto de la ventana. 14 días post-promo ≈ 30 t, el doble del ritmo previo.</div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<hr class="divider">
+
+<!-- 5b · PROXIMIDAD -->
+<section class="section" id="proximidad">
+  <div class="sec-label">Hallazgo 04 · Análisis por proximidad</div>
+  <h2 class="sec-title">¿Y a nivel de tienda? — <em>inconcluso por muestra</em></h2>
+  <p class="sec-lead">Bajamos al nivel más fino posible: comparar clientes <b>a menos de 500 m</b> de una tienda TAMBO que promocionó (cercanos) contra los de <b>más de 3 km</b> (lejanos), día a día. Con las 3 tiendas identificadas —todas en Villa El Salvador— el grupo "cercano" resultó demasiado chico para concluir, pero lo que se ve <b>no contradice</b> el veredicto agregado.</p>
+
+  <div class="card">
+    <h3 class="card-h">Bodegas cercanas vs lejanas — abril y mayo</h3>
+    <p class="card-p">Venta diaria indexada (pre-promo = 100). Los lejanos (muchos clientes) son estables en los dos eventos; los cercanos saltan sin patrón —de +1000 a valores negativos por devoluciones— porque son poquísimas bodegas (~5 kg/día). El ruido <b>es</b> el hallazgo: sin muestra no hay señal.</p>
+    <div class="legend">
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#E85D4C" stroke-width="3"/></svg>cerca (&lt;500 m) · 115 kg</span>
+      <span><svg width="22" height="8" aria-hidden="true"><line x1="0" y1="4" x2="22" y2="4" stroke="#2D9C9C" stroke-width="3"/></svg>lejos (&gt;3 km) · 24,404 kg</span>
+    </div>
+    <div class="g2">
+      <div><div style="font-size:12px;color:var(--text2);text-align:center;font-weight:600;margin-bottom:2px">Evento 20-abr</div><div class="chart-box" style="height:260px"><canvas id="c_prox_bod_abr" role="img" aria-label="Venta diaria indexada de bodegas cercanas contra lejanas al evento del 20 de abril. Los lejanos estables cerca de 100-130; los cercanos saltan de más de 1000 a valores negativos por muy pocos clientes."></canvas></div></div>
+      <div><div style="font-size:12px;color:var(--text2);text-align:center;font-weight:600;margin-bottom:2px">Evento 25-may</div><div class="chart-box" style="height:260px"><canvas id="c_prox_bod_may" role="img" aria-label="Venta diaria indexada de bodegas cercanas contra lejanas al evento del 25 de mayo. Los lejanos estables; los cercanos vuelven a saltar sin patrón por muy pocos clientes."></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="card-h">Por qué no concluye: casi toda la venta está lejos de las 3 tiendas</h3>
+    <p class="card-p">Participación del volumen del SKU según distancia a un TAMBO-promo. El grupo cercano es una fracción mínima — sin masa estadística para medir un efecto.</p>
+    <div class="legend">
+      <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#E85D4C"/></svg>cerca (&lt;500 m)</span>
+      <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#2D9C9C"/></svg>lejos (&gt;3 km)</span>
+    </div>
+    <div class="chart-box" style="height:190px"><canvas id="c_prox_mix" role="img" aria-label="Participación del volumen del atún según distancia a una tienda TAMBO que promocionó. En bodegas el grupo cercano es 0.5% del volumen; en mayoristas 1.2%. Casi todo el volumen está lejos de las 3 tiendas."></canvas></div>
+  </div>
+
+  <div class="g2" style="margin-top:18px">
+    <div class="callout-gold"><b>Sin muestra para el nivel fino.</b> Las bodegas a &lt;500 m mueven solo <b>115 kg</b> (0.5% del volumen); en mayoristas, VES tiene <b>1 sola transacción</b>. Con 3 tiendas, "cerca" es un puñado de clientes.</div>
+    <div class="callout"><b>Lo que se ve es ruido, no señal.</b> El indicador cerca-vs-lejos cambia de signo entre eventos (+115% en abril, −77% en mayo). Una señal real de canibalización sería negativa y consistente; esto es lo que hace el azar con pocos datos.</div>
+  </div>
+  <div class="callout-green" style="margin-top:8px"><b>El veredicto no cambia.</b> Se sostiene en el análisis agregado —Lima entera, miles de clientes y decenas de toneladas— que no mostró canibalización. Para cerrar el nivel fino con rigor haría falta el <b>maestro completo de coordenadas de las tiendas TAMBO que promocionaron</b> (cientos, no 3); con eso "cerca" tendría masa alrededor de toda la red.</div>
+</section>
+
+<!-- 6 · INSIGHTS -->
+<section class="section" id="insights">
+  <div class="sec-label">Lectura para negocio</div>
+  <h2 class="sec-title">Cinco <em>insights</em> para la reunión</h2>
+  <p class="sec-lead">Traducción de la evidencia a decisiones. Cada insight con su implicancia para la conversación con gerencia.</p>
+
+  <div class="ins-grid">
+    <div class="ins c-green">
+      <div class="ins-n">INSIGHT 01</div>
+      <div class="ins-h">No hay canibalización detectable</div>
+      <div class="ins-p">Los descuentos de TAMBO <b>no desabastecen</b> a mayoristas ni bodegas. En abril y mayo ambos canales mantuvieron o superaron su volumen normal en Lima.</div>
+      <div class="ins-imp"><span class="tag">Implicancia</span>No hay que frenar las promos de TAMBO por miedo a perder venta en los otros canales.</div>
+    </div>
+
+    <div class="ins c-coral">
+      <div class="ins-n">INSIGHT 02</div>
+      <div class="ins-h">El volumen en juego no alcanza para mover la aguja</div>
+      <div class="ins-p">Las <b>22 t</b> que libera la promo se comparan con <b>~75 t/mes</b> de mayoristas Lima y <b>~33 t/mes</b> de bodegas. Aunque TODO se desviara, sería apenas un tercio de un mes de un solo canal.</div>
+      <div class="ins-imp"><span class="tag">Implicancia</span>El volumen del descuento es chico frente al tamaño de los canales — no alcanza para desabastecerlos.</div>
+    </div>
+
+    <div class="ins">
+      <div class="ins-n">INSIGHT 03</div>
+      <div class="ins-h">Bodegas es demanda pura del consumidor</div>
+      <div class="ins-p">La venta en bodegas/PM es <b>plana e indiferente</b> a la promo: el día 0 no se distingue de un día normal. El shopper no migra a TAMBO.</div>
+      <div class="ins-imp"><span class="tag">Implicancia</span>Son ocasiones de compra distintas; la promo de TAMBO no compite por el mismo comprador.</div>
+    </div>
+
+    <div class="ins c-gold">
+      <div class="ins-n">INSIGHT 04</div>
+      <div class="ins-h">Si hay costo, es de margen — no de volumen</div>
+      <div class="ins-p">En el peor caso, vender vía TAMBO con descuento agresivo desplaza <b>margen</b>, no unidades. Y ni siquiera se observa ese desplazamiento a costa de otros canales.</div>
+      <div class="ins-imp"><span class="tag">Implicancia</span>La conversación correcta es ROI/margen de la promo, no "pérdida de volumen".</div>
+    </div>
+
+    <div class="ins c-coral">
+      <div class="ins-n">INSIGHT 05</div>
+      <div class="ins-h">La estacionalidad manda, no la promo</div>
+      <div class="ins-p">Abril fue alto en <b>todos</b> los canales por Semana Santa (vigilia), no por la promo. El pico general es calendario, no efecto promocional.</div>
+      <div class="ins-imp"><span class="tag">Implicancia</span>No atribuir a la promo lo que es estacional; separar ambos efectos en próximos análisis.</div>
+    </div>
+
+    <div class="ins">
+      <div class="ins-n">SÍNTESIS</div>
+      <div class="ins-h">Tres canales, misma conclusión</div>
+      <div class="ins-p">Bodegas: venta plana, Lima gana share. Mayoristas: pico el día de promo, sin hueco. TAMBO: 11.9 t el día del descuento. Ningún canal perdió volumen hacia la promo.</div>
+      <div class="ins-imp"><span class="tag">Neto</span>Abril fue un mes alto de Primor Atún en todos los canales a la vez, no una fuga.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · VEREDICTO -->
+<section class="section" id="veredicto">
+  <div class="verdict">
+    <div class="vl">Veredicto</div>
+    <h3>No hay evidencia de que TAMBO le reste volumen a los otros canales</h3>
+    <p>En abril y mayo, en ninguno de los dos canales aparece la firma del arbitraje. Bodegas: venta plana y Lima gana share. Mayoristas: el sell-in pica el mismo día de cada promo (incompatible con un arbitraje reactivo) y no deja hueco rezagado sostenido; el volumen post-promo corre por encima del baseline.</p>
+    <p>Lo que gobierna los datos es la estacionalidad de Semana Santa —que infla el atún en todos los canales a la vez— y la dinámica propia del canal mayorista, que compra en lotes y los digiere después. No una fuga hacia TAMBO.</p>
+    <div class="pnl">
+      <span class="tag">Lectura P&amp;L</span>
+      <p>Si acaso hubiera algún efecto, sería de <b style="color:#fff">margen</b> (vender vía TAMBO con descuento lo que igual se movía), no de <b style="color:#fff">volumen</b>. Pero la evidencia no muestra ni siquiera ese traslado a costa de los otros canales.</p>
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top:20px">
+    <div class="list-card">
+      <h4>Salvedades honestas</h4>
+      <ul>
+        <li>Junio aún no carga completo: bodegas llega a fin de mayo y el sell-in mayorista a ~26-jun, así que el evento del 29-jun no es evaluable todavía.</li>
+        <li>El "Resto" en mayoristas es un control débil (clientes no-Lima de las oficinas de Lima), no provincias reales; la señal fuerte es la forma de la serie de Lima.</li>
+        <li>El ubigeo de TAMBO viene fijo para toda la cadena → no permite cruzar proximidad tienda↔canal; y la promo es nacional-distribuida.</li>
+        <li>Con 3 promos de un día y una SKU, los resultados son direccionales; lo que sostiene la conclusión es la consistencia entre canales, eventos y granularidades.</li>
+      </ul>
+    </div>
+    <div class="list-card next">
+      <h4>Próximos pasos</h4>
+      <ul>
+        <li>Traer junio completo para cerrar el evento del 29-jun y el rezago de mayo en bodegas.</li>
+        <li>Confirmar con comercial si hubo campaña mayorista de Primor Atún en abril — los picos del día 0 lo sugieren con fuerza.</li>
+        <li>Cuantificar el margen por canal sobre el volumen del SKU para la lectura de ROI de la promo.</li>
+        <li>Opcional: corte por cliente (qué mayoristas específicos), ya sin la pata de proximidad geográfica.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <svg width="150" height="40" viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg" aria-label="COE Advanced Analytics"><rect x="0" y="0" width="38" height="32" rx="6" fill="#2D9C9C"/><text x="19" y="22" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="15" font-weight="800" fill="white" letter-spacing="1">COE</text><text x="46" y="13" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="700" fill="#8FCFCF" letter-spacing="0.5">ADVANCED</text><text x="46" y="25" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">ANALYTICS</text></svg>
+  <div style="display:flex;gap:36px;flex-wrap:wrap">
+    <div><div class="footer-kpi-v">22.2 t</div><div class="footer-kpi-l">Liberadas 2 días</div></div>
+    <div><div class="footer-kpi-v" style="color:var(--teal-m)">0</div><div class="footer-kpi-l">Canibalización</div></div>
+    <div><div class="footer-kpi-v">3</div><div class="footer-kpi-l">Canales · 3 eventos</div></div>
+  </div>
+  <div class="footer-meta">Efecto de promociones Kikiriki en canales · Atún Primor 3201024 · abr–jun 2026 · Fuentes: sell-out TAMBO, sell-in mayoristas/CODIS, sell-out bodegas/PM, maestro de promociones.</div>
+</footer>
+
+<script>
+(function(){
+  // progress bar
+  var pr=document.getElementById('progress');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement,b=document.body;
+    var st=h.scrollTop||b.scrollTop, sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
+    pr.style.width=(sh>0?(st/sh*100):0)+'%';
+  },{passive:true});
+
+  if(!window.Chart){return;}
+  var TEAL='#2D9C9C',TEALD='#1F6F6F',CORAL='#E85D4C',GOLD='#D4A853',TAN='#C6BEB0',
+      TEXT='#3D3A36',MUT='#7a7a8a',GRID='#EBE7E0';
+  Chart.defaults.font.family="'DM Sans',sans-serif";
+  Chart.defaults.color=MUT;
+  function kfmt(v){return (v/1000)+'k';}
+
+  function promoMarker(idxs){
+    return {id:'pm'+idxs.join(''),afterDatasetsDraw:function(ch){
+      var ctx=ch.ctx,a=ch.chartArea,x=ch.scales.x;
+      idxs.forEach(function(i){
+        var px=x.getPixelForValue(i);
+        ctx.save();
+        ctx.beginPath();ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(122,122,138,.8)';ctx.lineWidth=1;
+        ctx.moveTo(px,a.top);ctx.lineTo(px,a.bottom);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=MUT;ctx.font="11px 'DM Sans',sans-serif";ctx.textAlign='center';
+        ctx.fillText('promo',px,a.top-5);
+        ctx.restore();
+      });
+    }};
+  }
+  function opts(extra){
+    var base={
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{}}},
+      scales:{
+        y:{beginAtZero:true,grid:{color:GRID},ticks:{color:MUT,callback:kfmt}},
+        x:{grid:{display:false},ticks:{color:MUT,autoSkip:true,maxRotation:0,autoSkipPadding:12}}
+      }
+    };
+    if(extra&&extra.scales)base.scales=extra.scales;
+    if(extra&&extra.plugins)base.plugins=extra.plugins;
+    if(extra&&extra.layout)base.layout=extra.layout;
+    return base;
+  }
+  function lineDS(label,data,color,dash){
+    return {label:label,data:data,borderColor:color,backgroundColor:color,borderWidth:2.5,
+      tension:.3,spanGaps:true,pointRadius:2.5,pointHoverRadius:5,
+      borderDash:dash?[5,3]:[]};
+  }
+  function kgTip(){return {callbacks:{label:function(c){return c.dataset.label+': '+(c.parsed.y==null?'—':Math.round(c.parsed.y).toLocaleString()+' kg');}}};}
+  function dayTip(){return {callbacks:{title:function(t){return 'día '+t[0].label;},label:function(c){return c.dataset.label+': '+(c.parsed.y==null?'—':Math.round(c.parsed.y).toLocaleString()+' kg');}}};}
+
+  /* Rotación normal — eje recortado, picos fuera de escala (único chart de venta diaria TAMBO) */
+  (function(){
+    var abr=[77,159,380,100,85,127,91,84,108,82,49,83,44,99,87,83,90,71,82,84754,45,57,47,48,50,66,39,46,33,38];
+    var may=[25,54,46,39,92,89,77,82,68,62,49,76,82,95,75,56,65,90,146,63,80,82,80,67,74078,41,40,58,51,56,32];
+    var data=abr.concat(may),labels=[],d=new Date(2026,3,1);
+    for(var i=0;i<data.length;i++){labels.push(d.getDate()+' '+['ene','feb','mar','abr','may','jun'][d.getMonth()]);d.setDate(d.getDate()+1);}
+    var promo=[19,54],colors=data.map(function(v,i){return promo.indexOf(i)>-1?CORAL:TAN;});
+    var offLbl={19:'84,754',54:'74,078'};
+    var offPlugin={id:'offn',afterDatasetsDraw:function(ch){
+      var ctx=ch.ctx,m=ch.getDatasetMeta(0),a=ch.chartArea;
+      ctx.save();ctx.fillStyle=CORAL;ctx.font="700 11px 'Space Grotesk',sans-serif";ctx.textAlign='center';
+      Object.keys(offLbl).forEach(function(i){var bar=m.data[i];if(bar)ctx.fillText('↑ '+offLbl[i],bar.x,a.top-6);});
+      ctx.restore();
+    }};
+    new Chart(document.getElementById('c_tambo_norm'),{
+      type:'bar',
+      data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderRadius:2,maxBarThickness:13}]},
+      options:opts({layout:{padding:{top:24}},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return Math.round(c.parsed.y).toLocaleString()+' latas';}}}},
+        scales:{y:{beginAtZero:true,max:450,grid:{color:GRID},ticks:{color:MUT,stepSize:100}},x:{grid:{display:false},ticks:{color:MUT,autoSkip:true,maxRotation:0,autoSkipPadding:20}}}}),
+      plugins:[offPlugin]
+    });
+  })();
+
+  /* Top locales en días de promo (barras horizontales) */
+  (function(){
+    var loc=['J-CHAVEZ-VES','TDA BOCANEGRA','REVOLUCION2-VES','REVOLUCION-C14','M-BASTIDAS','FUNDO-MARQUEZ','JARDINES-C3','ANGAMOS-C3','VALLEJO','GARZON-C15','CHIMPU-OCLLO-C3','AREQUIPA-C25','CUETO-C5','TDA REVOLUCION','CELIMA'];
+    var abr=[1022,680,618,528,496,492,490,458,450,436,405,402,402,402,398];
+    var may=[584,442,580,464,346,304,446,274,248,398,200,58,224,246,380];
+    new Chart(document.getElementById('c_locales'),{
+      type:'bar',
+      data:{labels:loc,datasets:[
+        {label:'20-abr',data:abr,backgroundColor:'#E85D4C',borderRadius:3,categoryPercentage:0.78,barPercentage:0.92},
+        {label:'25-may',data:may,backgroundColor:'#F0A78F',borderRadius:3,categoryPercentage:0.78,barPercentage:0.92}
+      ]},
+      options:{
+        indexAxis:'y',
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+Math.round(c.parsed.x).toLocaleString()+' latas';}}}},
+        scales:{
+          x:{beginAtZero:true,grid:{color:GRID},ticks:{color:MUT}},
+          y:{grid:{display:false},ticks:{color:TEXT,font:{size:11}},reverse:false}
+        }
+      }
+    });
+  })();
+
+  /* Bodegas semanal */
+  (function(){
+    var L=['30 mar','6 abr','13 abr','20 abr','27 abr','4 may','11 may','18 may','25 may'];
+    new Chart(document.getElementById('c_bod_sem'),{type:'line',
+      data:{labels:L,datasets:[lineDS('Lima',[6371,9883,7463,8253,7400,13685,7284,6874,7421],TEAL,false),
+        lineDS('Resto',[5976,13026,10071,10195,8250,13816,8584,8275,7954],GOLD,true)]},
+      options:opts({layout:{padding:{top:6}},plugins:{legend:{display:false},tooltip:kgTip()}}),
+      plugins:[promoMarker([3,8])]});
+  })();
+
+  /* Bodegas diario (líneas, abril vs mayo) */
+  (function(){
+    var L=['−7','−6','−5','−4','−3','−2','−1','0','+1','+2','+3','+4','+5','+6','+7','+8','+9','+10','+11','+12','+13','+14'];
+    var abr=[1193,1385,1146,1307,1378,1055,null,1544,1400,1162,1449,1469,1230,null,1481,1631,1396,1938,null,954,null,1223];
+    var may=[1186,1361,970,1162,1205,990,null,1428,1226,1009,1185,1345,1228,null,null,null,null,null,null,null,null,null];
+    new Chart(document.getElementById('c_bod_dia'),{type:'line',
+      data:{labels:L,datasets:[lineDS('Abril (promo 20)',abr,TEAL,false),lineDS('Mayo (promo 25)',may,CORAL,false)]},
+      options:opts({layout:{padding:{top:6}},plugins:{legend:{display:false},tooltip:dayTip()},
+        scales:{y:{beginAtZero:true,grid:{color:GRID},ticks:{color:MUT,callback:kfmt}},x:{grid:{display:false},ticks:{color:MUT,autoSkip:false,maxRotation:0,font:{size:10}}}}}),
+      plugins:[promoMarker([7])]});
+  })();
+
+  /* Mayoristas semanal */
+  (function(){
+    var L=['30 mar','6 abr','13 abr','20 abr','27 abr','4 may','11 may','18 may','25 may'];
+    new Chart(document.getElementById('c_may_sem'),{type:'line',
+      data:{labels:L,datasets:[lineDS('Lima',[1189,15658,6028,20294,32632,3622,13487,7150,7594],TEAL,false),
+        lineDS('Resto',[2540,6606,3508,1740,3521,4408,3394,497,1109],GOLD,true)]},
+      options:opts({layout:{padding:{top:6}},plugins:{legend:{display:false},tooltip:kgTip()}}),
+      plugins:[promoMarker([3,8])]});
+  })();
+
+  /* Mayoristas diario — HOMOLOGADO a líneas (abril vs mayo) */
+  (function(){
+    var L=['−7','−6','−5','−4','−3','−2','−1','0','+1','+2','+3','+4','+5','+6','+7','+8','+9','+10','+11','+12','+13','+14'];
+    var abr=[null,134,517,0,1344,4032,null,12425,941,0,2896,3360,672,null,7305,11088,14240,null,null,null,null,null];
+    var may=[3992,1210,1008,101,0,840,null,7056,537,0,0,0,517,null,0,2379,3763,1344,2742,2016,null,16854];
+    new Chart(document.getElementById('c_may_dia'),{type:'line',
+      data:{labels:L,datasets:[lineDS('Abril (promo 20)',abr,TEAL,false),lineDS('Mayo (promo 25)',may,CORAL,false)]},
+      options:opts({layout:{padding:{top:6}},plugins:{legend:{display:false},tooltip:dayTip()},
+        scales:{y:{beginAtZero:true,grid:{color:GRID},ticks:{color:MUT,callback:kfmt}},x:{grid:{display:false},ticks:{color:MUT,autoSkip:false,maxRotation:0,font:{size:10}}}}}),
+      plugins:[promoMarker([7])]});
+  })();
+
+  /* Proximidad — bodegas event-time cerca vs lejos (abril + mayo) */
+  (function(){
+    var L=['−7','−6','−5','−4','−3','−2','−1','0','+1','+2','+3','+4','+5','+6','+7','+8','+9','+10','+11','+12','+13','+14'];
+    function proxChart(id,cerca,lejos){
+      new Chart(document.getElementById(id),{type:'line',
+        data:{labels:L,datasets:[lineDS('cerca',cerca,CORAL,false),lineDS('lejos',lejos,TEAL,false)]},
+        options:opts({layout:{padding:{top:6}},plugins:{legend:{display:false},tooltip:{callbacks:{title:function(t){return 'día '+t[0].label;},label:function(c){return c.dataset.label+': '+(c.parsed.y==null?'—':Math.round(c.parsed.y)+' (índice)');}}}},
+          scales:{y:{grid:{color:GRID},ticks:{color:MUT}},x:{grid:{display:false},ticks:{color:MUT,autoSkip:false,maxRotation:0,font:{size:9}}}}}),
+        plugins:[promoMarker([7])]});
+    }
+    proxChart('c_prox_bod_abr',
+      [284,260,0,85,99,-28,null,993,1045,-114,14,459,-19,null,47,449,0,66,null,0,null,227],
+      [113,125,104,118,130,110,null,126,119,108,133,132,115,null,121,135,137,181,null,90,null,101]);
+    proxChart('c_prox_bod_may',
+      [464,133,0,15,88,0,null,42,199,0,2,10,0,null,182,54,0,0,69,0,null,722],
+      [114,143,97,117,126,103,null,121,111,107,112,128,129,null,114,163,129,110,121,266,null,285]);
+  })();
+
+  /* Proximidad — participación cerca vs lejos (barras 100%) */
+  (function(){
+    new Chart(document.getElementById('c_prox_mix'),{type:'bar',
+      data:{labels:['Bodegas','Mayoristas'],datasets:[
+        {label:'cerca',data:[0.47,1.24],backgroundColor:CORAL,borderRadius:3},
+        {label:'lejos',data:[99.53,98.76],backgroundColor:TEAL,borderRadius:3}
+      ]},
+      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.x.toFixed(1)+'%';}}}},
+        scales:{x:{stacked:true,max:100,grid:{color:GRID},ticks:{color:MUT,callback:function(v){return v+'%';}}},
+                y:{stacked:true,grid:{display:false},ticks:{color:TEXT,font:{size:12}}}}}
+    });
+  })();
+
+})();
+</script>
+</body>
+</html>
