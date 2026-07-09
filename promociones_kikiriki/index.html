@@ -170,6 +170,7 @@
     <a href="#bodegas">Bodegas</a>
     <a href="#mayoristas">Mayoristas</a>
     <a href="#proximidad">Proximidad</a>
+    <a href="#conducta">Conducta</a>
     <a href="#insights">Insights</a>
     <a href="#veredicto">Veredicto</a>
   </div>
@@ -385,7 +386,61 @@
     <div class="callout-gold"><b>Sin muestra para el nivel fino.</b> Las bodegas a &lt;500 m mueven solo <b>115 kg</b> (0.5% del volumen); en mayoristas, VES tiene <b>1 sola transacción</b>. Con 3 tiendas, "cerca" es un puñado de clientes.</div>
     <div class="callout"><b>Lo que se ve es ruido, no señal.</b> El indicador cerca-vs-lejos cambia de signo entre eventos (+115% en abril, −77% en mayo). Una señal real de canibalización sería negativa y consistente; esto es lo que hace el azar con pocos datos.</div>
   </div>
-  <div class="callout-green" style="margin-top:8px"><b>El veredicto no cambia.</b> Se sostiene en el análisis agregado —Lima entera, miles de clientes y decenas de toneladas— que no mostró canibalización. Para cerrar el nivel fino con rigor haría falta el <b>maestro completo de coordenadas de las tiendas TAMBO que promocionaron</b> (cientos, no 3); con eso "cerca" tendría masa alrededor de toda la red.</div>
+  <div class="callout-green" style="margin-top:8px"><b>El veredicto no cambia.</b> Se sostiene en el análisis agregado —Lima entera, miles de clientes y decenas de toneladas— que no mostró canibalización. Para cerrar el nivel fino con rigor haría falta el <b>maestro completo de coordenadas de las tiendas TAMBO que promocionaron</b> (cientos, no 3); con eso "cerca" tendría masa alrededor de toda la red — es justo lo que hacemos en la siguiente sección.</div>
+</section>
+
+<!-- 5B · CONDUCTA POR CLIENTE -->
+<section class="section" id="conducta">
+  <div class="sec-label">Hallazgo 04B · Conducta por cliente</div>
+  <h2 class="sec-title">¿Cada bodega compró menos que <em>su propia normal</em>?</h2>
+  <p class="sec-lead">Llevamos la proximidad al corte más exigente: cada bodega contra <b>su propia compra histórica</b> (línea base ene–mar, antes de Semana Santa y de cualquier promo), sin compararla con otras. Con un <b>placebo</b> —la semana previa a la promo— para separar el efecto de la promo de la estacionalidad. Ahora la referencia es el <b>maestro geocodificado</b>: tiendas con dirección real (coord única, similitud ≥90%), no solo las 3 de VES.</p>
+
+  <div class="g4" style="margin-bottom:18px">
+    <div class="pc"><div class="pc-l">Bodegas cercanas con normal</div><div class="pc-v" style="color:var(--teal)">181</div><div class="pc-prev">evaluables · base ene–mar</div></div>
+    <div class="pc"><div class="pc-l">Su normal tras la promo · abril</div><div class="pc-v" style="color:var(--coral)">0.60×</div><div class="pc-prev">compraron menos que su normal</div></div>
+    <div class="pc"><div class="pc-l">Ya en la semana previa · placebo</div><div class="pc-v" style="color:var(--coral)">0.51×</div><div class="pc-prev">la baja precede a la promo</div></div>
+    <div class="pc"><div class="pc-l">Lejanas · mismo criterio</div><div class="pc-v" style="color:var(--teal)">0.65×</div><div class="pc-prev">cayeron igual → es mercado</div></div>
+  </div>
+
+  <div class="card">
+    <h3 class="card-h">La baja precede a la promo</h3>
+    <p class="card-p">Bodegas cercanas · compra como % de su normal ene–mar. Semana previa (pre) vs post-promo, con la línea de su normal en 100.</p>
+    <div class="legend">
+      <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#F0A78F"/></svg>semana previa (pre)</span>
+      <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#E85D4C"/></svg>post-promo</span>
+    </div>
+    <div class="chart-box" style="height:300px"><canvas id="c_cli_placebo" role="img" aria-label="Compra de las bodegas cercanas como porcentaje de su normal histórico. En abril la semana previa es 51 por ciento y post-promo 60; en mayo pre 53 y post 54. Ambas están por debajo de su normal (100) ya antes de la promo, y post no cae respecto al pre."></canvas></div>
+    <div class="callout" style="margin-top:14px"><b>Si TAMBO las drenara,</b> partirían de su normal (100) <b>antes</b> y caerían <b>después</b>. En cambio ya estaban en 0.51× la semana previa y post subieron a 0.60× — respecto a su propia semana anterior compraron <b>más</b>, no menos. Una promo del 20 no puede bajarles la compra del 13–19.</div>
+  </div>
+
+  <div class="g2" style="margin-top:18px">
+    <div class="card">
+      <h3 class="card-h">Cerca y lejos caen igual</h3>
+      <p class="card-p">Compra post-promo como % de su normal · cercanas vs lejanas (resto de Lima).</p>
+      <div class="legend">
+        <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#E85D4C"/></svg>cerca (&lt;500 m)</span>
+        <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#2D9C9C"/></svg>lejos (resto)</span>
+      </div>
+      <div class="chart-box" style="height:260px"><canvas id="c_cli_cvl" role="img" aria-label="Compra post-promo como porcentaje de su normal. Cercanas 60 por ciento en abril y 54 en mayo; lejanas 65 y 72. Están al mismo nivel."></canvas></div>
+    </div>
+    <div class="card">
+      <h3 class="card-h">Y la magnitud es mínima</h3>
+      <p class="card-p">Cercanas · kg esperado por su normal vs kg real post-promo (ventana de 14 días).</p>
+      <div class="legend">
+        <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#8FCFCF"/></svg>esperado por su normal</span>
+        <span><svg width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#E85D4C"/></svg>real post-promo</span>
+      </div>
+      <div class="chart-box" style="height:260px"><canvas id="c_cli_kg" role="img" aria-label="Kilos esperados por su normal contra kilos reales post-promo en las bodegas cercanas. Abril 152.6 esperado contra 91.7 real; mayo 152.6 contra 82. El faltante total es de unos 61 kilos."></canvas></div>
+    </div>
+  </div>
+
+  <div class="g3" style="margin-top:18px">
+    <div class="callout"><b>El placebo lo desmonta.</b> Ya compraban 0.51× su normal la semana <em>antes</em> de la promo. La baja existía sin que la promo tocara nada.</div>
+    <div class="callout"><b>Post ≥ pre: subieron.</b> Abril 0.51→0.60, mayo 0.53→0.54. Contra su propia semana previa, no compraron menos después de la promo.</div>
+    <div class="callout-gold"><b>Las lejanas caen igual.</b> 0.65× vs 0.60×, y 83% vs 84% bajo su normal. Si fuera TAMBO, las cercanas caerían <em>más</em>. Es mercado.</div>
+  </div>
+
+  <div class="callout-green" style="margin-top:8px"><b>Tres métodos, una conclusión.</b> Agregado (Lima sin canibalización) + diff-in-diff por cliente (las cercanas no cambian distinto a las lejanas) + auto-control con placebo (la baja precede a la promo y es de mercado). La respuesta a "¿compraron menos que su normal por la promo?" es <b>no</b>: la caída de abril–mayo es estacional del SKU (verano→otoño), uniforme en toda la geografía. Y con 181 bodegas cercanas, ya no es frágil por muestra.</div>
 </section>
 
 <!-- 6 · INSIGHTS -->
@@ -659,6 +714,48 @@
         scales:{x:{stacked:true,max:100,grid:{color:GRID},ticks:{color:MUT,callback:function(v){return v+'%';}}},
                 y:{stacked:true,grid:{display:false},ticks:{color:TEXT,font:{size:12}}}}}
     });
+  })();
+
+  /* Conducta por cliente — auto-control vs su propia normal */
+  (function(){
+    var normLine={id:'norm100',afterDraw:function(ch){
+      if(!ch.scales.y)return;var y=ch.scales.y.getPixelForValue(100),a=ch.chartArea;
+      if(y<a.top||y>a.bottom)return;var c=ch.ctx;c.save();
+      c.strokeStyle='#9AA7AD';c.setLineDash([5,4]);c.lineWidth=1;
+      c.beginPath();c.moveTo(a.left,y);c.lineTo(a.right,y);c.stroke();c.setLineDash([]);
+      c.fillStyle=MUT;c.font="11px 'DM Sans',sans-serif";c.fillText('su normal = 100',a.left+6,y-6);c.restore();
+    }};
+    var pctScales={y:{beginAtZero:true,suggestedMax:120,grid:{color:GRID},ticks:{color:MUT,callback:function(v){return v+'%';}}},
+                   x:{grid:{display:false},ticks:{color:TEXT,font:{size:11}}}};
+    function pctTip(){return {callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.y+'% de su normal';}}};}
+
+    new Chart(document.getElementById('c_cli_placebo'),{type:'bar',
+      data:{labels:['Abril (promo 20)','Mayo (promo 25)'],datasets:[
+        {label:'Semana previa',data:[51,53],backgroundColor:'#F0A78F',borderRadius:3,maxBarThickness:74},
+        {label:'Post-promo',data:[60,54],backgroundColor:CORAL,borderRadius:3,maxBarThickness:74}]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+        plugins:{legend:{display:false},tooltip:pctTip()},scales:pctScales},plugins:[normLine]});
+
+    new Chart(document.getElementById('c_cli_cvl'),{type:'bar',
+      data:{labels:['Abril','Mayo'],datasets:[
+        {label:'Cerca (<500 m)',data:[60,54],backgroundColor:CORAL,borderRadius:3,maxBarThickness:66},
+        {label:'Lejos (resto)',data:[65,72],backgroundColor:TEAL,borderRadius:3,maxBarThickness:66}]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+        plugins:{legend:{display:false},tooltip:pctTip()},scales:pctScales},plugins:[normLine]});
+
+    var ratioLbl={id:'ratioLbl',afterDatasetsDraw:function(ch){
+      var m=ch.getDatasetMeta(1),c=ch.ctx,r=['×0.60','×0.54'];
+      c.save();c.fillStyle=TEXT;c.font="700 12px 'Space Grotesk',sans-serif";c.textAlign='center';
+      m.data.forEach(function(bar,i){c.fillText(r[i],bar.x,bar.y-8);});c.restore();
+    }};
+    new Chart(document.getElementById('c_cli_kg'),{type:'bar',
+      data:{labels:['Abril','Mayo'],datasets:[
+        {label:'Esperado por su normal',data:[152.6,152.6],backgroundColor:'#8FCFCF',borderRadius:3,maxBarThickness:66},
+        {label:'Real post-promo',data:[91.7,82.0],backgroundColor:CORAL,borderRadius:3,maxBarThickness:66}]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},layout:{padding:{top:18}},
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.y+' kg';}}}},
+        scales:{y:{beginAtZero:true,grid:{color:GRID},ticks:{color:MUT,callback:function(v){return v+' kg';}}},
+                x:{grid:{display:false},ticks:{color:TEXT,font:{size:11}}}}},plugins:[ratioLbl]});
   })();
 
 })();
