@@ -228,6 +228,11 @@
     <div class="pc"><div class="pc-l">Puestos de mercado</div><div class="pc-v" style="color:var(--gold)">204k<span style="font-size:14px;font-weight:600;color:var(--text2)"> kg</span></div><div class="pc-prev">18% del volumen total del SKU</div></div>
     <div class="pc"><div class="pc-l">TAMBO</div><div class="pc-v" style="color:var(--text)">52k<span style="font-size:14px;font-weight:600;color:var(--text2)"> kg</span></div><div class="pc-prev">5% del volumen total del SKU</div></div>
   </div>
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-h">Venta semanal TOTAL del SKU — los 4 canales sumados (kg)</div>
+    <div class="card-p">La suma de todos los canales. Muestra la <b>estacionalidad</b> del atún: la demanda es alta en verano (feb–mar) y baja hacia otoño (abr–jun) — el mismo patrón que explica el bajón de abril–mayo, en todos los canales a la vez.</div>
+    <div class="chart-box h-md"><canvas id="z_total"></canvas></div>
+  </div>
   <div class="card">
     <div class="card-h">Venta semanal del SKU por canal (kg)</div>
     <div class="card-p">Las 4 series juntas. Mayoristas (coral) domina en volumen y es el más volátil; TAMBO (gris) es plano salvo los 4 picos de promo. Líneas punteadas = eventos de promo.</div>
@@ -397,6 +402,16 @@
   Chart.defaults.font.family="'DM Sans',sans-serif"; Chart.defaults.color=MUT;
   var LAB=["29-Dec", "05-Jan", "12-Jan", "19-Jan", "26-Jan", "02-Feb", "09-Feb", "16-Feb", "23-Feb", "02-Mar", "09-Mar", "16-Mar", "23-Mar", "30-Mar", "06-Apr", "13-Apr", "20-Apr", "27-Apr", "04-May", "11-May", "18-May", "25-May", "01-Jun", "08-Jun", "15-Jun", "22-Jun", "29-Jun", "06-Jul"], PIDX=[16, 21, 26];
   function promoMarker(){return {id:'pm',afterDatasetsDraw:function(ch){var ctx=ch.ctx,a=ch.chartArea,x=ch.scales.x;PIDX.forEach(function(i){var px=x.getPixelForValue(i);ctx.save();ctx.beginPath();ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(122,122,138,.5)';ctx.lineWidth=1;ctx.moveTo(px,a.top);ctx.lineTo(px,a.bottom);ctx.stroke();ctx.setLineDash([]);ctx.restore();});}};}
+
+  // Seccion 1: TOTAL (suma de canales)
+  new Chart(document.getElementById('z_total'),{type:'line',
+    data:{labels:LAB,datasets:[
+      {label:'Total',data:[8708, 32868, 33524, 29668, 16646, 44866, 38600, 49723, 42062, 103158, 76993, 28628, 66421, 25856, 45281, 27063, 52396, 52021, 35607, 32825, 23002, 35009, 33643, 61748, 25388, 37576, 41585, 25098],borderColor:'#3D3A36',backgroundColor:'rgba(232,93,76,.10)',borderWidth:2.6,tension:.3,fill:true,pointRadius:0,pointHoverRadius:4}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return (c.raw/1000).toFixed(1)+'k kg (todos los canales)';}}}},
+      scales:{x:{grid:{display:false},ticks:{maxTicksLimit:10,font:{size:9}}},y:{grid:{color:GRID},ticks:{callback:function(v){return (v/1000)+'k';}},beginAtZero:true,title:{display:true,text:'kg / semana (total)',font:{size:10}}}}},
+    plugins:[promoMarker()]});
 
   // Seccion 1: 4 lineas juntas
   new Chart(document.getElementById('z_all'),{type:'line',
