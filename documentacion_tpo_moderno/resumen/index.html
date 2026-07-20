@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TPO Moderno — Consolidado Ejecutivo | COE Advanced Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Paleta cálida — misma del timeline y la documentación técnica */
+    --bg-cream:#FDFBF7; --bg-warm:#F8F5F0; --card:#FFFFFF;
+    --tinta:#3D3A36; --gris:#7a7a8a; --linea:#E8E4DD;
+    /* acentos remapeados a los nombres semánticos ya usados en el cuerpo */
+    --azul:#E85D4C; --azul-osc:#C94A3A; --azul-cl:#FFF0EE;          /* coral = primario */
+    --verde:#2D9C9C; --verde-cl:#E8F6F6;                             /* teal = ok */
+    --ambar:#C4983F; --ambar-cl:#FDF8EC;                             /* gold = warn */
+    --rojo:#C94A3A; --rojo-cl:#FFF0EE;                               /* coral oscuro = err */
+    --gris-cl:#F4F2EE;
+    --teal:#2D9C9C; --teal-dk:#238080; --teal-cl:#E8F6F6;
+    --gold:#D4A853; --gold-dk:#C4983F; --gold-cl:#FDF8EC;
+    --coral:#E85D4C; --coral-dk:#C94A3A; --coral-cl:#FFF0EE;
+    --shadow-sm:0 2px 8px rgba(26,26,46,.06); --shadow-md:0 5px 18px rgba(26,26,46,.11);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    color:var(--tinta);background:var(--bg-cream);line-height:1.55;font-size:15px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  h1,h2,h3,.sec-num,.tl-phase-title,.kpi .n,.mpill .mv,.evo-arrow .v,.logo-name{font-family:'Space Grotesk',sans-serif}
+
+  /* HERO */
+  header.hero{background:linear-gradient(135deg,var(--bg-warm) 0%,var(--bg-cream) 100%);color:var(--tinta);
+    padding:34px 0 34px;border-bottom:1px solid var(--linea);position:relative;overflow:hidden}
+  header.hero::before{content:"";position:absolute;top:-60px;right:-40px;width:320px;height:320px;border-radius:50%;
+    background:radial-gradient(circle,rgba(232,93,76,.08),transparent 70%);pointer-events:none}
+  header.hero::after{content:"";position:absolute;bottom:-80px;left:-40px;width:280px;height:280px;border-radius:50%;
+    background:radial-gradient(circle,rgba(45,156,156,.07),transparent 70%);pointer-events:none}
+  .hero .wrap{display:flex;flex-direction:column;gap:6px;position:relative;z-index:2}
+  /* Logo */
+  .brand{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+  .brand svg{width:38px;height:38px;flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(201,74,58,.22))}
+  .logo-name{font-size:13px;font-weight:700;color:var(--tinta);line-height:1.15}
+  .logo-sub{font-size:10px;color:var(--gris);letter-spacing:.5px;text-transform:uppercase;margin-top:1px}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral-dk);font-weight:700}
+  .hero h1{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-top:4px;color:var(--tinta)}
+  .hero .sub{font-size:16px;color:#5a564f;max-width:760px;margin-top:8px}
+  .hero .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;font-size:13px}
+  .hero .meta span{background:var(--card);border:1px solid var(--linea);color:#5a564f;padding:5px 13px;border-radius:20px;box-shadow:var(--shadow-sm)}
+
+  /* KPI strip */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:-24px 0 30px;position:relative;z-index:3}
+  .kpi{background:var(--card);border-radius:14px;padding:18px 16px;box-shadow:var(--shadow-md);border:1px solid var(--linea);border-top:3px solid var(--coral)}
+  .kpi:nth-child(2){border-top-color:var(--teal)}
+  .kpi:nth-child(3){border-top-color:var(--gold)}
+  .kpi:nth-child(4){border-top-color:var(--coral)}
+  .kpi:nth-child(5){border-top-color:var(--teal)}
+  .kpi:nth-child(6){border-top-color:var(--gold)}
+  .kpi .n{font-size:28px;font-weight:700;color:var(--coral);line-height:1}
+  .kpi:nth-child(2) .n{color:var(--teal)}.kpi:nth-child(3) .n{color:var(--gold-dk)}
+  .kpi:nth-child(5) .n{color:var(--teal)}.kpi:nth-child(6) .n{color:var(--gold-dk)}
+  .kpi .l{font-size:12px;color:var(--gris);margin-top:6px;font-weight:600;letter-spacing:.02em}
+
+  /* NAV */
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(253,251,247,.95);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--linea);padding:10px 0;margin-bottom:8px}
+  nav.toc .wrap{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  nav.toc a{font-size:12.5px;color:var(--gris);text-decoration:none;padding:6px 11px;border-radius:7px;font-weight:600;white-space:nowrap;transition:.15s}
+  nav.toc a:hover{background:var(--coral-cl);color:var(--coral-dk)}
+
+  section{margin:40px 0;scroll-margin-top:60px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;border-bottom:2px solid var(--coral);padding-bottom:10px}
+  .sec-num{font-size:13px;font-weight:700;color:#fff;background:var(--coral);border-radius:6px;padding:3px 9px;letter-spacing:.05em}
+  .sec-head h2{font-size:24px;font-weight:700;letter-spacing:-.01em;color:var(--tinta)}
+  .sec-intro{color:var(--gris);font-size:14.5px;margin:12px 0 20px;max-width:860px}
+
+  h3{font-size:17px;font-weight:600;margin:26px 0 12px;color:var(--coral-dk)}
+  h4{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--tinta)}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0 10px 22px}
+  li{margin:5px 0}
+  strong{font-weight:700}
+  code{background:var(--bg-warm);border:1px solid var(--linea);border-radius:4px;padding:1px 6px;font-family:"SF Mono",Consolas,monospace;font-size:12.5px;color:var(--coral-dk)}
+
+  /* CARDS */
+  .card{background:var(--card);border:1px solid var(--linea);border-radius:14px;padding:22px;margin:16px 0;box-shadow:var(--shadow-sm)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+
+  /* TABLES */
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+  th{background:var(--coral);color:#fff;text-align:left;padding:10px 12px;font-weight:600;font-size:12.5px;letter-spacing:.02em}
+  td{padding:9px 12px;border-bottom:1px solid var(--linea);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  tr:nth-child(even) td{background:var(--bg-cream)}
+  .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* TIMELINE */
+  .tl{position:relative;margin:24px 0 10px;padding-left:0}
+  .tl-phase{margin:26px 0 10px}
+  .tl-phase-title{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:#fff;
+    padding:6px 14px;border-radius:20px;letter-spacing:.02em}
+  .ph-v1{background:#9a8f80}.ph-v2{background:var(--teal)}.ph-v3{background:var(--coral)}.ph-int{background:var(--gold-dk)}
+  .tl-items{border-left:2px solid var(--linea);margin-left:12px;padding-left:22px;margin-top:14px}
+  .tl-item{position:relative;padding:10px 0 10px 4px}
+  .tl-item::before{content:"";position:absolute;left:-30px;top:15px;width:11px;height:11px;border-radius:50%;
+    background:#fff;border:3px solid var(--coral)}
+  .tl-item.hi::before{background:var(--gold);border-color:var(--gold)}
+  .tl-item.ok::before{background:var(--teal);border-color:var(--teal)}
+  .tl-date{font-size:12px;font-weight:700;color:var(--coral-dk);letter-spacing:.02em}
+  .tl-text{font-size:14px;margin-top:2px}
+  .tl-text .em{color:var(--gris);font-size:13px}
+
+  /* BADGES */
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;letter-spacing:.02em;vertical-align:middle}
+  .b-ok{background:var(--teal-cl);color:var(--teal-dk)}
+  .b-warn{background:var(--gold-cl);color:var(--gold-dk)}
+  .b-err{background:var(--coral-cl);color:var(--coral-dk)}
+  .b-info{background:var(--coral-cl);color:var(--coral-dk)}
+  .b-neu{background:var(--bg-warm);color:var(--gris)}
+
+  /* CALLOUT */
+  .callout{border-left:4px solid var(--coral);background:var(--coral-cl);border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0;font-size:14px}
+  .callout.warn{border-color:var(--gold-dk);background:var(--gold-cl)}
+  .callout.ok{border-color:var(--teal);background:var(--teal-cl)}
+  .callout.err{border-color:var(--coral-dk);background:var(--coral-cl)}
+  .callout .ct{font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;display:block}
+
+  /* METRIC PILLS */
+  .mpills{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+  .mpill{background:#fff;border:1px solid var(--linea);border-radius:12px;padding:12px 18px;min-width:120px;box-shadow:var(--shadow-sm)}
+  .mpill .mv{font-size:22px;font-weight:700;color:var(--coral)}
+  .mpill .ml{font-size:11.5px;color:var(--gris);font-weight:600;margin-top:2px}
+
+  /* formula box */
+  .fbox{background:#3D3A36;color:#f0ede6;border-radius:12px;padding:16px 18px;margin:12px 0;font-family:"SF Mono",Consolas,monospace;font-size:13px;line-height:1.7;overflow-x:auto}
+  .fbox .cmt{color:#b0a99c}
+  .fbox .hl{color:#7fd1c1}
+
+  .evo-arrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0;font-size:13px}
+  .evo-arrow .v{background:var(--coral);color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;font-size:12px}
+  .evo-arrow .to{color:var(--gris);font-weight:800}
+
+  footer{background:var(--tinta);color:#d8d3c9;padding:26px 0;margin-top:50px;font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}
+  .footer-brand{display:flex;align-items:center;gap:10px}
+  .footer-brand svg{width:30px;height:30px;flex-shrink:0}
+  .footer-brand .logo-name{color:#fff}
+  .footer-brand .logo-sub{color:#a89f92}
+
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--gris);margin:10px 0}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+  /* ===== FLUJO DE NEGOCIO ===== */
+  .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:0;align-items:stretch;margin:22px 0 10px}
+  @media(max-width:900px){.flow{grid-template-columns:1fr;gap:8px}.flow .arrow{transform:rotate(90deg);justify-self:center;padding:2px 0}}
+  .flow-step{background:var(--card);border:1px solid var(--linea);border-radius:14px;padding:16px 15px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:6px}
+  .flow-step.accent-coral{border-top:3px solid var(--coral)}
+  .flow-step.accent-teal{border-top:3px solid var(--teal)}
+  .flow-step.accent-gold{border-top:3px solid var(--gold)}
+  .flow-step .fs-ico{font-size:22px;line-height:1}
+  .flow-step .fs-tit{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tinta)}
+  .flow-step .fs-desc{font-size:12px;color:var(--gris);line-height:1.45}
+  .flow .arrow{display:flex;align-items:center;justify-content:center;color:var(--coral);font-size:22px;font-weight:700;padding:0 6px}
+
+  /* fuentes de datos */
+  .src{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:6px;margin-top:2px}
+  .src-map{background:var(--teal-cl);color:var(--teal-dk)}
+  .src-trx{background:var(--gold-cl);color:var(--gold-dk)}
+  .src-mdl{background:var(--coral-cl);color:var(--coral-dk)}
+
+  /* tarjetas de concepto (inversión / utilidad / roi) */
+  .concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+  @media(max-width:820px){.concept-grid{grid-template-columns:1fr}}
+  .concept{background:var(--card);border:1px solid var(--linea);border-radius:14px;padding:18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+  .concept::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px}
+  .concept.c-inv::before{background:var(--gold)}
+  .concept.c-uti::before{background:var(--teal)}
+  .concept.c-roi::before{background:var(--coral)}
+  .concept .c-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gris)}
+  .concept .c-name{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:var(--tinta);margin:4px 0 8px}
+  .concept .c-eq{font-family:"SF Mono",Consolas,monospace;font-size:13px;background:var(--bg-warm);border:1px solid var(--linea);border-radius:8px;padding:9px 11px;color:var(--tinta);line-height:1.5}
+  .concept .c-note{font-size:12px;color:var(--gris);margin-top:9px;line-height:1.45}
+  .concept .c-hl{color:var(--coral-dk);font-weight:700}
+
+  /* ejemplo pill grande */
+  .roi-example{background:linear-gradient(135deg,var(--bg-warm),var(--coral-cl));border:1px solid var(--linea);border-radius:14px;padding:20px 22px;margin:16px 0}
+  .roi-example .rx-head{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tinta);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .rx-row{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+  .rx-num{background:#fff;border:1px solid var(--linea);border-radius:10px;padding:10px 14px;flex:1;min-width:130px;text-align:center}
+  .rx-num .v{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;line-height:1}
+  .rx-num .k{font-size:11px;color:var(--gris);margin-top:4px;font-weight:600}
+  .rx-num.big{background:var(--coral);border-color:var(--coral)}
+  .rx-num.big .v,.rx-num.big .k{color:#fff}
+  .rx-eq{display:flex;align-items:center;font-size:20px;font-weight:700;color:var(--gris);padding:0 2px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="url(#lgHero)"/>
+        <circle cx="12" cy="15" r="3" fill="white"/>
+        <circle cx="12" cy="20" r="3" fill="white"/>
+        <circle cx="12" cy="25" r="3" fill="white"/>
+        <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+        <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+        <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+        <defs>
+          <linearGradient id="lgHero" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#E85D4C"/>
+            <stop offset="1" stop-color="#C94A3A"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div>
+        <div class="logo-name">COE Advanced Analytics</div>
+        <div class="logo-sub">Alicorp</div>
+      </div>
+    </div>
+    <div class="kicker">Canal Moderno · TPO</div>
+    <h1>TPO Moderno — Consolidado Ejecutivo</h1>
+    <div class="sub">Trade Price Optimizer para Canal Moderno: evolución del modelo, acuerdos de negocio vigentes, estado de las corridas entregadas y categorías puestas en piloto.</div>
+    <div class="meta">
+      <span>📅 Feb 2025 → Sep 2026</span>
+      <span>🔢 Modelo v1 → v3.1</span>
+      <span>🏬 4 cadenas · SPSA · Metro · Tottus · Cencosud</span>
+      <span>📦 13 categorías mapeadas</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="kpis">
+    <div class="kpi"><div class="n">14</div><div class="l">meses de desarrollo</div></div>
+    <div class="kpi"><div class="n">v3.1</div><div class="l">versión vigente + interfaz</div></div>
+    <div class="kpi"><div class="n">4</div><div class="l">categorías en piloto real</div></div>
+    <div class="kpi"><div class="n">9</div><div class="l">salidas por corrida</div></div>
+    <div class="kpi"><div class="n">85.4%</div><div class="l">R² medio del modelo</div></div>
+    <div class="kpi"><div class="n">11.5%</div><div class="l">MAPE mediano</div></div>
+  </div>
+</div>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#resumen">Resumen</a>
+    <a href="#timeline">1 · Timeline</a>
+    <a href="#evolucion">2 · Evolución del modelo</a>
+    <a href="#acuerdos">3 · Acuerdos y fórmulas</a>
+    <a href="#corridas">4 · Corridas y output</a>
+    <a href="#piloto">5 · Piloto</a>
+    <a href="#pendientes">6 · Estado y pendientes</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ===================== RESUMEN ===================== -->
+<section id="resumen">
+  <div class="sec-head"><span class="sec-num">TL;DR</span><h2>En una página</h2></div>
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0">Qué es el TPO</h4>
+      <p style="font-size:14px">Un motor que responde una sola pregunta: <strong>¿a qué precio y por cuántos días conviene poner un SKU en oferta para maximizar el ROI de la tanda en cada supermercado?</strong></p>
+      <p style="font-size:14px">Entrena un Random Forest por SKU×subcadena, simula la demanda a distintos precios sobre un horizonte de 4 semanas, y calcula el retorno financiero de cada escenario precio×duración posible.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">Dónde está hoy</h4>
+      <ul style="font-size:14px">
+        <li><span class="badge b-ok">Productivo</span> Modelo Tradicional (refactorizado a Python) + nuevos módulos</li>
+        <li><span class="badge b-info">v3.1 activo</span> Modelo Moderno: precio facturado, duración de promo, ROI %, simulación por pasos</li>
+        <li><span class="badge b-ok">Cerrada y aprobada</span> Interfaz unificada Tradicional + Moderno</li>
+        <li><span class="badge b-ok">Piloto vivo</span> 4 categorías lanzadas: Pasta Dental, Enjuague Bucal, Pastas, Conservas</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout">
+    <span class="ct">Cómo leer este documento</span>
+    Sigue el orden acordado: primero la <strong>historia del modelo</strong> (§1–2), luego los <strong>acuerdos de negocio y fórmulas vigentes</strong> (§3), después el <strong>output actual y las corridas entregadas</strong> (§4), y por último las <strong>categorías en piloto</strong> (§5). El <strong>estado actual y los próximos pasos</strong> (§6) cierran el documento.
+  </div>
+</section>
+
+<!-- ===================== 1 TIMELINE ===================== -->
+<section id="timeline">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Timeline — del modelo BAIN a TPO v3.1</h2></div>
+  <p class="sec-intro">14 meses de trabajo continuo: consultoría inicial de BAIN, traspaso a Alicorp, refactoring del Tradicional, arranque del Canal Moderno, tres versiones del modelo Moderno y el desarrollo de la interfaz. Los hitos marcados en <span style="color:var(--ambar);font-weight:700">ámbar</span> son aprobaciones/feedback de negocio; en <span style="color:var(--verde);font-weight:700">verde</span>, pases a producción de Gobierno/BD.</p>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--azul)"></span>Hito de modelo</span>
+    <span><span class="dot" style="background:var(--ambar)"></span>Feedback / aprobación negocio</span>
+    <span><span class="dot" style="background:var(--verde)"></span>Pase a producción</span>
+  </div>
+
+  <div class="tl">
+
+    <div class="tl-phase">
+      <div class="tl-phase-title ph-v1">FASE 0 · Consultoría BAIN + Gobierno · Feb–Jun 2025</div>
+      <div class="tl-items">
+        <div class="tl-item"><div class="tl-date">05 Feb 2025</div><div class="tl-text">Gobierno + Cronograma: Mapa de Precio Moderno &amp; Tradicional</div></div>
+        <div class="tl-item"><div class="tl-date">10 Feb 2025</div><div class="tl-text">Creación del Plan de Remediación</div></div>
+        <div class="tl-item hi"><div class="tl-date">04 Abr 2025</div><div class="tl-text">1ª Revisión Modelo Promos — BAIN <span class="em">· primer status cliente</span></div></div>
+        <div class="tl-item"><div class="tl-date">28 Abr 2025</div><div class="tl-text">Traspaso Final BAIN — versión original. <span class="em">Aplica Rec. CMP 43.6% / AS 32.6%</span></div></div>
+        <div class="tl-item"><div class="tl-date">06–08 May 2025</div><div class="tl-text">Checkpoint BAIN ↔ Kuona · Inicio POC Piloto BO-PDM <span class="em">(Venta core +20%)</span></div></div>
+        <div class="tl-item ok"><div class="tl-date">03 Jun 2025</div><div class="tl-text">Traspaso lógica de ROI (BAIN → Alicorp) + Gobierno de Precio Lista &amp; Pactado <span class="em">· Calidad 99.82% → 100%</span></div></div>
+      </div>
+    </div>
+
+    <div class="tl-phase">
+      <div class="tl-phase-title ph-v2">FASE 1 · Refactoring Tradicional + arranque Moderno · Jul–Dic 2025</div>
+      <div class="tl-items">
+        <div class="tl-item hi"><div class="tl-date">18 Jul 2025</div><div class="tl-text"><strong>Fin Refactoring</strong> — Excels/Alteryx → Python. <span class="em">Variables temporales, macro (dólar), optimización de tiempos. Aplica Rec. sube a 76–78%</span></div></div>
+        <div class="tl-item"><div class="tl-date">22 Jul – 08 Ago 2025</div><div class="tl-text">Acercamiento Canal Moderno (D. Osorio) + 1ª reunión de estructura</div></div>
+        <div class="tl-item hi"><div class="tl-date">03 Sep 2025</div><div class="tl-text">Entrega fuente de datos — Canal Moderno <span class="badge b-warn">⚠ Datos</span></div></div>
+        <div class="tl-item"><div class="tl-date">01 Oct 2025</div><div class="tl-text"><strong>1ª Entrega Modelo Moderno</strong> — Salsas &amp; Pastas</div></div>
+        <div class="tl-item"><div class="tl-date">13–16 Oct 2025</div><div class="tl-text">1er Review de Daniel → 2ª entrega con feedback levantado</div></div>
+        <div class="tl-item ok"><div class="tl-date">30 Oct 2025</div><div class="tl-text">BD · Mapa Precios CM — Pase a Producción</div></div>
+        <div class="tl-item hi"><div class="tl-date">03 Nov 2025</div><div class="tl-text">Feedback positivo — <em>"le hacía sentido"</em> <span class="badge b-ok">✔ Aprobación D. Osorio</span></div></div>
+        <div class="tl-item ok"><div class="tl-date">05–11 Dic 2025</div><div class="tl-text">Mapa Precios AS + SISO Fase 1 a Producción · Gobierno TPM Promociones <span class="em">99.97%</span></div></div>
+      </div>
+    </div>
+
+    <div class="tl-phase">
+      <div class="tl-phase-title ph-v2">FASE 2 · Actualización modelo 2026 + ROI · Ene–Feb 2026</div>
+      <div class="tl-items">
+        <div class="tl-item"><div class="tl-date">02 Dic 2025</div><div class="tl-text">Inicio trabajos de actualización del modelo (rumbo Ene 2026)</div></div>
+        <div class="tl-item hi"><div class="tl-date">19–21 Ene 2026</div><div class="tl-text">Reunión Negocio + Trade (feedback) · 1ª Reunión de ROI (Jose Silva)</div></div>
+        <div class="tl-item"><div class="tl-date">21–22 Ene 2026</div><div class="tl-text">Don Vittorio 950g (última entrega 2025) · 1ª entrega 2026 (David) — obs. de consistencia</div></div>
+        <div class="tl-item hi"><div class="tl-date">16 Feb 2026</div><div class="tl-text">Última revisión ROI (Jose Silva) — comparativa de modelo</div></div>
+        <div class="tl-item ok"><div class="tl-date">22 Ene 2026</div><div class="tl-text">SISO Fase 2 — Pase a Producción</div></div>
+        <div class="tl-item"><div class="tl-date">17 Feb 2026</div><div class="tl-text"><strong>2ª Entrega Tanda 2026</strong> — última versión Moderno. <span class="em">Simulación por pasos S/0.10, ROI en %, nueva elasticidad, KG→Unidades, código centralizado en Data Factory. MAPE mediana 11.5% · R² media 85.4%</span></div></div>
+      </div>
+    </div>
+
+    <div class="tl-phase">
+      <div class="tl-phase-title ph-v3">FASE 3 · TPO v3.1 (Cross) · Mar–Abr 2026</div>
+      <div class="tl-items">
+        <div class="tl-item"><div class="tl-date">25 Feb – 02 Mar 2026</div><div class="tl-text">Inicio nueva fase TPO v3 · Arranque de tareas secuenciales y paralelas</div></div>
+        <div class="tl-item"><div class="tl-date">02–13 Mar 2026</div><div class="tl-text"><strong>Línea A (secuencial):</strong> integrar precio facturado + duración de promo al modelo · validación cruzada · expandir a todas las categorías <span class="em">→ 1er Review</span></div></div>
+        <div class="tl-item"><div class="tl-date">06–25 Mar 2026</div><div class="tl-text"><strong>Línea B (paralelo):</strong> optimizar ROI + duración · reentrenar RF · estimación diaria proyectada a 2 meses · canibalización entre SKUs <span class="em">→ 2do Review</span></div></div>
+        <div class="tl-item"><div class="tl-date">25 Mar – 01 Abr 2026</div><div class="tl-text">Testing en producción + monitoreo · análisis de canibalización</div></div>
+      </div>
+    </div>
+
+    <div class="tl-phase">
+      <div class="tl-phase-title ph-int">FASE 4 · Interfaz cerrada + Lanzamiento + Piloto · Abr → Sep 2026</div>
+      <div class="tl-items">
+        <div class="tl-item ok"><div class="tl-date">07 Abr 2026</div><div class="tl-text"><strong>Interfaz cerrada y aprobada para Moderno</strong> <span class="badge b-ok">✔ Aprobada</span> — dashboard interactivo, integración Tradicional + Moderno en una sola vista</div></div>
+        <div class="tl-item ok"><div class="tl-date">07–10 Abr 2026</div><div class="tl-text">Validación de Negocio con stakeholders <span class="badge b-ok">✔ Cerrada</span></div></div>
+        <div class="tl-item hi"><div class="tl-date">15–16 Abr 2026</div><div class="tl-text"><strong>Reuniones de consideraciones por categoría</strong> — se levantan las condiciones de <strong>Pasta Dental, Conservas, Lavavajillas y Limpiadores Light Duty</strong></div></div>
+        <div class="tl-item hi"><div class="tl-date">&gt; 20 Abr 2026</div><div class="tl-text"><strong>Lanzamiento de promociones</strong> para revisión de negocio con el <strong>equipo de Trade</strong></div></div>
+        <div class="tl-item ok"><div class="tl-date">May 2026</div><div class="tl-text"><strong>Arranca sección de tandas del piloto</strong> — Pasta Dental (SPSA, Metro)</div></div>
+        <div class="tl-item ok"><div class="tl-date">Jun 2026</div><div class="tl-text">Piloto suma Enjuague Bucal y Pastas</div></div>
+        <div class="tl-item ok"><div class="tl-date">Jul–Ago 2026</div><div class="tl-text">Piloto suma Conservas (SPSA, Tottus, Cencosud)</div></div>
+        <div class="tl-item"><div class="tl-date">Sep 2026</div><div class="tl-text">Tanda mensual con las <strong>13 categorías mapeadas</strong> disponibles</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 2 EVOLUCIÓN ===================== -->
+<section id="evolucion">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Evolución del modelo v1 → v3.1</h2></div>
+  <p class="sec-intro">Cada versión resolvió una limitación concreta de la anterior. El salto de mayor impacto para negocio fue pasar de <em>factores de descuento fijos</em> a <em>simulación por pasos de S/0.10</em>, y de <em>ROI como ratio</em> a <em>ROI en porcentaje</em> legible.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th style="width:90px">Versión</th><th>Qué cambió</th><th>Por qué importó</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge b-neu">v1 · BAIN</span></td>
+        <td>Modelo original de consultoría. Excels + Alteryx. Recomendación de precio con MAPE&lt;50.</td>
+        <td>Base de partida. Aplica Rec. inicial 32–44%.</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-info">v2.0 · Refactor</span></td>
+        <td>Migración completa a <strong>Python</strong>. Variables temporales (feriados, lags, diffs, rollings), variables macro (precio del dólar), optimización de tiempos de ejecución.</td>
+        <td>Mantenible, reproducible y más preciso. Aplica Rec. sube a <strong>76–78%</strong>.</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-info">v2.0 · Moderno</span></td>
+        <td>Primera versión para Canal Moderno. Simulación multisemana (horizonte 4 semanas donde la predicción de la semana H alimenta H+1). Conversión KG → Unidades de venta.</td>
+        <td>Habilita recomendar por SKU×subcadena en supermercados, no solo canal tradicional.</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-ok">v3.0 · Última tanda</span></td>
+        <td><strong>Simulación por pasos de S/0.10</strong> (reemplaza factores fijos) · <strong>ROI en %</strong> (antes ratio) · nueva métrica de elasticidad · código centralizado en Data Factory · mapa de precios en Datalake.</td>
+        <td>Recomendaciones más finas y legibles para Trade. MAPE mediana <strong>11.5%</strong>, R² media <strong>85.4%</strong>.</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-ok">v3.1 · Cross</span></td>
+        <td>Integra <strong>precio facturado</strong> y <strong>duración de promo</strong> al modelo · optimización conjunta ROI+duración · estimación diaria proyectada a 2 meses · análisis de canibalización entre SKUs.</td>
+        <td>El óptimo ya no es solo "qué precio" sino "qué precio × cuántos días", con visión de 2 meses.</td>
+      </tr>
+      <tr>
+        <td><span class="badge b-warn">Interfaz</span></td>
+        <td>Dashboard interactivo que unifica outputs de Tradicional + Moderno en una sola vista.</td>
+        <td>Trade deja de leer CSVs sueltos; ve la recomendación integrada. <em>En curso.</em></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="grid2">
+    <div class="callout ok">
+      <span class="ct">Salto clave 1 · Granularidad de precio</span>
+      <div class="evo-arrow"><span class="v">Antes</span> factores de descuento fijos <span class="to">→</span> <span class="v">Ahora</span> grilla de saltos de S/0.10</div>
+      Cada SKU se simula a decenas de precios candidatos en lugar de 3–4 factores predefinidos.
+    </div>
+    <div class="callout ok">
+      <span class="ct">Salto clave 2 · Lectura de negocio</span>
+      <div class="evo-arrow"><span class="v">Antes</span> ROI como ratio <span class="to">→</span> <span class="v">Ahora</span> ROI en %</div>
+      Trade lee <code>ROI: 33%</code> en vez de un ratio abstracto. Directamente accionable.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3 ACUERDOS Y FÓRMULAS ===================== -->
+<section id="acuerdos">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Acuerdos de negocio y fórmulas vigentes</h2></div>
+  <p class="sec-intro">Las reglas que hoy gobiernan cómo se arma cada tanda. Combinan la metodología del modelo con acuerdos explícitos de Trade (agrupaciones, días por cadena, cascada de estados).</p>
+
+  <h3>3.1 · Metodología transversal (aplica a todas las categorías)</h3>
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th style="width:180px">Regla</th><th>Definición vigente</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Criterio de precio</strong></td><td>El <strong>menor precio que mantenga ROI ≥ 0</strong>: la promo más atractiva sin perder rentabilidad.</td></tr>
+      <tr><td><strong>Validación de linealidad</strong></td><td>Mismo descuento a más días → menor ROI. Mismos días a más descuento → menor ROI. Se valida que las recomendaciones respeten esa monotonía.</td></tr>
+      <tr><td><strong>Cascada de estados</strong></td><td>ROI ≥ 0 → <span class="badge b-ok">OK (ROI+)</span> · si no, mejor ROI ≥ −5% → <span class="badge b-info">ROI≈0 (aceptable)</span> · si no, menor precio con ROI ≥ −20% → <span class="badge b-warn">Combinado (tope −20%)</span> · si no → <span class="badge b-err">NO PROMOCIONAR</span></td></tr>
+      <tr><td><strong>Uplift</strong></td><td>Cantidad Predicha − Cantidad Predicha sin promo (baseline). <em>No</em> es la columna "uplif" cruda del archivo.</td></tr>
+      <tr><td><strong>Precio común (grupos)</strong></td><td>Redondeo de precio modificado a 1 decimal + intersección de precios alcanzables por todos los SKUs del grupo. Tolerancia <strong>±S/0.25</strong> cuando los precios lista difieren. Cada SKU usa su propio factor.</td></tr>
+      <tr><td><strong>SKU con modelo inválido</strong></td><td>Elasticidad positiva. Criterio: a factor ≤ 7%, si la elasticidad es &lt; 0 en menos del 50% de los escenarios → <strong>ROTO</strong>. Se elimina solo en el (SKU, cadena, duración) donde falla.</td></tr>
+      <tr><td><strong>Excepción por SKU individual</strong></td><td>En categorías que van por SKU individual no se elimina nada: se muestra el ROI real y se marca <em>"Modelo dudoso"</em>.</td></tr>
+      <tr><td><strong>ROI individual negativo</strong></td><td>Un SKU puede salir negativo dentro de un grupo rentable ("efecto de carga"). <strong>Decide el ROI del grupo</strong>, no el del SKU aislado.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>3.2 · Cómo se calcula la recomendación</h3>
+  <p style="font-size:13.5px;color:var(--gris)">El modelo parte de dos fuentes de datos, estima la demanda a cada precio y traduce cada escenario en un retorno financiero (ROI). Ese ROI es el que decide si la promo se recomienda o no.</p>
+
+  <!-- FLUJO DE NEGOCIO -->
+  <div class="flow">
+    <div class="flow-step accent-teal">
+      <div class="fs-ico">🗺️</div>
+      <div class="fs-tit">Fuentes de datos</div>
+      <div class="fs-desc">Precio de lista y comportamiento histórico de cada SKU por cadena.</div>
+      <span class="src src-map">● Precio lista → Mapa de Precios</span>
+      <span class="src src-trx">● Historial → Data transaccional</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="flow-step accent-coral">
+      <div class="fs-ico">🤖</div>
+      <div class="fs-tit">Modelo de demanda</div>
+      <div class="fs-desc">Estima cuántas unidades se venderían a cada precio candidato, y cuánto se vendería <strong>sin</strong> promo (baseline).</div>
+      <span class="src src-mdl">● Baseline de demanda</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="flow-step accent-gold">
+      <div class="fs-ico">💰</div>
+      <div class="fs-tit">Retorno financiero</div>
+      <div class="fs-desc">Por cada escenario precio × días calcula la <strong>inversión</strong>, la <strong>utilidad extra</strong> y el <strong>ROI</strong>.</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="flow-step accent-teal">
+      <div class="fs-ico">✅</div>
+      <div class="fs-tit">Recomendación</div>
+      <div class="fs-desc">Elige el precio y la duración de <strong>mejor ROI</strong> y le asigna un estado (OK, aceptable, combinado o no promocionar).</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="ct">De dónde vienen los precios</span>
+    El <strong>precio de lista</strong> actual se toma del <strong>Mapa de Precios</strong>. El <strong>historial de precios</strong> (para entender cómo respondió la demanda en el pasado) viene de la <strong>data transaccional</strong>. Con esos dos insumos el modelo arma la curva de demanda de cada SKU.
+  </div>
+
+  <!-- LAS 3 FÓRMULAS CLAVE COMO CONCEPTOS -->
+  <h4 style="margin-top:26px">Los 3 números que definen la recomendación</h4>
+  <div class="concept-grid">
+    <div class="concept c-inv">
+      <div class="c-lbl">Cuánto cuesta la promo</div>
+      <div class="c-name">Inversión</div>
+      <div class="c-eq">(precio lista − precio promo) × unidades vendidas</div>
+      <div class="c-note">Lo que se “deja de cobrar” por el descuento. No es un desembolso de caja: es el margen que se resigna para ganar volumen.</div>
+    </div>
+    <div class="concept c-uti">
+      <div class="c-lbl">Cuánto se gana de más</div>
+      <div class="c-name">Mejora de utilidad</div>
+      <div class="c-eq">utilidad <span class="c-hl">con</span> promo − utilidad <span class="c-hl">sin</span> promo</div>
+      <div class="c-note">La utilidad extra que deja la promo frente a no hacer nada. El volumen adicional tiene que compensar el margen menor por unidad.</div>
+    </div>
+    <div class="concept c-roi">
+      <div class="c-lbl">Cuánto rinde cada sol</div>
+      <div class="c-name">ROI</div>
+      <div class="c-eq">mejora de utilidad ÷ inversión</div>
+      <div class="c-note">Cuánta utilidad extra genera cada S/1 de descuento. <strong>ROI ≥ 0</strong> → la promo se recomienda. Es el número que ordena la cascada de estados.</div>
+    </div>
+  </div>
+
+  <!-- EJEMPLO NUMÉRICO VISUAL -->
+  <div class="roi-example">
+    <div class="rx-head">📊 Ejemplo — un SKU con 12% de descuento</div>
+    <div class="rx-row">
+      <div class="rx-num"><div class="v" style="color:var(--tinta)">S/ 5.20 → 4.60</div><div class="k">precio lista → promo</div></div>
+      <div class="rx-num"><div class="v" style="color:var(--teal-dk)">1,128 → 1,580</div><div class="k">unidades sin → con promo</div></div>
+      <div class="rx-num"><div class="v" style="color:var(--gold-dk)">S/ 948</div><div class="k">inversión (descuento)</div></div>
+      <div class="rx-num"><div class="v" style="color:var(--teal-dk)">S/ 589</div><div class="k">utilidad extra</div></div>
+      <div class="rx-eq">=</div>
+      <div class="rx-num big"><div class="v">ROI 0.62</div><div class="k">recupera S/0.62 por cada S/1</div></div>
+    </div>
+    <p style="font-size:12.5px;color:var(--gris);margin:12px 0 0">La utilidad con promo (S/ 4,424) supera a la de sin promo (S/ 3,835): el volumen adicional compensa el margen menor por unidad. Elasticidad = <strong>−3.47</strong> (por cada 1% que baja el precio, la demanda sube 3.47%).</p>
+  </div>
+
+  <h3>3.3 · Días, tandas y perfil diario</h3>
+  <div class="grid3">
+    <div>
+      <h4>heurísticas_dias — factor de impulso (&lt;7 días)</h4>
+      <table style="font-size:12.5px">
+        <thead><tr><th>Días</th><th>Factor</th></tr></thead>
+        <tbody>
+          <tr><td>1 día</td><td>1.12</td></tr>
+          <tr><td>2 días</td><td>1.12</td></tr>
+          <tr><td>3 días</td><td>1.08</td></tr>
+          <tr><td>4 días</td><td>1.05</td></tr>
+          <tr><td>5 días</td><td>1.03</td></tr>
+          <tr><td>6 días</td><td>1.01</td></tr>
+          <tr><td>7 días</td><td>1.00 <span class="em" style="color:var(--gris)">(sem. completas)</span></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--gris)">Demanda promo = max(dem_semanales) × (días/7) × factor. Base = mean(dem_semanales) × (días/7).</p>
+    </div>
+    <div>
+      <h4>n_tandas — activaciones por mes</h4>
+      <table style="font-size:12.5px">
+        <thead><tr><th>Duración</th><th>n_tandas/mes</th></tr></thead>
+        <tbody>
+          <tr><td>== 1 día</td><td>30</td></tr>
+          <tr><td>== 2 días</td><td>15</td></tr>
+          <tr><td>3 a 7 días</td><td>4</td></tr>
+          <tr><td>8 a 14 días</td><td>2</td></tr>
+          <tr><td>≥ 15 días</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--gris)">Cuántas veces al mes puede repetirse esa tanda, independiente del factor de impulso.</p>
+    </div>
+    <div>
+      <h4>Perfil diario — tandas de 7 a 28 días</h4>
+      <table style="font-size:12.5px">
+        <thead><tr><th>Tramo</th><th>Cómo se estima</th></tr></thead>
+        <tbody>
+          <tr><td>Semanas completas</td><td>promedio (dem[i] + dem[i+1]) / 2 · igual promo y base</td></tr>
+          <tr><td>Días residuales <span class="em" style="color:var(--gris)">(días % 7)</span></td><td>promo: dem × (rest/7) × factor · base: sin factor</td></tr>
+          <tr><td>&gt; 28 días</td><td>suma de todas las semanas del horizonte</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--gris)">Habilita la <strong>estimación diaria proyectada a 2 meses</strong> (v3.1). El factor heurístico solo aplica a los días residuales; las semanas completas van iguales para promo y base.</p>
+    </div>
+  </div>
+  <div class="callout">
+    <span class="ct">Ejemplo · tanda de 10 días</span>
+    10 días = 1 semana completa + 3 residuales. Con demandas [316, 298, 280, 312]: semana completa = (316+298)/2 = <strong>307.0 kg</strong>; residuo 3 días promo = 298 × (3/7) × 1.08 = <strong>137.9 kg</strong> (base sin factor = 127.7 kg). <strong>Total promo = 444.9 kg · Total base = 434.7 kg.</strong>
+  </div>
+
+  <h3>3.4 · Agrupación y días por categoría (acuerdo con Trade)</h3>
+  <p style="font-size:13.5px;color:var(--gris)">Cómo se agrupan los SKUs de cada categoría y qué duraciones se corren por cadena. Base para armar cada tanda mensual.</p>
+  <div class="tbl-scroll">
+  <table style="font-size:12.5px">
+    <thead><tr><th>Categoría</th><th>Agrupación</th><th>Metro</th><th>Plaza Vea</th><th>Tottus</th></tr></thead>
+    <tbody>
+      <tr><td>Conservas</td><td>SKU + Ponderado Cadena</td><td>5, 14</td><td>5, 14</td><td>4, 14</td></tr>
+      <tr><td>Pasta dental</td><td>Por SKU</td><td>5, 14</td><td>5, 14</td><td>4, 14</td></tr>
+      <tr><td>Enjuague bucal</td><td>Presentación</td><td>5, 14, 15</td><td>5, 14, 15</td><td>4, 14, 15</td></tr>
+      <tr><td>Jabón líquido</td><td>Presentación</td><td>5, 7, 14</td><td>5, 7, 14</td><td>4, 14</td></tr>
+      <tr><td>Pastas Lavaggi / Espiga</td><td>Familia + presentación</td><td>Solo Espiga, 5</td><td>Solo Lavaggi, 5 y 14</td><td>No aplica</td></tr>
+      <tr><td>Lavavajillas</td><td>Presentación</td><td>5, 7, 14</td><td>5, 7, 14</td><td>4, 7, 14</td></tr>
+      <tr><td>Limpiadores</td><td>Presentación</td><td>5, 7, 14</td><td>5, 7, 14</td><td>4, 7, 14</td></tr>
+      <tr><td>Suavizantes</td><td>Tamaño (Bolívar + Plus juntos)</td><td>5, 14</td><td>5, 14</td><td>4, 14</td></tr>
+      <tr><td>Salsas</td><td>Por SKU</td><td>5, 7, 15</td><td>5, 7, 15</td><td>4, 7, 14</td></tr>
+      <tr><td>Pastas Don Vittorio</td><td>Peso</td><td>5, 14</td><td>5, 14</td><td>4, 14</td></tr>
+      <tr><td>Aceites</td><td>Por SKU</td><td>5, 14</td><td>5, 14</td><td>2, 4, 14</td></tr>
+      <tr><td>Jabones de lavar</td><td>Marca + presentación · Bebé aparte</td><td>5, 14</td><td>5, 14</td><td>2, 4, 14</td></tr>
+      <tr><td>Postres</td><td>Por TIPO</td><td>5, 7, 14</td><td>5, 7, 14</td><td>2, 4, 7, 14</td></tr>
+      <tr><td>Untables</td><td>Marca + presentación</td><td>5, 14</td><td>5, 14</td><td>2, 4, 14</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:12.5px;color:var(--gris);margin-top:8px">Reglas de separación notables: en <strong>Jabones de lavar</strong> y <strong>Untables</strong>, el Bebé va aparte aunque comparta marca y tamaño (el precio lista lo confirma). En <strong>Postres Umsha</strong>, todos los SKUs de un mismo tipo van al mismo precio sin importar sabor ni gramaje. Mapeos SKU→grupo completos disponibles en el documento de consideraciones.</p>
+</section>
+
+<!-- ===================== 4 CORRIDAS Y OUTPUT ===================== -->
+<section id="corridas">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Corridas entregadas y output actual</h2></div>
+  <p class="sec-intro">Qué se ha entregado a negocio y qué produce hoy cada corrida. Una "corrida" recorre el loop subcadena × categoría y genera 9 salidas por combinación.</p>
+
+  <h3>4.1 · Entregas a negocio</h3>
+  <p style="font-size:13.5px;color:var(--gris)">Dos etapas: las entregas puntuales por categoría de 2025 e inicio 2026, y desde mayo la <strong>tanda mensual</strong>, que fue ampliando la cobertura de categorías enviadas mes a mes.</p>
+
+  <h4 style="margin-top:18px">Entregas puntuales · 2025 → inicio 2026</h4>
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th style="width:120px">Fecha</th><th>Entrega</th><th>Alcance</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>01 Oct 2025</td><td>1ª Entrega Modelo Moderno</td><td>Salsas &amp; Pastas</td><td><span class="badge b-ok">Entregada</span></td></tr>
+      <tr><td>16 Oct 2025</td><td>2ª Entrega con feedback</td><td>Salsas &amp; Pastas (revisión 1er review)</td><td><span class="badge b-ok">Entregada</span></td></tr>
+      <tr><td>06 Nov 2025</td><td>Última entrega del mes</td><td>Cierre Nov 2025</td><td><span class="badge b-ok">Entregada</span></td></tr>
+      <tr><td>21 Ene 2026</td><td>Don Vittorio 950g</td><td>Última entrega 2025 (D. Osorio)</td><td><span class="badge b-ok">Entregada</span></td></tr>
+      <tr><td>22 Ene 2026</td><td>1ª Entrega 2026</td><td>David — obs. de consistencia</td><td><span class="badge b-warn">Con observaciones</span></td></tr>
+      <tr><td>17 Feb 2026</td><td>2ª Entrega Tanda 2026</td><td>Algunos SKU — <strong>última versión Moderno (v3.0)</strong></td><td><span class="badge b-ok">Entregada</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4 style="margin-top:22px">Tanda mensual · expansión de categorías enviadas</h4>
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th style="width:150px">Mes</th><th style="width:120px">Categorías</th><th>Cobertura</th></tr></thead>
+    <tbody>
+      <tr><td>Mayo 2026</td><td><span class="badge b-ok">4 categorías</span></td><td>Pasta Dental · Conservas · Lavavajillas · Limpiadores</td></tr>
+      <tr><td>Junio – Julio 2026</td><td><span class="badge b-info">9 categorías</span></td><td>Las 13 <strong>menos</strong> Postres, Untables, Aceites y Salsas</td></tr>
+      <tr><td>Agosto – Septiembre 2026</td><td><span class="badge b-info">13 categorías</span></td><td><strong>Cobertura completa</strong> — las 13 categorías mapeadas</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout">
+    <span class="ct">Enviadas ≠ piloto</span>
+    Estas son las categorías que el modelo <strong>procesó y entregó</strong> cada mes. No todas se seleccionaron como piloto para lanzar promociones en tienda: las categorías del <strong>piloto real</strong> (con activaciones ejecutadas) están en la §5.
+  </div>
+
+  <div class="mpills">
+    <div class="mpill"><div class="mv">4 → 13</div><div class="ml">expansión de categorías (May → Sep)</div></div>
+    <div class="mpill"><div class="mv">3</div><div class="ml">versiones de modelo entregadas (v1→v3.1)</div></div>
+    <div class="mpill"><div class="mv">2</div><div class="ml">reviews formales de ROI (Jose Silva)</div></div>
+  </div>
+
+  <h3>4.2 · Output actual — la Tanda Septiembre</h3>
+  <p style="font-size:13.5px;color:var(--gris)">Lo que hoy se entrega es la <strong>Tanda Septiembre con las 13 categorías</strong>. Cada tanda parte del <strong>Reporte 8 (Complete Report)</strong>: el modelo explora todos los escenarios precio × duración y de ahí se arma la recomendación final por SKU y por grupo.</p>
+
+  <div class="card">
+    <h4 style="margin-top:0">📄 Reporte 8 — el insumo de la tanda</h4>
+    <p style="font-size:13.5px">El Reporte 8 entrega <strong>dos vistas del mismo resultado</strong>, que es exactamente lo que se lleva a la reunión de Trade:</p>
+    <div class="grid2" style="margin-top:12px">
+      <div style="background:var(--bg-warm);border:1px solid var(--linea);border-radius:10px;padding:14px 16px">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:var(--coral-dk);margin-bottom:6px">▸ Vista resumen (por grupo)</div>
+        <p style="font-size:12.5px;color:var(--gris);margin:0">Una fila por Ítem/grupo y cadena: <strong>Precio Recomendado, #SKU, ROI, Inversión, BI y Estado</strong>. Es la vista de decisión — qué precio poner y por cuántos días.</p>
+      </div>
+      <div style="background:var(--bg-warm);border:1px solid var(--linea);border-radius:10px;padding:14px 16px">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:var(--teal-dk);margin-bottom:6px">▸ Vista detalle (por SKU)</div>
+        <p style="font-size:12.5px;color:var(--gris);margin:0">Una fila por SKU con Material, Precio Lista, Factor, Cantidad, Baseline, Uplift, Elasticidad, Inversión, Mejora, BI Uplift, ROI y Estado. Es la trazabilidad de cómo se llegó a cada precio.</p>
+      </div>
+    </div>
+  </div>
+
+  <h4 style="margin-top:22px">Los 9 archivos que genera cada corrida</h4>
+  <p style="font-size:13.5px;color:var(--gris)">Cada combinación cadena × categoría genera 9 salidas. El <strong>Reporte 8</strong> es el que alimenta la tanda; el resto es soporte, auditoría y calidad del modelo.</p>
+  <div class="tbl-scroll">
+  <table style="font-size:13px">
+    <thead><tr><th style="width:200px">Salida</th><th>Qué contiene</th><th>Uso</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge b-ok">_8_ Complete Report</span></td><td>Todos los escenarios precio × duración con precio recomendado, ROI, inversión, BI y estado — en las dos vistas (grupo y SKU).</td><td><strong>Base de la tanda</strong></td></tr>
+      <tr><td><span class="badge b-info">_9_ Top ROI</span></td><td>El mejor escenario por SKU/grupo, ya filtrado.</td><td>Recomendación final</td></tr>
+      <tr><td>_4_ Demand report</td><td>La curva de demanda simulada por precio.</td><td>Entender elasticidad</td></tr>
+      <tr><td>_6_ Metrics</td><td>Calidad del modelo por SKU (MAPE, R²).</td><td>Confianza del modelo</td></tr>
+      <tr><td>_1_ Demanda ajustada</td><td>Validación de inputs de demanda.</td><td>QA de datos</td></tr>
+      <tr><td>_5_ Feature importance</td><td>Qué variables mueven la demanda.</td><td>Interpretabilidad</td></tr>
+      <tr><td>_7_ Model params</td><td>Hiperparámetros del modelo para actualizar tablas.</td><td>Reutilización</td></tr>
+      <tr><td colspan="2" style="color:var(--gris)">(+ _2_ y _3_ intermedios del pipeline)</td><td>Internos</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>4.3 · Cómo se lee el _9_ (columnas clave)</h3>
+  <div class="grid3">
+    <div class="card" style="margin:0"><h4 style="margin-top:0">Factor (%)</h4><p style="font-size:13px">Descuento sobre precio lista. <code>0.12</code> = 12% off.</p></div>
+    <div class="card" style="margin:0"><h4 style="margin-top:0">Elasticidad</h4><p style="font-size:13px">Sensibilidad de demanda al precio. <code>−3.47</code> = elástico (baja precio, sube volumen).</p></div>
+    <div class="card" style="margin:0"><h4 style="margin-top:0">ROI</h4><p style="font-size:13px">Retorno de la tanda. <code>0.62</code> = recupera S/0.62 por cada S/1. Define el estado.</p></div>
+    <div class="card" style="margin:0"><h4 style="margin-top:0">n_tandas</h4><p style="font-size:13px">Activaciones/mes según duración. <code>4</code> para 7 días.</p></div>
+    <div class="card" style="margin:0"><h4 style="margin-top:0">Mejora Utilidad</h4><p style="font-size:13px">Utilidad incremental vs no promocionar.</p></div>
+    <div class="card" style="margin:0"><h4 style="margin-top:0">Inversión</h4><p style="font-size:13px">Costo de la promo (descuento × volumen).</p></div>
+  </div>
+</section>
+
+<!-- ===================== 5 PILOTO ===================== -->
+<section id="piloto">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Categorías en piloto</h2></div>
+  <p class="sec-intro">De las categorías enviadas cada mes (§4), <strong>4 se seleccionaron como piloto real</strong> y salieron a tienda con promociones ejecutadas: Pasta Dental, Enjuague Bucal, Pastas y Conservas. Esta sección mide cómo se comportó ese piloto.</p>
+
+  <div class="mpills">
+    <div class="mpill"><div class="mv">4</div><div class="ml">categorías en piloto</div></div>
+    <div class="mpill"><div class="mv">13</div><div class="ml">categorías mapeadas totales</div></div>
+    <div class="mpill"><div class="mv">4</div><div class="ml">cadenas activas</div></div>
+    <div class="mpill"><div class="mv">41</div><div class="ml">activaciones lanzadas (May–Ago)</div></div>
+  </div>
+
+  <h3>5.1 · Piloto lanzado por mes y categoría</h3>
+  <div class="tbl-scroll">
+  <table style="font-size:13px">
+    <thead><tr><th>Mes</th><th>Categoría</th><th>Cadena</th><th>Activaciones</th><th>Días totales</th><th>Rango precio (S/)</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2">May 2026</td><td>Pasta Dental</td><td>Metro</td><td>4</td><td>22</td><td>17.5</td></tr>
+      <tr><td>Pasta Dental</td><td>SPSA</td><td>1</td><td>21</td><td>9.0</td></tr>
+      <tr><td rowspan="6">Jun 2026</td><td>Enjuague Bucal</td><td>Metro</td><td>1</td><td>7</td><td>17.5</td></tr>
+      <tr><td>Enjuague Bucal</td><td>SPSA</td><td>1</td><td>7</td><td>11.5</td></tr>
+      <tr><td>Enjuague Bucal</td><td>Tottus</td><td>1</td><td>6</td><td>17.5</td></tr>
+      <tr><td>Pasta Dental</td><td>Metro</td><td>3</td><td>15</td><td>17.5</td></tr>
+      <tr><td>Pasta Dental</td><td>SPSA</td><td>3</td><td>15</td><td>9.0</td></tr>
+      <tr><td>Pastas</td><td>Metro / SPSA / Tottus</td><td>6</td><td>46</td><td>3.6 – 5.5</td></tr>
+      <tr><td rowspan="2">Jul 2026</td><td>Conservas</td><td>Cenco / SPSA / Tottus</td><td>8</td><td>72</td><td>4.9 – 5.7</td></tr>
+      <tr><td>Pastas</td><td>Metro / SPSA / Tottus</td><td>3</td><td>23</td><td>3.5 – 5.5</td></tr>
+      <tr><td>Ago 2026</td><td>Conservas</td><td>Cenco / SPSA / Tottus</td><td>10</td><td>56</td><td>5.1 – 5.7</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>5.2 · Origen de las activaciones (TPO vs manual)</h3>
+  <p style="font-size:13.5px;color:var(--gris)">No todas las activaciones del piloto salieron del modelo: parte se completó con ajuste manual de Trade. Esto es relevante para medir la adopción real del TPO.</p>
+  <div class="tbl-scroll">
+  <table style="font-size:13px">
+    <thead><tr><th>Categoría</th><th>Desde TPO</th><th>Manual / ajuste</th><th>% adopción TPO</th></tr></thead>
+    <tbody>
+      <tr><td>Pasta Dental</td><td>11</td><td>0</td><td><span class="badge b-ok">100%</span></td></tr>
+      <tr><td>Enjuague Bucal</td><td>3</td><td>0</td><td><span class="badge b-ok">100%</span></td></tr>
+      <tr><td>Pastas</td><td>7</td><td>2</td><td><span class="badge b-info">78%</span></td></tr>
+      <tr><td>Conservas</td><td>6</td><td>12</td><td><span class="badge b-warn">33%</span></td></tr>
+      <tr><td style="font-weight:700">Total</td><td style="font-weight:700">27</td><td style="font-weight:700">14</td><td><span class="badge b-info">66%</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout warn">
+    <span class="ct">Lectura</span>
+    Pasta Dental y Enjuague Bucal corrieron <strong>100% con recomendación TPO</strong>. En <strong>Conservas</strong>, la mayoría de activaciones (12 de 18) fueron ajuste manual — vale la pena revisar por qué el modelo no se adoptó en esa categoría (precios, calibración o decisión comercial).
+  </div>
+
+  <h3>5.3 · Estado por categoría (13 en tanda)</h3>
+  <p style="font-size:13.5px;color:var(--gris)">Las 13 categorías ya se procesan en la tanda mensual (§4). La distinción es cuáles se seleccionaron para <strong>lanzar en tienda</strong> (piloto) y cuáles se entregan pero aún no salieron a promoción.</p>
+  <div class="tbl-scroll">
+  <table style="font-size:13px">
+    <thead><tr><th>Categoría</th><th>Estado</th><th>Categoría</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>Pasta Dental</td><td><span class="badge b-ok">En piloto</span></td><td>Suavizantes</td><td><span class="badge b-info">En tanda</span></td></tr>
+      <tr><td>Enjuague Bucal</td><td><span class="badge b-ok">En piloto</span></td><td>Limpiadores</td><td><span class="badge b-info">En tanda</span></td></tr>
+      <tr><td>Pastas</td><td><span class="badge b-ok">En piloto</span></td><td>Lavavajillas</td><td><span class="badge b-info">En tanda</span></td></tr>
+      <tr><td>Conservas</td><td><span class="badge b-ok">En piloto</span></td><td>Jabón Líquido</td><td><span class="badge b-info">En tanda</span></td></tr>
+      <tr><td>Salsas</td><td><span class="badge b-info">En tanda</span></td><td>Aceites</td><td><span class="badge b-info">En tanda</span></td></tr>
+      <tr><td>Untables</td><td><span class="badge b-info">En tanda</span></td><td>Jabones de lavar</td><td><span class="badge b-info">En tanda</span></td></tr>
+      <tr><td>Postres</td><td><span class="badge b-info">En tanda</span></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="legend" style="margin-top:8px">
+    <span><span class="badge b-ok" style="padding:1px 7px">En piloto</span> seleccionada y lanzada en tienda</span>
+    <span><span class="badge b-info" style="padding:1px 7px">En tanda</span> procesada y entregada, sin promoción ejecutada aún</span>
+  </div>
+</section>
+
+<!-- ===================== 6 ESTADO Y PENDIENTES ===================== -->
+<section id="pendientes">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Estado actual y próximos pasos</h2></div>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0">✅ Cerrado / productivo</h4>
+      <ul style="font-size:13.5px">
+        <li>Modelo Tradicional refactorizado en Python + nuevos módulos</li>
+        <li>Modelo Moderno v3.1 con precio facturado + duración + ROI %</li>
+        <li><strong>Interfaz unificada Tradicional + Moderno — cerrada y aprobada</strong></li>
+        <li><strong>Validación de negocio con stakeholders — cerrada</strong></li>
+        <li>Mapa de Precios CM y AS en producción</li>
+        <li>Gobierno TPM Promociones (calidad &gt;99.9%) · SISO Fase 1 y 2</li>
+        <li>Lanzamiento de promociones con Trade (post-20 Abr) · piloto vivo en 4 categorías</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">🔧 En curso / por definir</h4>
+      <ul style="font-size:13.5px">
+        <li><span class="badge b-warn">Adopción</span> revisar baja adopción TPO en Conservas (33%)</li>
+        <li><span class="badge b-info">Escalar</span> piloto a las 9 categorías restantes</li>
+        <li><span class="badge b-info">Monitoreo</span> seguimiento de resultados de las tandas lanzadas con Trade</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout ok">
+    <span class="ct">Mensaje de cierre para negocio</span>
+    El TPO Moderno pasó de un modelo de consultoría a un motor propio y productivo, con <strong>interfaz cerrada, validación aprobada y promociones ya lanzadas con Trade</strong>. La recomendación combina precio × duración con visión de 2 meses (R² medio 85%, MAPE mediano 11.5%). El foco inmediato es <strong>subir la adopción</strong> en las categorías donde el equipo comercial todavía ajusta a mano y <strong>escalar</strong> a las categorías restantes.
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="wrap">
+    <div class="footer-brand">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="url(#lgFoot)"/>
+        <circle cx="12" cy="15" r="3" fill="white"/>
+        <circle cx="12" cy="20" r="3" fill="white"/>
+        <circle cx="12" cy="25" r="3" fill="white"/>
+        <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/>
+        <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+        <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+        <defs>
+          <linearGradient id="lgFoot" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#E85D4C"/>
+            <stop offset="1" stop-color="#C94A3A"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div>
+        <div class="logo-name">COE Advanced Analytics</div>
+        <div class="logo-sub">TPO Moderno · Canal Moderno · 2026</div>
+      </div>
+    </div>
+    <div style="text-align:right;font-size:12px;color:#a89f92">
+      Fuentes: Timeline TPO v1→v3.1 · Documentación técnica v3.0 · Consideraciones de tandas ·<br>
+      Lanzamientos del piloto (May–Ago 2026) · Tanda Septiembre (13 categorías)
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
