@@ -154,25 +154,26 @@
   .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 
   /* ===== COMPACTACIÓN PARA RESUMEN (3 scrolls máx) ===== */
-  section{margin:26px 0}
-  header.hero{padding:26px 0 24px}
-  .hero h1{font-size:30px}
-  .hero .sub{font-size:15px;margin-top:6px}
-  .kpis{margin:-20px 0 22px}
-  .kpi{padding:14px 14px}
-  .kpi .n{font-size:24px}
-  .sec-head{margin-bottom:4px;padding-bottom:8px}
-  .sec-head h2{font-size:21px}
-  .sec-intro{margin:8px 0 12px;font-size:13.5px}
-  table{margin:10px 0}
-  th{padding:8px 11px}
-  td{padding:7px 11px}
-  .card{padding:16px 18px;margin:10px 0}
-  .callout{padding:12px 16px;margin:12px 0}
-  .mpills{margin:10px 0}
-  .mpill{padding:10px 16px}
-  .mpill .mv{font-size:19px}
-  h4{margin:14px 0 6px}
+  section{margin:20px 0}
+  header.hero{padding:22px 0 20px}
+  .hero h1{font-size:28px}
+  .hero .sub{font-size:14.5px;margin-top:6px}
+  .kpis{margin:-18px 0 18px}
+  .kpi{padding:12px 13px}
+  .kpi .n{font-size:22px}
+  .sec-head{margin-bottom:4px;padding-bottom:7px}
+  .sec-head h2{font-size:20px}
+  .sec-intro{margin:7px 0 10px;font-size:13px}
+  table{margin:9px 0}
+  th{padding:7px 10px}
+  td{padding:6px 10px}
+  .card{padding:14px 16px;margin:9px 0}
+  .callout{padding:11px 15px;margin:10px 0}
+  .mpills{margin:9px 0}
+  .mpill{padding:9px 15px}
+  .mpill .mv{font-size:18px}
+  h4{margin:12px 0 5px;font-size:13.5px}
+  .brand{margin-bottom:12px}
 
   /* ===== FLUJO DE NEGOCIO ===== */
   .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:0;align-items:stretch;margin:22px 0 10px}
@@ -353,13 +354,39 @@
   </div>
   <div class="callout">
     <span class="ct">Enviadas ≠ piloto</span>
-    Estas son las categorías que el modelo procesó y entregó cada mes. Solo 4 se seleccionaron como <strong>piloto real</strong> para lanzar promociones en tienda (ver punto 6).
+    Estas son las categorías que el modelo procesó y entregó cada mes. Solo 4 se seleccionaron como <strong>piloto real</strong> para lanzar promociones en tienda (ver punto 7).
   </div>
 </section>
 
-<!-- 6. PILOTO -->
+<!-- 6. OUTPUT ACTUAL -->
 <section>
-  <div class="sec-head"><span class="sec-num">06</span><h2>Piloto en vivo</h2></div>
+  <div class="sec-head"><span class="sec-num">06</span><h2>Output actual — la Tanda Septiembre</h2></div>
+  <p class="sec-intro">Lo que hoy se entrega es la <strong>Tanda Septiembre con las 13 categorías</strong>. Para cada SKU y cadena, el modelo entrega la recomendación en dos vistas del mismo resultado.</p>
+  <div class="grid2">
+    <div class="card" style="margin:0">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--coral-dk);margin-bottom:6px">▸ Vista resumen — por grupo</div>
+      <p style="font-size:12.5px;color:var(--gris);margin:0 0 8px">La decisión: qué precio poner y por cuántos días. Una fila por ítem/grupo × cadena.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">
+        <span class="badge b-neu">Categoría</span><span class="badge b-neu">Cadena</span><span class="badge b-neu">Días</span><span class="badge b-neu">Ítem</span><span class="badge b-neu"># SKU</span><span class="badge b-neu">Precio Rec.</span><span class="badge b-neu">ROI</span><span class="badge b-neu">Inversión</span><span class="badge b-neu">BI</span><span class="badge b-neu">Estado</span>
+      </div>
+    </div>
+    <div class="card" style="margin:0">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--teal-dk);margin-bottom:6px">▸ Vista detalle — por SKU</div>
+      <p style="font-size:12.5px;color:var(--gris);margin:0 0 8px">La trazabilidad: cómo se llegó a cada precio. Una fila por SKU del grupo.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">
+        <span class="badge b-neu">SKU</span><span class="badge b-neu">Material</span><span class="badge b-neu">Precio Lista</span><span class="badge b-neu">Precio Rec.</span><span class="badge b-neu">Factor %</span><span class="badge b-neu">Cantidad</span><span class="badge b-neu">Baseline</span><span class="badge b-neu">Uplift</span><span class="badge b-neu">Elasticidad</span><span class="badge b-neu">Inversión</span><span class="badge b-neu">Mejora</span><span class="badge b-neu">ROI</span><span class="badge b-neu">Estado</span>
+      </div>
+    </div>
+  </div>
+  <div class="callout">
+    <span class="ct">Cómo se decide</span>
+    El <strong>ROI del grupo</strong> define el estado, no el de un SKU aislado: un SKU puede salir negativo dentro de un grupo rentable y aun así el grupo se marca OK. El <strong>Factor</strong> es el descuento sobre precio lista y la <strong>Elasticidad</strong> (negativa) confirma que la demanda responde.
+  </div>
+</section>
+
+<!-- 7. PILOTO -->
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>Piloto en vivo</h2></div>
   <p class="sec-intro"><strong>4 categorías</strong> se seleccionaron como piloto real y salieron a tienda con promociones ejecutadas: Pasta Dental, Enjuague Bucal, Pastas y Conservas.</p>
 
   <div class="mpills">
@@ -369,27 +396,23 @@
     <div class="mpill"><div class="mv">66%</div><div class="ml">adopción TPO global</div></div>
   </div>
 
-  <h4 style="margin-top:20px">Adopción del modelo por categoría</h4>
-  <p style="font-size:13px;color:var(--gris)">Cuánto del piloto salió con recomendación TPO vs ajuste manual de Trade.</p>
-  <div class="grid2">
-    <div>
-      <div class="tbl-scroll">
-      <table style="font-size:13px">
-        <thead><tr><th>Categoría</th><th>TPO</th><th>Manual</th><th>Adopción</th></tr></thead>
-        <tbody>
-          <tr><td>Pasta Dental</td><td>11</td><td>0</td><td><span class="badge b-ok">100%</span></td></tr>
-          <tr><td>Enjuague Bucal</td><td>3</td><td>0</td><td><span class="badge b-ok">100%</span></td></tr>
-          <tr><td>Pastas</td><td>7</td><td>2</td><td><span class="badge b-info">78%</span></td></tr>
-          <tr><td>Conservas</td><td>6</td><td>12</td><td><span class="badge b-warn">33%</span></td></tr>
-          <tr><td style="font-weight:700">Total</td><td style="font-weight:700">27</td><td style="font-weight:700">14</td><td><span class="badge b-info">66%</span></td></tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-    <div class="callout warn" style="margin:0">
-      <span class="ct">Lectura para negocio</span>
-      Pasta Dental y Enjuague corrieron <strong>100% con recomendación TPO</strong>. En <strong>Conservas</strong> la mayoría fue ajuste manual (12 de 18): conviene revisar por qué el modelo no se adoptó ahí (precios, calibración o decisión comercial). <strong>Foco inmediato:</strong> subir la adopción y escalar el piloto a las categorías restantes.
-    </div>
+  <h4 style="margin-top:20px">Piloto por categoría — activaciones y adopción</h4>
+  <p style="font-size:13px;color:var(--gris)">Activaciones ejecutadas (May–Ago) y cuánto salió con recomendación TPO vs ajuste manual de Trade.</p>
+  <div class="tbl-scroll">
+  <table style="font-size:13px">
+    <thead><tr><th>Categoría</th><th>Meses</th><th>Cadenas</th><th>Activ.</th><th>TPO</th><th>Manual</th><th>Adopción</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Pasta Dental</strong></td><td>May – Jun</td><td>Metro · SPSA</td><td>11</td><td>11</td><td>0</td><td><span class="badge b-ok">100%</span></td></tr>
+      <tr><td><strong>Enjuague Bucal</strong></td><td>Jun</td><td>Metro · SPSA · Tottus</td><td>3</td><td>3</td><td>0</td><td><span class="badge b-ok">100%</span></td></tr>
+      <tr><td><strong>Pastas</strong></td><td>Jun – Jul</td><td>Metro · SPSA · Tottus</td><td>9</td><td>7</td><td>2</td><td><span class="badge b-info">78%</span></td></tr>
+      <tr><td><strong>Conservas</strong></td><td>Jul – Ago</td><td>Cenco · SPSA · Tottus</td><td>18</td><td>6</td><td>12</td><td><span class="badge b-warn">33%</span></td></tr>
+      <tr><td style="font-weight:700">Total</td><td style="color:var(--gris)">May – Ago</td><td style="color:var(--gris)">4 cadenas</td><td style="font-weight:700">41</td><td style="font-weight:700">27</td><td style="font-weight:700">14</td><td><span class="badge b-info">66%</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout warn">
+    <span class="ct">Lectura para negocio</span>
+    Pasta Dental y Enjuague corrieron <strong>100% con recomendación TPO</strong>. En <strong>Conservas</strong> la mayoría fue ajuste manual (12 de 18): conviene revisar por qué el modelo no se adoptó ahí (precios, calibración o decisión comercial). <strong>Foco inmediato:</strong> subir la adopción y escalar el piloto a las categorías restantes.
   </div>
 </section>
 
