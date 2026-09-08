@@ -1,0 +1,898 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Simulador de reasignacion - DiaDia</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script><style>
+:root{--teal:#2D9C9C;--teal-l:#E8F6F6;--teal-d:#1F6F6F;--teal-m:#5EBABA;--teal-soft:#8FCFCF;
+--gold:#D4A853;--gold-l:#FDF8EC;--gold-d:#B8862F;--coral:#E85D4C;--coral-l:#FEF0EE;
+--green:#059669;--green-l:#ECFDF5;--cat:#2D9C9C;--cat-border:#A7E0E0;
+--text:#3D3A36;--text2:#7a7a8a;--text3:#9CA3AF;--bg:#FDFBF7;--bg2:#F8F5F0;--border:#E8E4DD;--line:#E8E4DD}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;background:#E8E4DD}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+h1,h2,h3,h4{margin:0}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cat),var(--teal-m));z-index:9999;width:0}
+.nav{position:fixed;top:3px;left:0;right:0;z-index:1000;padding:9px 40px;display:flex;align-items:center;
+justify-content:space-between;background:rgba(253,251,247,.96);backdrop-filter:blur(12px);
+border-bottom:1px solid var(--border);box-shadow:0 2px 14px rgba(0,0,0,.06)}
+.brand{text-decoration:none;display:flex;flex-direction:column;background:#fff;border:1px solid var(--border);
+border-radius:40px;padding:6px 16px}
+.brand-t{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--text);line-height:1.3}
+.brand-s{font-size:10px;color:var(--text2)}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:11px;font-weight:600;padding:5px 12px;
+border-radius:20px;letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
+.nav-links a:hover,.nav-links a.on{color:var(--text);background:var(--border)}
+.section{padding:30px 60px 50px;max-width:1300px;margin:0 auto}
+.hero{padding:112px 40px 26px;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 80% 40%,var(--teal-l),transparent),
+radial-gradient(ellipse 40% 60% at 10% 70%,var(--coral-l),transparent);opacity:.7}
+.hero-inner{max-width:960px;margin:0 auto;position:relative;z-index:1}
+.hero-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;color:var(--cat);
+letter-spacing:.22em;text-transform:uppercase;margin-bottom:12px}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4.2vw,50px);font-weight:800;
+line-height:1.07;letter-spacing:-.02em}
+.hero-title em{font-style:normal;color:var(--cat)}
+.hero-badge{display:inline-block;background:#fff;border:1px solid var(--border);border-radius:40px;
+padding:6px 16px;font-size:12px;font-weight:600;color:var(--text2);margin:14px 0 4px}
+.hero-sub{font-size:15px;color:var(--text2);max-width:74ch;margin:12px auto 26px;line-height:1.7}
+.tabbar{position:sticky;top:54px;z-index:40;display:flex;gap:8px;justify-content:center;padding:13px 16px;
+background:rgba(253,252,250,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tabbtn{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;padding:9px 18px;
+border-radius:100px;border:1.5px solid var(--line);background:#fff;color:var(--text2);transition:all .2s;text-align:center}
+.tabbtn:hover{border-color:var(--teal);color:var(--teal)}
+.tabbtn.on{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 3px 12px rgba(45,156,156,.28)}
+.tabbtn .tb-k{display:block;font-size:10px;font-weight:500;opacity:.78;margin-top:2px}
+.tabpanel{display:none;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sec-label{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:var(--cat);
+letter-spacing:.22em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--cat-border),transparent)}
+.sec-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(25px,2.9vw,38px);font-weight:800;
+line-height:1.12;margin-bottom:12px}
+.sec-title em{font-style:normal;color:var(--cat)}
+.sec-lead{font-size:14.5px;color:var(--text2);max-width:940px;line-height:1.75;margin-bottom:24px}
+.sec-lead b{color:var(--text);font-weight:600}
+.blk-h{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin:26px 0 6px}
+.hero-kpis{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.kpi{text-align:center}
+.kpi-v{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:800;line-height:1}
+.kpi-l{font-size:11px;color:var(--text2);margin-top:6px;text-transform:uppercase;letter-spacing:.07em;
+line-height:1.4;max-width:21ch}
+.kpi-div{width:1px;height:50px;background:var(--border);align-self:center}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.pc{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:0 2px 10px rgba(26,26,46,.05)}
+.pc-l{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em}
+.pc-v{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:800;line-height:1.15;margin:6px 0 3px}
+.pc-prev{font-size:11.5px;color:var(--text3)}
+.mini{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;gap:12px;
+align-items:flex-start;box-shadow:0 2px 10px rgba(26,26,46,.05)}
+.mini-i{font-size:20px;line-height:1.2}
+.mini-l{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.07em}
+.mini-v{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:800;line-height:1.2;margin:3px 0}
+.mini-s{font-size:11px;color:var(--text3);line-height:1.45}
+.tbl-wrap{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:auto;
+box-shadow:0 2px 10px rgba(26,26,46,.05);margin-top:10px;max-height:560px}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{text-align:left;padding:10px 12px;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;
+color:var(--text2);text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--border);
+background:#fff;position:sticky;top:0;z-index:2}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono',monospace}
+.tbl th.num{text-align:right}
+.tbl tr:hover td{background:var(--bg2)}
+.tbl .hot{color:var(--coral);font-weight:700}
+.tbl .chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;background:var(--teal-l);color:var(--teal-d);
+padding:2px 7px;border-radius:5px;white-space:nowrap}
+.chip-o{font-size:10.5px;background:var(--bg2);color:var(--text3);padding:2px 8px;border-radius:5px}
+.tbl .sub-l{font-size:10.5px;color:var(--text3);font-weight:400}
+.callout,.callout-gold,.callout-coral,.callout-green{border-left:3px solid var(--teal);background:var(--teal-l);
+padding:13px 18px;border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;margin:12px 0}
+.callout-gold{border-left-color:var(--gold);background:var(--gold-l)}
+.callout-coral{border-left-color:var(--coral);background:var(--coral-l)}
+.callout-green{border-left-color:var(--green);background:var(--green-l)}
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;box-shadow:0 2px 10px rgba(26,26,46,.05)}
+.card-h{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px}
+.card-p{font-size:12.5px;color:var(--text2);line-height:1.7;margin-bottom:12px}
+.verdict{background:linear-gradient(135deg,var(--teal-d),#0f4f4f);color:#eafaf7;border-radius:16px;
+padding:34px 32px;box-shadow:0 4px 20px rgba(31,111,111,.2)}
+.verdict .vl{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;
+text-transform:uppercase;color:var(--teal-soft);margin-bottom:10px}
+.verdict h3{font-family:'Space Grotesk',sans-serif;font-size:clamp(21px,2.8vw,30px);font-weight:800;color:#fff;
+line-height:1.15;margin-bottom:10px}
+.verdict p{color:#cdeeea;max-width:74ch;font-size:14px}
+.verdict .pnl{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.18);display:flex;gap:14px;align-items:flex-start}
+.verdict .pnl .tag{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:10px;letter-spacing:.06em;
+text-transform:uppercase;color:#0f4f4f;background:var(--gold-d);padding:4px 10px;border-radius:6px;white-space:nowrap}
+.chart-box{position:relative;width:100%}
+.ej-num{background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 22px;margin:14px 0}
+.ej-fila{display:flex;justify-content:space-between;align-items:center;gap:20px;
+padding:13px 0;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--text2)}
+.ej-fila:last-child{border-bottom:none}
+.ej-fila b{font-family:'Space Grotesk',sans-serif;font-size:16px;color:var(--text);
+text-align:right;white-space:nowrap}
+.ej-fila.destacada{background:var(--coral-l);margin:0 -22px;padding:13px 22px;border-radius:10px}
+.ej-fila.destacada b{color:var(--coral)}
+.catchips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 16px}
+.catchip{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;
+padding:6px 13px;border-radius:100px;border:1px solid var(--border);background:#fff;
+color:var(--text2);transition:all .15s}
+.catchip:hover{border-color:var(--teal);color:var(--teal)}
+.catchip.on{background:var(--teal);border-color:var(--teal);color:#fff;
+box-shadow:0 2px 8px rgba(45,156,156,.26)}
+.pick-hint{font-size:11.5px;color:var(--text3);margin-bottom:2px}
+.footer{background:var(--text);color:#fff;padding:28px 60px;display:flex;align-items:center;
+justify-content:space-between;flex-wrap:wrap;gap:20px;margin-top:50px}
+.footer-kpi-v{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:19px;color:#fff;line-height:1}
+.footer-kpi-l{font-size:10px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.footer-meta{font-size:11px;color:var(--text3);max-width:52ch;line-height:1.55}
+.catsel{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 18px}
+.catbtn{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;
+padding:5px 13px;border-radius:100px;border:1.5px solid var(--line);background:#fff;
+color:var(--text2);transition:all .15s}
+.catbtn:hover{border-color:var(--teal);color:var(--teal)}
+.hm-fila{cursor:pointer}
+.hm-fila:hover td:first-child{color:var(--teal)}
+.catbtn.on{background:var(--teal);border-color:var(--teal);color:#fff;
+box-shadow:0 2px 9px rgba(45,156,156,.26)}
+.evo-h{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:800;margin-bottom:2px}
+@media (max-width:980px){.g3,.g4{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){.section{padding:22px 16px 36px}.nav{padding:9px 14px}
+.g2,.g3,.g4{grid-template-columns:1fr}.footer{padding:24px 18px}.hero{padding:110px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.simwrap{max-width:1220px;margin:0 auto;padding:96px 30px 60px}
+/* el nav es fijo: sin este margen superior tapa lo primero de la pagina */
+.nivsel{display:flex;gap:9px;margin:6px 0 14px;flex-wrap:wrap}
+.nivbtn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;
+padding:9px 18px;border-radius:100px;border:1.5px solid var(--line);background:#fff;color:var(--text2)}
+.nivbtn:hover{border-color:var(--teal);color:var(--teal)}
+.nivbtn.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.escbtn{font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;
+padding:8px 16px;border-radius:100px;border:1.5px solid var(--line);background:#fff;color:var(--text2)}
+.escbtn:hover{border-color:var(--gold-d);color:var(--gold-d)}
+.escbtn.on{background:var(--gold-d);border-color:var(--gold-d);color:#fff}
+.fila{display:grid;grid-template-columns:1fr 250px 78px;gap:14px;align-items:center;
+padding:9px 0;border-bottom:1px solid var(--line)}
+.fn b{font-size:13px;display:block}
+.fn span{font-size:11px;color:var(--text2);font-family:'JetBrains Mono',monospace}
+.fila input[type=range]{width:100%;accent-color:var(--teal)}
+.fv{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;text-align:right}
+.barra{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:16px 0 6px}
+.btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;
+padding:9px 20px;border-radius:100px;border:none;background:var(--teal);color:#fff}
+.btn.sec{background:#fff;color:var(--text2);border:1.5px solid var(--line)}
+.scroll{max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:12px;
+padding:4px 16px;background:#fff}
+.filtro{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:6px 0 10px}
+.busca{font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 16px;border-radius:100px;
+border:1.5px solid var(--line);background:#fff;color:var(--text);min-width:250px}
+.busca:focus{outline:none;border-color:var(--teal)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 12px}
+.chipf{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;
+padding:5px 12px;border-radius:100px;border:1.5px solid var(--line);background:#fff;color:var(--text2)}
+.chipf:hover{border-color:var(--teal);color:var(--teal)}
+.chipf.on{background:var(--teal-l);border-color:var(--teal);color:var(--teal-d)}
+.oculto{font-size:11.5px;color:var(--text2);margin:4px 0 0}
+.oculto b{color:var(--coral)}
+.rol{display:inline-block;font-size:10px;font-weight:700;color:#fff;padding:2px 8px;
+border-radius:100px;margin-right:7px;text-transform:uppercase;letter-spacing:.04em}
+.vistasel{display:flex;gap:9px;margin:0 0 20px}
+.doc{max-width:860px}
+.doc h3{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;
+margin:30px 0 8px;color:var(--text)}
+.doc p{font-size:14px;line-height:1.62;color:var(--text2);margin:0 0 12px}
+.doc b{color:var(--text)}
+.doc code{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:var(--teal-l);
+padding:2px 6px;border-radius:5px;color:var(--teal-d)}
+.doc ol,.doc ul{font-size:14px;line-height:1.62;color:var(--text2);padding-left:20px;margin:0 0 12px}
+.doc li{margin-bottom:7px}
+.paso{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px}
+.paso-n{flex:0 0 30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;
+display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;
+font-family:'Space Grotesk',sans-serif}
+.ej{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 22px;
+margin:14px 0 18px}
+.ej-verde{background:var(--teal-l);border-left:4px solid var(--teal);border-radius:0 12px 12px 0;
+padding:15px 20px;margin:14px 0 18px;font-size:14px;line-height:1.6;color:var(--text)}
+.ej .paso{margin-bottom:12px}
+.ej .paso:last-child{margin-bottom:0}
+.parte{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;
+letter-spacing:.14em;color:var(--teal-d);background:var(--teal-l);display:inline-block;
+padding:7px 16px;border-radius:100px;margin:38px 0 4px}
+</style></head><body>
+<div class="nav"><a class="brand" href="#"><span class="brand-t">COE Advanced Analytics</span>
+<span class="brand-s">Simulador &middot; DiaDia</span></a></div>
+<div class="simwrap">
+<div class="vistasel">
+  <button class="nivbtn on" data-v="sim">Simulador</button>
+  <button class="nivbtn" data-v="doc">C&oacute;mo funciona</button>
+</div>
+<div id="vista-sim">
+<div class="sec-label">Reasignaci&oacute;n de inversi&oacute;n promocional</div>
+<h2 class="sec-title">Mov&eacute; puntos de tasa y mir&aacute; <em>qu&eacute; pasa con el volumen</em></h2>
+<p class="sec-lead">Negativo entrega, positivo recibe. <b>Balancear</b> ajusta a los que reciben
+hasta que el presupuesto cierra en cero. Las elasticidades salen del panel cliente &times;
+material &times; mes sobre 24 meses; la inversi&oacute;n y la tasa, de los &uacute;ltimos 12.</p>
+<div class="nivsel">
+  <button class="nivbtn on" data-n="categoria">Entre categor&iacute;as</button>
+  <button class="nivbtn" data-n="marca">Entre marcas, dentro de la categor&iacute;a</button>
+</div>
+<div class="blk-h" style="margin-top:6px">Escenarios ya corridos</div>
+<p class="sec-lead" style="margin-bottom:8px">Cargan los sliders y recalculan. Ninguno usa a
+<b>Cereales</b> ni a <b>Galletas</b> como donantes: el negocio las est&aacute; impulsando, as&iacute;
+que solo reciben.</p>
+<div class="nivsel" id="escsel"><button class="escbtn" data-e="A">A &middot; Mejor margen</button><button class="escbtn" data-e="B">B &middot; Margen y solidez</button><button class="escbtn" data-e="C">C &middot; Volumen con margen</button><button class="escbtn" data-e="D">D &middot; Bajo riesgo</button><button class="escbtn" data-e="E">E &middot; Diversificada</button><button class="escbtn" data-e="F">F &middot; Marca · Pastas</button><button class="escbtn" data-e="G">G &middot; Marca · Harinas</button><button class="escbtn" data-e="H">H &middot; Marca · Aceites</button><button class="escbtn" data-e="I">I &middot; Piloto barato</button><button class="escbtn" data-e="J">J &middot; Marca · Untables</button><button class="escbtn" data-e="K">K &middot; Marca · Jabones</button></div>
+<div class="callout" id="escNota" style="display:none"></div>
+<div class="callout" id="nivNota">Entre categorías la sustitución es baja, así que la elasticidad propia se aproxima bien al efecto neto. Es el nivel más defendible de los dos.</div>
+<div class="g4" style="margin:20px 0 10px">
+  <div class="pc"><div class="pc-l">&Delta; Inversi&oacute;n</div>
+    <div class="pc-v" id="kInv">S/ 0</div><div class="pc-prev" id="kInvSub"></div></div>
+  <div class="pc"><div class="pc-l">&Delta; Volumen</div>
+    <div class="pc-v" id="kTn" style="color:var(--teal)">0 TN</div>
+    <div class="pc-prev" id="kTnSub"></div></div>
+  <div class="pc"><div class="pc-l">&Delta; Venta</div>
+    <div class="pc-v" id="kVenta" style="color:var(--gold-d)">S/ 0</div>
+    <div class="pc-prev" id="kVentaSub"></div></div>
+  <div class="pc"><div class="pc-l">&Delta; Margen bruto</div>
+    <div class="pc-v" id="kMar">S/ 0</div><div class="pc-prev" id="kMarSub"></div></div>
+</div>
+<div class="g4" style="margin:0 0 10px">
+  <div class="pc"><div class="pc-l">Punto de quiebre (margen)</div>
+    <div class="pc-v" id="kQ" style="font-size:22px">0%</div>
+    <div class="pc-prev" id="kQSub"></div></div>
+  <div class="pc"><div class="pc-l">Punto de quiebre (volumen)</div>
+    <div class="pc-v" id="kQv" style="font-size:22px">0%</div>
+    <div class="pc-prev">de referencia</div></div>
+</div>
+<div class="mini-s" id="noAbs" style="margin-bottom:8px"></div>
+<div class="barra">
+  <button class="btn" id="bal">Balancear presupuesto</button>
+  <button class="btn sec" id="reset">Limpiar</button>
+  <span style="font-size:12px;color:var(--text2)">Ahorro deliberado</span>
+  <input type="range" id="ahorro" min="0" max="100" step="5" value="0"
+         style="width:145px;accent-color:var(--gold-d)">
+  <span class="fv" id="ahorroV">0%</span>
+  <span style="font-size:12px;color:var(--text2);margin-left:8px">Canibalizaci&oacute;n</span>
+  <input type="range" id="cani" min="0" max="80" step="5" value="0"
+         style="width:145px;accent-color:var(--coral)">
+  <span class="fv" id="caniV">0%</span>
+</div>
+<div class="card" style="margin-bottom:16px">
+<div class="card-h">Qu&eacute; pasa con la plata liberada</div>
+<div class="card-p">Lo que se suelta al recortar tiene tres destinos: lo que los receptores
+<b>reciben</b>, lo que se decide <b>no recolocar</b>, y lo que <b>no entra</b> porque el
+receptor ya lleg&oacute; a su techo hist&oacute;rico de absorci&oacute;n.</div>
+<div class="g4" style="margin-top:6px">
+  <div class="pc"><div class="pc-l">Liberado</div>
+    <div class="pc-v" id="kLib" style="font-size:22px">S/ 0</div></div>
+  <div class="pc"><div class="pc-l">Colocado</div>
+    <div class="pc-v" id="kCol" style="font-size:22px;color:var(--teal)">S/ 0</div></div>
+  <div class="pc"><div class="pc-l">Ahorrado</div>
+    <div class="pc-v" id="kAho" style="font-size:22px;color:var(--gold-d)">S/ 0</div></div>
+  <div class="pc"><div class="pc-l">No colocado por capacidad</div>
+    <div class="pc-v" id="kNoc" style="font-size:22px;color:var(--coral)">S/ 0</div></div>
+</div></div>
+<div class="g2">
+  <div class="card"><div class="card-h">Los nueve escenarios, lado a lado</div>
+    <div class="card-p">Barra = banda de volumen propagando el intervalo de cada elasticidad.
+    El punto es el valor central. En verde los que aguantan m&aacute;s de 70% de
+    canibalizaci&oacute;n.</div>
+    <div class="chart-box" style="height:330px"><canvas id="chEsc"></canvas></div></div>
+  <div class="card"><div class="card-h">Tama&ntilde;o contra robustez</div>
+    <div class="card-p">Eje X el <b>margen</b> que gana, eje Y hasta cu&aacute;nta
+    canibalizaci&oacute;n aguanta, tama&ntilde;o la plata que mueve. <b>Arriba a la derecha
+    est&aacute; lo que conviene: mucho margen y mucho margen de error.</b></div>
+    <div class="chart-box" style="height:330px"><canvas id="chTrade"></canvas></div></div>
+</div>
+<div class="card" style="margin-top:16px">
+<div class="card-h">Por qu&eacute; esta entrega y esta recibe</div>
+<div class="card-p">Las cuatro cosas que definen una jugada, lado a lado. Se entrega donde
+se paga caro, se responde poco o el margen es bajo; se recibe donde pasa lo contrario.</div>
+<div id="porque"></div></div>
+
+<div class="card" style="margin-top:16px">
+<div class="card-h">Tama&ntilde;o de cada categor&iacute;a</div>
+<div class="card-p">Las barras son la <span id="mLab">venta</span> del a&ntilde;o; los rombos, el
+margen sobre venta. <b style="color:var(--coral)">Rojo</b> entrega,
+<b style="color:var(--teal)">verde</b> recibe. El tama&ntilde;o manda: un punto de tasa en una
+categor&iacute;a grande mueve mucha m&aacute;s plata que en una chica.
+<span style="margin-left:8px"><button class="chipf on" id="mVenta">Venta</button>
+<button class="chipf" id="mVol">Volumen</button></span></div>
+<div class="chart-box" style="height:420px"><canvas id="chTamano"></canvas></div></div>
+
+<div class="card" style="margin-top:16px"><div class="card-h">Resultado por unidad</div><div id="tabla"></div></div>
+<div class="card" style="margin-top:16px"><div class="card-h">D&oacute;nde entra y sale la plata</div>
+<div class="chart-box" style="height:300px"><canvas id="chSim"></canvas></div></div>
+<div class="blk-h">Controles</div>
+<div class="filtro">
+  <input class="busca" id="busca" type="search"
+         placeholder="Buscar categor&iacute;a o marca&hellip;" autocomplete="off">
+  <button class="btn sec" id="limpiaFiltro">Ver todo</button>
+  <span class="fv" id="cuenta"></span>
+</div>
+<div class="chips" id="chips"></div>
+<div class="scroll" id="controles"></div>
+<div class="oculto" id="oculto"></div>
+<div class="callout-gold" style="margin-top:22px"><b>Lo que este simulador no calcula: el margen.</b>
+La metodolog&iacute;a del simulador de segmentos dice que la decisi&oacute;n se toma por la fila de
+margen, y <code>dex_cliente_detalle</code> no lo trae. Ac&aacute; se llega hasta volumen y venta.
+Se puede ganar volumen y destruir margen, as&iacute; que antes de mover presupuesto hay que sumarle
+la utilidad bruta &mdash; el mismo campo que ya usa el simulador de segmentos.</div>
+<div class="callout-coral"><b>El punto de quiebre es la cifra a mirar.</b> No tenemos
+elasticidades cruzadas, as&iacute; que la canibalizaci&oacute;n es un supuesto y no una
+medici&oacute;n. En vez de inventar un factor, el simulador reporta hasta qu&eacute;
+canibalizaci&oacute;n la jugada sigue sumando volumen. Si el quiebre da 60%, la decisi&oacute;n
+aguanta; si da 5%, cualquier sustituci&oacute;n la anula.</div>
+</div>
+
+<div id="vista-doc" style="display:none">
+<div class="sec-label">Manual del simulador</div>
+<h2 class="sec-title">Aprender a usarlo <em>en cuatro partes</em></h2>
+<div class="doc">
+
+<div class="ej-verde"><p style="margin:0"><b>C&oacute;mo est&aacute; organizado esto.</b>
+Primero <b>los conceptos</b> (qu&eacute; significan las palabras que vas a ver). Despu&eacute;s
+<b>c&oacute;mo se usa</b>, con un caso real de punta a punta. Despu&eacute;s <b>c&oacute;mo se
+juzga</b> si un escenario sirve o no. Y al final, <b>qu&eacute; NO puede hacer</b>. Si es la
+primera vez, leelo en orden; si ya lo usaste, and&aacute; directo a la parte 3.</p></div>
+
+<div class="parte">PARTE 1 &middot; Los conceptos</div>
+
+<h3>La pregunta que responde</h3>
+<p>Una sola: <b>si le saco descuento a un producto y se lo doy a otro, cu&aacute;nto gano o
+pierdo</b> en kilos, en venta y en margen. Nada m&aacute;s que eso.</p>
+
+<h3>Tasa y punto</h3>
+<p>Son las dos palabras que vas a ver en cada control.</p>
+<div class="ej">
+<p><b>La tasa</b> es cu&aacute;nto se gasta en promoci&oacute;n por cada sol vendido.
+Pastas tiene tasa <b>4.71%</b>: de cada S/100 que factura, S/4.71 se van en descuento.</p>
+<p style="margin:0"><b>Un punto</b> es mover esa tasa en 1. Llevar Pastas de 4.71% a 5.71%
+es &ldquo;darle un punto&rdquo;. Los sliders se mueven en puntos: negativo entrega, positivo
+recibe.</p></div>
+
+<h3>La elasticidad: cu&aacute;nto reacciona la gente al descuento</h3>
+<p>Es el n&uacute;mero que dice si el descuento sirve para algo en esa categor&iacute;a.</p>
+<div class="ej-verde"><p style="margin:0"><b>Pastas tiene &minus;3.94.</b> Se lee:
+<b>si el precio baja 1%, se venden 3.94% m&aacute;s kilos.</b></p></div>
+<p>Cuanto m&aacute;s negativo, m&aacute;s reacciona la gente. Compar&aacute;:</p>
+<ul>
+<li><b>Jabones de Lavar &minus;5.75</b> &rarr; muy sensible. Un descuento chico mueve
+mucho volumen.</li>
+<li><b>Pastas &minus;3.94</b> &rarr; sensible.</li>
+<li><b>Galletas &minus;1.43</b> &rarr; poco sensible. Descontar ah&iacute; mueve poco.</li>
+</ul>
+<p><b>De d&oacute;nde sale.</b> De mirar 24 meses de compras reales, cliente por cliente y
+producto por producto. La clave es que dos clientes compran el mismo producto el mismo mes a
+distinto descuento: comparando cu&aacute;nto compr&oacute; cada uno se despeja
+cu&aacute;nto pes&oacute; el precio. Son 26.6 millones de compras.</p>
+
+<h3>El margen: el ratio que convierte kilos en plata</h3>
+<p>Cada categor&iacute;a deja un margen distinto sobre lo que vende. <b>Untables deja 56.8
+centavos por cada sol; Conservas, 23.8.</b></p>
+<div class="ej-verde"><p style="margin:0">Por eso <b>vender m&aacute;s kilos no es lo mismo
+que ganar m&aacute;s plata.</b> Si le sac&aacute;s inversi&oacute;n a una categor&iacute;a de
+margen alto y se la das a una de margen bajo, pod&eacute;s terminar con m&aacute;s toneladas y
+menos ganancia.</p></div>
+<p>Eso pasa de verdad: mover un punto de Untables (56.8%) a Pastas (35.6%) suma
+<b>234 toneladas</b> y destruye <b>S/95 mil de margen</b>. Por eso la fila que decide es la
+del margen, no la del volumen.</p>
+
+<div class="parte">PARTE 2 &middot; C&oacute;mo se usa</div>
+
+<h3>Los tres pasos</h3>
+<div class="paso"><div class="paso-n">1</div><div><b>Eleg&iacute; qui&eacute;n entrega:</b>
+slider a negativo. Us&aacute; el buscador o los chips de categor&iacute;a para encontrarlo
+r&aacute;pido.</div></div>
+<div class="paso"><div class="paso-n">2</div><div><b>Eleg&iacute; qui&eacute;n recibe</b> con
+cualquier valor positivo y apret&aacute; <b>Balancear</b>. Si quer&eacute;s guardarte parte de
+lo liberado en vez de recolocarlo todo, sub&iacute; antes <b>Ahorro deliberado</b>.</div></div>
+<div class="paso"><div class="paso-n">3</div><div><b>Juzg&aacute; el resultado</b> con la
+parte 3 de este manual. No alcanza con mirar si el n&uacute;mero es positivo.</div></div>
+<p>Los nueve escenarios de arriba ya vienen resueltos: cargan los sliders y recalculan.
+Ninguno usa <b>Cereales</b> ni <b>Galletas</b> como donantes, porque el negocio las
+est&aacute; impulsando.</p>
+
+<h3>Un caso completo, de punta a punta</h3>
+<p>Escenario <b>A</b>: le sacamos 1 punto a Untables Dom&eacute;sticos y se lo damos a
+Jabones de Lavar. As&iacute; se encadena la cuenta:</p>
+<div class="ej">
+<div class="paso"><div class="paso-n">1</div><div><b>Untables baja de 2.93% a 1.93%.</b>
+Eso libera <b>S/327,773</b> y le cuesta 48 toneladas.</div></div>
+<div class="paso"><div class="paso-n">2</div><div><b>Balancear busca cu&aacute;nto puede
+recibir Jabones</b> con esa plata: sube de 5.03% a 6.01%, casi un punto.</div></div>
+<div class="paso"><div class="paso-n">3</div><div><b>El precio efectivo de Jabones baja
+1.03%.</b> Con elasticidad &minus;5.75, el volumen sube <b>6.2%</b>.</div></div>
+<div class="paso"><div class="paso-n">4</div><div><b>+139 toneladas en Jabones</b>, menos las
+48 que perdi&oacute; Untables: <b>neto +90.5 toneladas.</b></div></div>
+<div class="paso"><div class="paso-n">5</div><div><b>El margen:</b> Jabones gana S/755 mil,
+Untables pierde S/497 mil. <b>Neto +S/257 mil.</b> Ac&aacute; s&iacute; conviene, porque los
+dos m&aacute;rgenes son parecidos (50.6% contra 56.8%).</div></div>
+</div>
+<p><b>Por qu&eacute; Balancear no es una regla de tres.</b> Al vender m&aacute;s, Jabones
+tambi&eacute;n necesita m&aacute;s plata para mantener su tasa nueva. El n&uacute;mero se
+busca probando hasta que la cuenta cierra sola.</p>
+
+<h3>Qu&eacute; significa cada n&uacute;mero de arriba</h3>
+<div class="tbl-wrap" style="max-height:none"><table class="tbl">
+<thead><tr><th>El n&uacute;mero</th><th>La pregunta que contesta</th>
+<th>Cu&aacute;ndo desconfiar</th></tr></thead><tbody>
+<tr><td><b>&Delta; Inversi&oacute;n</b></td><td>&iquest;La plata cierra?</td>
+<td>Si no da cerca de cero, falta apretar Balancear</td></tr>
+<tr><td><b>&Delta; Volumen</b></td><td>&iquest;Cu&aacute;ntos kilos m&aacute;s se venden?</td>
+<td>Si la banda de abajo toca el cero</td></tr>
+<tr><td><b>&Delta; Venta</b></td><td>&iquest;Cu&aacute;nta facturaci&oacute;n m&aacute;s?</td>
+<td>Si sube mucho menos que el volumen: son kilos baratos</td></tr>
+<tr><td><b>&Delta; Margen bruto</b></td><td>&iquest;Se gana plata de verdad?</td>
+<td><b>Si es negativo, la jugada no va</b>, por m&aacute;s volumen que sume</td></tr>
+<tr><td><b>Punto de quiebre</b></td><td>&iquest;Cu&aacute;nto aguanta antes de dejar de
+servir?</td><td>Debajo de 25% es fr&aacute;gil</td></tr>
+<tr><td><b>No colocado</b></td><td>&iquest;Cu&aacute;nto no entr&oacute; por capacidad?</td>
+<td>Si es la mayor parte de lo liberado, eleg&iacute; otro receptor</td></tr>
+</tbody></table></div>
+
+<h3>Qu&eacute; pasa con la plata que se libera</h3>
+<p>No siempre se recoloca todo. Tiene tres destinos:</p>
+<ul>
+<li><b>Colocado:</b> lo que el receptor efectivamente recibe.</li>
+<li><b>Ahorrado:</b> lo que deciden guardarse, con el slider de ahorro deliberado. Al 100% es
+un recorte puro, sin darle a nadie.</li>
+<li><b>No colocado:</b> lo que el receptor no puede recibir porque ya lleg&oacute; a su
+techo.</li>
+</ul>
+<p>El techo es lo m&aacute;s que esa categor&iacute;a absorbi&oacute; alguna vez en un mes.
+<b>Ejemplo:</b> si le sac&aacute;s 1 punto a Salsas (S/960 mil) y se lo quer&eacute;s dar a
+Lej&iacute;as, Lej&iacute;as solo puede recibir <b>S/37 mil</b>. El resto queda como ahorro, y
+Lej&iacute;as sube de 2.23% a 2.85% y ah&iacute; se frena.</p>
+
+<div class="parte">PARTE 3 &middot; C&oacute;mo se juzga</div>
+
+<h3>Por qu&eacute; una entrega y otra recibe</h3>
+<p>Son cuatro cosas, y est&aacute;n todas en la tabla <b>&ldquo;Por qu&eacute; esta entrega y
+esta recibe&rdquo;</b>:</p>
+<ol>
+<li><b>Cu&aacute;nto paga hoy</b> (tasa). Conviene sacarle al que paga caro.</li>
+<li><b>Cu&aacute;nto reacciona</b> (elasticidad). Conviene darle al que reacciona m&aacute;s.</li>
+<li><b>Cu&aacute;nto margen deja.</b> Conviene sacarle al de margen bajo.</li>
+<li><b>Qu&eacute; tan grande es</b> (venta y volumen). En una categor&iacute;a grande, un
+punto de tasa mueve much&iacute;sima m&aacute;s plata.</li>
+</ol>
+<div class="ej"><p style="margin:0 0 8px"><b>En el escenario A los cuatro criterios no
+apuntan al mismo lado, y conviene igual:</b></p>
+<ul style="margin:0">
+<li><b>Tasa:</b> Untables paga 2.93% y Jabones 5.03%. <b>Este criterio est&aacute; EN
+CONTRA</b> &mdash; le estamos sacando al que paga menos.</li>
+<li><b>Elasticidad:</b> &minus;2.79 contra &minus;5.75. Jabones reacciona el doble. A favor.</li>
+<li><b>Margen:</b> 56.8% contra 50.6%. Parecidos, casi no se pierde en el camino.</li>
+<li><b>Tama&ntilde;o:</b> S/31 millones contra S/24 millones. Parecidos tambi&eacute;n.</li>
+</ul></div>
+<p>El gr&aacute;fico de <b>tama&ntilde;o</b> muestra esto para todas: barras con la venta del
+a&ntilde;o, rombos con el margen. Detergentes y Aceites est&aacute;n arriba de S/110 millones
+y Lej&iacute;as no llega a S/10: un punto de tasa ah&iacute; mueve diez veces menos plata. Con
+el bot&oacute;n pas&aacute;s a volumen y el orden cambia &mdash; <b>Pastas es la m&aacute;s
+grande en toneladas aunque no en soles</b>, porque su precio por tonelada es m&aacute;s bajo.</p>
+
+<h3 id="quiebre">El punto de quiebre</h3>
+<p>Us&aacute; el escenario <b>F</b>, dentro de Pastas: le sacamos a Lavaggi y le damos a
+Don Vittorio.</p>
+<div class="ej"><p style="margin:0"><b>&iquest;De d&oacute;nde salen las toneladas que gana
+Don Vittorio?</b> Puede ser gente que antes compraba menos pasta y ahora compra m&aacute;s
+&mdash;venta nueva de verdad&mdash;, o puede ser gente que compraba Lavaggi y se
+cambi&oacute;. Esa segunda parte <b>no le suma nada a Alicorp</b>: los kilos cambian de marca,
+no aparecen.</p></div>
+<p>A eso se le llama <b>canibalizaci&oacute;n</b>: una marca se come a la otra. Y no sabemos
+qu&eacute; porcentaje es &mdash; podr&iacute;a ser 10% o 70%, y los datos no alcanzan para
+averiguarlo.</p>
+<p>Entonces damos vuelta la pregunta: en vez de adivinar el porcentaje, calculamos
+<b>hasta qu&eacute; porcentaje la jugada todav&iacute;a conviene</b>. Eso es el punto de
+quiebre, y se mide sobre el margen.</p>
+<div class="ej-verde"><p style="margin:0"><b>Escenario F: punto de quiebre 70%.</b> Mientras
+menos del 70% de lo que gana Don Vittorio sea robado a Lavaggi, la jugada suma margen.
+Pasando el 70%, empieza a restar.</p></div>
+<p><b>Lo bueno de darlo vuelta as&iacute;:</b> no necesit&aacute;s saber la
+canibalizaci&oacute;n exacta, solo si es mayor o menor que ese n&uacute;mero. Y eso s&iacute;
+se puede conversar con comercial.</p>
+<ul>
+<li><b>Arriba de 70%</b> &mdash; verde. Har&iacute;a falta que casi todo fuera robado para que
+no sirva.</li>
+<li><b>Entre 25% y 70%</b> &mdash; amarillo. Entre categor&iacute;as que no compiten es
+razonable. Entre dos marcas de la misma categor&iacute;a hay que pensarlo.</li>
+<li><b>Debajo de 25%</b> &mdash; rojo. Con muy poquito que se roben, no suma nada.</li>
+</ul>
+<p>El slider de <b>canibalizaci&oacute;n</b> te deja forzar un valor y ver c&oacute;mo cae el
+resultado. Si lo pon&eacute;s justo en el punto de quiebre, el margen da cero.</p>
+
+<h3>La banda debajo de cada n&uacute;mero</h3>
+<p>Cada elasticidad es una estimaci&oacute;n, no una certeza. Jabones de Lavar da
+&minus;5.75, <b>pero podr&iacute;a estar entre &minus;4.08 y &minus;11.24</b>. La banda
+muestra qu&eacute; pasar&iacute;a en cada caso.</p>
+<div class="ej"><p style="margin:0">El escenario <b>C</b> dice <b>+330 toneladas</b>, un
+n&uacute;mero enorme. Pero su punto de quiebre por margen es <b>7%</b>. Traducido: con que
+apenas un 7% de lo que gana Detergentes se lo saque a Salsas, la ganancia desaparece.
+<b>El n&uacute;mero grande no es el mejor escenario.</b></p></div>
+
+<h3>Antes de aceptar un escenario, chequeá estas cinco cosas</h3>
+<ol>
+<li><b>&iquest;El margen es positivo?</b> Si no, no va. Da igual el volumen.</li>
+<li><b>&iquest;La banda toca el cero?</b> Si la toca, el n&uacute;mero central no alcanza
+para decidir.</li>
+<li><b>&iquest;El punto de quiebre es alto?</b> Debajo de 25% cualquier sustituci&oacute;n
+lo anula.</li>
+<li><b>&iquest;Cu&aacute;nto salta el receptor?</b> Si su inversi&oacute;n sube 30% o
+m&aacute;s, la elasticidad se est&aacute; usando lejos de donde se midi&oacute;.</li>
+<li><b>&iquest;Qued&oacute; plata sin colocar?</b> Si es la mayor parte, el receptor es
+demasiado chico para esa jugada.</li>
+</ol>
+
+<h3>Cuatro errores comunes al leerlo</h3>
+<ul>
+<li><b>Elegir por volumen.</b> El escenario C gana 330 toneladas y es de los m&aacute;s
+fr&aacute;giles del set.</li>
+<li><b>Creerle al n&uacute;mero central e ignorar la banda.</b> Son dos cosas distintas.</li>
+<li><b>Comparar escenarios que mueven plata muy distinta.</b> Uno que mueve S/40 mil y otro
+S/960 mil no se comparan por el total: mir&aacute; tambi&eacute;n el quiebre.</li>
+<li><b>Pensar que el filtro cambia el resultado.</b> No: una unidad con el slider movido que
+qued&oacute; fuera del filtro <b>sigue contando</b>. Por eso aparece el aviso en rojo.</li>
+</ul>
+
+<div class="parte">PARTE 4 &middot; Los l&iacute;mites</div>
+
+<h3>Las cinco cosas que este simulador NO puede decirte</h3>
+<ol>
+<li><b>Que el descuento CAUSE la venta.</b> Mira lo que pas&oacute; hist&oacute;ricamente, y
+en general se invierte donde ya hay demanda, no al rev&eacute;s. Para probar causa hace falta
+un experimento: un grupo de clientes con la inversi&oacute;n nueva contra otro grupo parecido
+sin el cambio, midiendo dos o tres meses. <b>El escenario I est&aacute; pensado para eso</b>:
+es chico, estable y barato de probar.</li>
+<li><b>Cu&aacute;nta canibalizaci&oacute;n hay de verdad.</b> Por eso existe el punto de
+quiebre.</li>
+<li><b>Qu&eacute; pasa con cambios grandes.</b> Las elasticidades se midieron con la tasa
+movi&eacute;ndose poco. Un salto del 30% en el receptor usa el n&uacute;mero fuera de su
+rango.</li>
+<li><b>El margen exacto.</b> El ratio viene por familia y se promedia ponderando por venta;
+adem&aacute;s queda por confirmar con Finanzas si la utilidad bruta ya descuenta la
+inversi&oacute;n promocional. Si no la descuenta, al ahorro deliberado habr&iacute;a que
+sumarle ese monto.</li>
+<li><b>Nada de categor&iacute;as sin datos suficientes.</b> Solo entran las que tienen
+m&aacute;s de S/50 mil de inversi&oacute;n y elasticidad estimable: 21 categor&iacute;as y 35
+marcas.</li>
+</ol>
+
+<h3>Glosario</h3>
+<div class="tbl-wrap" style="max-height:none"><table class="tbl"><tbody>
+<tr><td><b>Tasa</b></td><td>Cu&aacute;nto se gasta en promoci&oacute;n por cada sol vendido,
+en porcentaje.</td></tr>
+<tr><td><b>Punto (pp)</b></td><td>Mover esa tasa en 1. De 4.71% a 5.71% es &ldquo;un
+punto&rdquo;.</td></tr>
+<tr><td><b>Elasticidad</b></td><td>Cu&aacute;nto sube el volumen si el precio baja 1%.
+M&aacute;s negativo = reacciona m&aacute;s.</td></tr>
+<tr><td><b>Margen sobre venta</b></td><td>Cu&aacute;ntos centavos de ganancia deja cada sol
+vendido.</td></tr>
+<tr><td><b>Canibalizaci&oacute;n</b></td><td>La parte del volumen que gana uno y se la
+saca a otro, sin sumar nada al total.</td></tr>
+<tr><td><b>Punto de quiebre</b></td><td>Hasta cu&aacute;nta canibalizaci&oacute;n la jugada
+sigue ganando margen.</td></tr>
+<tr><td><b>Capacidad</b></td><td>Lo m&aacute;s que una categor&iacute;a absorbi&oacute; alguna
+vez en un mes. Es el techo de lo que puede recibir.</td></tr>
+<tr><td><b>Banda</b></td><td>El rango del resultado si la elasticidad fuera m&aacute;s alta o
+m&aacute;s baja de lo estimado.</td></tr>
+</tbody></table></div>
+</div>
+</div>
+</div>
+<script>const D={"categoria": [{"u": "Aceites", "cat": "Aceites", "inv": 6332972, "venta": 106398149, "tn": 12490.9, "tasa": 5.952, "pt": 8518.07, "e": -4.528, "lo": -7.689, "hi": -4.967, "cap": 4899480, "nsku": 26, "mr": 0.2707}, {"u": "Salsas", "cat": "Salsas", "inv": 3672409, "venta": 84556993, "tn": 3609.4, "tasa": 4.343, "pt": 23426.83, "e": -3.963, "lo": -4.717, "hi": -3.162, "cap": 2505453, "nsku": 51, "mr": 0.4645}, {"u": "Pastas", "cat": "Pastas", "inv": 3091115, "venta": 65586770, "tn": 16422.7, "tasa": 4.713, "pt": 3993.67, "e": -3.94, "lo": -4.67, "hi": -3.141, "cap": 1008666, "nsku": 126, "mr": 0.3561}, {"u": "Detergentes", "cat": "Detergentes", "inv": 3065559, "venta": 112386782, "tn": 14615.5, "tasa": 2.728, "pt": 7689.57, "e": -4.189, "lo": -4.925, "hi": -3.525, "cap": 2006981, "nsku": 128, "mr": 0.4645}, {"u": "Cereales", "cat": "Cereales", "inv": 1906004, "venta": 20201215, "tn": 1039.2, "tasa": 9.435, "pt": 19439.1, "e": -1.711, "lo": -1.971, "hi": -1.439, "cap": 482109, "nsku": 37, "mr": 0.3456}, {"u": "Conservas", "cat": "Conservas", "inv": 1515829, "venta": 36509421, "tn": 1282.1, "tasa": 4.152, "pt": 28475.96, "e": -8.315, "lo": -11.662, "hi": -6.243, "cap": 1376073, "nsku": 8, "mr": 0.2385}, {"u": "Galletas", "cat": "Galletas", "inv": 1408101, "venta": 42544283, "tn": 3136.1, "tasa": 3.31, "pt": 13565.86, "e": -1.425, "lo": -1.656, "hi": -1.185, "cap": 778951, "nsku": 74, "mr": 0.3995}, {"u": "Jabones de Lavar", "cat": "Jabones de Lavar", "inv": 1215671, "venta": 24180504, "tn": 2248.3, "tasa": 5.027, "pt": 10754.84, "e": -5.751, "lo": -11.244, "hi": -4.079, "cap": 1131428, "nsku": 14, "mr": 0.5056}, {"u": "Untables Domesticos", "cat": "Untables Domesticos", "inv": 909893, "venta": 31088779, "tn": 1713.6, "tasa": 2.927, "pt": 18142.89, "e": -2.788, "lo": -3.819, "hi": -1.895, "cap": 621117, "nsku": 19, "mr": 0.5677}, {"u": "Panetones", "cat": "Panetones", "inv": 633731, "venta": 6584887, "tn": 326.1, "tasa": 9.624, "pt": 20195.14, "e": -12.029, "lo": -21.357, "hi": -10.129, "cap": 2121743, "nsku": 6, "mr": 0.4044}, {"u": "Harinas", "cat": "Harinas", "inv": 601963, "venta": 13860359, "tn": 2671.1, "tasa": 4.343, "pt": 5188.93, "e": -2.779, "lo": -3.856, "hi": -0.586, "cap": 172647, "nsku": 15, "mr": 0.4121}, {"u": "Lavavajillas", "cat": "Lavavajillas", "inv": 493992, "venta": 13352865, "tn": 2189.6, "tasa": 3.7, "pt": 6098.21, "e": -4.748, "lo": -6.246, "hi": -3.373, "cap": 329937, "nsku": 41, "mr": 0.4315}, {"u": "Postres", "cat": "Postres", "inv": 493042, "venta": 11483710, "tn": 688.6, "tasa": 4.293, "pt": 16676.23, "e": -2.528, "lo": -2.961, "hi": -2.0, "cap": 195107, "nsku": 29, "mr": 0.4493}, {"u": "Suavizantes", "cat": "Suavizantes", "inv": 369965, "venta": 15037434, "tn": 1907.4, "tasa": 2.46, "pt": 7883.7, "e": -4.092, "lo": -4.856, "hi": -3.257, "cap": 299227, "nsku": 46, "mr": 0.4764}, {"u": "Pasta Dental", "cat": "Pasta Dental", "inv": 352923, "venta": 6897732, "tn": 281.0, "tasa": 5.117, "pt": 24545.74, "e": -2.874, "lo": -6.299, "hi": -2.856, "cap": 81824, "nsku": 17, "mr": 0.4417}, {"u": "Shampoo", "cat": "Shampoo", "inv": 229980, "venta": 4108579, "tn": 186.4, "tasa": 5.598, "pt": 22043.09, "e": -1.208, "lo": -3.513, "hi": -1.94, "cap": 329764, "nsku": 41, "mr": 0.2984}, {"u": "Refrescos", "cat": "Refrescos", "inv": 165253, "venta": 3851986, "tn": 77.2, "tasa": 4.29, "pt": 49879.03, "e": -0.945, "lo": -1.191, "hi": -0.747, "cap": 67680, "nsku": 12, "mr": 0.5163}, {"u": "Limpiadores Light Duty", "cat": "Limpiadores Light Duty", "inv": 133215, "venta": 5995339, "tn": 2633.7, "tasa": 2.222, "pt": 2276.43, "e": -1.616, "lo": -1.901, "hi": -1.408, "cap": 46880, "nsku": 22, "mr": 0.3608}, {"u": "Lejias", "cat": "Lejias", "inv": 122244, "venta": 5492840, "tn": 3113.1, "tasa": 2.226, "pt": 1764.43, "e": -2.914, "lo": -3.744, "hi": -1.95, "cap": 37409, "nsku": 9, "mr": 0.3335}, {"u": "Jabon Liquido", "cat": "Jabon Liquido", "inv": 106906, "venta": 2819332, "tn": 309.1, "tasa": 3.792, "pt": 9120.22, "e": -2.164, "lo": -2.507, "hi": -1.78, "cap": 84320, "nsku": 17, "mr": 0.479}, {"u": "Quitamanchas", "cat": "Quitamanchas", "inv": 54724, "venta": 3459747, "tn": 862.3, "tasa": 1.582, "pt": 4012.41, "e": -2.603, "lo": -3.162, "hi": -2.322, "cap": 25006, "nsku": 10, "mr": 0.4014}], "marca": [{"u": "Aceites · Primor", "cat": "Aceites", "inv": 4472210, "venta": 56221417, "tn": 5941.7, "tasa": 7.955, "pt": 9462.13, "e": -6.405, "lo": -8.325, "hi": -4.276, "cap": 3459909, "nsku": 10, "mr": 0.3}, {"u": "Salsas · Alacena", "cat": "Salsas", "inv": 3658452, "venta": 84213678, "tn": 3581.9, "tasa": 4.344, "pt": 23510.64, "e": -4.103, "lo": -4.854, "hi": -3.306, "cap": 2495930, "nsku": 46, "mr": 0.4645}, {"u": "Pastas · Don Vittorio", "cat": "Pastas", "inv": 1960295, "venta": 33757763, "tn": 7393.6, "tasa": 5.807, "pt": 4565.82, "e": -4.98, "lo": -5.803, "hi": -3.888, "cap": 639666, "nsku": 53, "mr": 0.4233}, {"u": "Cereales · Angel", "cat": "Cereales", "inv": 1905929, "venta": 20200069, "tn": 1039.2, "tasa": 9.435, "pt": 19438.74, "e": -1.711, "lo": -1.971, "hi": -1.439, "cap": 482090, "nsku": 37, "mr": 0.3456}, {"u": "Conservas · Primor", "cat": "Conservas", "inv": 1515640, "venta": 36500077, "tn": 1281.6, "tasa": 4.152, "pt": 28479.4, "e": -8.429, "lo": -12.123, "hi": -6.497, "cap": 1375901, "nsku": 6, "mr": 0.2385}, {"u": "Galletas · Victoria", "cat": "Galletas", "inv": 1336339, "venta": 37089679, "tn": 2658.7, "tasa": 3.603, "pt": 13950.45, "e": -1.4, "lo": -1.66, "hi": -1.109, "cap": 739253, "nsku": 66, "mr": 0.4215}, {"u": "Detergentes · Marsella", "cat": "Detergentes", "inv": 1154461, "venta": 43645109, "tn": 6502.2, "tasa": 2.645, "pt": 6712.41, "e": -3.719, "lo": -4.719, "hi": -2.852, "cap": 755810, "nsku": 53, "mr": 0.4665}, {"u": "Jabones de Lavar · Bolivar", "cat": "Jabones de Lavar", "inv": 1144037, "venta": 20340374, "tn": 1758.0, "tasa": 5.624, "pt": 11570.37, "e": -7.999, "lo": -12.02, "hi": -4.798, "cap": 1064758, "nsku": 10, "mr": 0.5056}, {"u": "Detergentes · Bolivar", "cat": "Detergentes", "inv": 1082795, "venta": 37935517, "tn": 4076.4, "tasa": 2.854, "pt": 9306.21, "e": -4.687, "lo": -6.161, "hi": -3.406, "cap": 708891, "nsku": 37, "mr": 0.4641}, {"u": "Aceites · Cocinero", "cat": "Aceites", "inv": 792446, "venta": 14033351, "tn": 1702.5, "tasa": 5.647, "pt": 8243.03, "e": -8.068, "lo": -11.062, "hi": -5.148, "cap": 613073, "nsku": 2, "mr": 0.2549}, {"u": "Detergentes · Opal", "cat": "Detergentes", "inv": 788710, "venta": 27326760, "tn": 3315.3, "tasa": 2.886, "pt": 8242.6, "e": -4.452, "lo": -5.968, "hi": -3.229, "cap": 516358, "nsku": 29, "mr": 0.4651}, {"u": "Pastas · Nicolini", "cat": "Pastas", "inv": 636813, "venta": 17080361, "tn": 4808.3, "tasa": 3.728, "pt": 3552.26, "e": -4.11, "lo": -5.259, "hi": -2.601, "cap": 207799, "nsku": 38, "mr": 0.2966}, {"u": "Aceites · CIL", "cat": "Aceites", "inv": 602415, "venta": 13112002, "tn": 1664.4, "tasa": 4.594, "pt": 7878.13, "e": -4.281, "lo": -5.275, "hi": -3.194, "cap": 466056, "nsku": 10, "mr": 0.1826}, {"u": "Postres · Umsha", "cat": "Postres", "inv": 493042, "venta": 11483710, "tn": 688.6, "tasa": 4.293, "pt": 16676.23, "e": -2.528, "lo": -2.961, "hi": -2.0, "cap": 195107, "nsku": 29, "mr": 0.4493}, {"u": "Harinas · Blanca Flor", "cat": "Harinas", "inv": 483172, "venta": 9446413, "tn": 1644.3, "tasa": 5.115, "pt": 5744.97, "e": -3.979, "lo": -5.077, "hi": -1.353, "cap": 138577, "nsku": 6, "mr": 0.4737}, {"u": "Untables Domesticos · Manty", "cat": "Untables Domesticos", "inv": 471134, "venta": 12800762, "tn": 772.7, "tasa": 3.681, "pt": 16565.91, "e": -4.181, "lo": -6.688, "hi": -2.566, "cap": 321609, "nsku": 5, "mr": 0.5978}, {"u": "Untables Domesticos · Sello de Oro", "cat": "Untables Domesticos", "inv": 438759, "venta": 18288017, "tn": 940.8, "tasa": 2.399, "pt": 19438.08, "e": -1.673, "lo": -1.943, "hi": -1.459, "cap": 299508, "nsku": 14, "mr": 0.5467}, {"u": "Panetones · Blanca Flor", "cat": "Panetones", "inv": 420491, "venta": 3477377, "tn": 161.9, "tasa": 12.092, "pt": 21481.64, "e": -9.848, "lo": -11.92, "hi": -8.89, "cap": 1407810, "nsku": 3, "mr": 0.3977}, {"u": "Aceites · Capri", "cat": "Aceites", "inv": 388116, "venta": 5359640, "tn": 676.9, "tasa": 7.241, "pt": 7917.63, "e": -4.706, "lo": -8.739, "hi": -2.807, "cap": 300264, "nsku": 4, "mr": 0.2207}, {"u": "Lavavajillas · Sapolio", "cat": "Lavavajillas", "inv": 379285, "venta": 10940858, "tn": 1762.0, "tasa": 3.467, "pt": 6209.34, "e": -4.81, "lo": -6.272, "hi": -3.492, "cap": 253325, "nsku": 32, "mr": 0.4452}, {"u": "Suavizantes · Bolivar", "cat": "Suavizantes", "inv": 369965, "venta": 14612931, "tn": 1834.8, "tasa": 2.532, "pt": 7964.34, "e": -4.094, "lo": -4.896, "hi": -3.277, "cap": 299227, "nsku": 45, "mr": 0.4788}, {"u": "Pasta Dental · Dento", "cat": "Pasta Dental", "inv": 352923, "venta": 6897732, "tn": 281.0, "tasa": 5.117, "pt": 24545.74, "e": -4.643, "lo": -6.299, "hi": -2.856, "cap": 81824, "nsku": 17, "mr": 0.4417}, {"u": "Pastas · Lavaggi", "cat": "Pastas", "inv": 318670, "venta": 6885580, "tn": 1686.6, "tasa": 4.628, "pt": 4082.4, "e": -1.516, "lo": -1.879, "hi": -1.128, "cap": 103986, "nsku": 15, "mr": 0.3482}, {"u": "Shampoo · Amaras", "cat": "Shampoo", "inv": 229980, "venta": 4108579, "tn": 186.4, "tasa": 5.598, "pt": 22043.09, "e": -2.651, "lo": -3.513, "hi": -1.94, "cap": 329764, "nsku": 41, "mr": 0.2984}, {"u": "Panetones · Sayon", "cat": "Panetones", "inv": 212755, "venta": 2906652, "tn": 150.0, "tasa": 7.32, "pt": 19378.74, "e": -21.393, "lo": -27.275, "hi": -18.873, "cap": 712307, "nsku": 3, "mr": 0.4124}, {"u": "Refrescos · Umsha", "cat": "Refrescos", "inv": 165253, "venta": 3851986, "tn": 77.2, "tasa": 4.29, "pt": 49879.03, "e": -0.945, "lo": -1.191, "hi": -0.747, "cap": 67680, "nsku": 12, "mr": 0.5163}, {"u": "Pastas · Alianza", "cat": "Pastas", "inv": 146220, "venta": 3229773, "tn": 889.6, "tasa": 4.527, "pt": 3630.66, "e": -3.952, "lo": -4.522, "hi": -2.235, "cap": 47713, "nsku": 10, "mr": 0.2221}, {"u": "Limpiadores Light Duty · Sapolio", "cat": "Limpiadores Light Duty", "inv": 133215, "venta": 5995339, "tn": 2633.7, "tasa": 2.222, "pt": 2276.43, "e": -1.616, "lo": -1.901, "hi": -1.408, "cap": 46880, "nsku": 22, "mr": 0.3608}, {"u": "Lejias · Sapolio", "cat": "Lejias", "inv": 122244, "venta": 5492840, "tn": 3113.1, "tasa": 2.226, "pt": 1764.43, "e": -2.914, "lo": -3.744, "hi": -1.95, "cap": 37409, "nsku": 9, "mr": 0.3335}, {"u": "Lavavajillas · Lavax", "cat": "Lavavajillas", "inv": 113657, "venta": 1978157, "tn": 326.8, "tasa": 5.746, "pt": 6052.86, "e": -1.17, "lo": -1.578, "hi": -1.001, "cap": 75912, "nsku": 9, "mr": 0.3558}, {"u": "Harinas · Favorita", "cat": "Harinas", "inv": 107711, "venta": 3478050, "tn": 804.2, "tasa": 3.097, "pt": 4324.81, "e": -0.49, "lo": -0.94, "hi": -0.313, "cap": 30892, "nsku": 4, "mr": 0.2648}, {"u": "Jabon Liquido · Aval", "cat": "Jabon Liquido", "inv": 106906, "venta": 2819332, "tn": 309.1, "tasa": 3.792, "pt": 9120.22, "e": -2.164, "lo": -2.507, "hi": -1.78, "cap": 84320, "nsku": 17, "mr": 0.479}, {"u": "Jabones de Lavar · Marsella", "cat": "Jabones de Lavar", "inv": 71625, "venta": 1882233, "tn": 183.3, "tasa": 3.805, "pt": 10266.51, "e": -2.619, "lo": -3.622, "hi": -1.528, "cap": 66662, "nsku": 4, "mr": 0.2668}, {"u": "Galletas · Sayon", "cat": "Galletas", "inv": 70030, "venta": 3337233, "tn": 245.4, "tasa": 2.098, "pt": 13599.24, "e": -1.654, "lo": -1.922, "hi": -1.199, "cap": 38740, "nsku": 6, "mr": 0.282}, {"u": "Quitamanchas · Sapolio", "cat": "Quitamanchas", "inv": 54659, "venta": 3454175, "tn": 861.6, "tasa": 1.582, "pt": 4008.91, "e": -2.603, "lo": -3.162, "hi": -2.322, "cap": 24976, "nsku": 10, "mr": 0.4035}]};const NOTA={"categoria": "Entre categorías la sustitución es baja, así que la elasticidad propia se aproxima bien al efecto neto. Es el nivel más defendible de los dos.", "marca": "Dentro de la categoría las elasticidades difieren mucho más, pero es donde MENOS vale la elasticidad propia: dos marcas de la misma categoría son sustitutas, así que parte de lo que gana una se lo saca a la otra. Solo hay tres categorías con dos o más marcas medidas. Mirá el punto de quiebre antes de creerle al número."};const ESC=[{"cod": "A", "nombre": "Mejor margen", "nivel": "categoria", "nota": "La mejor por margen: S/258 mil. Untables entrega venta al 56.8% de margen y Jabones de Lavar la recibe al 50.6%, asi que casi no se pierde margen en el camino y ademas se gana volumen.", "delta": {"Untables Domesticos": -1.0, "Jabones de Lavar": 0.984}, "tn": 90.6, "lo": -0.1, "hi": 177.9, "venta": 617245, "margen": 257631, "quiebre": 0.341, "quiebre_tn": 0.652, "plata": 327761, "salto": 27.0}, {"cod": "B", "nombre": "Margen y solidez", "nivel": "categoria", "nota": "Aguanta 85% de canibalizacion, el mas robusto de los grandes. Shampoo tiene el margen mas bajo del portafolio (29.8%) y Jabones de Lavar el mas alto (50.6%): el margen sube casi sin costo de volumen.", "delta": {"Shampoo": -1.0, "Jabones de Lavar": 0.137}, "tn": 16.4, "lo": 4.4, "hi": 27.3, "venta": 149326, "margen": 86261, "quiebre": 0.848, "quiebre_tn": 0.874, "plata": 43473, "salto": 3.6}, {"cod": "C", "nombre": "Volumen con margen", "nivel": "categoria", "nota": "La de mas tonelaje que igual suma margen: +330 TN y +S/113 mil. Salsas y Detergentes tienen el mismo ratio de margen (46.5%), asi que el volumen extra se traduce entero.", "delta": {"Salsas": -1.0, "Detergentes": 0.741}, "tn": 330.0, "lo": 242.9, "hi": 416.7, "venta": 244040, "margen": 113268, "quiebre": 0.067, "quiebre_tn": 0.694, "plata": 959710, "salto": 31.3}, {"cod": "D", "nombre": "Bajo riesgo", "nivel": "categoria", "nota": "Chico y muy seguro: mueve poca plata y aguanta 79% de canibalizacion. Sirve para arrancar sin exponerse.", "delta": {"Refrescos": -1.0, "Jabones de Lavar": 0.125}, "tn": 16.4, "lo": 5.7, "hi": 26.4, "venta": 146480, "margen": 73654, "quiebre": 0.791, "quiebre_tn": 0.956, "plata": 39757, "salto": 3.3}, {"cod": "E", "nombre": "Diversificada", "nivel": "categoria", "nota": "Tres que entregan y dos que reciben. Reparte el riesgo y ningun receptor salta mucho sobre su base.", "delta": {"Shampoo": -1.0, "Refrescos": -1.0, "Postres": -0.5, "Jabones de Lavar": 0.308, "Panetones": 0.308}, "tn": 43.9, "lo": 15.8, "hi": 68.3, "venta": 491376, "margen": 239336, "quiebre": 0.7, "quiebre_tn": 0.784, "plata": 146351, "salto": 8.1}, {"cod": "F", "nombre": "Marca · Pastas", "nivel": "marca", "nota": "La mejor de marca: Don Vittorio tiene mas margen y mas precio por tonelada que Lavaggi. Aguanta 70% de canibalizacion, alto para un movimiento entre marcas.", "delta": {"Pastas · Lavaggi": -1.0, "Pastas · Don Vittorio": 0.164}, "tn": 37.8, "lo": 23.8, "hi": 51.0, "venta": 185551, "margen": 86653, "quiebre": 0.697, "quiebre_tn": 0.588, "plata": 72775, "salto": 3.7}, {"cod": "G", "nombre": "Marca · Harinas", "nivel": "marca", "nota": "92% de quiebre de margen, el mas robusto de todo el ejercicio. Blanca Flor responde mas y deja mas margen que Favorita.", "delta": {"Harinas · Favorita": -1.0, "Harinas · Blanca Flor": 0.303}, "tn": 17.0, "lo": 7.3, "hi": 26.7, "venta": 103407, "margen": 52638, "quiebre": 0.919, "quiebre_tn": 0.808, "plata": 35146, "salto": 7.3}, {"cod": "H", "nombre": "Marca · Aceites", "nivel": "marca", "nota": "El de mas margen entre marcas (S/115 mil) y buen volumen, pero su quiebre en VOLUMEN es solo 30%: gana margen antes que kilos.", "delta": {"Aceites · CIL": -1.0, "Aceites · Cocinero": 0.693}, "tn": 31.6, "lo": -9.0, "hi": 73.8, "venta": 287112, "margen": 114559, "quiebre": 0.523, "quiebre_tn": 0.303, "plata": 151694, "salto": 19.1}, {"cod": "I", "nombre": "Piloto barato", "nivel": "marca", "nota": "Chico y estable. Pensado como prueba controlada: bajo costo para medir de verdad la canibalizacion antes de hacerlo en una categoria grande.", "delta": {"Lavavajillas · Lavax": -1.0, "Lavavajillas · Sapolio": 0.162}, "tn": 10.3, "lo": 6.0, "hi": 14.7, "venta": 64417, "margen": 30849, "quiebre": 0.781, "quiebre_tn": 0.719, "plata": 20933, "salto": 5.5}, {"cod": "J", "nombre": "Marca · Untables", "nivel": "marca", "delta": {"Untables Domesticos · Sello de Oro": -1.0, "Untables Domesticos · Manty": 1.2}, "nota": "El mejor caso de marca del set: Manty responde -4.18 y deja 59.8% de margen; Sello de Oro responde -1.67 y deja 54.7%. Los cuatro criterios apuntan al mismo lado. El pero es el salto: Manty sube 40% sobre su inversion actual, asi que la elasticidad se usa lejos de donde se midio."}, {"cod": "K", "nombre": "Marca · Jabones", "nivel": "marca", "delta": {"Jabones de Lavar · Marsella": -1.0, "Jabones de Lavar · Bolivar": 0.067}, "nota": "El mas solido de todos: 77% de quiebre y Bolivar sube apenas 1.8% sobre su base. Mueve poca plata (S/20 mil) y por eso el margen es chico, pero es el que menos depende de supuestos. Ojo: Marsella no tenia ratio de margen propio y hereda el de su categoria."}];
+const S=v=>'S/ '+Math.round(v).toLocaleString('es-PE');
+const TN=v=>v.toLocaleString('es-PE',{maximumFractionDigits:1})+' TN';
+const TASA_MAX=25;
+let nivel='categoria', delta={}, canib=0, ch=null;
+let busca='', cats=new Set(), ahorro=0, metrica='venta', chTam=null;
+const U=()=>D[nivel];
+
+// Réplica de simulador_diadia.simular: la tasa mueve el precio efectivo, el
+// precio mueve el volumen vía la elasticidad, la venta acompaña al volumen a
+// precio por tonelada constante, y la inversión nueva es tasa nueva x venta nueva.
+function correr(dl,c,campo){
+  let dInv=0,dTn=0,dVenta=0,dMar=0,noAbs=0,gana=0,pierde=0,ganaM=0,pierdeM=0;
+  const det=U().map(u=>{
+    const dpp=dl[u.u]||0;
+    const t1=Math.min(Math.max(u.tasa+dpp,0),TASA_MAX)/100, t0=u.tasa/100;
+    const dx=Math.log(1-t1)-Math.log(1-t0);
+    const e=campo==='lo'?u.lo:(campo==='hi'?u.hi:u.e);
+    const bruto=u.tn*Math.exp(e*dx)-u.tn;
+    if(bruto>0) gana+=bruto; else pierde-=bruto;
+    let dtn=bruto>0?bruto*(1-c):bruto;
+    // La línea base se recalcula con los mismos factores que el escenario. Si se
+    // usan la venta y la inversión guardadas, que vienen redondeadas por
+    // separado, mover cero puntos deja un residuo de cientos de soles.
+    const v0=u.tn*u.pt, i0=t0*v0;
+    let vNew=(u.tn+dtn)*u.pt, di=t1*vNew-i0;
+    if(di>0 && u.cap>0 && di>u.cap){
+      const ex=di-u.cap; noAbs+=ex;
+      dtn*=Math.max(0,1-ex/di); di-=ex; vNew=(u.tn+dtn)*u.pt;
+    }
+    const dv=vNew-v0, dm=dv*(u.mr||0);
+    dInv+=di; dTn+=dtn; dVenta+=dv; dMar+=dm;
+    if(bruto>0){ganaM+=dm;} else {pierdeM-=dm;}
+    return {...u,dpp,tasaNew:t1*100,dtn,di,dv,dm};
+  });
+  return {det,dInv,dTn,dVenta,dMar,noAbs,
+          quiebre:ganaM>0?Math.max(0,Math.min(1,1-pierdeM/ganaM)):0,
+          quiebreTn:gana>0?Math.max(0,Math.min(1,1-pierde/gana)):0};
+}
+
+// Mismo criterio que el motor: la busqueda se detiene donde la capacidad
+// satura, en vez de subirle la tasa al receptor persiguiendo un balance que la
+// capacidad no permite. Antes Lejias saltaba de 2.23% a 25% en ese caso.
+function balancear(){
+  const don=Object.keys(delta).filter(k=>delta[k]<0);
+  const rec=Object.keys(delta).filter(k=>delta[k]>0);
+  if(!don.length||!rec.length){
+    alert('Marcá al menos una unidad que entrega (negativo) y una que recibe (positivo).');return;}
+  const base={}; don.forEach(k=>base[k]=delta[k]);
+  const conK=k=>{const d={...base}; rec.forEach(r=>d[r]=k); return d;};
+  const colocado=k=>correr(conK(k),canib,'e').det.filter(x=>x.di>0)
+        .reduce((s,x)=>s+x.di,0);
+  const liberado=-correr(base,canib,'e').det.filter(x=>x.di<0)
+        .reduce((s,x)=>s+x.di,0);
+  const KMAX=25;
+  const meta=Math.min(liberado*(1-ahorro), colocado(KMAX));
+  let lo=0,hi=KMAX;
+  for(let i=0;i<60;i++){
+    const mid=(lo+hi)/2;
+    if(colocado(mid)>=meta-1) hi=mid; else lo=mid;}
+  rec.forEach(r=>delta[r]=Math.round(hi*1000)/1000);
+  filas(); pintar();
+}
+
+function pintar(){
+  const c=correr(delta,canib,'e'), b=correr(delta,canib,'hi'), a=correr(delta,canib,'lo');
+  const tot=U().reduce((s,u)=>s+u.inv,0);
+  const eq=Math.abs(c.dInv)<Math.max(1000,0.001*tot);
+  const g=id=>document.getElementById(id);
+  g('kInv').textContent=S(c.dInv);
+  g('kInv').style.color=eq?'var(--green)':'var(--coral)';
+  g('kInvSub').textContent=eq?'presupuesto cerrado':'no cierra: usá Balancear';
+  g('kTn').textContent=TN(c.dTn);
+  g('kTnSub').textContent=TN(b.dTn)+' a '+TN(a.dTn);
+  g('kVenta').textContent=S(c.dVenta);
+  g('kVentaSub').textContent=S(b.dVenta)+' a '+S(a.dVenta);
+  const lib=-c.det.filter(x=>x.di<0).reduce((s,x)=>s+x.di,0);
+  const col=c.det.filter(x=>x.di>0).reduce((s,x)=>s+x.di,0);
+  g('kLib').textContent=S(lib);
+  g('kCol').textContent=S(col);
+  g('kAho').textContent=S(lib*ahorro);
+  g('kNoc').textContent=S(Math.max(0, lib*(1-ahorro)-col));
+  g('kMar').textContent=S(c.dMar);
+  g('kMar').style.color=c.dMar>=0?'var(--green)':'var(--coral)';
+  g('kMarSub').textContent=c.dTn!==0?S(c.dMar/c.dTn)+' por tonelada':'';
+  g('kQv').textContent=Math.round(100*c.quiebreTn)+'%';
+  const q=Math.round(100*c.quiebre);
+  g('kQ').textContent=q+'%';
+  g('kQ').style.color=q>=50?'var(--green)':(q>=25?'var(--gold-d)':'var(--coral)');
+  g('kQSub').textContent=q>=50?'decisión robusta'
+    :(q>=25?'tolera canibalización media':'frágil: casi cualquier sustitución lo anula');
+  g('noAbs').textContent=c.noAbs>0?'No absorbida por capacidad: '+S(c.noAbs):'';
+
+  const mov=c.det.filter(d=>Math.abs(d.dpp)>1e-9).sort((x,y)=>y.di-x.di);
+  g('tabla').innerHTML=mov.length?
+   '<table class="tbl"><thead><tr><th>Unidad</th><th class="num">Tasa hoy</th>'
+   +'<th class="num">Tasa nueva</th><th class="num">Elasticidad</th>'
+   +'<th class="num">Δ inversión</th><th class="num">Δ volumen</th>'
+   +'<th class="num">Δ venta</th><th class="num">Δ margen</th></tr></thead><tbody>'
+   +mov.map(d=>'<tr><td>'+d.u+'</td><td class="num">'+d.tasa.toFixed(2)+'%</td>'
+     +'<td class="num"><b>'+d.tasaNew.toFixed(2)+'%</b></td>'
+     +'<td class="num">'+d.e.toFixed(2)+'</td>'
+     +'<td class="num" style="color:'+(d.di>0?'var(--teal)':'var(--coral)')+'">'+S(d.di)+'</td>'
+     +'<td class="num">'+d.dtn.toFixed(1)+'</td><td class="num">'+S(d.dv)+'</td>'
+     +'<td class="num" style="color:'+(d.dm>=0?'var(--green)':'var(--coral)')+'">'+S(d.dm)+'</td></tr>').join('')
+   +'</tbody></table>'
+   : '<div class="card-p" style="padding:22px 0">Mové los puntos de tasa con los controles de '
+     +'abajo. Negativo entrega, positivo recibe.</div>';
+
+  porque(c.det); tamano(c.det);
+  if(ch){ch.data.labels=mov.map(d=>d.u);
+    ch.data.datasets[0].data=mov.map(d=>Math.round(d.di));
+    ch.data.datasets[1].data=mov.map(d=>Math.round(d.dtn*10)/10);
+    ch.update();}
+}
+
+// El filtro es solo de VISTA: una unidad oculta con su slider movido sigue
+// contando en el resultado, y se avisa abajo para que nadie lo lea de menos.
+function visibles(){
+  const q=busca.trim().toLowerCase();
+  return U().map((u,i)=>({u,i}))
+    .filter(o=>(!q || o.u.u.toLowerCase().includes(q))
+            && (cats.size===0 || cats.has(o.u.cat)));
+}
+
+function chips(){
+  const cs=[...new Set(U().map(u=>u.cat))].sort();
+  document.getElementById('chips').innerHTML=cs.map(c=>
+    '<button class="chipf'+(cats.has(c)?' on':'')+'" data-c="'+c+'">'+c+'</button>').join('');
+  document.querySelectorAll('.chipf').forEach(b=>b.addEventListener('click',()=>{
+    const c=b.dataset.c;
+    if(cats.has(c)) cats.delete(c); else cats.add(c);
+    chips(); filas();}));
+}
+
+// Justificacion de la jugada: las cuatro dimensiones que la explican.
+function porque(det){
+  const don=det.filter(d=>d.dpp<-1e-9).sort((a,b)=>a.di-b.di);
+  const rec=det.filter(d=>d.dpp>1e-9).sort((a,b)=>b.di-a.di);
+  const el=document.getElementById('porque');
+  if(!don.length||!rec.length){
+    el.innerHTML='<div class="card-p" style="padding:18px 0">Mov&eacute; al menos una unidad '
+      +'que entregue y una que reciba.</div>'; return;}
+  const fila=(t,arr,color)=>arr.map(d=>
+    '<tr><td><span class="rol" style="background:'+color+'">'+t+'</span> '+d.u+'</td>'
+    +'<td class="num">'+S(d.venta)+'</td>'
+    +'<td class="num">'+d.tn.toLocaleString('es-PE')+'</td>'
+    +'<td class="num">'+d.tasa.toFixed(2)+'%</td>'
+    +'<td class="num">'+d.e.toFixed(2)+'</td>'
+    +'<td class="num">'+(100*d.mr).toFixed(1)+'%</td>'
+    +'<td class="num" style="color:'+(d.dm>0?'var(--green)':'var(--coral)')+'">'+S(d.dm)+'</td></tr>').join('');
+  el.innerHTML='<table class="tbl"><thead><tr><th>Unidad</th><th class="num">Venta</th>'
+    +'<th class="num">Volumen (TN)</th><th class="num">Tasa hoy</th><th class="num">Elasticidad</th>'
+    +'<th class="num">Margen s/ venta</th><th class="num">&Delta; margen</th></tr></thead><tbody>'
+    +fila('entrega',don,'var(--coral)')+fila('recibe',rec,'var(--teal)')+'</tbody></table>';
+}
+
+function tamano(det){
+  const orden=[...det].sort((a,b)=>b[metrica==='venta'?'venta':'tn']-a[metrica==='venta'?'venta':'tn']);
+  const val=orden.map(d=>metrica==='venta'?d.venta:d.tn);
+  const col=orden.map(d=>d.dpp<-1e-9?'#E85D4C':(d.dpp>1e-9?'#2D9C9C':'#D8D2C7'));
+  if(!chTam){
+    chTam=new Chart(document.getElementById('chTamano'),{data:{labels:orden.map(d=>d.u),
+     datasets:[
+      {type:'bar',label:metrica==='venta'?'Venta':'Volumen (TN)',data:val,
+       backgroundColor:col,borderRadius:4,xAxisID:'x'},
+      {type:'scatter',label:'Margen sobre venta',
+       data:orden.map(d=>({x:100*d.mr,y:d.u})),backgroundColor:'#D4A853',
+       pointStyle:'rectRot',pointRadius:6,xAxisID:'x2'}]},
+     options:{indexAxis:'y',maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{boxWidth:12,usePointStyle:true,font:{size:11}}},
+       tooltip:{callbacks:{label:c=>c.datasetIndex===0
+         ?(metrica==='venta'?S(c.parsed.x):c.parsed.x.toLocaleString('es-PE')+' TN')
+         :'margen '+c.parsed.x.toFixed(1)+'% de la venta'}}},
+      scales:{x:{grid:{color:'#EEEAE3'},position:'bottom',
+         ticks:{callback:v=>metrica==='venta'?(v/1e6).toFixed(0)+'M':(v/1000).toFixed(0)+'K'}},
+       x2:{position:'top',grid:{drawOnChartArea:false},min:0,max:80,
+         ticks:{callback:v=>v+'%'}},
+       y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+  } else {
+    chTam.data.labels=orden.map(d=>d.u);
+    chTam.data.datasets[0].data=val;
+    chTam.data.datasets[0].backgroundColor=col;
+    chTam.data.datasets[0].label=metrica==='venta'?'Venta':'Volumen (TN)';
+    chTam.data.datasets[1].data=orden.map(d=>({x:100*d.mr,y:d.u}));
+    chTam.update();
+  }
+}
+
+function filas(){
+  const vis=visibles();
+  document.getElementById('cuenta').textContent=vis.length+' de '+U().length;
+  const ocultos=U().filter(u=>!vis.some(o=>o.u.u===u.u) && Math.abs(delta[u.u]||0)>1e-9);
+  document.getElementById('oculto').innerHTML = ocultos.length
+    ? '<b>Ojo:</b> '+ocultos.length+' unidad'+(ocultos.length>1?'es':'')+' con puntos movidos '
+      +'queda'+(ocultos.length>1?'n':'')+' fuera del filtro y sigue'+(ocultos.length>1?'n':'')
+      +' contando en el resultado: '+ocultos.map(u=>u.u).join(', ')
+    : '';
+  document.getElementById('controles').innerHTML=vis.length
+   ? vis.map(({u,i})=>
+   '<div class="fila"><div class="fn"><b>'+u.u+'</b><span>'+S(u.inv)+' · tasa '
+   +u.tasa.toFixed(2)+'% · elast '+u.e.toFixed(2)+' · margen '
+   +(100*u.mr).toFixed(0)+'% · '+u.nsku+' SKU</span></div>'
+   +'<input type="range" min="-3" max="3" step="0.05" value="'+(delta[u.u]||0)+'" data-u="'+i+'">'
+   +'<div class="fv" id="v'+i+'">'+(delta[u.u]||0).toFixed(2)+' pp</div></div>').join('')
+   : '<div class="card-p" style="padding:20px 0">Sin resultados para ese filtro.</div>';
+  document.querySelectorAll('#controles input').forEach(inp=>
+    inp.addEventListener('input',e=>{
+      const u=U()[+e.target.dataset.u], v=parseFloat(e.target.value);
+      if(Math.abs(v)<1e-9) delete delta[u.u]; else delta[u.u]=v;
+      document.getElementById('v'+e.target.dataset.u).textContent=v.toFixed(2)+' pp';
+      pintar();}));
+}
+
+document.querySelectorAll('[data-v]').forEach(b=>b.addEventListener('click',()=>{
+  const v=b.dataset.v;
+  document.querySelectorAll('[data-v]').forEach(x=>x.classList.toggle('on',x===b));
+  document.getElementById('vista-sim').style.display=v==='sim'?'block':'none';
+  document.getElementById('vista-doc').style.display=v==='doc'?'block':'none';
+  window.scrollTo({top:0,behavior:'smooth'});}));
+
+document.getElementById('mVenta').addEventListener('click',()=>{
+  metrica='venta';
+  document.getElementById('mVenta').classList.add('on');
+  document.getElementById('mVol').classList.remove('on');
+  document.getElementById('mLab').textContent='venta'; pintar();});
+document.getElementById('mVol').addEventListener('click',()=>{
+  metrica='tn';
+  document.getElementById('mVol').classList.add('on');
+  document.getElementById('mVenta').classList.remove('on');
+  document.getElementById('mLab').textContent='volumen'; pintar();});
+
+document.getElementById('busca').addEventListener('input',e=>{busca=e.target.value; filas();});
+document.getElementById('limpiaFiltro').addEventListener('click',()=>{
+  busca=''; cats.clear(); document.getElementById('busca').value=''; chips(); filas();});
+
+document.querySelectorAll('.nivbtn').forEach(b=>b.addEventListener('click',()=>{
+  if(!b.dataset.n) return;          // los botones de escenario no cambian el nivel
+  nivel=b.dataset.n; delta={}; busca=''; cats.clear();
+  if(chTam){chTam.destroy(); chTam=null;}
+  document.getElementById('busca').value='';
+  document.querySelectorAll('.nivbtn').forEach(x=>x.classList.toggle('on',x===b));
+  document.getElementById('nivNota').textContent=NOTA[nivel];
+  chips(); filas(); pintar();}));
+document.getElementById('cani').addEventListener('input',e=>{
+  canib=(+e.target.value)/100;
+  document.getElementById('caniV').textContent=e.target.value+'%'; pintar();});
+document.getElementById('ahorro').addEventListener('input',e=>{
+  ahorro=(+e.target.value)/100;
+  document.getElementById('ahorroV').textContent=e.target.value+'%'; pintar();});
+document.querySelectorAll('.escbtn').forEach(b=>b.addEventListener('click',()=>{
+  const e=ESC.find(x=>x.cod===b.dataset.e);
+  if(nivel!==e.nivel){
+    nivel=e.nivel;
+    if(chTam){chTam.destroy(); chTam=null;}
+    document.querySelectorAll('.nivbtn').forEach(x=>x.classList.toggle('on',x.dataset.n===nivel));
+    document.getElementById('nivNota').textContent=NOTA[nivel];
+  }
+  delta={...e.delta};
+  document.querySelectorAll('.escbtn').forEach(x=>x.classList.toggle('on',x===b));
+  const n=document.getElementById('escNota');
+  n.style.display='block'; n.innerHTML='<b>'+e.nombre+'.</b> '+e.nota;
+  busca=''; cats.clear(); document.getElementById('busca').value='';
+  chips(); filas(); pintar();}));
+document.getElementById('bal').addEventListener('click',balancear);
+document.getElementById('reset').addEventListener('click',()=>{
+  delta={}; document.getElementById('cani').value=0; canib=0; ahorro=0;
+  document.getElementById('ahorro').value=0;
+  document.getElementById('ahorroV').textContent='0%';
+  document.querySelectorAll('.escbtn').forEach(x=>x.classList.remove('on'));
+  document.getElementById('escNota').style.display='none';
+  document.getElementById('caniV').textContent='0%'; filas(); pintar();});
+
+const col=q=>q>=0.70?'#059669':(q>=0.45?'#D4A853':'#E85D4C');
+new Chart(document.getElementById('chEsc'),{data:{labels:ESC.map(e=>e.cod+' · '+e.nombre),
+ datasets:[
+  {type:'bar',label:'Banda de volumen',data:ESC.map(e=>[e.lo,e.hi]),
+   backgroundColor:ESC.map(e=>col(e.quiebre)+'55'),borderColor:ESC.map(e=>col(e.quiebre)),
+   borderWidth:1.5,borderSkipped:false,borderRadius:3},
+  {type:'scatter',label:'Valor central',data:ESC.map(e=>({x:e.tn,y:e.cod+' · '+e.nombre})),
+   backgroundColor:'#1F6F6F',pointRadius:6}]},
+ options:{indexAxis:'y',maintainAspectRatio:false,
+  plugins:{legend:{position:'bottom',labels:{boxWidth:12,usePointStyle:true,font:{size:11}}},
+   tooltip:{callbacks:{label:c=>c.datasetIndex===0
+     ?'entre '+c.raw[0].toFixed(0)+' y '+c.raw[1].toFixed(0)+' TN'
+     :ESC[c.dataIndex].tn+' TN · quiebre '+Math.round(100*ESC[c.dataIndex].quiebre)+'%'}}},
+  scales:{x:{grid:{color:'#EEEAE3'},title:{display:true,text:'toneladas ganadas'}},
+   y:{grid:{display:false},ticks:{font:{size:10.5}}}}}});
+
+new Chart(document.getElementById('chTrade'),{type:'bubble',
+ data:{datasets:[{label:'Escenario',
+  data:ESC.map(e=>({x:e.margen,y:100*e.quiebre,
+    r:Math.max(6,Math.min(28,Math.sqrt(e.plata/1e6)*30)),cod:e.cod,n:e.nombre,
+    plata:e.plata,niv:e.nivel,tn:e.tn})),
+  backgroundColor:ESC.map(e=>col(e.quiebre)+'aa')}]},
+ options:{maintainAspectRatio:false,plugins:{legend:{display:false},
+  tooltip:{callbacks:{label:c=>[c.raw.cod+' · '+c.raw.n+' ('+c.raw.niv+')',
+    S(c.raw.x)+' de margen · '+c.raw.tn.toFixed(0)+' TN',
+    'aguanta '+c.raw.y.toFixed(0)+'% · mueve '+S(c.raw.plata)]}}},
+  scales:{x:{grid:{color:'#EEEAE3'},title:{display:true,text:'margen ganado (S/)'},
+    ticks:{callback:v=>(v/1000).toFixed(0)+'K'}},
+   y:{grid:{color:'#EEEAE3'},min:0,max:105,ticks:{callback:v=>v+'%'},
+      title:{display:true,text:'canibalización que aguanta'}}}}});
+
+ch=new Chart(document.getElementById('chSim'),{data:{labels:[],datasets:[
+  {type:'bar',label:'Δ inversión',data:[],backgroundColor:'#2D9C9C',borderRadius:4,yAxisID:'y'},
+  {type:'line',label:'Δ volumen (TN)',data:[],borderColor:'#E85D4C',backgroundColor:'#E85D4C',
+   showLine:false,pointRadius:7,pointStyle:'rectRot',yAxisID:'y1'}]},
+ options:{maintainAspectRatio:false,
+  plugins:{legend:{position:'bottom',labels:{boxWidth:12,usePointStyle:true,font:{size:11}}},
+   tooltip:{callbacks:{label:c=>c.dataset.yAxisID==='y'?S(c.parsed.y):c.parsed.y.toFixed(1)+' TN'}}},
+  scales:{y:{grid:{color:'#EEEAE3'},ticks:{callback:v=>(v/1000).toFixed(0)+'K'}},
+   y1:{position:'right',grid:{drawOnChartArea:false}},
+   x:{grid:{display:false},ticks:{font:{size:10},maxRotation:35}}}}});
+chips(); filas(); pintar();
+</script></body></html>
