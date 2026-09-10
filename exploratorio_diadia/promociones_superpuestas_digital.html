@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promociones Flash · Convivencia y Escenarios de Recorte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg-cream:#FDFBF7;--bg-warm:#F8F5F0;--bg-card:#FFFFFF;--text-primary:#3D3A36;--text-secondary:#4a4a5a;
+--text-muted:#7a7a8a;--coral:#E85D4C;--coral-dark:#C94A3A;--coral-light:#FFF0EE;--teal:#2D9C9C;--teal-dark:#238080;
+--teal-light:#E8F6F6;--gold:#D4A853;--gold-dark:#C4983F;--gold-light:#FDF8EC;--purple:#7B5EA7;--purple-light:#F2EEF9;
+--blue:#3A7BD5;--blue-light:#E8F0FD;--green:#2E9E6B;--green-light:#E8F7F1;--border:#E8E4DD;
+--shadow-sm:0 2px 6px rgba(26,26,46,.07);--shadow-md:0 5px 18px rgba(26,26,46,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-cream);color:var(--text-primary);line-height:1.5;overflow-x:hidden}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px 60px}
+.area-logo{position:fixed;top:16px;right:22px;display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.82);
+backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:100px;padding:6px 15px 6px 8px;box-shadow:var(--shadow-sm);z-index:10}
+.area-logo svg{width:28px;height:28px;flex-shrink:0}
+.area-logo-name{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--text-primary);line-height:1.2}
+.area-logo-sub{font-size:8.5px;color:var(--text-muted);letter-spacing:.4px}
+.hero{background:linear-gradient(135deg,var(--bg-warm) 0%,var(--bg-cream) 100%);border-bottom:1px solid var(--border);
+position:relative;overflow:hidden;margin-bottom:34px}
+.hero::before{content:'';position:absolute;bottom:-50px;right:80px;width:230px;height:230px;
+background:radial-gradient(circle,var(--coral-light) 0%,transparent 70%);border-radius:50%}
+.hero::after{content:'';position:absolute;top:-40px;right:360px;width:180px;height:180px;
+background:radial-gradient(circle,var(--teal-light) 0%,transparent 70%);border-radius:50%}
+.hero-inner{max-width:1080px;margin:0 auto;padding:38px 22px 30px;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--border);
+padding:4px 13px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;
+color:var(--coral);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px}
+.badge-dot{width:6px;height:6px;background:var(--coral);border-radius:50%}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3.6vw,38px);font-weight:700;line-height:1.12;margin-bottom:8px}
+.hero h1 .hl{color:var(--coral)}
+.hero .sub{font-size:14px;color:var(--text-muted);margin-bottom:20px}
+.hero-stats{display:flex;gap:30px;flex-wrap:wrap}
+.stat .n{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;line-height:1}
+.stat .l{font-size:10px;color:var(--text-muted);margin-top:3px;letter-spacing:.3px}
+.section{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-sm);padding:26px 28px;margin-bottom:22px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.sec-num{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:#fff;width:26px;height:26px;
+border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;text-transform:uppercase;
+letter-spacing:.8px;color:var(--text-muted)}
+.section h2{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:700;line-height:1.2}
+.sec-desc{font-size:12.5px;color:var(--text-muted);margin:2px 0 20px 38px}
+.hier{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
+.hier-step{flex:1;min-width:150px;border-radius:12px;padding:14px 14px 12px;position:relative}
+.hier-step .k{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;
+letter-spacing:.6px;opacity:.75;margin-bottom:4px}
+.hier-step .t{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;line-height:1.15;margin-bottom:5px}
+.hier-step .e{font-size:11px;line-height:1.4;opacity:.9}
+.st-teal{background:var(--teal-light);color:var(--teal-dark)}
+.st-coral{background:var(--coral-light);color:var(--coral-dark)}
+.st-gold{background:var(--gold-light);color:var(--gold-dark)}
+.st-dark{background:var(--text-primary);color:#fff}.st-dark .k,.st-dark .e{opacity:.85}
+.factbar{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
+.fact{flex:1;min-width:200px;background:var(--bg-warm);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.fact .fn{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-primary)}
+.fact .fn .accent{color:var(--coral)}
+.fact .fl{font-size:11.5px;color:var(--text-secondary);margin-top:3px;line-height:1.4}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12.5px}
+th{background:var(--bg-warm);color:var(--text-primary);padding:9px 11px;text-align:left;
+font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;
+letter-spacing:.5px;border-bottom:2px solid var(--border)}
+td{padding:9px 11px;border-bottom:1px solid var(--border);color:var(--text-secondary)}
+tr:last-child td{border-bottom:none}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+.b{font-weight:700;color:var(--text-primary);font-family:'Space Grotesk',sans-serif}
+tr.tot td{background:var(--bg-warm);font-weight:700;color:var(--text-primary)}
+.callout{display:flex;gap:12px;align-items:flex-start;background:var(--gold-light);border-radius:12px;padding:14px 16px;margin-bottom:18px}
+.callout .cdot{width:22px;height:22px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:1px}
+.callout .ctext{font-size:12.5px;color:var(--text-secondary);line-height:1.5}
+.callout .ctext b{color:var(--gold-dark);font-weight:700}
+.callout.cor{background:var(--coral-light)}.callout.cor .cdot{background:var(--coral)}.callout.cor .ctext b{color:var(--coral-dark)}
+.callout.tl{background:var(--teal-light)}.callout.tl .cdot{background:var(--teal)}.callout.tl .ctext b{color:var(--teal-dark)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.shift{background:var(--bg-warm);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.shift .lab{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:12px}
+.shift .row{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.shift .row .name{font-size:12px;color:var(--text-secondary);width:120px}
+.shift .row .val{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700}
+.val.up{color:var(--coral-dark)}.val.down{color:var(--teal-dark)}
+.shift .note{font-size:11px;color:var(--text-muted);font-style:italic;margin-top:8px}
+.band{background:var(--text-primary);border-radius:14px;padding:18px 22px;margin-top:20px;color:#fff}
+.band .t{font-size:13px;color:#E8E4DD;margin-bottom:10px}
+.band .pcts{display:flex;gap:36px;flex-wrap:wrap}
+.band .pcts .p .pn{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:var(--gold)}
+.band .pcts .p .pl{font-size:12px;color:#CFCAC2}
+.barrow{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.barrow .cat{width:120px;font-size:11.5px;color:var(--text-secondary);text-align:right;flex-shrink:0}
+.barrow .bars{flex:1}
+.bseg{display:flex;align-items:center;gap:7px}
+.bseg .bar{height:12px;border-radius:3px}
+.bseg .bv{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;color:var(--text-muted)}
+.stackbar{height:30px;border-radius:5px;overflow:hidden;display:flex;margin:10px 0 4px}
+.stackbar span{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;
+font-family:'Space Grotesk',sans-serif}
+.leg{display:flex;gap:16px;margin:6px 0 16px}
+.leg span{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--text-muted)}
+.leg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.foot{text-align:center;font-size:11px;color:var(--text-muted);margin-top:28px;padding-top:18px;border-top:1px solid var(--border)}
+@media(max-width:720px){.two{grid-template-columns:1fr}.area-logo-name,.area-logo-sub{display:none}}
+</style></head><body>
+
+<div class="area-logo">
+  <svg viewBox="0 0 40 40" fill="none">
+    <rect width="40" height="40" rx="10" fill="url(#lgCOE)"/>
+    <circle cx="12" cy="15" r="3" fill="white"/><circle cx="12" cy="20" r="3" fill="white"/>
+    <circle cx="12" cy="25" r="3" fill="white"/>
+    <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"/><circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"/>
+    <circle cx="28" cy="20" r="4" fill="#D4A853"/>
+    <defs><linearGradient id="lgCOE" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#E85D4C"/><stop offset="1" stop-color="#C94A3A"/></linearGradient></defs>
+  </svg>
+  <div><div class="area-logo-name">COE Advanced Analytics</div><div class="area-logo-sub">Alicorp</div></div>
+</div>
+
+<header class="hero"><div class="hero-inner">
+<span class="hero-badge"><span class="badge-dot"></span>Promociones Flash · Canal Tradicional</span>
+<h1>Convivencia promocional y <span class="hl">escenarios de recorte</span></h1>
+<p class="sub">8 categorías · Bodegas y Puestos de Mercado · Ventanas flash de abril a junio 2026</p>
+<div class="hero-stats">
+<div class="stat"><div class="n" style="color:var(--coral)">S/ 648,890</div><div class="l">INVERSIÓN EN VENTANA</div></div>
+<div class="stat"><div class="n" style="color:var(--teal-dark)">1,633</div><div class="l">TONELADAS</div></div>
+<div class="stat"><div class="n" style="color:var(--gold-dark)">33%</div><div class="l">INVERSIÓN EN MIXTAS</div></div>
+<div class="stat"><div class="n" style="color:var(--text-primary)">8</div><div class="l">CATEGORÍAS</div></div>
+</div></div></header>
+
+<div class="wrap">
+
+<section class="section">
+<div class="sec-head"><div class="sec-num" style="background:var(--teal)">1</div>
+<div><div class="sec-eyebrow">Punto de partida</div><h2>Los tres tipos de llave</h2></div></div>
+<p class="sec-desc">Cada compra que un cliente hace de un producto en un día se clasifica según cuántas promociones le llegaron encima.</p>
+<div class="hier">
+<div class="hier-step st-coral"><div class="k">Tipo 1</div><div class="t">Solo flash</div>
+<div class="e">Solo la flash llegó a ese producto. Todo lo que se vendió y lo que se invirtió es mérito de la flash.</div></div>
+<div class="hier-step st-gold"><div class="k">Tipo 2</div><div class="t">Mixta</div>
+<div class="e">La flash y otra promoción cayeron sobre el mismo producto a la vez. Sabemos cuánto puso cada una, pero no cuánto vendió cada una.</div></div>
+<div class="hier-step st-teal"><div class="k">Tipo 3</div><div class="t">Solo otras</div>
+<div class="e">La flash no participó. El descuento vino de las promociones regulares del portafolio.</div></div>
+</div>
+<div class="callout" style="margin-top:18px"><div class="cdot"></div><div class="ctext">
+En las compras <b>mixtas</b> el sistema registra cada descuento por separado, así que sabemos exactamente cuánto
+puso cada promoción. Pero la venta es un solo monto: <b>no hay forma de saber qué parte trajo la flash y qué parte
+la otra</b>. Para los escenarios se estima repartiéndola según cuánto invirtió cada una.
+</div></div>
+</section>
+
+<section class="section">
+<div class="sec-head"><div class="sec-num" style="background:var(--coral)">2</div>
+<div><div class="sec-eyebrow">Highlights</div><h2>Inversión y volumen por tipo</h2></div></div>
+<p class="sec-desc">Todas las categorías, dentro de la ventana flash de cada una.</p>
+<div class="stackbar">
+<span style="width:62.7%;background:var(--teal)">Solo otras · 62.7%</span>
+<span style="width:32.9%;background:var(--gold)">Mixta · 32.9%</span>
+<span style="width:4.4%;background:var(--coral)">Flash · 4.4%</span></div>
+<div class="leg"><span><i style="background:var(--teal)"></i>Solo otras</span>
+<span><i style="background:var(--gold)"></i>Mixta</span><span><i style="background:var(--coral)"></i>Solo flash</span>
+<span style="margin-left:auto;font-style:italic">Distribución de la inversión</span></div>
+<table><thead><tr><th>Tipo de llave</th><th class=n>Inv. flash</th><th class=n>Inv. otras</th><th class=n>Inversión</th>
+<th class=n>% inv.</th><th class=n>Volumen tn</th><th class=n>% vol.</th><th class=n>Venta × sol</th></tr></thead><tbody>
+<tr><td><b>Solo flash</b></td><td class=n>S/ 28,310</td><td class=n>—</td><td class=n>S/ 28,310</td>
+<td class='n b'>4.4%</td><td class=n>110.6</td><td class=n>6.8%</td><td class='n b'>34.4</td></tr>
+<tr><td><b>Mixta</b></td><td class=n>S/ 101,141</td><td class=n>S/ 112,356</td><td class=n>S/ 213,497</td>
+<td class='n b'>32.9%</td><td class=n>347.3</td><td class=n>21.3%</td><td class='n b'>16.4</td></tr>
+<tr><td><b>Solo otras</b></td><td class=n>—</td><td class=n>S/ 407,084</td><td class=n>S/ 407,084</td>
+<td class='n b'>62.7%</td><td class=n>1,175.4</td><td class=n>72.0%</td><td class='n b'>24.7</td></tr>
+<tr class="tot"><td>Total</td><td class=n>S/ 129,451</td><td class=n>S/ 519,439</td>
+<td class=n>S/ 648,890</td><td class=n>100%</td><td class=n>1,633.3</td><td class=n>100%</td><td class=n>—</td></tr>
+</tbody></table>
+<div class="callout cor"><div class="cdot"></div><div class="ctext">
+Donde la flash convive con otra promoción la eficiencia cae a <b>16.4 soles de venta por sol invertido</b>,
+frente a 34.4 de solo flash y 24.7 de solo otras. Superponer descuentos sobre el mismo producto
+degrada el retorno de ambos: las mixtas consumen el 33% de la inversión y solo aportan el 21% del volumen.
+</div></div>
+
+<h3 style="font-family:'Space Grotesk';font-size:14px;margin:22px 0 4px">Apertura por boca de salida</h3>
+<table><thead><tr><th>Boca</th><th>Tipo</th><th class=n>Inversión</th><th class=n>% inv.</th>
+<th class=n>Volumen tn</th><th class=n>% vol.</th><th class=n>Venta × sol</th></tr></thead><tbody>
+<tr><td rowspan=3><b>BO</b><br><span style="font-size:10px;color:var(--text-muted)">Bodegas</span></td>
+<td>Solo flash</td><td class=n>S/ 26,472</td><td class=n>7.2%</td>
+<td class=n>100.2</td><td class=n>10.8%</td>
+<td class='n b'>33.3</td></tr>
+<tr><td>Mixta</td><td class=n>S/ 190,263</td><td class=n>52.0%</td>
+<td class=n>310.7</td><td class=n>33.3%</td>
+<td class='n b'>16.3</td></tr>
+<tr><td>Solo otras</td><td class=n>S/ 148,865</td><td class=n>40.7%</td>
+<td class=n>520.8</td><td class=n>55.9%</td>
+<td class='n b'>31.1</td></tr>
+<tr><td rowspan=3><b>PM</b><br><span style="font-size:10px;color:var(--text-muted)">Puestos de mercado</span></td>
+<td>Solo flash</td><td class=n>S/ 1,838</td><td class=n>0.6%</td>
+<td class=n>10.4</td><td class=n>1.5%</td>
+<td class='n b'>49.9</td></tr>
+<tr><td>Mixta</td><td class=n>S/ 23,234</td><td class=n>8.2%</td>
+<td class=n>36.6</td><td class=n>5.2%</td>
+<td class='n b'>17.4</td></tr>
+<tr><td>Solo otras</td><td class=n>S/ 258,219</td><td class=n>91.1%</td>
+<td class=n>654.6</td><td class=n>93.3%</td>
+<td class='n b'>21.1</td></tr>
+</tbody></table>
+<div class="callout tl"><div class="cdot"></div><div class="ctext">
+Los dos canales se comportan distinto. En <b>bodegas</b> las mixtas dominan con el 52% de la
+inversión. En <b>puestos de mercado</b> la superposición casi no existe: el 91% del gasto
+va a promociones regulares y la flash apenas participa — pero cuando lo hace sola rinde
+<b>49.9 soles por sol</b>, el mejor ratio de toda la matriz.
+</div></div>
+</section>
+
+<section class="section">
+<div class="sec-head"><div class="sec-num" style="background:var(--gold)">3</div>
+<div><div class="sec-eyebrow">Composición</div><h2>Qué tipo de promoción hay detrás</h2></div></div>
+<p class="sec-desc">Apertura por mecánica dentro de cada tipo de llave.</p>
+<div class="two">
+<div><div class="shift"><div class="lab">Solo otras — S/ 407,084</div>
+<div class="barrow"><div class="cat">OTROS</div><div class="bars"><div class="bseg"><div class="bar" style="width:184px;background:var(--teal)"></div><div class="bv">57.6%</div></div></div></div><div class="barrow"><div class="cat">TPM-007</div><div class="bars"><div class="bseg"><div class="bar" style="width:124px;background:var(--teal)"></div><div class="bv">38.8%</div></div></div></div><div class="barrow"><div class="cat">TPM-005</div><div class="bars"><div class="bseg"><div class="bar" style="width:6px;background:var(--teal)"></div><div class="bv">1.9%</div></div></div></div><div class="barrow"><div class="cat">Descuento precio</div><div class="bars"><div class="bseg"><div class="bar" style="width:5px;background:var(--teal)"></div><div class="bv">1.5%</div></div></div></div><div class="barrow"><div class="cat">TPM-008</div><div class="bars"><div class="bseg"><div class="bar" style="width:2px;background:var(--teal)"></div><div class="bv">0.1%</div></div></div></div><div class="barrow"><div class="cat">TPM-002</div><div class="bars"><div class="bseg"><div class="bar" style="width:2px;background:var(--teal)"></div><div class="bv">0.1%</div></div></div></div>
+<div class="note">Dos mecánicas concentran el 96% del gasto</div></div></div>
+<div><div class="shift"><div class="lab">Mixtas — la parte NO flash · S/ 112,356</div>
+<div class="barrow"><div class="cat">TPM-007</div><div class="bars"><div class="bseg"><div class="bar" style="width:154px;background:var(--gold)"></div><div class="bv">48.3%</div></div></div></div><div class="barrow"><div class="cat">OTROS</div><div class="bars"><div class="bseg"><div class="bar" style="width:146px;background:var(--gold)"></div><div class="bv">45.6%</div></div></div></div><div class="barrow"><div class="cat">Descuento precio</div><div class="bars"><div class="bseg"><div class="bar" style="width:9px;background:var(--gold)"></div><div class="bv">2.9%</div></div></div></div><div class="barrow"><div class="cat">TPM-008</div><div class="bars"><div class="bseg"><div class="bar" style="width:6px;background:var(--gold)"></div><div class="bv">2.0%</div></div></div></div><div class="barrow"><div class="cat">TPM-005</div><div class="bars"><div class="bseg"><div class="bar" style="width:4px;background:var(--gold)"></div><div class="bv">1.3%</div></div></div></div>
+<div class="note">Lo que compite con la flash sobre el mismo producto</div></div></div>
+</div>
+<table style="margin-top:16px"><thead><tr><th>Mecánica</th><th class=n>Inversión</th><th class=n>% inv.</th>
+<th class=n>Volumen tn</th><th class=n>% vol.</th></tr></thead><tbody>
+<tr><td><b>OTROS</b></td><td class=n>S/ 234,608</td><td class=n>57.6%</td><td class=n>966.7</td><td class=n>44.8%</td></tr><tr><td><b>TPM-007</b></td><td class=n>S/ 157,923</td><td class=n>38.8%</td><td class=n>1,049.8</td><td class=n>48.7%</td></tr><tr><td><b>TPM-005</b></td><td class=n>S/ 7,673</td><td class=n>1.9%</td><td class=n>64.7</td><td class=n>3.0%</td></tr><tr><td><b>Descuento precio</b></td><td class=n>S/ 6,056</td><td class=n>1.5%</td><td class=n>70.3</td><td class=n>3.3%</td></tr><tr><td><b>TPM-008</b></td><td class=n>S/ 588</td><td class=n>0.1%</td><td class=n>2.7</td><td class=n>0.1%</td></tr><tr><td><b>TPM-002</b></td><td class=n>S/ 237</td><td class=n>0.1%</td><td class=n>3.0</td><td class=n>0.1%</td></tr>
+<tr class="tot"><td>Total solo otras</td><td class=n>S/ 407,084</td><td class=n>100%</td>
+<td class=n>2,157.2</td><td class=n>100%</td></tr>
+</tbody></table>
+<div class="callout"><div class="cdot"></div><div class="ctext">
+<b>Solo flash es 100% mecánica OTROS</b>: S/ 28,310 y 110.6 tn. La flash no está
+tipificada con un código TPM propio, por lo que en la parrilla queda mezclada con el resto de promociones OTROS.
+<b>Conviene asignarle un código propio</b> — hoy solo se puede distinguir cruzando contra el catálogo de ventanas.
+</div></div>
+</section>
+
+<section class="section">
+<div class="sec-head"><div class="sec-num" style="background:var(--purple)">4</div>
+<div><div class="sec-eyebrow">Escenarios</div><h2>Qué pasa si se recorta</h2></div></div>
+<p class="sec-desc">Tres escenarios progresivos. El volumen de mixtas se estima prorrateando por participación en inversión.</p>
+
+<div class="two">
+<div class="shift"><div class="lab" style="color:var(--gold-dark)">E1 · Quitar solo el descuento superpuesto</div>
+<div class="row"><span class="name">Ahorro</span><span class="val down">S/ 112,356</span></div>
+<div class="row"><span class="name">Volumen estimado</span><span class="val up">182.8 tn</span></div>
+<div class="row"><span class="name">Techo del rango</span><span class="val" style="color:var(--text-muted)">347.3 tn</span></div>
+<div class="note">El cliente conserva la flash. Solo se retira el descuento redundante.</div></div>
+<div class="shift"><div class="lab" style="color:var(--teal-dark)">E2 · Quitar las promociones regulares</div>
+<div class="row"><span class="name">Ahorro</span><span class="val down">S/ 407,084</span></div>
+<div class="row"><span class="name">Volumen en riesgo</span><span class="val up">1,175.4 tn</span></div>
+<div class="row"><span class="name">Clientes sin promo</span><span class="val" style="color:var(--text-muted)">87,721</span></div>
+<div class="note">Esas llaves quedan a precio lista: no hay flash de respaldo.</div></div>
+</div>
+
+<div class="shift" style="margin-top:16px;border-color:var(--coral);background:var(--coral-light)">
+<div class="lab" style="color:var(--coral-dark)">E3 · Ambas — dejar únicamente la flash</div>
+<div class="two" style="gap:24px">
+<div><div class="row"><span class="name">Ahorro total</span><span class="val down">S/ 519,439</span></div>
+<div class="row"><span class="name">— de mixtas</span><span class="val" style="font-size:15px;color:var(--text-secondary)">S/ 112,356</span></div>
+<div class="row"><span class="name">— de solo otras</span><span class="val" style="font-size:15px;color:var(--text-secondary)">S/ 407,084</span></div></div>
+<div><div class="row"><span class="name">Volumen estimado</span><span class="val up">1,358.2 tn</span></div>
+<div class="row"><span class="name">Techo del rango</span><span class="val" style="font-size:15px;color:var(--text-muted)">1,522.7 tn</span></div>
+<div class="row"><span class="name">Clientes afectados</span><span class="val" style="font-size:15px;color:var(--text-secondary)">130,394</span></div></div>
+</div></div>
+
+<h3 style="font-family:'Space Grotesk';font-size:14px;margin:22px 0 4px">Desglose por boca de salida</h3>
+<table><thead><tr><th>Escenario</th><th>Boca</th><th class=n>Ahorro</th><th class=n>Volumen est.</th>
+<th class=n>Volumen máx.</th><th class=n>Clientes</th></tr></thead><tbody>
+<tr><td rowspan=2><b>E1</b> mixtas</td><td>BO</td><td class=n>S/ 97,226</td>
+<td class=n>158.7</td><td class=n>310.7</td><td class=n>39,992</td></tr>
+<tr><td>PM</td><td class=n>S/ 15,130</td><td class=n>23.8</td>
+<td class=n>36.6</td><td class=n>2,681</td></tr>
+<tr><td rowspan=2><b>E2</b> solo otras</td><td>BO</td><td class=n>S/ 148,865</td>
+<td class=n>520.8</td><td class=n>520.8</td><td class=n>55,618</td></tr>
+<tr><td>PM</td><td class=n>S/ 258,219</td><td class=n>654.6</td>
+<td class=n>654.6</td><td class=n>32,103</td></tr>
+<tr class="tot"><td rowspan=2>E3 ambas</td><td>BO</td><td class=n>S/ 246,090</td>
+<td class=n>679.6</td><td class=n>831.5</td><td class=n>95,610</td></tr>
+<tr class="tot"><td>PM</td><td class=n>S/ 273,349</td><td class=n>678.4</td>
+<td class=n>691.2</td><td class=n>34,784</td></tr>
+</tbody></table>
+<div class="callout"><div class="cdot"></div><div class="ctext">
+En mixtas el <b>53% de la inversión</b> viene de promociones no flash. Ese porcentaje es el que
+se usa para prorratear el volumen: de las 347.3 tn que pasan por llaves mixtas, se estima que
+182.8 tn son atribuibles a la parte que se retiraría. El techo del rango asume el peor caso —
+que se pierde todo el volumen de la llave.
+</div></div>
+</section>
+
+<section class="section">
+<div class="sec-head"><div class="sec-num" style="background:var(--blue)">5</div>
+<div><div class="sec-eyebrow">Dimensionamiento</div><h2>Peso sobre el volumen total del canal</h2></div></div>
+<p class="sec-desc">Volumen impactado frente al total facturado por cada boca entre abril y junio 2026, todas las categorías. Ambas cifras cubren el mismo periodo de tres meses.</p>
+<div class="factbar">
+<div class="fact"><div class="fn">14,256 tn</div><div class="fl">Volumen total <b>bodegas</b> · abr–jun 2026</div></div>
+<div class="fact"><div class="fn">9,692 tn</div><div class="fl">Volumen total <b>puestos de mercado</b> · abr–jun 2026</div></div>
+<div class="fact"><div class="fn"><span class="accent">5.7%</span></div>
+<div class="fl">Del volumen del canal quedaría expuesto en el escenario E3</div></div>
+</div>
+<table style="margin-top:16px"><thead><tr><th>Escenario</th><th class=n>BO · tn</th><th class=n>BO · % canal</th>
+<th class=n>PM · tn</th><th class=n>PM · % canal</th></tr></thead><tbody>
+<tr><td><b>E1</b> · mixtas (estimado)</td><td class=n>158.7</td>
+<td class='n b'>1.11%</td><td class=n>23.8</td>
+<td class='n b'>0.25%</td></tr>
+<tr><td><b>E2</b> · solo otras</td><td class=n>520.8</td>
+<td class='n b'>3.65%</td><td class=n>654.6</td>
+<td class='n b'>6.75%</td></tr>
+<tr class="tot"><td><b>E3</b> · ambas (estimado)</td><td class=n>679.6</td>
+<td class=n>4.77%</td><td class=n>678.4</td>
+<td class=n>7.00%</td></tr>
+<tr class="tot"><td><b>E3</b> · ambas (techo)</td><td class=n>831.5</td>
+<td class=n>5.83%</td><td class=n>691.2</td>
+<td class=n>7.13%</td></tr>
+</tbody></table>
+<div class="band"><div class="t">Escenario E3 · exposición sobre el volumen acumulado abr–jun de cada canal</div>
+<div class="pcts">
+<div class="p"><div class="pn">4.8%</div><div class="pl">Bodegas · estimado</div></div>
+<div class="p"><div class="pn">7.0%</div><div class="pl">Puestos de mercado · estimado</div></div>
+<div class="p"><div class="pn">S/ 519,439</div><div class="pl">Ahorro potencial</div></div>
+</div></div>
+<div class="callout cor" style="margin-top:18px"><div class="cdot"></div><div class="ctext">
+E1 es el escenario más acotado: expone entre <b>0.25% y 1.11% del volumen del trimestre</b> según el canal, sin
+dejar clientes sin promoción. E3 sube a 4.8% en bodegas y 7.0% en puestos de mercado — un riesgo bastante mayor
+para un ahorro que sigue siendo pequeño frente a la venta que compromete.
+</div></div>
+</section>
+
+<section class="section">
+<div class="sec-head"><div class="sec-num" style="background:var(--green)">6</div>
+<div><div class="sec-eyebrow">Detalle</div><h2>Apertura por categoría</h2></div></div>
+<p class="sec-desc">Inversión por tipo de llave y ahorro potencial del escenario E3, dentro de la ventana de cada categoría.</p>
+<table><thead><tr><th>Categoría</th><th class=n>Mixta</th><th class=n>Solo flash</th><th class=n>Solo otras</th>
+<th class=n>Inversión total</th><th class=n>Volumen tn</th><th class=n>Ahorro E3</th></tr></thead><tbody>
+<tr><td><b>Detergentes</b></td><td class=n>S/ 47,083</td><td class=n>S/ 11,664</td><td class=n>S/ 163,572</td><td class='n b'>S/ 222,319</td><td class=n>654.5</td><td class='n b'>S/ 183,991</td></tr><tr><td><b>Aceites</b></td><td class=n>S/ 48,215</td><td class=n>S/ 11,222</td><td class=n>S/ 100,149</td><td class='n b'>S/ 159,585</td><td class=n>518.7</td><td class='n b'>S/ 119,797</td></tr><tr><td><b>Salsas</b></td><td class=n>S/ 59,229</td><td class=n>S/ 1,199</td><td class=n>S/ 38,433</td><td class='n b'>S/ 98,861</td><td class=n>72.3</td><td class='n b'>S/ 78,090</td></tr><tr><td><b>Conservas</b></td><td class=n>S/ 21,271</td><td class=n>S/ 2,506</td><td class=n>S/ 35,342</td><td class='n b'>S/ 59,118</td><td class=n>45.8</td><td class='n b'>S/ 45,962</td></tr><tr><td><b>Pastas</b></td><td class=n>S/ 14,764</td><td class=n>S/ 1,182</td><td class=n>S/ 39,649</td><td class='n b'>S/ 55,594</td><td class=n>258.6</td><td class='n b'>S/ 47,765</td></tr><tr><td><b>Cereales</b></td><td class=n>S/ 11,634</td><td class=n>S/ 328</td><td class=n>S/ 13,669</td><td class='n b'>S/ 25,631</td><td class=n>12.9</td><td class='n b'>S/ 22,333</td></tr><tr><td><b>Galletas</b></td><td class=n>S/ 7,720</td><td class=n>S/ 0</td><td class=n>S/ 12,428</td><td class='n b'>S/ 20,148</td><td class=n>44.1</td><td class='n b'>S/ 15,859</td></tr><tr><td><b>Lavavajillas</b></td><td class=n>S/ 3,582</td><td class=n>S/ 210</td><td class=n>S/ 3,842</td><td class='n b'>S/ 7,634</td><td class=n>26.3</td><td class='n b'>S/ 5,642</td></tr>
+</tbody></table>
+<div class="callout tl"><div class="cdot"></div><div class="ctext">
+<b>Galletas no registra llaves solo flash</b>: toda su actividad flash ocurre superpuesta con otras promociones.
+Detergentes, Aceites y Salsas concentran el grueso de la inversión y son donde un piloto tendría más sentido.
+</div></div>
+</section>
+
+
+
+<div class="foot">COE Advanced Analytics · Alicorp · Fuente: parrilla promocional DEX y transaccional dex_cliente_detalle<br>
+Ventanas flash de abril a junio 2026 · Bodegas y puestos de mercado · Venta × sol = venta bruta / inversión</div>
+</div></body></html>
