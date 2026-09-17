@@ -179,12 +179,12 @@ padding:5px 9px;border-radius:6px;background:var(--bg-card)}
 
 /* ---------- hoja 1: estilos propios del informe de convivencia ---------- */
 #p1 tr.hi td{background:var(--coral-light)}
-#p1 .card{background:var(--bg-warm);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
-#p1 .card .lab{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:10px}
+.card{background:var(--bg-warm);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card .lab{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:10px}
 #p1 .row{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
 #p1 .row .name{font-size:11.5px;color:var(--text-secondary);width:118px}
 #p1 .row .val{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700}
-#p1 .note{font-size:10.5px;color:var(--text-muted);font-style:italic;margin-top:7px}
+.note{font-size:10.5px;color:var(--text-muted);font-style:italic;margin-top:7px}
 #p1 .band .pn{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--gold)}
 #p1 .band .pl{font-size:11.5px;color:#CFCAC2}
 #p1 .leg{flex-wrap:wrap}
@@ -304,14 +304,14 @@ flash sola — once veces más. Es el canal donde la superposición sale más ca
 <div><div class="sec-eyebrow">Qué se apila</div><h2>Quién está encima de la flash</h2></div></div>
 <p class="sec-desc">Dentro de las mixtas, la flash pone el 47% de la inversión. El otro 53% viene de estas mecánicas.</p>
 <div class="two">
-<div><div class="card"><div class="lab">Mixtas · la parte que NO es flash</div>
-<table style="margin:0"><thead><tr><th>Mecánica</th><th class=n>Inversión</th><th class=n>%</th><th class=n>tn</th></tr></thead>
-<tbody><tr><td>Combo DEX</td><td class=n>S/ 110,982</td><td class='n b'>48.7%</td><td class=n>537.2</td></tr><tr><td>Trade</td><td class=n>S/ 99,456</td><td class='n b'>43.6%</td><td class=n>360.8</td></tr><tr><td>Diadía</td><td class=n>S/ 17,551</td><td class='n b'>7.7%</td><td class=n>25.0</td></tr></tbody></table>
+<div><div class="card"><div class="lab">Mixtas</div>
+<table style="margin:0"><thead><tr><th>Mecánica</th><th class=n>Inversión</th><th class=n>%</th></tr></thead>
+<tbody><tr><td>Diadía flash</td><td class=n>S/ 199,631</td><td class='n b'>53.1%</td></tr><tr><td>Combo DEX</td><td class=n>S/ 110,982</td><td class='n b'>48.7%</td></tr><tr><td>Trade</td><td class=n>S/ 99,456</td><td class='n b'>43.6%</td></tr><tr><td>Diadía</td><td class=n>S/ 17,551</td><td class='n b'>7.7%</td></tr></tbody></table>
 <div class="note">Combo DEX y Trade juntos son el 92% de lo que se apila</div></div></div>
 <div><div class="card"><div class="lab">Solo otras · sin flash, mismos días</div>
-<table style="margin:0"><thead><tr><th>Mecánica</th><th class=n>Inversión</th><th class=n>%</th><th class=n>tn</th><th class=n>% vol</th></tr></thead>
-<tbody><tr><td>Combo DEX</td><td class=n>S/ 218,520</td><td class='n b'>36.9%</td><td class=n>1,366.9</td><td class=n>87.6%</td></tr><tr><td>Diadía</td><td class=n>S/ 195,443</td><td class='n b'>33.0%</td><td class=n>606.4</td><td class=n>38.9%</td></tr><tr><td>Trade</td><td class=n>S/ 178,827</td><td class='n b'>30.2%</td><td class=n>989.2</td><td class=n>63.4%</td></tr></tbody></table>
-<div class="note">Los % de volumen suman más de 100: una llave puede tener varias mecánicas</div></div></div>
+<table style="margin:0"><thead><tr><th>Mecánica</th><th class=n>Inversión</th><th class=n>%</th></tr></thead>
+<tbody><tr><td>Combo DEX</td><td class=n>S/ 218,520</td><td class='n b'>36.9%</td></tr><tr><td>Diadía</td><td class=n>S/ 195,443</td><td class='n b'>33.0%</td></tr><tr><td>Trade</td><td class=n>S/ 178,827</td><td class='n b'>30.2%</td></tr></tbody></table>
+</div></div>
 </div>
 <div class="callout"><div class="cdot"></div><div class="ctext">
 <b>Un tercio de lo que corre en paralelo a la flash es Diadía</b>, otro descuento digital (33% de la inversión de solo-otras,
@@ -447,6 +447,27 @@ Un valor de 1.00 significa "igual que antes de la ventana". Los días 0, 1 y 2 s
 <div id="kpi2" class="kpis"></div>
 <div id="cal2" class="callout cor" style="margin-top:16px"><div class="cdot"></div><div class="ctext" id="cal2t"></div></div>
 </section>
+<section class="section">
+<div class="sec-head"><div class="sec-num" style="background:var(--gold)">4</div>
+<div><div class="sec-eyebrow">Qué se apila</div><h2>Quién está encima de la flash</h2></div></div>
+<p class="sec-desc">Dentro de las mixtas, la flash pone el 47% de la inversión. El otro 53% viene de estas mecánicas.</p>
+<div class="two">
+<div><div class="card"><div class="lab">Mixtas</div>
+<table style="margin:0"><thead><tr><th>Mecánica</th><th class=n>Inversión</th><th class=n>%</th></tr></thead>
+<tbody><tr><td>Diadía flash</td><td class=n>S/ 199,631</td><td class='n b'>53.1%</td></tr><tr><td>Combo DEX</td><td class=n>S/ 110,982</td><td class='n b'>48.7%</td></tr><tr><td>Trade</td><td class=n>S/ 99,456</td><td class='n b'>43.6%</td></tr><tr><td>Diadía</td><td class=n>S/ 17,551</td><td class='n b'>7.7%</td></tr></tbody></table>
+<div class="note">Combo DEX y Trade juntos son el 92% de lo que se apila</div></div></div>
+<div><div class="card"><div class="lab">Solo otras · sin flash, mismos días</div>
+<table style="margin:0"><thead><tr><th>Mecánica</th><th class=n>Inversión</th><th class=n>%</th></tr></thead>
+<tbody><tr><td>Combo DEX</td><td class=n>S/ 218,520</td><td class='n b'>36.9%</td></tr><tr><td>Diadía</td><td class=n>S/ 195,443</td><td class='n b'>33.0%</td></tr><tr><td>Trade</td><td class=n>S/ 178,827</td><td class='n b'>30.2%</td></tr></tbody></table>
+</div></div>
+</div>
+<div class="callout" style="margin-top:16px"><div class="cdot"></div><div class="ctext">
+<b>Un tercio de lo que corre en paralelo a la flash es Diadía</b>, otro descuento digital (33% de la inversión de solo-otras,
+S/ 195,443). Es decir: la misma app que lanza la flash de 3% tiene
+otra promoción activa sobre el mismo bodeguero, con descuento mayor. <b>No es un conflicto entre canales, es un conflicto
+dentro del canal digital.</b>
+</div></div>
+</section>
 </div>
 <div class="pane" id="p3">
 <section class="section">
@@ -515,7 +536,7 @@ y el precio final quedó por debajo del que paga el canal mayorista — que por 
 <div class="wf">
 <div class="wr"><span>Venta bruta (sin IGV)</span><b>S/ 127.05</b></div>
 <div class="wr si"><span>(−) OTROS · 1.5%</span><b>S/ 1.91</b></div>
-<div class="wr si"><span>(−) TPM-007 combo · 2.0%</span><b>S/ 2.54</b></div>
+<div class="wr si"><span>(−) Combo DEX · 2.0%</span><b>S/ 2.54</b></div>
 <div class="wr no"><span>(−) Digital flash · 3.0% — fuera del mapa</span><b>S/ 3.81</b></div>
 <div class="wr tot"><span>Tasa efectiva del pedido</span><b>6.50%</b></div>
 </div>
@@ -531,7 +552,7 @@ El mapa de precios contempla <b>3.5%</b>. El exceso es de <b>3.00 puntos</b> y e
 <div class="wf">
 <div class="wr"><span>Venta bruta (sin IGV)</span><b>S/ 5.04</b></div>
 <div class="wr si"><span>(−) OTROS · 1.98%</span><b>S/ 0.10</b></div>
-<div class="wr si"><span>(−) TPM-007 combo · 0.99%</span><b>S/ 0.05</b></div>
+<div class="wr si"><span>(−) Combo DEX · 0.99%</span><b>S/ 0.05</b></div>
 <div class="wr no"><span>(−) Digital flash · 1.98% — fuera del mapa</span><b>S/ 0.10</b></div>
 <div class="wr tot"><span>Tasa efectiva del pedido</span><b>4.96%</b></div>
 </div>
@@ -590,7 +611,7 @@ y que la jerarquía de canales se rompió.
 <div class="sec-head"><div class="sec-num" style="background:var(--teal)">5</div>
 <div><div class="sec-eyebrow">La pregunta de fondo</div><h2>Si el digital ya mueve la venta, ¿para qué apilarle piso encima?</h2></div></div>
 <p class="sec-desc">Medido a nivel de pedido real: cada pedido queda clasificado como "solo flash" o "mixta"
-(flash + otra promoción del canal tradicional, como TPM-007 u OTROS). Ventana flash únicamente, 3 categorías foco.</p>
+(flash + otra promoción del canal tradicional, como Combo DEX). Ventana flash únicamente, 3 categorías foco.</p>
 
 <h3 style="font-family:'Space Grotesk';font-size:14px;margin:18px 0 8px">Venta × sol: pedidos con flash sola vs. pedidos con flash + piso</h3>
 <div class="ladder" id="lad5"></div>
@@ -904,7 +925,7 @@ function draw5(){
      <div style="width:${(tr/t*100)}%;background:#D4A853" title="Trade"></div>
      <div style="width:${(dg/t*100)}%;background:#2D9C9C" title="Digital"></div>`;
   document.getElementById('stack5-lab').innerHTML = `
-    <span><i style="background:#C9704F"></i>Combo DEX (TPM-007) · S/ ${cd.toLocaleString('es-PE')} · ${(cd/t*100).toFixed(0)}%</span>
+    <span><i style="background:#C9704F"></i>Combo DEX · S/ ${cd.toLocaleString('es-PE')} · ${(cd/t*100).toFixed(0)}%</span>
     <span><i style="background:#D4A853"></i>Trade · S/ ${tr.toLocaleString('es-PE')} · ${(tr/t*100).toFixed(0)}%</span>
     <span><i style="background:#2D9C9C"></i>Digital (flash + otro digital) · S/ ${dg.toLocaleString('es-PE')} · ${(dg/t*100).toFixed(0)}%</span>`;
 
