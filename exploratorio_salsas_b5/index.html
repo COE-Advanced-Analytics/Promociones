@@ -1,1 +1,863 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Análisis promocional · Mayonesa Sabores · julio-agosto 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#2D9C9C; --teal-lt:#E8F4F4; --teal-dk:#1f7070;
+  --gold:#D4A853; --gold-lt:#FBF4E5;
+  --coral:#E85D4C; --coral-lt:#FDECEA;
+  --vi:#7C5CBF;   --vi-lt:#EDE9F8;
+  --green:#1a7a1a; --green-lt:#e8f5e8;
+  --bg:#F0EDE8;   --card:#FFFFFF;
+  --ink:#222220;  --gray:#6B6864; --muted:#A09E9B; --line:#E2DDD8;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+.shell{max-width:1380px;margin:0 auto;padding:24px 32px 40px;display:flex;flex-direction:column;gap:12px}
+
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.tb-badge{display:inline-block;background:var(--teal);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:5px}
+.tb-title{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1.1}
+.tb-title em{color:var(--teal);font-style:normal}
+.tb-sub{font-size:12px;color:var(--gray);margin-top:4px}
+
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--line);margin-bottom:20px}
+.tab-btn{background:none;border:none;padding:12px 20px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal)}
+
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+.narrative{background:var(--card);border-radius:10px;padding:16px 18px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);line-height:1.7;color:var(--ink)}
+.narrative strong{font-weight:600;color:var(--teal)}
+.narrative .num{font-weight:600;color:var(--ink)}
+
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.kpi{background:var(--card);border-radius:8px;padding:12px 13px 10px;box-shadow:0 1px 4px rgba(0,0,0,.05);border-top:2.5px solid var(--teal)}
+.kpi.pos{border-top-color:var(--green)}.kpi.neg{border-top-color:var(--coral)}.kpi.au{border-top-color:var(--gold)}
+.kpi-lbl{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.kpi-v{font-size:22px;font-weight:700;line-height:1;color:var(--ink)}
+.kpi-v.pos{color:var(--green)}.kpi-v.neg{color:var(--coral)}
+.kpi-sub{font-size:10px;color:var(--gray);margin-top:4px}
+
+.sec-label{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.08em;text-transform:uppercase;margin:16px 0 8px}
+
+.tbl-card{background:var(--card);border-radius:10px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.05);margin-bottom:12px}
+.tbl-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px}
+.tbl-note{font-size:10px;color:var(--gray);margin-top:8px;line-height:1.6;border-left:3px solid var(--teal-lt);padding-left:10px}
+
+table{width:100%;border-collapse:collapse}
+th{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:7px 11px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+td{padding:9px 11px;border-bottom:1px solid #edeae4;vertical-align:middle;white-space:nowrap;font-size:12px;color:var(--ink)}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+th.num{text-align:right}
+tbody tr:hover td{background:#f8f5f0}
+.tot td{background:var(--teal-lt);font-weight:600;border-bottom:none}
+
+.badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:5px;margin-right:6px}
+.bd-zona{background:#e8f4f4;color:#1f7070}
+.bd-pos{background:var(--green-lt);color:var(--green)}
+.bd-neg{background:var(--coral-lt);color:var(--coral)}
+.bd-trend{background:#f3f0ea;color:var(--gray)}
+.calc-box{background:#faf9f6;border:1px dashed var(--line);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:12px;color:var(--gray);line-height:1.9}
+.calc-box code{background:#fff;padding:1px 6px;border-radius:3px;font-family:monospace;color:var(--ink);border:1px solid var(--line);font-size:11.5px}
+.calc-box .step{color:var(--ink);font-weight:600}
+
+.footer{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--line);gap:16px;margin-top:20px}
+.footer span{font-size:10px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="topbar">
+    <div>
+      <div class="tb-badge">Análisis Promocional</div>
+      <div class="tb-title">Mayonesa <em>Sabores</em></div>
+      <div class="tb-sub">Lanzamiento junio · promoción julio · impacto pre-post abril-agosto 2026 · BO y PM · 3 oficinas</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('estrella')">Estrella (BO)</button>
+    <button class="tab-btn" onclick="switchTab('abarrotero')">Abarrotero (PM)</button>
+  </div>
+
+  <!-- TAB: ESTRELLA -->
+  <div id="estrella" class="tab-content active">
+
+    <div class="narrative">
+      <strong>En julio, la promo adelantó compra</strong>: el grupo que la recibió creció <span class="num">+12%</span> en volumen vs el baseline de junio, pero en agosto ese adelanto se evaporó. La recompra quedó <strong>5pp por debajo del control</strong> (27.8% vs 35.8%), y quien volvió compró en pedidos cada vez más chicos. Los recompradores de Lima (+2pp en volumen, pre-post) traccionan levemente el resultado, pero Sur (−10pp en volumen) lo hunde.
+    </div>
+
+    <div class="sec-label">Recompradores: tasa general y distribución por zona</div>
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-lbl">Total recompradores</div>
+        <div class="kpi-v">450</div>
+        <div class="kpi-sub">de 1,621 que compraron en julio</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-lbl">Tasa recompra general</div>
+        <div class="kpi-v neg">27.8%</div>
+        <div class="kpi-sub">vs 35.8% en control (−8pp)</div>
+      </div>
+      <div class="kpi au">
+        <div class="kpi-lbl">Venta/ Pedido PRE→POST</div>
+        <div class="kpi-v">−12.6%</div>
+        <div class="kpi-sub">el pedido se achica más que el resto</div>
+      </div>
+    </div>
+
+    <div class="tbl-card" style="background:var(--gold-lt);border:1px solid #e6d4a0">
+      <div class="tbl-title" style="color:#8a6010">El mix de SKU crece en las tres vistas del análisis</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:4px">
+        <div>
+          <div class="kpi-lbl">Categoría total</div>
+          <div class="kpi-v pos">+2.65pp</div>
+
+        </div>
+        <div>
+          <div class="kpi-lbl">Sin Mayonesa Sabores</div>
+          <div class="kpi-v pos">+1.70pp</div>
+
+        </div>
+        <div>
+          <div class="kpi-lbl">Recompradores</div>
+          <div class="kpi-v pos">+2.73pp</div>
+
+        </div>
+      </div>
+      <div class="tbl-note" style="border-left-color:#e6d4a0;margin-top:10px">No es un efecto exclusivo de los recompradores: en las tres vistas — con Sabores, sin Sabores, y solo entre quienes repitieron compra — el cliente con promo amplía su mix de SKU más que el control. Es el hallazgo más consistente de todo el análisis (detalle de la vista de recompradores más abajo).</div>
+    </div>
+
+    <div class="tbl-card">
+      <div class="tbl-title">Tasa de recompra por zona</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Zona</th>
+            <th class="num">Compraron julio (aplicó)</th>
+            <th class="num">Recompraron agosto (aplicó)</th>
+            <th class="num">Tasa aplicó</th>
+            <th class="num">Compraron julio (control)</th>
+            <th class="num">Recompraron agosto (control)</th>
+            <th class="num">Tasa control</th>
+            <th class="num">Diferencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge bd-zona">Lima</span></td>
+            <td class="num">902</td><td class="num">245</td><td class="num"><strong>27.2%</strong></td>
+            <td class="num">4,082</td><td class="num">1,557</td><td class="num">38.1%</td>
+            <td class="num"><span class="badge bd-neg">−10.9pp</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge bd-zona">Norte</span></td>
+            <td class="num">252</td><td class="num">58</td><td class="num"><strong>23.0%</strong></td>
+            <td class="num">1,252</td><td class="num">340</td><td class="num">27.2%</td>
+            <td class="num"><span class="badge bd-neg">−4.1pp</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge bd-zona">Sur</span></td>
+            <td class="num">467</td><td class="num">147</td><td class="num"><strong>31.5%</strong></td>
+            <td class="num">2,402</td><td class="num">871</td><td class="num">36.3%</td>
+            <td class="num"><span class="badge bd-neg">−4.8pp</span></td>
+          </tr>
+          <tr class="tot">
+            <td>TOTAL</td>
+            <td class="num">1,621</td><td class="num">450</td><td class="num">27.8%</td>
+            <td class="num">7,736</td><td class="num">2,768</td><td class="num">35.8%</td>
+            <td class="num">−8.0pp</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note"><strong>Lima tiene la mayor brecha</strong> (−10.9pp): en términos absolutos su tasa (27.2%) es media, pero es donde el control más se le adelanta. Sur y Norte tienen brechas menores (−4.8pp y −4.1pp) aunque con tasas también por debajo del control. Ninguna zona iguala o supera a su control.</div>
+    </div>
+
+    <div class="sec-label">Categoría total — venta promedio por cliente (monto S/)</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Por zona, aplicó promo vs no aplico</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Zona</th>
+            <th colspan="2" style="text-align:center">Prepromo (abr-jun)</th>
+            <th colspan="2" style="text-align:center">Durante (julio)</th>
+            <th colspan="2" style="text-align:center">Post (agosto)</th>
+            <th colspan="2" style="text-align:center">Var % PRE→POST</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lima / NS Chico</strong></td>
+            <td class="num">110.84</td><td class="num">111.61</td>
+            <td class="num">117.87</td><td class="num">123.70</td>
+            <td class="num">126.19</td><td class="num">124.86</td>
+            <td class="num">+13.8%</td><td class="num">+11.9%</td>
+          </tr>
+          <tr>
+            <td><strong>Norte / Oriente</strong></td>
+            <td class="num">192.38</td><td class="num">111.04</td>
+            <td class="num">200.44</td><td class="num">118.60</td>
+            <td class="num">197.96</td><td class="num">118.80</td>
+            <td class="num">+2.9%</td><td class="num">+7.0%</td>
+          </tr>
+          <tr>
+            <td><strong>Sur / Centro</strong></td>
+            <td class="num">170.22</td><td class="num">119.85</td>
+            <td class="num">197.88</td><td class="num">132.13</td>
+            <td class="num">176.35</td><td class="num">125.19</td>
+            <td class="num">+3.6%</td><td class="num">+4.5%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note">Lima crece parejo en ambos grupos (+14% vs +12%). Norte y Sur ven crecimiento menor en el grupo promo, lo que explica la brecha de DiD negativa.</div>
+    </div>
+
+    <div class="sec-label">Sin Mayonesa Sabores — desempeño de otros SKUs</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Monto promedio por cliente, excluyendo la familia promovida</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Zona</th>
+            <th colspan="2" style="text-align:center">Prepromo</th>
+            <th colspan="2" style="text-align:center">Durante</th>
+            <th colspan="2" style="text-align:center">Post</th>
+            <th colspan="2" style="text-align:center">Var % PRE→POST</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lima</strong></td>
+            <td class="num">110.28</td><td class="num">110.84</td>
+            <td class="num">116.88</td><td class="num">121.58</td>
+            <td class="num">122.81</td><td class="num">121.91</td>
+            <td class="num">+11.4%</td><td class="num">+10.0%</td>
+          </tr>
+          <tr>
+            <td><strong>Norte</strong></td>
+            <td class="num">190.43</td><td class="num">110.30</td>
+            <td class="num">191.59</td><td class="num">116.66</td>
+            <td class="num">192.86</td><td class="num">116.59</td>
+            <td class="num">+1.3%</td><td class="num">+5.7%</td>
+          </tr>
+          <tr>
+            <td><strong>Sur</strong></td>
+            <td class="num">169.33</td><td class="num">119.05</td>
+            <td class="num">191.87</td><td class="num">128.89</td>
+            <td class="num">167.53</td><td class="num">121.82</td>
+            <td class="num">−1.1%</td><td class="num">+2.3%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note"><strong>Sur es el problema:</strong> sin Sabores, aplico-promo cae −1.1% PRE→POST, mientras el control crece +2.3%.</div>
+    </div>
+
+    <div class="sec-label">Recompradores — monto promedio por cliente</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Solo clientes que compraron en julio y volvieron en agosto</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Zona</th>
+            <th colspan="2" style="text-align:center">Prepromo</th>
+            <th colspan="2" style="text-align:center">Durante</th>
+            <th colspan="2" style="text-align:center">Post</th>
+            <th colspan="2" style="text-align:center">Var % PRE→POST</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th class="num">Aplico (n)</th>
+            <th class="num">No aplico (n)</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lima</strong> (245/1557)</td>
+            <td class="num">168.61</td><td class="num">228.39</td>
+            <td class="num">192.62</td><td class="num">264.98</td>
+            <td class="num">203.69</td><td class="num">273.62</td>
+            <td class="num">+20.8%</td><td class="num">+19.8%</td>
+          </tr>
+          <tr>
+            <td><strong>Norte</strong> (58/340)</td>
+            <td class="num">380.00</td><td class="num">266.43</td>
+            <td class="num">395.78</td><td class="num">283.06</td>
+            <td class="num">401.23</td><td class="num">273.39</td>
+            <td class="num">+5.6%</td><td class="num">+2.6%</td>
+          </tr>
+          <tr>
+            <td><strong>Sur</strong> (147/871)</td>
+            <td class="num">278.16</td><td class="num">212.42</td>
+            <td class="num">327.61</td><td class="num">251.25</td>
+            <td class="num">288.08</td><td class="num">238.91</td>
+            <td class="num">+3.6%</td><td class="num">+12.5%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note"><strong>Patrón inverso en Sur:</strong> el control crece casi 4x más que aplico-promo (+12.5% vs +3.6%). En Lima están parejos. Norte mantiene una ventaja de DiD (5.6% − 2.6% = +3.0pp). <strong>Ojo:</strong> esta tabla NO excluye Mayonesa Sabores — es la misma población de recompradores (245/58/147), pero mide su gasto en <strong>toda la categoría</strong> Salsas, Sabores incluida. La tabla "sin Mayonesa Sabores" de arriba es una vista distinta (todos los clientes, no solo recompradores) — son dos recortes diferentes de la data, no una excluye a la otra.</div>
+    </div>
+
+    <div class="sec-label">Recompradores: mix de SKU — compran menos, pero más variado</div>
+    <div class="tbl-card" style="background:var(--vi-lt);border:1px solid #d4c8f0">
+      <div class="tbl-title" style="color:#4d3480">Mix de SKU promedio por pedido (categoría Salsas completa)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Grupo</th><th class="num">PRE</th><th class="num">Durante</th><th class="num">Post</th>
+            <th class="num">Var % PRE→POST</th><th class="num">DiD pre-post</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Aplicó promo</strong></td>
+            <td class="num">1.57</td><td class="num">1.81</td><td class="num">1.74</td>
+            <td class="num"><span class="badge bd-pos">+10.70%</span></td>
+            <td class="num" rowspan="2" style="vertical-align:middle"><span class="badge bd-pos">+2.73pp</span></td>
+          </tr>
+          <tr>
+            <td>No aplicó (control)</td>
+            <td class="num">1.60</td><td class="num">1.75</td><td class="num">1.72</td>
+            <td class="num">+7.97%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note" style="border-left-color:#d4c8f0">El recomprador con promo <strong>amplía su mix más que el control</strong>, tanto viéndose a sí mismo (+10.7% de crecimiento propio) como comparado con el resto (+2.73pp de DiD). Es el espejo exacto de lo que pasa en monto (−5.76pp de DiD): compra menos en soles, pero reparte esa compra entre más SKUs — no compra menos de todo, compra más variado y de menor ticket por SKU.</div>
+    </div>
+
+    <div class="sec-label">Por familia: ¿qué cae, y es culpa de la promo?</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Recompradores sin Mayonesa Sabores — indicadores que cayeron de PRE a POST</div>
+      <table>
+        <thead>
+          <tr><th>Familia</th><th>Grupo</th><th>Indicador</th><th class="num">PRE</th><th class="num">POST</th><th class="num">Var %</th><th>¿Es efecto de la promo?</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alacena Tari</td><td>Aplicó promo</td><td>Monto</td>
+            <td class="num">47.21</td><td class="num">40.99</td><td class="num">−13.17%</td>
+            <td><span class="badge bd-neg">Solo en aplicó-promo</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Tari</td><td>Aplicó promo</td><td>Volumen</td>
+            <td class="num">1.73</td><td class="num">1.52</td><td class="num">−12.13%</td>
+            <td><span class="badge bd-neg">Solo en aplicó-promo</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mostaza</td><td>Aplicó promo</td><td>Monto</td>
+            <td class="num">22.20</td><td class="num">20.89</td><td class="num">−5.90%</td>
+            <td><span class="badge bd-trend">Cae en ambos grupos</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mostaza</td><td>No aplicó</td><td>Monto</td>
+            <td class="num">20.59</td><td class="num">20.03</td><td class="num">−2.72%</td>
+            <td><span class="badge bd-trend">Tendencia de categoría</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mostaza</td><td>Aplicó promo</td><td>Volumen</td>
+            <td class="num">1.08</td><td class="num">1.00</td><td class="num">−6.85%</td>
+            <td><span class="badge bd-trend">Cae en ambos grupos</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mostaza</td><td>No aplicó</td><td>Volumen</td>
+            <td class="num">1.01</td><td class="num">0.97</td><td class="num">−4.10%</td>
+            <td><span class="badge bd-trend">Tendencia de categoría</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mayonesa Light</td><td>No aplicó</td><td>Monto</td>
+            <td class="num">15.50</td><td class="num">14.14</td><td class="num">−8.74%</td>
+            <td><span class="badge bd-trend">Solo en el control</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mayonesa Light</td><td>No aplicó</td><td>Volumen</td>
+            <td class="num">0.62</td><td class="num">0.58</td><td class="num">−7.51%</td>
+            <td><span class="badge bd-trend">Solo en el control</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mostaza</td><td>No aplicó</td><td>Mix SKU</td>
+            <td class="num">1.25</td><td class="num">1.23</td><td class="num">−1.81%</td>
+            <td><span class="badge bd-trend">Solo en el control</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note">De 16 combinaciones familia-flag posibles, solo caen 4 en monto, 4 en volumen y 1 en mix. La única caída que aparece <strong>únicamente en el grupo con promo y no en el control</strong> es <strong>Alacena Tari</strong> (−13.2% monto, −12.1% volumen) — es el único candidato real a sustitución causada por la promo. Mostaza cae en ambos grupos por igual: es tendencia de la familia, no efecto de Sabores. Mayonesa Light y el mix de Mostaza solo caen en el control, así que tampoco son atribuibles a la promo.</div>
+    </div>
+
+    <div class="sec-label">¿Canibalizó Sabores al resto de la categoría?</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Volumen del resto de la categoría, antes y después de adoptar Sabores (7,777 adoptantes en julio)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Grupo</th><th class="num">Adoptantes</th>
+            <th class="num">Vol. resto — prom. mensual PRE</th><th class="num">Vol. resto — Post</th>
+            <th class="num">Tasa de canibalización</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Aplicó promo</strong></td><td class="num">1,401</td>
+            <td class="num">0.004</td><td class="num">0.005</td>
+            <td class="num"><span class="badge bd-pos">−10.3%</span></td>
+          </tr>
+          <tr>
+            <td>No aplicó (control)</td><td class="num">6,274</td>
+            <td class="num">0.006</td><td class="num">0.006</td>
+            <td class="num"><span class="badge bd-pos">−7.2%</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note"><strong>¿Qué es un "adoptante"?</strong> Cliente que compró Mayonesa Sabores <strong>por primera vez en julio</strong>, el mes de lanzamiento de la promo — no es lo mismo que "recomprador" (ese es el que además volvió a comprar Sabores en agosto). Aquí medimos qué le pasó al <strong>resto de su canasta</strong> (todo menos Sabores) entre antes y después de adoptar. <strong>Negativo = el resto de la categoría CRECIÓ</strong> tras adoptar (no la canibalizó); positivo significaría que cayó. Los dos grupos dan negativo — pero el <strong>no-aplico también lo es</strong>, lo que indica que no canibalizar es una propiedad de <strong>adoptar Sabores en general</strong>, no un mérito exclusivo de la promoción.</div>
+    </div>
+
+    <div class="sec-label">¿Cuánto volumen incremental generó la promoción?</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Volumen total mensual (TN) — Estrella</div>
+      <table>
+        <thead>
+          <tr><th>Grupo</th><th class="num">PRE (prom. mensual)</th><th class="num">Durante (julio)</th><th class="num">Post (agosto)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Aplicó promo</strong></td><td class="num">8.41</td><td class="num">10.42</td><td class="num">9.26</td></tr>
+          <tr><td>No aplicó (control)</td><td class="num">142.53</td><td class="num">157.28</td><td class="num">153.95</td></tr>
+        </tbody>
+      </table>
+      <div class="calc-box" style="margin-top:12px">
+        <span class="step">Fórmula (contrafactual DiD):</span> <code>Volumen esperado = PRE(aplicó) × [Ventana(control) / PRE(control)]</code> — asume que aplicó-promo hubiera crecido al mismo ritmo que el control si la promo no hubiera existido.<br><br>
+        <span class="step">Julio (durante):</span> esperado = 8.41 × (157.28 / 142.53) = <code>9.28 TN</code> · observado = <code>10.42 TN</code> → <strong>incremental = +1.14 TN (+12%)</strong><br>
+        <span class="step">Agosto (post):</span> esperado = 8.41 × (153.95 / 142.53) = <code>9.08 TN</code> · observado = <code>9.26 TN</code> → <strong>incremental = +0.18 TN (+2%)</strong>
+      </div>
+      <div class="tbl-note">La promo sí generó volumen incremental real en julio, el mes de la promoción (+1.14 TN, +12% sobre lo esperado). Pero ese efecto <strong>casi desaparece en agosto</strong> (+0.18 TN). Es un patrón de <strong>adelanto de compra (pull-forward)</strong>, no de creación de demanda nueva y sostenida.</div>
+    </div>
+
+  </div>
+
+  <!-- TAB: ABARROTERO -->
+  <div id="abarrotero" class="tab-content">
+
+    <div class="narrative">
+      <strong>Abarrotero cierra diferente:</strong> recompra <strong>7pp más alta</strong> en aplicó-promo (45.5% vs 38.7%), y Mayonesa Sabores muestra DiD fuertemente positivo a nivel general (+25.5pp en monto, categoría completa) que se mantiene, más moderado, entre quienes recompran (+20.5pp). La promo funciona en este segmento — tanto en adelanto de compra en julio como en retención en agosto. Lima lleva el volumen, Norte es chico pero consistente, Sur repite el patrón de Estrella (control supera al aplicó-promo).
+    </div>
+
+    <div class="sec-label">Recompradores: tasa general y distribución por zona</div>
+    <div class="kpis">
+      <div class="kpi pos">
+        <div class="kpi-lbl">Total recompradores</div>
+        <div class="kpi-v pos">930</div>
+        <div class="kpi-sub">de 2,042 que compraron en julio</div>
+      </div>
+      <div class="kpi pos">
+        <div class="kpi-lbl">Tasa recompra general</div>
+        <div class="kpi-v pos">45.5%</div>
+        <div class="kpi-sub">vs 38.7% en control (+6.8pp) ✓</div>
+      </div>
+      <div class="kpi au">
+        <div class="kpi-lbl">Venta/Pedido PRE→POST</div>
+        <div class="kpi-v">−9.1%</div>
+        <div class="kpi-sub">menos que en Estrella, mantiene más tamaño</div>
+      </div>
+    </div>
+
+    <div class="tbl-card" style="background:var(--gold-lt);border:1px solid #e6d4a0">
+      <div class="tbl-title" style="color:#8a6010">El mix de SKU crece en el general, pero NO en recompradores</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:4px">
+        <div>
+          <div class="kpi-lbl">Categoría total</div>
+          <div class="kpi-v pos">+3.78pp</div>
+          <div class="kpi-sub">DiD mix_sku, PRE→POST</div>
+        </div>
+        <div>
+          <div class="kpi-lbl">Sin Mayonesa Sabores</div>
+          <div class="kpi-v pos">+0.94pp</div>
+          <div class="kpi-sub">DiD mix_sku, PRE→POST</div>
+        </div>
+        <div>
+          <div class="kpi-lbl">Recompradores</div>
+          <div class="kpi-v neg">−0.44pp</div>
+          <div class="kpi-sub">DiD mix_sku, PRE→POST</div>
+        </div>
+      </div>
+      <div class="tbl-note" style="border-left-color:#e6d4a0;margin-top:10px">A diferencia de Estrella, aquí el patrón <strong>no es consistente en las tres vistas</strong>: en categoría total y sin Sabores el mix sí crece más con promo, pero entre los recompradores específicamente el DiD es prácticamente cero (ligeramente negativo). No fuerces la misma narrativa de "compra menos pero más variado" para este segmento — los datos no la sostienen igual (detalle más abajo).</div>
+    </div>
+
+    <div class="tbl-card">
+      <div class="tbl-title">Tasa de recompra por zona</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Zona</th>
+            <th class="num">Compraron julio (aplicó)</th>
+            <th class="num">Recompraron agosto (aplicó)</th>
+            <th class="num">Tasa aplicó</th>
+            <th class="num">Compraron julio (control)</th>
+            <th class="num">Recompraron agosto (control)</th>
+            <th class="num">Tasa control</th>
+            <th class="num">Diferencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge bd-zona">Lima</span></td>
+            <td class="num">1,373</td><td class="num">713</td><td class="num"><strong>51.9%</strong></td>
+            <td class="num">2,538</td><td class="num">1,121</td><td class="num">44.2%</td>
+            <td class="num"><span class="badge bd-pos">+7.8pp</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge bd-zona">Norte</span></td>
+            <td class="num">320</td><td class="num">78</td><td class="num"><strong>24.4%</strong></td>
+            <td class="num">505</td><td class="num">82</td><td class="num">16.2%</td>
+            <td class="num"><span class="badge bd-pos">+8.1pp</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge bd-zona">Sur</span></td>
+            <td class="num">349</td><td class="num">139</td><td class="num"><strong>39.8%</strong></td>
+            <td class="num">452</td><td class="num">148</td><td class="num">32.7%</td>
+            <td class="num"><span class="badge bd-pos">+7.1pp</span></td>
+          </tr>
+          <tr class="tot">
+            <td>TOTAL</td>
+            <td class="num">2,042</td><td class="num">930</td><td class="num">45.5%</td>
+            <td class="num">3,495</td><td class="num">1,351</td><td class="num">38.7%</td>
+            <td class="num">+6.9pp</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note"><strong>Las tres zonas superan a su control</strong>, algo que no pasó en ninguna zona de Estrella. Lima tiene la tasa absoluta más alta (51.9%), pero Norte tiene la brecha relativa más grande (+8.1pp) partiendo de una base más chica (320 clientes). Es la única pestaña donde el patrón es consistente en las tres zonas.</div>
+    </div>
+
+    <div class="sec-label">Categoría total — venta promedio por cliente (monto S/)</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Por zona, aplicó promo vs no aplico</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Zona</th>
+            <th colspan="2" style="text-align:center">Prepromo (abr-jun)</th>
+            <th colspan="2" style="text-align:center">Durante (julio)</th>
+            <th colspan="2" style="text-align:center">Post (agosto)</th>
+            <th colspan="2" style="text-align:center">Var % PRE→POST</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lima / NS Chico</strong></td>
+            <td class="num">307.09</td><td class="num">222.50</td>
+            <td class="num">326.67</td><td class="num">248.75</td>
+            <td class="num">331.91</td><td class="num">239.82</td>
+            <td class="num">+8.1%</td><td class="num">+7.8%</td>
+          </tr>
+          <tr>
+            <td><strong>Norte / Oriente</strong></td>
+            <td class="num">299.45</td><td class="num">227.60</td>
+            <td class="num">323.33</td><td class="num">247.25</td>
+            <td class="num">304.26</td><td class="num">246.05</td>
+            <td class="num">+1.6%</td><td class="num">+8.1%</td>
+          </tr>
+          <tr>
+            <td><strong>Sur / Centro</strong></td>
+            <td class="num">320.05</td><td class="num">234.58</td>
+            <td class="num">350.55</td><td class="num">244.66</td>
+            <td class="num">339.78</td><td class="num">242.48</td>
+            <td class="num">+6.2%</td><td class="num">+3.4%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note">Lima y Sur muestran crecimiento neto positivo en ambos grupos. Norte debilita el aplicó-promo (+1.6% vs +8.1% del control), similar a lo que vimos en Estrella.</div>
+    </div>
+
+    <div class="sec-label">Sin Mayonesa Sabores — desempeño de otros SKUs</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Monto promedio por cliente, excluyendo la familia promovida</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Zona</th>
+            <th colspan="2" style="text-align:center">Prepromo</th>
+            <th colspan="2" style="text-align:center">Durante</th>
+            <th colspan="2" style="text-align:center">Post</th>
+            <th colspan="2" style="text-align:center">Var % PRE→POST</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lima</strong></td>
+            <td class="num">306.12</td><td class="num">221.98</td>
+            <td class="num">332.69</td><td class="num">249.10</td>
+            <td class="num">325.12</td><td class="num">237.37</td>
+            <td class="num">+6.2%</td><td class="num">+6.9%</td>
+          </tr>
+          <tr>
+            <td><strong>Norte</strong></td>
+            <td class="num">298.74</td><td class="num">227.29</td>
+            <td class="num">338.57</td><td class="num">248.99</td>
+            <td class="num">303.60</td><td class="num">245.82</td>
+            <td class="num">+1.6%</td><td class="num">+8.2%</td>
+          </tr>
+          <tr>
+            <td><strong>Sur</strong></td>
+            <td class="num">319.43</td><td class="num">234.32</td>
+            <td class="num">356.54</td><td class="num">243.71</td>
+            <td class="num">333.57</td><td class="num">241.15</td>
+            <td class="num">+4.4%</td><td class="num">+2.9%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note">Sin Sabores, el patrón es más uniforme: aplicó-promo crece entre +1.6% (Norte) y +6.2% (Lima), con el control más o menos parejo. Sur ya no es outlier aquí.</div>
+    </div>
+
+    <div class="sec-label">Recompradores — monto promedio por cliente</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Solo clientes que compraron en julio y volvieron en agosto</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Zona</th>
+            <th colspan="2" style="text-align:center">Prepromo</th>
+            <th colspan="2" style="text-align:center">Durante</th>
+            <th colspan="2" style="text-align:center">Post</th>
+            <th colspan="2" style="text-align:center">Var % PRE→POST</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th class="num">Aplico (n)</th>
+            <th class="num">No aplico (n)</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+            <th class="num">Aplico</th>
+            <th class="num">No aplico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lima</strong> (713/1121)</td>
+            <td class="num">387.83</td><td class="num">374.33</td>
+            <td class="num">432.74</td><td class="num">429.17</td>
+            <td class="num">427.32</td><td class="num">416.97</td>
+            <td class="num">+10.2%</td><td class="num">+11.4%</td>
+          </tr>
+          <tr>
+            <td><strong>Norte</strong> (78/82)</td>
+            <td class="num">377.26</td><td class="num">338.21</td>
+            <td class="num">414.62</td><td class="num">429.34</td>
+            <td class="num">412.80</td><td class="num">375.68</td>
+            <td class="num">+9.4%</td><td class="num">+11.1%</td>
+          </tr>
+          <tr>
+            <td><strong>Sur</strong> (139/148)</td>
+            <td class="num">336.77</td><td class="num">352.46</td>
+            <td class="num">396.90</td><td class="num">391.40</td>
+            <td class="num">368.80</td><td class="num">352.60</td>
+            <td class="num">+9.5%</td><td class="num">+0.04%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note"><strong>Sur es el outlier nuevamente:</strong> el control literalmente no crece (+0.04%), mientras que aplico-promo crece +9.5%. Es un resultado muy diferente al resto de Abarrotero y a Estrella, sugiere que el control podría estar contaminado o el patrón de selección en Sur fue significativamente distinto. <strong>Ojo:</strong> esta tabla NO excluye Mayonesa Sabores — es la misma población de recompradores (713/78/139), pero mide su gasto en <strong>toda la categoría</strong>, Sabores incluida. La tabla "sin Mayonesa Sabores" de arriba mide a todos los clientes, no solo a recompradores — son dos recortes distintos de la data.</div>
+    </div>
+
+    <div class="sec-label">Recompradores: mix de SKU</div>
+    <div class="tbl-card" style="background:var(--vi-lt);border:1px solid #d4c8f0">
+      <div class="tbl-title" style="color:#4d3480">Mix de SKU promedio por pedido (categoría Salsas completa)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Grupo</th><th class="num">PRE</th><th class="num">Durante</th><th class="num">Post</th>
+            <th class="num">Var % PRE→POST</th><th class="num">DiD pre-post</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Aplicó promo</strong></td>
+            <td class="num">1.73</td><td class="num">1.89</td><td class="num">1.90</td>
+            <td class="num"><span class="badge bd-pos">+10.23%</span></td>
+            <td class="num" rowspan="2" style="vertical-align:middle"><span class="badge bd-neg">−0.44pp</span></td>
+          </tr>
+          <tr>
+            <td>No aplicó (control)</td>
+            <td class="num">1.71</td><td class="num">1.85</td><td class="num">1.90</td>
+            <td class="num">+10.67%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note" style="border-left-color:#d4c8f0">A diferencia de Estrella, aquí <strong>el mix crece parecido en los dos grupos</strong> (+10.2% aplicó vs +10.7% control) — el DiD es casi cero (−0.44pp). El recomprador de Abarrotero amplía su mix igual que lo haría sin promo; el patrón de "compra menos pero más variado" que se ve claro en Estrella no se replica aquí con la misma fuerza.</div>
+    </div>
+
+    <div class="sec-label">Por familia: ¿qué cae, y es culpa de la promo?</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Recompradores sin Mayonesa Sabores — indicadores que cayeron de PRE a POST</div>
+      <table>
+        <thead>
+          <tr><th>Familia</th><th>Grupo</th><th>Indicador</th><th class="num">PRE</th><th class="num">POST</th><th class="num">Var %</th><th>¿Es efecto de la promo?</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alacena Mostaza</td><td>Aplicó promo</td><td>Monto</td>
+            <td class="num">24.97</td><td class="num">23.88</td><td class="num">−4.38%</td>
+            <td><span class="badge bd-trend">Cae en ambos grupos</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mostaza</td><td>No aplicó</td><td>Monto</td>
+            <td class="num">23.98</td><td class="num">23.87</td><td class="num">−0.48%</td>
+            <td><span class="badge bd-trend">Tendencia de categoría</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mostaza</td><td>Aplicó promo</td><td>Volumen</td>
+            <td class="num">1.29</td><td class="num">1.25</td><td class="num">−2.97%</td>
+            <td><span class="badge bd-neg">Solo en aplicó-promo</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Salsas Picantes</td><td>Aplicó promo</td><td>Pedidos</td>
+            <td class="num">1.15</td><td class="num">1.12</td><td class="num">−2.43%</td>
+            <td><span class="badge bd-trend">Cae en ambos grupos</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Salsas Picantes</td><td>No aplicó</td><td>Pedidos</td>
+            <td class="num">1.12</td><td class="num">1.10</td><td class="num">−1.72%</td>
+            <td><span class="badge bd-trend">Tendencia de categoría</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Salsas Picantes</td><td>No aplicó</td><td>Monto</td>
+            <td class="num">10.20</td><td class="num">10.14</td><td class="num">−0.58%</td>
+            <td><span class="badge bd-trend">Solo en el control</span></td>
+          </tr>
+          <tr>
+            <td>Alacena Mayonesa</td><td>Aplicó promo</td><td>Mix SKU</td>
+            <td class="num">3.31</td><td class="num">3.31</td><td class="num">−0.08%</td>
+            <td><span class="badge bd-trend">Negligible (prácticamente plano)</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note">De 16 combinaciones familia-flag, caen 3 en monto, 1 en volumen, 2 en pedidos y 1 en mix — todavía menos que Estrella. La única caída <strong>exclusiva del grupo con promo</strong> es <strong>Mostaza en volumen</strong> (−2.97%), pero es una magnitud pequeña, el equivalente de Abarrotero al caso Tari de Estrella, aunque mucho más leve. Mostaza en monto y Salsas Picantes en pedidos caen en ambos grupos: son tendencia de familia, no efecto de la promo.</div>
+    </div>
+
+    <div class="sec-label">¿Canibalizó Sabores al resto de la categoría?</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Volumen del resto de la categoría, antes y después de adoptar Sabores (4,631 adoptantes en julio)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Grupo</th><th class="num">Adoptantes</th>
+            <th class="num">Vol. resto — prom. mensual PRE</th><th class="num">Vol. resto — Post</th>
+            <th class="num">Tasa de canibalización</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Aplicó promo</strong></td><td class="num">1,674</td>
+            <td class="num">0.012</td><td class="num">0.013</td>
+            <td class="num"><span class="badge bd-pos">−5.1%</span></td>
+          </tr>
+          <tr>
+            <td>No aplicó (control)</td><td class="num">2,847</td>
+            <td class="num">0.012</td><td class="num">0.013</td>
+            <td class="num"><span class="badge bd-pos">−8.0%</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tbl-note"><strong>¿Qué es un "adoptante"?</strong> Cliente que compró Mayonesa Sabores <strong>por primera vez en julio</strong> — no es lo mismo que "recomprador" (ese es el que además volvió a comprarla en agosto). Aquí medimos qué le pasó al <strong>resto de su canasta</strong> (todo menos Sabores) tras adoptar. Igual que en Estrella: los dos grupos dan negativo (el resto de la categoría creció, no fue canibalizado). Aquí el <strong>control es incluso más negativo que el grupo con promo</strong> (−8.0% vs −5.1%), confirmando que no canibalizar es un efecto del producto Sabores, no de la promoción en sí.</div>
+    </div>
+
+    <div class="sec-label">¿Cuánto volumen incremental generó la promoción?</div>
+    <div class="tbl-card">
+      <div class="tbl-title">Volumen total mensual (TN) — Abarrotero</div>
+      <table>
+        <thead>
+          <tr><th>Grupo</th><th class="num">PRE (prom. mensual)</th><th class="num">Durante (julio)</th><th class="num">Post (agosto)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Aplicó promo</strong></td><td class="num">27.10</td><td class="num">32.39</td><td class="num">29.15</td></tr>
+          <tr><td>No aplicó (control)</td><td class="num">152.39</td><td class="num">171.93</td><td class="num">163.64</td></tr>
+        </tbody>
+      </table>
+      <div class="calc-box" style="margin-top:12px">
+        <span class="step">Fórmula (contrafactual DiD):</span> <code>Volumen esperado = PRE(aplicó) × [Ventana(control) / PRE(control)]</code><br><br>
+        <span class="step">Julio (durante):</span> esperado = 27.10 × (171.93 / 152.39) = <code>30.58 TN</code> · observado = <code>32.39 TN</code> → <strong>incremental = +1.81 TN (+6%)</strong><br>
+        <span class="step">Agosto (post):</span> esperado = 27.10 × (163.64 / 152.39) = <code>29.10 TN</code> · observado = <code>29.15 TN</code> → <strong>incremental = +0.05 TN (+0.2%)</strong>
+      </div>
+      <div class="tbl-note">Mismo patrón que Estrella: incremental real en julio (+1.81 TN, +6%) que se evapora casi por completo en agosto (+0.05 TN). El efecto sostenido es prácticamente nulo en ambos segmentos — la diferencia entre Estrella y Abarrotero está en la <strong>recompra y retención</strong>, no en la generación de volumen incremental durante la promo.</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>Alicorp · COE Advanced Analytics · Análisis Promocional Salsas · Fuente: dex_cliente_detalle · cr_segmentacion</span>
+    <span>Estrella: n-recompradores = 450 · Abarrotero: n-recompradores = 930 · julio-agosto 2026</span>
+  </div>
+
+</div>
+
+<script>
+function switchTab(tab) {
+  // Hide all tabs
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  
+  // Show selected tab
+  document.getElementById(tab).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
