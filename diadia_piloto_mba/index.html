@@ -1,1 +1,867 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Piloto MBA · recorte de promociones de piso</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#2D9C9C; --teal-lt:#E8F4F4; --teal-dk:#1f7070;
+  --gold:#D4A853; --gold-lt:#FBF4E5;
+  --coral:#E85D4C; --coral-lt:#FDECEA;
+  --vi:#7C5CBF;   --vi-lt:#EDE9F8;
+  --green:#1a7a1a; --green-lt:#e8f5e8;
+  --bg:#F0EDE8;   --card:#FFFFFF;
+  --ink:#222220;  --gray:#6B6864; --muted:#A09E9B; --line:#E2DDD8;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5;min-width:1100px}
+.shell{max-width:1380px;margin:0 auto;padding:24px 32px 40px;display:flex;flex-direction:column;gap:12px}
 
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.tb-badge{display:inline-block;background:var(--teal);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:5px}
+.tb-title{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1.1}
+.tb-title em{color:var(--teal);font-style:normal}
+.tb-sub{font-size:12px;color:var(--gray);margin-top:4px}
+.coe{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:40px;padding:6px 14px 6px 7px;box-shadow:0 1px 5px rgba(0,0,0,.06);flex-shrink:0}
+.coe svg{width:26px;height:26px;display:block;flex-shrink:0}
+.coe-name{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--ink);line-height:1.3}
+.coe-sub{font-size:10px;color:var(--gray)}
+.acline{height:2px;border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--teal) 50%,transparent)}
+
+.banner{background:var(--teal);color:#fff;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.banner-icon{font-size:20px;flex-shrink:0}
+.banner b{font-size:14px;font-weight:600;display:block;line-height:1.4}
+.banner small{font-size:11.5px;opacity:.82;margin-top:3px;display:block}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.kpi{background:var(--card);border-radius:8px;padding:12px 13px 10px;box-shadow:0 1px 4px rgba(0,0,0,.05);border-top:2.5px solid var(--teal)}
+.kpi.rd{border-top-color:var(--coral)}.kpi.au{border-top-color:var(--gold)}.kpi.vi{border-top-color:var(--vi)}
+.kpi-lbl{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.kpi-nums{display:flex;align-items:flex-end;gap:8px}
+.kpi-n{display:flex;flex-direction:column}
+.kpi-tag{font-size:9px;font-weight:500;color:var(--muted);margin-bottom:2px}
+.kpi-v{font-size:26px;font-weight:700;line-height:1}
+.neg{color:var(--coral)}.tl{color:var(--teal)}.au{color:var(--gold)}.vi{color:var(--vi)}
+.kpi-chip{display:inline-block;margin-top:7px;font-size:9.5px;font-weight:500;padding:3px 10px;border-radius:20px}
+.ch-tl{background:var(--teal-lt);color:var(--teal-dk)}.ch-rd{background:var(--coral-lt);color:var(--coral)}.ch-au{background:var(--gold-lt);color:#8a6010}.ch-vi{background:var(--vi-lt);color:var(--vi)}
+
+.tbl-card{background:var(--card);border-radius:10px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.tbl-hd{margin-bottom:12px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.tbl-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
+.tbl-kicker{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+.tbl-note{font-size:10px;color:var(--gray);margin-top:6px;line-height:1.7;border-left:3px solid var(--teal-lt);padding-left:10px}
+.formula{font-family:'Space Grotesk',sans-serif;font-size:13px;background:#f7f5f1;border:1px dashed var(--line);border-radius:8px;padding:10px 14px;margin:10px 0;color:var(--teal-dk);font-weight:600}
+.formula span{color:var(--muted);font-weight:500;font-size:11px;display:block;margin-top:3px;font-family:'DM Sans',sans-serif}
+
+table{width:100%;border-collapse:collapse}
+.grp{font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;text-align:center;border-bottom:1px solid}
+.g-hist{background:#fffbf0;color:#9a7020;border-color:#e8d5a0}
+.g-tpo {background:#eefafa;color:var(--teal-dk);border-color:#bce4e4}
+.g-vi  {background:var(--vi-lt);color:#4d3480;border-color:#d4c8f0}
+
+th{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:7px 11px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.th-h{background:#fffdf5;color:#9a7020}
+.th-t{background:#f4fafa;color:var(--teal-dk)}
+.th-v{background:#f6f2fc;color:#4d3480}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+th.num{text-align:right}
+
+tbody td{padding:9px 11px;border-bottom:1px solid #edeae4;vertical-align:middle;white-space:nowrap;font-size:12.5px;font-weight:400;color:var(--ink)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:not(.sep):not(.tot):hover td{background:#f8f5f0}
+.tot td{background:var(--teal-lt);font-weight:600;border-bottom:none}
+.rec td{background:#fffbf0}
+.unidad{display:block;font-size:9.5px;color:var(--muted);font-weight:400}
+
+.tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:5px}
+.ma{background:var(--teal-lt);color:var(--teal-dk)}
+.codi{background:var(--gold-lt);color:#8a6010}
+
+.r-neg{display:inline-block;background:var(--coral-lt);color:var(--coral);font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px}
+.r-pos{display:inline-block;background:var(--teal-lt);color:var(--teal-dk);font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px}
+
+.footer{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--line);gap:16px}
+.footer span{font-size:10px;color:var(--muted)}
+.cmp-strip{display:flex;align-items:stretch;gap:10px;margin:0;flex-wrap:wrap}
+.cmp-box{flex:1;min-width:170px;background:var(--card);border-radius:8px;padding:10px 13px;border:1px solid var(--line);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.cmp-box.est{background:var(--gold-lt);border-color:#e6d4a0}
+.cmp-lbl{font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.cmp-v{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;line-height:1.2;color:var(--ink)}
+.cmp-sub{font-size:11px;color:var(--gray);margin-top:4px}
+.sec-label{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.08em;text-transform:uppercase;margin:6px 0 0}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bars{display:flex;flex-direction:column;gap:6px}
+.bar-row{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center}
+.bar-lbl{font-size:11.5px;color:var(--ink);font-weight:500}
+.bar-track{height:20px;background:#f3f0ea;border-radius:4px;overflow:hidden}
+.bar-seg{height:100%;display:flex;align-items:center;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.01em;border-radius:4px;padding-left:6px;white-space:nowrap}
+.bar-ma{background:var(--teal)}
+.bar-def{background:#c4bfb6}
+.bar-tot{font-size:11px;font-weight:700;text-align:right}
+.legend{display:flex;gap:14px;margin-top:10px}
+.leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gray)}
+.dot{width:9px;height:9px;border-radius:2px;display:inline-block}
+
+.tabs{display:flex;gap:6px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.tab-btn{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--muted);background:none;border:none;padding:9px 16px;cursor:pointer;border-bottom:2.5px solid transparent;letter-spacing:.03em}
+.tab-btn.active{color:var(--teal-dk);border-bottom-color:var(--teal)}
+.tab-btn:hover{color:var(--teal-dk)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="topbar">
+    <div>
+      <div class="tb-badge">Reporte Ejecutivo · Piloto Promocional</div>
+      <div class="tb-title">Piloto MBA <em>recorte de promociones de piso</em></div>
+      <div class="tb-sub">Canal digital (diadia) vs tradicional (nitro) · DEX MBA + 9 compañías de comparación · jun-set 2026, set 2025 vs 2026</div>
+    </div>
+    <div class="coe">
+      <svg viewBox="0 0 40 40" fill="none" width="26" height="26" aria-hidden="true">
+        <rect width="40" height="40" rx="10" fill="url(#lgH1)"></rect>
+        <circle cx="12" cy="15" r="3" fill="white"></circle>
+        <circle cx="12" cy="20" r="3" fill="white"></circle>
+        <circle cx="12" cy="25" r="3" fill="white"></circle>
+        <circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"></circle>
+        <circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"></circle>
+        <circle cx="28" cy="20" r="4" fill="#D4A853"></circle>
+        <defs><linearGradient id="lgH1" x1="0" y1="0" x2="40" y2="40">
+          <stop stop-color="#2D9C9C"></stop><stop offset="1" stop-color="#1f7070"></stop>
+        </linearGradient></defs>
+      </svg>
+      <div><div class="coe-name">COE Advanced Analytics</div><div class="coe-sub">Alicorp · GTM 2.0</div></div>
+    </div>
+  </div>
+
+  <div class="acline"></div>
+
+
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-lbl">Venta neta / cliente · interanual</div>
+      <div class="kpi-nums"><div class="kpi-n"><span class="kpi-tag">2025 → 2026</span><span class="kpi-v tl">+7.8%</span></div></div>
+      <span class="kpi-chip ch-tl">Pre/Post: +9.5%</span>
+    </div>
+    <div class="kpi au">
+      <div class="kpi-lbl">Ticket / cliente · interanual</div>
+      <div class="kpi-nums"><div class="kpi-n"><span class="kpi-tag">2025 → 2026</span><span class="kpi-v neg">-2.8%</span></div></div>
+      <span class="kpi-chip ch-au">Pre/Post: +11.5%</span>
+    </div>
+    <div class="kpi vi">
+      <div class="kpi-lbl">Clientes distintos · interanual</div>
+      <div class="kpi-nums"><div class="kpi-n"><span class="kpi-tag">2025 → 2026</span><span class="kpi-v vi">+7.8%</span></div></div>
+      <span class="kpi-chip ch-vi">Pre/Post: +1.5%</span>
+    </div>
+    <div class="kpi rd">
+      <div class="kpi-lbl">GTN (Inversión/Venta neta) · interanual</div>
+      <div class="kpi-nums"><div class="kpi-n"><span class="kpi-tag">4.43% → 3.30%</span><span class="kpi-v tl">-1.12 pp</span></div></div>
+      <span class="kpi-chip ch-rd">Pre/Post: +0.37 pp</span>
+    </div>
+  </div>
+
+  <div class="cmp-strip">
+    <div class="cmp-box">
+      <div class="cmp-lbl">Qué se recortó</div>
+      <div class="cmp-v">Promos de piso en nitro</div>
+      <div class="cmp-sub">Se mantuvo solo Descuento digital y combo DEX.</div>
+    </div>
+    <div class="cmp-box">
+      <div class="cmp-lbl">Objetivo</div>
+      <div class="cmp-v">Empujar a canal digital</div>
+      <div class="cmp-sub">Migrar venta y clientes de nitro hacia diadia.</div>
+    </div>
+
+  </div>
+
+  <div class="sec-label">Gross to Net</div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div><div class="tbl-kicker">Inversión / venta neta</div><div class="tbl-title">¿Cuánta inversión promocional cuesta cada sol de venta neta?</div></div></div>
+    <div class="formula">GTN = Inversión / Venta neta
+    </div>
+    <table>
+<thead><tr><th>Vista</th><th class="grp g-hist" colspan="3">Interanual · setiembre (2025 vs 2026)</th><th class="grp g-tpo" colspan="3">Pre vs Post 2026</th></tr>
+<tr><th></th><th class="num th-h">2025</th><th class="num th-h">2026</th><th class="num th-h">Δ pp</th>
+<th class="num th-t">Pre</th><th class="num th-t">Post</th><th class="num th-t">Δ pp</th></tr></thead>
+<tbody>
+<tr class="tot"><td>Total (diadia+nitro)</td>
+          <td class="num">4.43%</td><td class="num">3.30%</td>
+          <td class="num"><span class="r-pos">-1.12 pp</span></td>
+          <td class="num">2.94%</td><td class="num">3.30%</td>
+          <td class="num"><span class="r-neg">+0.37 pp</span></td></tr>
+<tr><td>Diadia <span class="tag ma" style="margin-left:6px">digital</span></td>
+          <td class="num">4.15%</td><td class="num">3.41%</td>
+          <td class="num"><span class="r-pos">-0.74 pp</span></td>
+          <td class="num">3.00%</td><td class="num">3.41%</td>
+          <td class="num"><span class="r-neg">+0.41 pp</span></td></tr>
+<tr><td>Nitro <span class="tag codi" style="margin-left:6px">tradicional</span></td>
+          <td class="num">4.78%</td><td class="num">2.69%</td>
+          <td class="num"><span class="r-pos">-2.09 pp</span></td>
+          <td class="num">2.79%</td><td class="num">2.69%</td>
+          <td class="num"><span class="r-pos">-0.10 pp</span></td></tr>
+</tbody></table>
+    <div class="tbl-note" style="margin-top:12px">
+      Contra el año pasado (interanual), el GTN <b>mejora</b> (baja) en los tres cortes — se necesita menos inversión por sol de venta neta que en 2025. Contra el trimestre inmediato anterior (pre/post), el GTN total <b>empeora</b> (sube) porque diadia empeora — la inversión en digital creció más rápido que la venta neta que generó. En nitro, en cambio, el GTN pre/post mejora levemente.
+    </div>
+  </div>
+
+  <div class="sec-label">MBA · Vista total (diadia + nitro combinado)</div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">Interanual · setiembre, 2025 vs 2026</div>
+      <div class="tbl-title">Venta y ticket crecen, pero menos que en pre/post</div>
+    </div></div>
+    
+<table>
+<thead><tr><th>Métrica</th><th class="num">2025</th><th class="num th-t">2026</th><th class="num">Var %</th></tr></thead>
+<tbody>
+<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
+        <td class="num">S/ 385</td><td class="num">S/ 414</td>
+        <td class="num"><span class="r-pos">+7.8%</span></td></tr>
+<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
+        <td class="num">S/ 180</td><td class="num">S/ 175</td>
+        <td class="num"><span class="r-neg">-2.8%</span></td></tr>
+<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
+        <td class="num">43</td><td class="num">43</td>
+        <td class="num"><span class="r-pos">+0.7%</span></td></tr>
+<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos (max entre canales)</span></td>
+        <td class="num">14.0</td><td class="num">15.5</td>
+        <td class="num"><span class="r-pos">+10.5%</span></td></tr>
+<tr><td>Mix Familia / cliente<span class="unidad">familias distintas (max entre canales)</span></td>
+        <td class="num">9.4</td><td class="num">10.4</td>
+        <td class="num"><span class="r-pos">+10.7%</span></td></tr>
+<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
+    <td class="num">5,074</td><td class="num">5,468</td>
+    <td class="num"><span class="r-pos">+7.8%</span></td></tr>
+</tbody></table>
+  </div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">Pre vs Post · jun-ago vs set 2026</div>
+      <div class="tbl-title">Contra el trimestre inmediato anterior, el salto es mayor</div>
+    </div></div>
+    
+<table>
+<thead><tr><th>Métrica</th><th class="num">Pre (jun-ago)</th><th class="num th-t">Post (set)</th><th class="num">Var %</th></tr></thead>
+<tbody>
+<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
+        <td class="num">S/ 379</td><td class="num">S/ 414</td>
+        <td class="num"><span class="r-pos">+9.5%</span></td></tr>
+<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
+        <td class="num">S/ 157</td><td class="num">S/ 175</td>
+        <td class="num"><span class="r-pos">+11.5%</span></td></tr>
+<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
+        <td class="num">40</td><td class="num">43</td>
+        <td class="num"><span class="r-pos">+7.8%</span></td></tr>
+<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos (max entre canales)</span></td>
+        <td class="num">15.2</td><td class="num">15.5</td>
+        <td class="num"><span class="r-pos">+2.4%</span></td></tr>
+<tr><td>Mix Familia / cliente<span class="unidad">familias distintas (max entre canales)</span></td>
+        <td class="num">10.1</td><td class="num">10.4</td>
+        <td class="num"><span class="r-pos">+2.9%</span></td></tr>
+<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
+    <td class="num">5,390</td><td class="num">5,468</td>
+    <td class="num"><span class="r-pos">+1.5%</span></td></tr>
+</tbody></table>
+  </div>
+
+  <div class="sec-label">MBA · Por canal (diadia vs nitro)</div>
+  <div class="twocol">
+    <div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Diadia · Interanual</div><div class="tbl-title">Canal digital, setiembre 2025 vs 2026</div></div></div>
+<table>
+<thead><tr><th>Métrica</th><th class="num">2025</th><th class="num th-t">2026</th><th class="num">Var %</th></tr></thead>
+<tbody>
+<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
+        <td class="num">S/ 311</td><td class="num">S/ 411</td>
+        <td class="num"><span class="r-pos">+31.9%</span></td></tr>
+<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
+        <td class="num">S/ 168</td><td class="num">S/ 199</td>
+        <td class="num"><span class="r-pos">+18.2%</span></td></tr>
+<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
+        <td class="num">34</td><td class="num">42</td>
+        <td class="num"><span class="r-pos">+25.4%</span></td></tr>
+<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos (max entre canales)</span></td>
+        <td class="num">13.5</td><td class="num">16.0</td>
+        <td class="num"><span class="r-pos">+18.3%</span></td></tr>
+<tr><td>Mix Familia / cliente<span class="unidad">familias distintas (max entre canales)</span></td>
+        <td class="num">9.1</td><td class="num">10.7</td>
+        <td class="num"><span class="r-pos">+17.5%</span></td></tr>
+<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
+    <td class="num">3,529</td><td class="num">4,710</td>
+    <td class="num"><span class="r-pos">+33.5%</span></td></tr>
+</tbody></table></div>
+    <div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Nitro · Interanual</div><div class="tbl-title">Canal tradicional, setiembre 2025 vs 2026</div></div></div>
+<table>
+<thead><tr><th>Métrica</th><th class="num">2025</th><th class="num th-t">2026</th><th class="num">Var %</th></tr></thead>
+<tbody>
+<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
+        <td class="num">S/ 265</td><td class="num">S/ 128</td>
+        <td class="num"><span class="r-neg">-51.8%</span></td></tr>
+<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
+        <td class="num">S/ 172</td><td class="num">S/ 84</td>
+        <td class="num"><span class="r-neg">-50.9%</span></td></tr>
+<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
+        <td class="num">30</td><td class="num">14</td>
+        <td class="num"><span class="r-neg">-54.2%</span></td></tr>
+<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos (max entre canales)</span></td>
+        <td class="num">10.1</td><td class="num">7.2</td>
+        <td class="num"><span class="r-neg">-29.2%</span></td></tr>
+<tr><td>Mix Familia / cliente<span class="unidad">familias distintas (max entre canales)</span></td>
+        <td class="num">7.0</td><td class="num">5.2</td>
+        <td class="num"><span class="r-neg">-25.6%</span></td></tr>
+<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
+    <td class="num">3,222</td><td class="num">2,600</td>
+    <td class="num"><span class="r-neg">-19.3%</span></td></tr>
+</tbody></table></div>
+  </div>
+  <div class="twocol">
+    <div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Diadia · Pre vs Post 2026</div><div class="tbl-title">Ticket +20.6%, mix SKU +6.5%</div></div></div>
+<table>
+<thead><tr><th>Métrica</th><th class="num">Pre</th><th class="num th-t">Post</th><th class="num">Var %</th></tr></thead>
+<tbody>
+<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
+        <td class="num">S/ 334</td><td class="num">S/ 411</td>
+        <td class="num"><span class="r-pos">+22.9%</span></td></tr>
+<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
+        <td class="num">S/ 164</td><td class="num">S/ 199</td>
+        <td class="num"><span class="r-pos">+21.1%</span></td></tr>
+<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
+        <td class="num">35</td><td class="num">42</td>
+        <td class="num"><span class="r-pos">+20.7%</span></td></tr>
+<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos (max entre canales)</span></td>
+        <td class="num">15.0</td><td class="num">16.0</td>
+        <td class="num"><span class="r-pos">+6.7%</span></td></tr>
+<tr><td>Mix Familia / cliente<span class="unidad">familias distintas (max entre canales)</span></td>
+        <td class="num">10.0</td><td class="num">10.7</td>
+        <td class="num"><span class="r-pos">+7.0%</span></td></tr>
+<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
+    <td class="num">4,243</td><td class="num">4,710</td>
+    <td class="num"><span class="r-pos">+11.0%</span></td></tr>
+</tbody></table></div>
+    <div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Nitro · Pre vs Post 2026</div><div class="tbl-title">Ticket -31.8%, mix SKU -21.5%</div></div></div>
+<table>
+<thead><tr><th>Métrica</th><th class="num">Pre</th><th class="num th-t">Post</th><th class="num">Var %</th></tr></thead>
+<tbody>
+<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
+        <td class="num">S/ 200</td><td class="num">S/ 128</td>
+        <td class="num"><span class="r-neg">-36.3%</span></td></tr>
+<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
+        <td class="num">S/ 126</td><td class="num">S/ 84</td>
+        <td class="num"><span class="r-neg">-33.3%</span></td></tr>
+<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
+        <td class="num">21</td><td class="num">14</td>
+        <td class="num"><span class="r-neg">-34.9%</span></td></tr>
+<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos (max entre canales)</span></td>
+        <td class="num">9.2</td><td class="num">7.2</td>
+        <td class="num"><span class="r-neg">-22.3%</span></td></tr>
+<tr><td>Mix Familia / cliente<span class="unidad">familias distintas (max entre canales)</span></td>
+        <td class="num">6.4</td><td class="num">5.2</td>
+        <td class="num"><span class="r-neg">-19.5%</span></td></tr>
+<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
+    <td class="num">3,107</td><td class="num">2,600</td>
+    <td class="num"><span class="r-neg">-16.3%</span></td></tr>
+</tbody></table></div>
+  </div>
+
+
+  <div class="sec-label">MBA vs. las demás compañías</div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">10 DEX de la muestra</div>
+      <div class="tbl-title">MBA no es la que más crece — está en la mitad de la tabla</div>
+    </div></div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="mostrarTab(event,'tab-total')">TOTAL</button>
+      <button class="tab-btn" onclick="mostrarTab(event,'tab-diadia')">DIADIA</button>
+      <button class="tab-btn" onclick="mostrarTab(event,'tab-nitro')">NITRO</button>
+    </div>
+
+    <div id="tab-total" class="tab-panel active">
+      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA★</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-ma" style="position:absolute;left:50%;width:24.5%;justify-content:center">+9.5%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:50.0%;justify-content:center">+19.8%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:29.8%;justify-content:center">+11.5%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:7.6%;justify-content:center">-3.0%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:1.8%;justify-content:center">+0.7%</div>
+         
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:3.2%;justify-content:center">+0.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:28.2%;justify-content:center">+11.2%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:3.5%;justify-content:center">+3.5%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:2.3%;justify-content:center">-1.1%</div>
+          </div><div class="bar-tot">&nbsp;</div></div></div>
+      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
+      <table style="margin-top:16px">
+        <thead>
+          <tr><th rowspan="2">Compañía</th>
+            <th class="grp g-hist" colspan="2">Venta neta/cliente, var %</th>
+            <th class="grp g-vi" colspan="2">Clientes, var %</th>
+            <th class="grp g-tpo" colspan="2">Ticket/cliente, var %</th>
+            <th class="grp g-hist" colspan="2">Mix SKU, var %</th>
+            <th class="grp g-vi" colspan="2">GTN, Δ pp</th></tr>
+          <tr><th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
+            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th>
+            <th class="num th-t">Interanual</th><th class="num th-t">Pre/Post</th>
+            <th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
+            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th></tr>
+        </thead>
+        <tbody><tr class="rec"><td>MBA<span class="tag ma">PILOTO</span></td>
+          <td class="num">+7.8%</td>
+          <td class="num">+9.5%</td>
+          <td class="num">+7.8%</td>
+          <td class="num">+1.5%</td>
+          <td class="num">-2.8%</td>
+          <td class="num">+11.5%</td>
+          <td class="num">+10.5%</td>
+          <td class="num">+2.4%</td>
+          <td class="num">-1.12 pp</td>
+          <td class="num">+0.37 pp</td>
+        </tr><tr><td>ALMA</td>
+          <td class="num">+20.7%</td>
+          <td class="num">+19.8%</td>
+          <td class="num">+7.1%</td>
+          <td class="num">+1.2%</td>
+          <td class="num">+4.8%</td>
+          <td class="num">+16.8%</td>
+          <td class="num">+12.4%</td>
+          <td class="num">-0.2%</td>
+          <td class="num">-1.09 pp</td>
+          <td class="num">-0.14 pp</td>
+        </tr><tr><td>DEX APURIMAC</td>
+          <td class="num">+12.5%</td>
+          <td class="num">+11.5%</td>
+          <td class="num">+26.2%</td>
+          <td class="num">+10.1%</td>
+          <td class="num">+10.8%</td>
+          <td class="num">+11.1%</td>
+          <td class="num">-1.3%</td>
+          <td class="num">+0.1%</td>
+          <td class="num">-0.63 pp</td>
+          <td class="num">+0.09 pp</td>
+        </tr><tr><td>DEX MINALI</td>
+          <td class="num">-4.7%</td>
+          <td class="num">-3.1%</td>
+          <td class="num">+7.3%</td>
+          <td class="num">+4.3%</td>
+          <td class="num">-11.9%</td>
+          <td class="num">-5.3%</td>
+          <td class="num">+8.2%</td>
+          <td class="num">-3.5%</td>
+          <td class="num">-1.39 pp</td>
+          <td class="num">+0.17 pp</td>
+        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
+          <td class="num">-1.2%</td>
+          <td class="num">+0.3%</td>
+          <td class="num">-1.9%</td>
+          <td class="num">-0.0%</td>
+          <td class="num">-0.5%</td>
+          <td class="num">-0.2%</td>
+          <td class="num">+7.7%</td>
+          <td class="num">-5.4%</td>
+          <td class="num">-0.53 pp</td>
+          <td class="num">+0.01 pp</td>
+        </tr><tr><td>MADEX</td>
+          <td class="num">+1.2%</td>
+          <td class="num">+1.1%</td>
+          <td class="num">+7.7%</td>
+          <td class="num">+3.3%</td>
+          <td class="num">-5.8%</td>
+          <td class="num">-6.4%</td>
+          <td class="num">+2.3%</td>
+          <td class="num">-3.4%</td>
+          <td class="num">-0.39 pp</td>
+          <td class="num">-0.15 pp</td>
+        </tr><tr><td>ROSET</td>
+          <td class="num">+17.4%</td>
+          <td class="num">+11.2%</td>
+          <td class="num">+3.9%</td>
+          <td class="num">+3.5%</td>
+          <td class="num">+2.3%</td>
+          <td class="num">+4.4%</td>
+          <td class="num">+12.9%</td>
+          <td class="num">+2.2%</td>
+          <td class="num">-1.22 pp</td>
+          <td class="num">-0.00 pp</td>
+        </tr><tr><td>RTDEX</td>
+          <td class="num">+22.2%</td>
+          <td class="num">+3.5%</td>
+          <td class="num">-2.9%</td>
+          <td class="num">-2.3%</td>
+          <td class="num">+23.9%</td>
+          <td class="num">+1.0%</td>
+          <td class="num">+10.4%</td>
+          <td class="num">-6.5%</td>
+          <td class="num">-0.55 pp</td>
+          <td class="num">-0.61 pp</td>
+        </tr><tr><td>SELVA DEX</td>
+          <td class="num">-3.2%</td>
+          <td class="num">-1.1%</td>
+          <td class="num">+31.8%</td>
+          <td class="num">+3.2%</td>
+          <td class="num">-32.1%</td>
+          <td class="num">+2.5%</td>
+          <td class="num">+1.9%</td>
+          <td class="num">-7.7%</td>
+          <td class="num">-1.10 pp</td>
+          <td class="num">+0.20 pp</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div id="tab-diadia" class="tab-panel">
+      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA (PILOTO) ★</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-ma" style="position:absolute;left:50%;width:50.0%;justify-content:center">+22.9%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:25.8%;justify-content:center">+11.5%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:16.8%;justify-content:center">+8.1%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:3.5%;justify-content:center">-1.7%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:35.3%;justify-content:center">+16%</div>
+
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:10.7%;justify-content:center">+4.9%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:24.8%;justify-content:center">-9.0%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:4.5%;justify-content:center">+1.7%</div>
+          </div><div class="bar-tot">&nbsp;</div></div></div>
+      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
+      <table style="margin-top:16px">
+        <thead>
+          <tr><th rowspan="2">Compañía</th>
+            <th class="grp g-hist" colspan="2">Venta neta/cliente, var %</th>
+            <th class="grp g-vi" colspan="2">Clientes, var %</th>
+            <th class="grp g-tpo" colspan="2">Ticket/cliente, var %</th>
+            <th class="grp g-hist" colspan="2">Mix SKU, var %</th>
+            <th class="grp g-vi" colspan="2">GTN, Δ pp</th></tr>
+          <tr><th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
+            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th>
+            <th class="num th-t">Interanual</th><th class="num th-t">Pre/Post</th>
+            <th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
+            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th></tr>
+        </thead>
+        <tbody><tr class="rec"><td>MBA (PILOTO) <span class="tag ma">PILOTO</span></td>
+          <td class="num">+31.9%</td>
+          <td class="num">+22.9%</td>
+          <td class="num">+33.5%</td>
+          <td class="num">+11.0%</td>
+          <td class="num">+18.2%</td>
+          <td class="num">+21.1%</td>
+          <td class="num">+18.3%</td>
+          <td class="num">+6.7%</td>
+          <td class="num">-0.74 pp</td>
+          <td class="num">+0.41 pp</td>
+        </tr><tr><td>ALMA</td>
+          <td class="num">-14.7%</td>
+          <td class="num">+11.5%</td>
+          <td class="num">+539.8%</td>
+          <td class="num">+21.0%</td>
+          <td class="num">-49.9%</td>
+          <td class="num">+7.2%</td>
+          <td class="num">+33.4%</td>
+          <td class="num">-4.8%</td>
+          <td class="num">-4.25 pp</td>
+          <td class="num">-0.15 pp</td>
+        </tr><tr><td>DEX APURIMAC</td>
+          <td class="num">+44.8%</td>
+          <td class="num">+8.1%</td>
+          <td class="num">+63.7%</td>
+          <td class="num">+27.8%</td>
+          <td class="num">+34.3%</td>
+          <td class="num">+1.2%</td>
+          <td class="num">+16.2%</td>
+          <td class="num">-2.0%</td>
+          <td class="num">-0.56 pp</td>
+          <td class="num">+0.01 pp</td>
+        </tr><tr><td>DEX MINALI</td>
+          <td class="num">-2.7%</td>
+          <td class="num">-1.7%</td>
+          <td class="num">+59.4%</td>
+          <td class="num">+6.7%</td>
+          <td class="num">-11.0%</td>
+          <td class="num">-3.1%</td>
+          <td class="num">+4.8%</td>
+          <td class="num">-2.3%</td>
+          <td class="num">-1.56 pp</td>
+          <td class="num">+0.07 pp</td>
+        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
+          <td class="num">+29.1%</td>
+          <td class="num">+16.0%</td>
+          <td class="num">+4.9%</td>
+          <td class="num">+12.5%</td>
+          <td class="num">+22.8%</td>
+          <td class="num">+15.5%</td>
+          <td class="num">+25.3%</td>
+          <td class="num">+4.6%</td>
+          <td class="num">-0.30 pp</td>
+          <td class="num">+0.15 pp</td>
+        </tr><tr><td>MADEX</td>
+          <td class="num">+35.5%</td>
+          <td class="num">+0.8%</td>
+          <td class="num">+22.2%</td>
+          <td class="num">+11.6%</td>
+          <td class="num">+35.1%</td>
+          <td class="num">-1.9%</td>
+          <td class="num">+22.5%</td>
+          <td class="num">-4.6%</td>
+          <td class="num">+0.10 pp</td>
+          <td class="num">-0.14 pp</td>
+        </tr><tr><td>ROSET</td>
+          <td class="num">+7.5%</td>
+          <td class="num">+4.9%</td>
+          <td class="num">+37.1%</td>
+          <td class="num">+17.7%</td>
+          <td class="num">-5.0%</td>
+          <td class="num">-0.4%</td>
+          <td class="num">+2.7%</td>
+          <td class="num">-2.4%</td>
+          <td class="num">-0.80 pp</td>
+          <td class="num">-0.03 pp</td>
+        </tr><tr><td>RTDEX</td>
+          <td class="num">+51.1%</td>
+          <td class="num">-9.0%</td>
+          <td class="num">+48.5%</td>
+          <td class="num">-1.4%</td>
+          <td class="num">+29.8%</td>
+          <td class="num">-9.2%</td>
+          <td class="num">+34.5%</td>
+          <td class="num">-11.7%</td>
+          <td class="num">-0.42 pp</td>
+          <td class="num">-0.43 pp</td>
+        </tr><tr><td>SELVA DEX</td>
+          <td class="num">+3.0%</td>
+          <td class="num">+1.7%</td>
+          <td class="num">+51.9%</td>
+          <td class="num">+3.3%</td>
+          <td class="num">-28.6%</td>
+          <td class="num">+2.8%</td>
+          <td class="num">+5.7%</td>
+          <td class="num">-5.9%</td>
+          <td class="num">-1.15 pp</td>
+          <td class="num">+0.11 pp</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div id="tab-nitro" class="tab-panel">
+      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA (PILOTO) ★</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-ma" style="position:absolute;right:50%;width:50.0%;justify-content:center">-36.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:14.4%;justify-content:center">+9.8%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:7.3%;justify-content:center">+3.7%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:13.7%;justify-content:center">-10.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:18.0%;justify-content:center">-13.4%</div>
+        
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:9.3%;justify-content:center">+6.2%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:13.9%;justify-content:center">+15.1%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:19.5%;justify-content:center">-13.2%</div>
+          </div><div class="bar-tot">&nbsp;</div></div></div>
+      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
+      <table style="margin-top:16px">
+        <thead>
+          <tr><th rowspan="2">Compañía</th>
+            <th class="grp g-hist" colspan="2">Venta neta/cliente, var %</th>
+            <th class="grp g-vi" colspan="2">Clientes, var %</th>
+            <th class="grp g-tpo" colspan="2">Ticket/cliente, var %</th>
+            <th class="grp g-hist" colspan="2">Mix SKU, var %</th>
+            <th class="grp g-vi" colspan="2">GTN, Δ pp</th></tr>
+          <tr><th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
+            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th>
+            <th class="num th-t">Interanual</th><th class="num th-t">Pre/Post</th>
+            <th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
+            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th></tr>
+        </thead>
+        <tbody><tr class="rec"><td>MBA (PILOTO) <span class="tag ma">PILOTO</span></td>
+          <td class="num">-51.8%</td>
+          <td class="num">-36.3%</td>
+          <td class="num">-19.3%</td>
+          <td class="num">-16.3%</td>
+          <td class="num">-50.9%</td>
+          <td class="num">-33.3%</td>
+          <td class="num">-29.2%</td>
+          <td class="num">-22.3%</td>
+          <td class="num">-2.09 pp</td>
+          <td class="num">-0.10 pp</td>
+        </tr><tr><td>ALMA</td>
+          <td class="num">-33.9%</td>
+          <td class="num">+9.8%</td>
+          <td class="num">-31.6%</td>
+          <td class="num">-11.5%</td>
+          <td class="num">-31.1%</td>
+          <td class="num">+15.7%</td>
+          <td class="num">-32.3%</td>
+          <td class="num">-8.3%</td>
+          <td class="num">-0.31 pp</td>
+          <td class="num">-0.08 pp</td>
+        </tr><tr><td>DEX APURIMAC</td>
+          <td class="num">-11.7%</td>
+          <td class="num">+3.7%</td>
+          <td class="num">+9.4%</td>
+          <td class="num">+4.7%</td>
+          <td class="num">-5.1%</td>
+          <td class="num">+7.3%</td>
+          <td class="num">-16.4%</td>
+          <td class="num">-4.5%</td>
+          <td class="num">-0.78 pp</td>
+          <td class="num">+0.12 pp</td>
+        </tr><tr><td>DEX MINALI</td>
+          <td class="num">-32.1%</td>
+          <td class="num">-10.3%</td>
+          <td class="num">-25.1%</td>
+          <td class="num">+1.5%</td>
+          <td class="num">-29.2%</td>
+          <td class="num">-16.8%</td>
+          <td class="num">-23.2%</td>
+          <td class="num">-12.3%</td>
+          <td class="num">-1.02 pp</td>
+          <td class="num">+0.44 pp</td>
+        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
+          <td class="num">-24.8%</td>
+          <td class="num">-13.4%</td>
+          <td class="num">+1.7%</td>
+          <td class="num">-4.8%</td>
+          <td class="num">-13.6%</td>
+          <td class="num">-8.3%</td>
+          <td class="num">-5.7%</td>
+          <td class="num">-14.8%</td>
+          <td class="num">-0.65 pp</td>
+          <td class="num">-0.07 pp</td>
+        </tr><tr><td>MADEX</td>
+          <td class="num">-14.2%</td>
+          <td class="num">-6.0%</td>
+          <td class="num">-1.5%</td>
+          <td class="num">+4.8%</td>
+          <td class="num">-17.4%</td>
+          <td class="num">-10.5%</td>
+          <td class="num">-8.0%</td>
+          <td class="num">-8.3%</td>
+          <td class="num">-0.82 pp</td>
+          <td class="num">-0.22 pp</td>
+        </tr><tr><td>ROSET</td>
+          <td class="num">+1.6%</td>
+          <td class="num">+6.2%</td>
+          <td class="num">+1.0%</td>
+          <td class="num">+1.0%</td>
+          <td class="num">-2.3%</td>
+          <td class="num">+4.1%</td>
+          <td class="num">+7.1%</td>
+          <td class="num">+0.1%</td>
+          <td class="num">-1.59 pp</td>
+          <td class="num">+0.00 pp</td>
+        </tr><tr><td>RTDEX</td>
+          <td class="num">+4.8%</td>
+          <td class="num">+15.1%</td>
+          <td class="num">-18.4%</td>
+          <td class="num">-1.9%</td>
+          <td class="num">+16.7%</td>
+          <td class="num">+10.5%</td>
+          <td class="num">-12.1%</td>
+          <td class="num">-1.2%</td>
+          <td class="num">-0.56 pp</td>
+          <td class="num">-0.82 pp</td>
+        </tr><tr><td>SELVA DEX</td>
+          <td class="num">-52.8%</td>
+          <td class="num">-13.2%</td>
+          <td class="num">+25.3%</td>
+          <td class="num">-0.2%</td>
+          <td class="num">-58.2%</td>
+          <td class="num">-3.9%</td>
+          <td class="num">-33.6%</td>
+          <td class="num">-16.5%</td>
+          <td class="num">-0.24 pp</td>
+          <td class="num">+0.83 pp</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div class="tbl-note" style="margin-top:12px">
+      ALMA crece +19.8% en venta neta pre/post y +9.8% interanual <b>sin ningún recorte de promociones</b> — más que MBA en ambas ventanas. Eso no invalida el piloto, pero significa que parte del crecimiento de MBA es tendencia de mercado.
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Alicorp · COE Advanced Analytics · Piloto MBA — recorte de promociones de piso ·</span>
+  </div>
+
+</div>
+<script>
+function mostrarTab(ev, id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  ev.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
