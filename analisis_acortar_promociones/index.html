@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimización de promociones — análisis y simulador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF1F5; --surface:#FFFFFF; --ink:#132433; --muted:#5B6E7E;
+  --hair:#DCE3EA; --hair-strong:#C3CDD6;
+  --accent:#0E6E8C; --accent-soft:#E3F0F4;
+  --vol:#15803D; --vol-soft:#E4F2E9; --gasto:#B7791F; --gasto-soft:#F7EEDC;
+  --shadow:0 1px 2px rgba(19,36,51,.05), 0 14px 34px -16px rgba(19,36,51,.20);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D1621; --surface:#16232F; --ink:#EAF1F6; --muted:#94A5B3; --hair:#243542;
+  --hair-strong:#334756; --accent:#38BDD8; --accent-soft:#12303A; --vol:#4ADE80;
+  --vol-soft:#123528; --gasto:#E0A64B; --gasto-soft:#33280F;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);}}
+:root[data-theme="dark"]{
+  --bg:#0D1621; --surface:#16232F; --ink:#EAF1F6; --muted:#94A5B3; --hair:#243542;
+  --hair-strong:#334756; --accent:#38BDD8; --accent-soft:#12303A; --vol:#4ADE80;
+  --vol-soft:#123528; --gasto:#E0A64B; --gasto-soft:#33280F;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased;
+  font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.tnum{font-variant-numeric:tabular-nums}
+/* ===== tabs ===== */
+.tabbar{position:sticky;top:0;z-index:10;display:flex;gap:6px;flex-wrap:wrap;
+  background:var(--bg);border-bottom:1px solid var(--hair);
+  padding:12px clamp(18px,3vw,42px);}
+.tabbar button{font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:600;font-size:.9rem;
+  color:var(--muted);background:transparent;border:1px solid var(--hair);border-radius:999px;
+  padding:8px 16px;cursor:pointer;transition:all .15s}
+.tabbar button:hover{border-color:var(--hair-strong)}
+.tabbar button.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.view{display:none} .view.active{display:block}
+#v-gen .page{max-width:960px; margin:0 auto; padding:clamp(18px,3vw,42px)}
+#v-gen .masthead{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px 16px;
+  border-top:3px solid var(--ink); border-bottom:1px solid var(--hair);
+  padding:8px 0 10px; margin-bottom:20px}
+#v-gen .masthead .sec{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:.95rem}
+#v-gen .masthead .date{color:var(--muted); font-size:.78rem}
+#v-gen .headline{font-family:"Fraunces",Georgia,serif; font-weight:600; line-height:1.02;
+  font-size:clamp(2rem,5.4vw,3.4rem); margin:0 0 14px; letter-spacing:-.01em}
+#v-gen .dek{font-size:1.06rem; color:var(--muted); max-width:64ch; margin:0 0 24px; line-height:1.55}
+#v-gen .dek b{color:var(--ink); font-weight:600}
+#v-gen .dek .gv{color:var(--vol); font-weight:600}
+#v-gen .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hair);
+  border:1px solid var(--hair); border-radius:14px; overflow:hidden; margin-bottom:28px}
+@media (max-width:620px){#v-gen .stats{grid-template-columns:1fr}}
+#v-gen .stat{background:var(--surface); padding:18px 20px}
+#v-gen .stat .v{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(1.6rem,3.6vw,2.2rem);
+  line-height:1; font-variant-numeric:tabular-nums; margin-bottom:6px}
+#v-gen .stat .l{font-size:.82rem; color:var(--muted); line-height:1.4}
+#v-gen .stat.g .v{color:var(--gasto)}
+#v-gen .stat.a .v{color:var(--accent)}
+#v-gen .h2{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:1.25rem; margin:0 0 3px}
+#v-gen .sub{color:var(--muted); font-size:.9rem; margin:0 0 14px}
+#v-gen .card{background:var(--surface); border:1px solid var(--hair); border-radius:16px;
+  box-shadow:var(--shadow); padding:20px 22px; margin-bottom:26px}
+#v-gen /* contraste gasto vs volumen */
+.leg{display:flex; gap:18px; font-size:.8rem; color:var(--muted); margin-bottom:14px}
+#v-gen .leg span{display:inline-flex; align-items:center; gap:7px}
+#v-gen .leg i{width:12px;height:12px;border-radius:3px;display:inline-block}
+#v-gen .gv-tbl{border:1px solid var(--hair); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); margin-bottom:26px}
+#v-gen .gvrow{display:grid; grid-template-columns:100px 1fr 52px; gap:14px; align-items:center;
+  padding:14px 20px; background:var(--surface); border-bottom:1px solid var(--hair)}
+#v-gen .gvrow:last-child{border-bottom:0}
+#v-gen .gvrow .cat{font-weight:600; font-size:.95rem}
+#v-gen .bars{display:flex; flex-direction:column; gap:6px}
+#v-gen .brow{display:flex; align-items:center; gap:8px}
+#v-gen .track{flex:1; height:13px; background:var(--bg); border-radius:5px; overflow:hidden}
+#v-gen .f-g{height:100%; background:var(--gasto); border-radius:5px}
+#v-gen .f-v{height:100%; background:var(--vol); border-radius:5px}
+#v-gen .pct{width:54px; font-variant-numeric:tabular-nums; font-weight:600; font-size:.84rem}
+#v-gen .pct.g{color:var(--gasto)}
+#v-gen .pct.v{color:var(--vol)}
+#v-gen .mult{justify-self:center; font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:1.15rem; color:var(--gasto)}
+#v-gen /* maduracion */
+.chart-svg{width:100%; height:auto; display:block; overflow:visible}
+#v-gen .axis text{fill:var(--muted); font-size:11px}
+#v-gen .gl{stroke:var(--hair); stroke-width:1}
+#v-gen .mline{fill:none; stroke:var(--accent); stroke-width:2.5; stroke-linejoin:round}
+#v-gen .mark-l{stroke:var(--gasto); stroke-width:1.5; stroke-dasharray:4 3}
+#v-gen .mark-t{fill:var(--gasto); font-size:12px; font-weight:600}
+#v-gen .area{fill:var(--accent-soft); opacity:.5}
+#v-gen /* duracion */
+.dur .bar{display:flex; height:38px; border-radius:10px; overflow:hidden; border:1px solid var(--hair)}
+#v-gen .dur .seg{display:flex; align-items:center; justify-content:center; color:#fff; font-weight:600; font-size:.85rem}
+#v-gen .dur .lbls{display:flex; justify-content:space-between; margin-top:8px; font-size:.8rem; color:var(--muted)}
+#v-gen .dur .lbls b{color:var(--ink)}
+#v-gen footer{margin-top:22px; color:var(--muted); font-size:.76rem; line-height:1.6}
+#v-gen footer b{color:var(--ink)}
+@media print{#v-gen body{background:#fff}
+#v-gen .card, #v-gen .gv-tbl, #v-gen .stats{box-shadow:none}}
+#v-sim .wrap{max-width:960px; margin:0 auto; padding:clamp(18px,3vw,40px)}
+#v-sim .top{border-top:3px solid var(--ink); border-bottom:1px solid var(--hair); padding:8px 0 10px; margin-bottom:18px;
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px 16px; align-items:baseline}
+#v-sim .top .k{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:.92rem}
+#v-sim .top .d{color:var(--muted); font-size:.78rem}
+#v-sim h1{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(1.6rem,4vw,2.3rem);
+  line-height:1.05; margin:.3rem 0 .4rem}
+#v-sim .lead{color:var(--muted); font-size:.98rem; max-width:64ch; margin:0 0 22px}
+#v-sim .lead b{color:var(--ink); font-weight:600}
+#v-sim .ctrls{display:grid; grid-template-columns:1fr 1.2fr 1fr; gap:14px; margin-bottom:18px}
+@media (max-width:720px){#v-sim .ctrls{grid-template-columns:1fr}}
+#v-sim .cbox{background:var(--surface); border:1px solid var(--hair); border-radius:14px; padding:16px 18px; box-shadow:var(--shadow)}
+#v-sim .cbox .cl{font-size:.8rem; color:var(--muted); font-weight:600; margin-bottom:10px}
+#v-sim select{width:100%; font:inherit; font-weight:600; font-size:1rem; padding:10px 12px; border-radius:10px;
+  border:1px solid var(--hair-strong); background:var(--bg); color:var(--ink); cursor:pointer}
+#v-sim .seg{display:flex; background:var(--bg); border:1px solid var(--hair); border-radius:10px; padding:4px; gap:4px}
+#v-sim .seg button{flex:1; border:0; background:transparent; color:var(--muted); font:inherit; font-weight:600;
+  font-size:.82rem; padding:9px 4px; border-radius:7px; cursor:pointer; transition:background .15s,color .15s}
+#v-sim .seg button[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(19,36,51,.12)}
+#v-sim .slider{display:flex; align-items:center; gap:12px}
+#v-sim .slider input[type=range]{flex:1; accent-color:var(--accent)}
+#v-sim .slider .nd{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:1.5rem; min-width:2ch; text-align:center; font-variant-numeric:tabular-nums}
+#v-sim .slider .u{font-size:.8rem; color:var(--muted)}
+#v-sim .banner{display:flex; gap:12px; align-items:flex-start; border-radius:12px; padding:13px 16px; margin-bottom:18px; font-size:.9rem}
+#v-sim .banner .m{flex:none; width:26px; height:26px; border-radius:7px; display:grid; place-items:center; font-weight:800; font-size:.85rem}
+#v-sim .banner.ok{background:var(--vol-soft)}
+#v-sim .banner.ok .m{background:var(--vol); color:#fff}
+#v-sim .banner.wait{background:var(--gasto-soft)}
+#v-sim .banner.wait .m{background:var(--gasto); color:#fff}
+#v-sim .banner p{margin:0}
+#v-sim .banner b{color:var(--ink)}
+#v-sim .res{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hair);
+  border:1px solid var(--hair); border-radius:14px; overflow:hidden; margin-bottom:22px}
+@media (max-width:620px){#v-sim .res{grid-template-columns:1fr}}
+#v-sim .rc{background:var(--surface); padding:20px 20px}
+#v-sim .rc .l{font-size:.78rem; color:var(--muted); font-weight:600; margin-bottom:8px}
+#v-sim .rc .v{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(1.6rem,3.6vw,2.2rem);
+  line-height:1; font-variant-numeric:tabular-nums}
+#v-sim .rc .u{font-size:.76rem; color:var(--muted); margin-top:7px}
+#v-sim .rc.save .v{color:var(--gasto)}
+#v-sim .rc.risk .v{color:var(--vol)}
+#v-sim .card{background:var(--surface); border:1px solid var(--hair); border-radius:16px; box-shadow:var(--shadow);
+  padding:18px 20px; margin-bottom:26px}
+#v-sim .chart-h{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; align-items:baseline; margin-bottom:8px}
+#v-sim .chart-h .t{font-size:.92rem; font-weight:700}
+#v-sim .legend{display:flex; gap:14px; font-size:.76rem; color:var(--muted); flex-wrap:wrap}
+#v-sim .legend span{display:inline-flex; align-items:center; gap:6px}
+#v-sim .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+#v-sim .legend i.line{width:16px;height:0;border-top:2.5px solid var(--vol);border-radius:0}
+#v-sim .chart-svg{width:100%; height:auto; display:block; overflow:visible}
+#v-sim .axis text{fill:var(--muted); font-size:10px}
+#v-sim .gl{stroke:var(--hair); stroke-width:1}
+#v-sim .hoy{stroke:var(--ink); stroke-width:1.3; stroke-dasharray:3 3}
+#v-sim .dlab{fill:var(--muted); font-size:10px; font-weight:600}
+#v-sim .pastfill{fill:var(--ink); opacity:.04}
+#v-sim .tbl{border:1px solid var(--hair); border-radius:14px; overflow:hidden; box-shadow:var(--shadow)}
+#v-sim .tbl .hd, #v-sim .pr{display:grid; grid-template-columns:1fr 70px 100px; gap:12px; padding:11px 18px; align-items:center}
+#v-sim .tbl .hd{background:var(--surface); font-size:.74rem; color:var(--muted); font-weight:600; border-bottom:1px solid var(--hair)}
+#v-sim .tbl .hd .r, #v-sim .pr .r{text-align:right}
+#v-sim .pr{background:var(--surface); border-bottom:1px solid var(--hair); font-size:.85rem}
+#v-sim .pr:last-child{border-bottom:0}
+#v-sim .pr .nm{font-weight:500}
+#v-sim .pr .r{font-variant-numeric:tabular-nums}
+#v-sim .h2{font-size:.95rem; font-weight:700; margin:0 0 10px}
+#v-apil .page{max-width:960px; margin:0 auto; padding:clamp(18px,3vw,42px)}
+#v-apil .masthead{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px 16px;
+  border-top:3px solid var(--ink); border-bottom:1px solid var(--hair); padding:8px 0 10px; margin-bottom:20px}
+#v-apil .masthead .sec{font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:.95rem}
+#v-apil .masthead .date{color:var(--muted); font-size:.78rem}
+#v-apil .headline{font-family:"Fraunces",Georgia,serif; font-weight:600; line-height:1.02;
+  font-size:clamp(1.9rem,5.2vw,3.2rem); margin:0 0 14px; letter-spacing:-.01em}
+#v-apil .dek{font-size:1.06rem; color:var(--muted); max-width:64ch; margin:0 0 24px; line-height:1.55}
+#v-apil .dek b{color:var(--ink); font-weight:600}
+#v-apil .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hair);
+  border:1px solid var(--hair); border-radius:14px; overflow:hidden; margin-bottom:26px}
+@media (max-width:620px){#v-apil .stats{grid-template-columns:1fr}}
+#v-apil .stat{background:var(--surface); padding:18px 20px}
+#v-apil .stat .v{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(1.5rem,3.4vw,2.1rem);
+  line-height:1; font-variant-numeric:tabular-nums; margin-bottom:6px}
+#v-apil .stat .l{font-size:.82rem; color:var(--muted); line-height:1.4}
+#v-apil .stat.g .v{color:var(--gasto)}
+#v-apil .stat.a .v{color:var(--accent)}
+#v-apil .h2{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:1.25rem; margin:0 0 3px}
+#v-apil .sub{color:var(--muted); font-size:.9rem; margin:0 0 14px}
+#v-apil .card{background:var(--surface); border:1px solid var(--hair); border-radius:16px; box-shadow:var(--shadow); padding:20px 22px; margin-bottom:26px}
+#v-apil .legend{display:flex; gap:16px; font-size:.8rem; color:var(--muted); margin-bottom:10px}
+#v-apil .legend span{display:inline-flex; align-items:center; gap:7px}
+#v-apil .legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+#v-apil .chart-svg{width:100%; height:auto; display:block; overflow:visible}
+#v-apil .axis text{fill:var(--muted); font-size:11px}
+#v-apil .gl{stroke:var(--hair); stroke-width:1}
+#v-apil .conc{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:26px}
+@media (max-width:620px){#v-apil .conc{grid-template-columns:1fr}}
+#v-apil .cc{border:1px solid var(--gasto); background:var(--gasto-soft); border-radius:14px; padding:18px}
+#v-apil .cc h3{margin:0 0 10px; font-size:1.05rem}
+#v-apil .cc .big{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:1.9rem; color:var(--gasto); line-height:1; font-variant-numeric:tabular-nums}
+#v-apil .cc p{margin:8px 0 0; font-size:.88rem; color:var(--muted)}
+#v-apil .cc p b{color:var(--ink)}
+#v-apil .mech{background:var(--accent-soft); border-radius:14px; padding:14px 18px; margin-bottom:22px; font-size:.92rem}
+#v-apil .mech b{color:var(--ink)}
+#v-apil footer{color:var(--muted); font-size:.76rem; border-top:1px solid var(--hair); padding-top:12px}
+@media print{#v-apil body{background:#fff}
+#v-apil .card, #v-apil .stats{box-shadow:none}}
+</style>
+</head>
+<body>
+<nav class="tabbar">
+<button data-t="v-gen" class="active">Gasto vs volumen</button>
+<button data-t="v-sim">Simulador</button>
+<button data-t="v-apil">Apilamiento por pedido</button>
+</nav>
+<section class="view active" id="v-gen">
+<div class="page">
+
+  <div class="masthead">
+    <span class="sec">Análisis para la optimización de promociones</span>
+    <span class="date">Últimos 3 meses · 7 categorías · negocio CMP</span>
+  </div>
+
+  <h1 class="headline">El gasto crece hasta 6 veces más rápido que el volumen.</h1>
+  <p class="dek">En los días de mayor gasto el <span class="gv">volumen sí sube — entre 25% y 37%,
+  demanda real que se respeta</span> — pero la inversión sube <b>de 2 a 6 veces más</b>. Esa diferencia
+  es descuento que no trae toneladas: <b>se recupera sin resignar volumen</b>.</p>
+
+  <div class="stats">
+    <div class="stat g"><div class="v tnum">hasta 6×</div><div class="l">más rápido crece el gasto que el volumen en días pico</div></div>
+    <div class="stat a"><div class="v tnum">88%</div><div class="l">del descuento ya otorgado al día 25 de una promoción de 30</div></div>
+    <div class="stat"><div class="v tnum">87%</div><div class="l">del gasto se concentra en promociones de 16 a 45 días</div></div>
+  </div>
+
+  <h2 class="h2">Días de mayor gasto: el volumen no acompaña</h2>
+  <p class="sub">Incremento del gasto y del volumen en los días de gasto pico, frente a un día normal.</p>
+  <div class="leg">
+    <span><i style="background:var(--gasto)"></i>Gasto</span>
+    <span><i style="background:var(--vol)"></i>Volumen</span>
+    <span style="color:var(--muted)">La cifra de la derecha: cuántas veces crece más el gasto que el volumen.</span>
+  </div>
+  <div class="gv-tbl" id="gvt"></div>
+
+  <h2 class="h2">Además, duran de más</h2>
+  <p class="sub">Al día 25 ya se otorgó el 88% del descuento; la última semana casi no suma.</p>
+  <div class="card">
+    <svg class="chart-svg" id="chart-v-gen" viewBox="0 0 900 280" preserveAspectRatio="xMidYMid meet"
+      role="img" aria-label="Maduración: el descuento acumulado llega al 88% al día 25 de 30"></svg>
+  </div>
+  <div class="dur" style="margin-bottom:8px">
+    <div class="bar">
+      <div class="seg" style="width:13%; background:var(--accent)">13%</div>
+      <div class="seg" style="width:87%; background:var(--gasto)">87%</div>
+    </div>
+    <div class="lbls">
+      <span><b>1–15 días</b> · 32% de las promos · 13% del gasto</span>
+      <span><b>16–45 días</b> · 68% de las promos · 87% del gasto</span>
+    </div>
+  </div>
+
+</div>
+</section>
+<section class="view" id="v-sim">
+<div class="wrap">
+
+  <div class="top">
+    <span class="k">Simulador de optimización de promociones</span>
+    <span class="d">Septiembre · hoy: día 15 · 1–15 real, 16–30 proyectado</span>
+  </div>
+  <h1>¿Cuándo recortar y cuántos días?</h1>
+  <p class="lead">Elige categoría y ventana de recorte. El simulador indica si <b>aún alcanza este mes</b>
+  o si conviene aplicarlo en <b>octubre</b>. Nivel de gasto normal de <span id="cat-name">—</span> (mediana):
+  <b id="cat-med">—</b>/día.</p>
+
+  <div class="ctrls">
+    <div class="cbox">
+      <div class="cl">Categoría</div>
+      <select id="cat"></select>
+    </div>
+    <div class="cbox">
+      <div class="cl">¿Dónde recortar?</div>
+      <div class="seg" role="group" aria-label="Posición del recorte">
+        <button data-p="inicio" aria-pressed="false">Inicio</button>
+        <button data-p="quincena" aria-pressed="true">Quincena</button>
+        <button data-p="fin" aria-pressed="false">Fin de mes</button>
+      </div>
+    </div>
+    <div class="cbox">
+      <div class="cl">¿Cuántos días?</div>
+      <div class="slider">
+        <input type="range" id="days" min="3" max="7" value="5">
+        <span class="nd" id="nd">5</span><span class="u">días</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner" id="banner"><div class="m" id="b-m">·</div><p id="b-t"></p></div>
+
+  <div class="res">
+    <div class="rc save"><div class="l">Ahorro</div><div class="v tnum" id="r-ahorro">—</div><div class="u">al mes en descuento</div></div>
+    <div class="rc"><div class="l">Volumen impactado</div><div class="v tnum" id="r-imp">—</div><div class="u">toneladas en esos días</div></div>
+    <div class="rc risk"><div class="l">Pérdida estimada de volumen</div><div class="v tnum" id="r-comp">—</div><div class="u">reducción estimada si se recortan esas promociones</div></div>
+  </div>
+
+  <div class="card">
+    <div class="chart-h">
+      <span class="t">Gasto y volumen por día — se resaltan los días recortados</span>
+      <span class="legend">
+        <span><i style="background:var(--gasto)"></i>Gasto</span>
+        <span><i class="line"></i>Volumen</span>
+      </span>
+    </div>
+    <svg class="chart-svg" id="chart-v-sim" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid meet"
+      role="img" aria-label="Gasto diario en barras y volumen en línea, con hoy marcado y la ventana recortada resaltada"></svg>
+  </div>
+
+  <div class="h2">Top 5 promociones — <span id="cat-name2">—</span></div>
+  <div class="tbl" id="tbl">
+    <div class="hd"><span>Promoción</span><span class="r">Vigencia</span><span class="r">Gasto/mes</span></div>
+  </div>
+</div>
+</section>
+<section class="view" id="v-apil">
+<div class="page">
+  <div class="masthead">
+    <span class="sec">Análisis para la optimización de promociones</span>
+    <span class="date">Detalle a nivel de pedido · jun–sep 2026</span>
+  </div>
+
+  <h1 class="headline">El gasto no sigue al volumen: sigue al apilamiento de promociones.</h1>
+  <p class="dek">El detalle por pedido lo confirma: el descuento no se dispara por vender más, sino porque
+  <b>un mismo pedido acumula varias promociones a la vez</b>. Cada promo adicional profundiza el descuento,
+  y una minoría de pedidos apilados concentra casi todo el gasto.</p>
+
+  <div class="stats">
+    <div class="stat g"><div class="v tnum">0.4% → 3.7%</div><div class="l">tasa de descuento de un pedido sin promo vs uno con 4+ promos (Detergentes)</div></div>
+    <div class="stat a"><div class="v tnum">64.5%</div><div class="l">del descuento lo concentra el 17.5% de pedidos con 4+ promos (Detergentes)</div></div>
+    <div class="stat"><div class="v tnum">+15%</div><div class="l">más promos por pedido el día 15 — el apilamiento se intensifica en quincena</div></div>
+  </div>
+
+  <h2 class="h2">A más promos en el pedido, más descuento por venta</h2>
+  <p class="sub">Tasa de descuento (% de la venta) según cuántas promociones se aplican a un mismo pedido.</p>
+  <div class="card">
+    <div class="legend">
+      <span><i style="background:var(--accent)"></i>Aceites</span>
+      <span><i style="background:var(--gasto)"></i>Detergentes</span>
+    </div>
+    <svg class="chart-svg" id="chart-v-apil" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid meet"
+      role="img" aria-label="Tasa de descuento creciente según promos apiladas por pedido"></svg>
+  </div>
+
+  <h2 class="h2">Dónde se concentra el gasto</h2>
+  <p class="sub">Una minoría de pedidos apilados se lleva la mayor parte del descuento.</p>
+  <div class="conc">
+    <div class="cc">
+      <h3>Detergentes</h3>
+      <div class="big">17.5% → 64.5%</div>
+      <p>El <b>17.5% de pedidos</b> (los que apilan 4+ promos) concentra el <b>64.5% del descuento</b>.</p>
+    </div>
+    <div class="cc">
+      <h3>Aceites</h3>
+      <div class="big">27% → 76%</div>
+      <p>Los pedidos con <b>2+ promos (27%)</b> concentran el <b>76% del descuento</b>.</p>
+    </div>
+  </div>
+
+  <h2 class="h2">Es el mismo pedido de siempre — no más volumen</h2>
+  <p class="sub">El cliente hace ~1 pedido en todos los niveles; lo que cambia es cuántas promos apila en él.</p>
+  <div class="conc">
+    <div class="cc" style="border-color:var(--accent); background:var(--accent-soft)">
+      <h3>El mismo pedido</h3>
+      <div class="big" style="color:var(--accent)">~1.2</div>
+      <p>pedidos por cliente, <b>igual en todos los niveles</b> (de 0 a 4+ promos). No compran más veces — apilan más promos en el pedido habitual.</p>
+    </div>
+    <div class="cc">
+      <h3>Descuento por pedido</h3>
+      <div class="big">×26 a ×59</div>
+      <p>salta el descuento del pedido al pasar de 0 a 4+ promos (Aceites ×26, Detergentes ×59). Y es un <b>grupo de clientes recurrente</b>, estable mes a mes.</p>
+    </div>
+  </div>
+
+  <div class="mech">
+    <b>Por qué el día 15.</b> Las promociones viven casi todo el mes, pero en quincena el mismo tipo de
+    pedido acumula más promos a la vez (+15% promos por pedido). Como cada promo apilada multiplica el
+    descuento, el gasto sube mucho más que el volumen — sin que se vendan más toneladas.
+  </div>
+
+  <footer>
+    Base: detalle de pedidos jun–sep 2026. "Promos por pedido" = número de promociones aplicadas a un mismo
+    pedido. La palanca de ahorro es limitar el apilamiento por pedido, no recortar volumen.
+  </footer>
+</div>
+</section>
+<script>
+/* === v-gen === */
+(function(){
+
+/* contraste gasto vs volumen (dias pico vs normal, %) */
+const GV=[
+ {cat:'Aceites',    g:210, v:34, m:6},
+ {cat:'Galletas',   g:105, v:37, m:3},
+ {cat:'Pastas',     g:93,  v:27, m:3},
+ {cat:'Detergentes',g:77,  v:27, m:3},
+ {cat:'Harinas',    g:66,  v:28, m:2},
+ {cat:'Salsas',     g:64,  v:35, m:2},
+ {cat:'Cereales',   g:46,  v:25, m:2}
+];
+const MX=Math.max(...GV.map(c=>c.g));
+const gvt=document.getElementById('gvt');
+GV.forEach(c=>{
+  const el=document.createElement('div'); el.className='gvrow';
+  el.innerHTML=`<div class="cat">${c.cat}</div>
+    <div class="bars">
+      <div class="brow"><div class="track"><div class="f-g" style="width:${(c.g/MX*100).toFixed(1)}%"></div></div><div class="pct g">+${c.g}%</div></div>
+      <div class="brow"><div class="track"><div class="f-v" style="width:${(c.v/MX*100).toFixed(1)}%"></div></div><div class="pct v">+${c.v}%</div></div>
+    </div>
+    <div class="mult">${c.m}×</div>`;
+  gvt.appendChild(el);
+});
+
+/* maduracion */
+const MAD=[2.8,5.8,9.6,13.6,16.5,20.1,23.0,27.4,30.6,34.9,39.3,42.3,46.1,49.2,53.3,56.1,60.0,63.5,66.0,69.3,72.1,75.9,78.5,82.0,85.4,87.8,90.6,92.6,95.0,97.2,99.6];
+(function(){
+  const W=900,H=280,mL=42,mR=20,mT=14,mB=30, iw=W-mL-mR, ih=H-mT-mB;
+  const x=d=>mL+d/30*iw, y=v=>mT+ih-v/100*ih;
+  let s='';
+  for(let g=0;g<=4;g++){const val=g*25,yy=y(val);
+    s+=`<line class="gl" x1="${mL}" y1="${yy.toFixed(1)}" x2="${W-mR}" y2="${yy.toFixed(1)}"/>`;
+    s+=`<text class="axis" x="${mL-6}" y="${(yy+4).toFixed(1)}" text-anchor="end">${val}%</text>`;}
+  for(const d of [0,5,10,15,20,25,30]) s+=`<text class="axis" x="${x(d).toFixed(1)}" y="${H-9}" text-anchor="middle">día ${d}</text>`;
+  let area='M'+x(0)+' '+y(0); MAD.forEach((v,d)=>area+=' L'+x(d).toFixed(1)+' '+y(v).toFixed(1)); area+=' L'+x(30)+' '+y(0)+' Z';
+  s+=`<path class="area" d="${area}"/>`;
+  let ln='';MAD.forEach((v,d)=>ln+=(d===0?'M':'L')+x(d).toFixed(1)+' '+y(v).toFixed(1)+' ');
+  s+=`<path class="mline" d="${ln.trim()}"/>`;
+  s+=`<line class="mark-l" x1="${x(25).toFixed(1)}" y1="${y(87.8).toFixed(1)}" x2="${x(25).toFixed(1)}" y2="${mT+ih}"/>`;
+  s+=`<circle cx="${x(25).toFixed(1)}" cy="${y(87.8).toFixed(1)}" r="4" fill="var(--gasto)"/>`;
+  s+=`<text class="mark-t" x="${(x(25)-8).toFixed(1)}" y="${(y(87.8)-8).toFixed(1)}" text-anchor="end">88% al día 25</text>`;
+  document.getElementById('chart-v-gen').innerHTML=s;
+})();
+
+})();
+/* === v-sim === */
+(function(){
+
+const CATS={"Aceites": {"med": 2351, "serie": [{"d": 1, "inv": 206, "vol": 99513}, {"d": 2, "inv": 1688, "vol": 91296}, {"d": 3, "inv": 1674, "vol": 84105}, {"d": 4, "inv": 1753, "vol": 71588}, {"d": 5, "inv": 1782, "vol": 90886}, {"d": 6, "inv": 1591, "vol": 86206}, {"d": 7, "inv": 2527, "vol": 106577}, {"d": 8, "inv": 1087, "vol": 85343}, {"d": 9, "inv": 2090, "vol": 96915}, {"d": 10, "inv": 1400, "vol": 92249}, {"d": 11, "inv": 1184, "vol": 92257}, {"d": 12, "inv": 3933, "vol": 104286}, {"d": 13, "inv": 2469, "vol": 116208}, {"d": 14, "inv": 5339, "vol": 106987}, {"d": 15, "inv": 8918, "vol": 106864}, {"d": 16, "inv": 2213, "vol": 90418}, {"d": 17, "inv": 2262, "vol": 91499}, {"d": 18, "inv": 2604, "vol": 92932}, {"d": 19, "inv": 2580, "vol": 85132}, {"d": 20, "inv": 2685, "vol": 86339}, {"d": 21, "inv": 2441, "vol": 81367}, {"d": 22, "inv": 3321, "vol": 88677}, {"d": 23, "inv": 2982, "vol": 77621}, {"d": 24, "inv": 3104, "vol": 80593}, {"d": 25, "inv": 4000, "vol": 87659}, {"d": 26, "inv": 2493, "vol": 86917}, {"d": 27, "inv": 2787, "vol": 82490}, {"d": 28, "inv": 1951, "vol": 57894}, {"d": 29, "inv": 1838, "vol": 65862}, {"d": 30, "inv": 1985, "vol": 72763}], "promos": [{"nom": "MIRASOL DOMESTICO 3.5%", "vig": 20, "gasto": 7635}, {"nom": "CIL ALB 900 ML 3%", "vig": 25, "gasto": 6009}, {"nom": "CIL 900 ML 3%", "vig": 25, "gasto": 5889}, {"nom": "CI CR SUR 1.5%", "vig": 30, "gasto": 5173}, {"nom": "CI CR SUR 1.5%", "vig": 31, "gasto": 4733}], "n": 31}, "Detergentes": {"med": 1304, "serie": [{"d": 1, "inv": 492, "vol": 83213}, {"d": 2, "inv": 344, "vol": 113012}, {"d": 3, "inv": 137, "vol": 102252}, {"d": 4, "inv": 112, "vol": 105855}, {"d": 5, "inv": 196, "vol": 95939}, {"d": 6, "inv": 1191, "vol": 83767}, {"d": 7, "inv": 166, "vol": 99786}, {"d": 8, "inv": 111, "vol": 99759}, {"d": 9, "inv": 128, "vol": 112139}, {"d": 10, "inv": 128, "vol": 107041}, {"d": 11, "inv": 1220, "vol": 110959}, {"d": 12, "inv": 4109, "vol": 121323}, {"d": 13, "inv": 0, "vol": 10}, {"d": 14, "inv": 5846, "vol": 134230}, {"d": 15, "inv": 6255, "vol": 148396}, {"d": 16, "inv": 1210, "vol": 93825}, {"d": 17, "inv": 1306, "vol": 87324}, {"d": 18, "inv": 1343, "vol": 88501}, {"d": 19, "inv": 1405, "vol": 86468}, {"d": 20, "inv": 1440, "vol": 92310}, {"d": 21, "inv": 1548, "vol": 96077}, {"d": 22, "inv": 1514, "vol": 89774}, {"d": 23, "inv": 1279, "vol": 65797}, {"d": 24, "inv": 1475, "vol": 94920}, {"d": 25, "inv": 1371, "vol": 89002}, {"d": 26, "inv": 1396, "vol": 90331}, {"d": 27, "inv": 1496, "vol": 89959}, {"d": 28, "inv": 1303, "vol": 69996}, {"d": 29, "inv": 1318, "vol": 79981}, {"d": 30, "inv": 1743, "vol": 105967}], "promos": [{"nom": "DX-CM-MEGAMARCA-D-ESC.BOLIVAR", "vig": 28, "gasto": 22790}, {"nom": "DX-CM-MEGAMARCA-D-ESC.BOLIVAR", "vig": 31, "gasto": 19043}, {"nom": "DX-CM-MEGAMARCA-D-ESC.BOLIVAR", "vig": 27, "gasto": 18124}, {"nom": "DX-CM-MEGAMARCA2-D-ESC.BOLIVAR", "vig": 31, "gasto": 11168}, {"nom": "DX-CM-MEGAMARCA2-D-ESC.BOLIVAR", "vig": 28, "gasto": 10942}], "n": 42}, "Pastas": {"med": 6679, "serie": [{"d": 1, "inv": 7473, "vol": 130449}, {"d": 2, "inv": 7912, "vol": 147206}, {"d": 3, "inv": 8291, "vol": 150947}, {"d": 4, "inv": 10159, "vol": 142699}, {"d": 5, "inv": 8469, "vol": 150170}, {"d": 6, "inv": 4685, "vol": 121364}, {"d": 7, "inv": 4982, "vol": 135814}, {"d": 8, "inv": 4782, "vol": 143228}, {"d": 9, "inv": 6078, "vol": 181424}, {"d": 10, "inv": 6578, "vol": 141232}, {"d": 11, "inv": 4115, "vol": 128782}, {"d": 12, "inv": 6472, "vol": 144769}, {"d": 13, "inv": 0, "vol": 0}, {"d": 14, "inv": 5375, "vol": 154353}, {"d": 15, "inv": 6405, "vol": 170870}, {"d": 16, "inv": 6328, "vol": 116854}, {"d": 17, "inv": 6717, "vol": 129863}, {"d": 18, "inv": 9519, "vol": 138845}, {"d": 19, "inv": 6709, "vol": 125926}, {"d": 20, "inv": 7857, "vol": 133566}, {"d": 21, "inv": 8934, "vol": 150034}, {"d": 22, "inv": 7302, "vol": 135191}, {"d": 23, "inv": 5690, "vol": 92866}, {"d": 24, "inv": 6649, "vol": 126709}, {"d": 25, "inv": 7157, "vol": 132364}, {"d": 26, "inv": 7418, "vol": 132303}, {"d": 27, "inv": 9787, "vol": 130119}, {"d": 28, "inv": 3647, "vol": 80936}, {"d": 29, "inv": 6486, "vol": 118066}, {"d": 30, "inv": 7501, "vol": 130868}], "promos": [{"nom": "DV PM 70 2%", "vig": 31, "gasto": 10556}, {"nom": "DX-CM-001-D-ESC DV PM 2%", "vig": 31, "gasto": 9364}, {"nom": "DX-CM-001-D-ESC DV PM 2.5%", "vig": 30, "gasto": 8218}, {"nom": "DX-CM-001-D-ESC DV BO M30 2%", "vig": 31, "gasto": 7076}, {"nom": "DX-CM-001-D-ESC DV BO M30 2.5%", "vig": 30, "gasto": 6573}], "n": 172}, "Galletas": {"med": 10629, "serie": [{"d": 1, "inv": 6818, "vol": 36239}, {"d": 2, "inv": 6563, "vol": 42188}, {"d": 3, "inv": 6961, "vol": 37590}, {"d": 4, "inv": 5872, "vol": 38062}, {"d": 5, "inv": 8257, "vol": 42302}, {"d": 6, "inv": 6790, "vol": 36353}, {"d": 7, "inv": 8144, "vol": 40761}, {"d": 8, "inv": 13532, "vol": 49593}, {"d": 9, "inv": 15063, "vol": 50267}, {"d": 10, "inv": 14249, "vol": 50206}, {"d": 11, "inv": 10760, "vol": 43825}, {"d": 12, "inv": 16094, "vol": 53323}, {"d": 13, "inv": 0, "vol": 0}, {"d": 14, "inv": 10662, "vol": 45617}, {"d": 15, "inv": 12529, "vol": 50205}, {"d": 16, "inv": 9717, "vol": 37739}, {"d": 17, "inv": 10226, "vol": 39035}, {"d": 18, "inv": 9616, "vol": 38016}, {"d": 19, "inv": 10597, "vol": 40045}, {"d": 20, "inv": 11332, "vol": 38408}, {"d": 21, "inv": 13711, "vol": 46100}, {"d": 22, "inv": 13022, "vol": 44172}, {"d": 23, "inv": 10443, "vol": 26729}, {"d": 24, "inv": 10932, "vol": 39695}, {"d": 25, "inv": 11737, "vol": 39576}, {"d": 26, "inv": 11489, "vol": 42037}, {"d": 27, "inv": 10216, "vol": 36774}, {"d": 28, "inv": 12047, "vol": 36205}, {"d": 29, "inv": 9384, "vol": 32756}, {"d": 30, "inv": 12585, "vol": 45673}], "promos": [{"nom": "DX-CM-012-D-SIM-GALLETAS CORE GMIN", "vig": 29, "gasto": 18530}, {"nom": "DX-CM-012-D-SIM-GALLETAS CORE GMIN", "vig": 28, "gasto": 18138}, {"nom": "DX-CM-TRD-012-014-D-SIM COMB IMPU ", "vig": 30, "gasto": 11558}, {"nom": "DX-CM-012-D-ESC-Promo Casino FP G0", "vig": 27, "gasto": 9222}, {"nom": "DX-CM-012-D-ESC DCTO TORRE 1 G09", "vig": 31, "gasto": 9096}], "n": 394}, "Cereales": {"med": 13882, "serie": [{"d": 1, "inv": 14323, "vol": 10791}, {"d": 2, "inv": 13913, "vol": 10297}, {"d": 3, "inv": 14054, "vol": 10196}, {"d": 4, "inv": 15540, "vol": 11375}, {"d": 5, "inv": 14981, "vol": 10680}, {"d": 6, "inv": 11447, "vol": 8843}, {"d": 7, "inv": 15728, "vol": 12000}, {"d": 8, "inv": 14365, "vol": 10929}, {"d": 9, "inv": 16619, "vol": 11848}, {"d": 10, "inv": 14646, "vol": 10783}, {"d": 11, "inv": 14452, "vol": 10345}, {"d": 12, "inv": 13499, "vol": 9455}, {"d": 13, "inv": 0, "vol": 0}, {"d": 14, "inv": 13814, "vol": 10216}, {"d": 15, "inv": 15679, "vol": 12520}, {"d": 16, "inv": 12269, "vol": 9318}, {"d": 17, "inv": 10559, "vol": 9031}, {"d": 18, "inv": 15727, "vol": 11215}, {"d": 19, "inv": 13134, "vol": 10186}, {"d": 20, "inv": 13316, "vol": 9066}, {"d": 21, "inv": 15111, "vol": 10462}, {"d": 22, "inv": 13525, "vol": 9523}, {"d": 23, "inv": 13906, "vol": 9338}, {"d": 24, "inv": 13261, "vol": 9141}, {"d": 25, "inv": 13859, "vol": 9456}, {"d": 26, "inv": 13777, "vol": 9921}, {"d": 27, "inv": 12398, "vol": 8722}, {"d": 28, "inv": 10153, "vol": 6833}, {"d": 29, "inv": 10136, "vol": 7856}, {"d": 30, "inv": 15353, "vol": 10655}], "promos": [{"nom": "Angel BO pt1", "vig": 31, "gasto": 21640}, {"nom": "DX-CM-014-D-ESC Angel BO pt1", "vig": 31, "gasto": 16635}, {"nom": "DX-CM-014-D-ESC Angel BO pt1", "vig": 14, "gasto": 12088}, {"nom": "DX-CM-014-D-ESC Angel BO pt1", "vig": 30, "gasto": 12075}, {"nom": "Angel G09 pt3 G1", "vig": 31, "gasto": 11724}], "n": 225}, "Salsas": {"med": 9602, "serie": [{"d": 1, "inv": 7584, "vol": 22938}, {"d": 2, "inv": 7969, "vol": 24463}, {"d": 3, "inv": 9027, "vol": 24454}, {"d": 4, "inv": 7977, "vol": 23114}, {"d": 5, "inv": 8945, "vol": 25378}, {"d": 6, "inv": 10096, "vol": 26886}, {"d": 7, "inv": 9928, "vol": 26838}, {"d": 8, "inv": 12900, "vol": 32814}, {"d": 9, "inv": 12502, "vol": 32801}, {"d": 10, "inv": 10007, "vol": 27569}, {"d": 11, "inv": 14749, "vol": 36593}, {"d": 12, "inv": 12788, "vol": 33142}, {"d": 13, "inv": 11018, "vol": 27937}, {"d": 14, "inv": 10702, "vol": 28941}, {"d": 15, "inv": 13164, "vol": 34008}, {"d": 16, "inv": 10129, "vol": 26356}, {"d": 17, "inv": 10010, "vol": 25305}, {"d": 18, "inv": 9536, "vol": 24277}, {"d": 19, "inv": 10121, "vol": 25043}, {"d": 20, "inv": 9421, "vol": 24322}, {"d": 21, "inv": 9356, "vol": 24549}, {"d": 22, "inv": 8748, "vol": 22813}, {"d": 23, "inv": 8091, "vol": 22498}, {"d": 24, "inv": 9819, "vol": 24546}, {"d": 25, "inv": 8473, "vol": 22902}, {"d": 26, "inv": 9669, "vol": 23670}, {"d": 27, "inv": 7491, "vol": 21259}, {"d": 28, "inv": 5242, "vol": 15426}, {"d": 29, "inv": 6357, "vol": 18380}, {"d": 30, "inv": 9480, "vol": 25914}], "promos": [{"nom": "DX-CM-017-D-ESC PICN SC G9 G3", "vig": 31, "gasto": 10959}, {"nom": "DX-CM-017-D-ESC MAYO LIM BO G1", "vig": 31, "gasto": 10591}, {"nom": "DX-CM-017-D-ESC MAYO G9 G3", "vig": 31, "gasto": 10361}, {"nom": "DX-CM-017-D-ESC MAYO LIM BO G1", "vig": 30, "gasto": 9862}, {"nom": "DX-CM-017-D-ESC MAYO LIM PM G1", "vig": 21, "gasto": 9086}], "n": 329}, "Harinas": {"med": 1371, "serie": [{"d": 1, "inv": 1249, "vol": 19952}, {"d": 2, "inv": 1230, "vol": 20240}, {"d": 3, "inv": 1251, "vol": 21262}, {"d": 4, "inv": 1035, "vol": 17708}, {"d": 5, "inv": 1066, "vol": 18371}, {"d": 6, "inv": 1331, "vol": 18159}, {"d": 7, "inv": 1262, "vol": 20455}, {"d": 8, "inv": 1302, "vol": 20856}, {"d": 9, "inv": 2321, "vol": 26797}, {"d": 10, "inv": 2274, "vol": 23623}, {"d": 11, "inv": 3118, "vol": 27073}, {"d": 12, "inv": 1375, "vol": 18736}, {"d": 13, "inv": 1541, "vol": 18806}, {"d": 14, "inv": 1586, "vol": 19523}, {"d": 15, "inv": 1991, "vol": 24268}, {"d": 16, "inv": 1360, "vol": 16974}, {"d": 17, "inv": 1127, "vol": 15994}, {"d": 18, "inv": 1246, "vol": 18145}, {"d": 19, "inv": 1473, "vol": 19660}, {"d": 20, "inv": 1252, "vol": 17835}, {"d": 21, "inv": 1350, "vol": 18219}, {"d": 22, "inv": 1287, "vol": 18004}, {"d": 23, "inv": 1857, "vol": 22002}, {"d": 24, "inv": 2147, "vol": 21508}, {"d": 25, "inv": 1483, "vol": 17423}, {"d": 26, "inv": 1757, "vol": 18707}, {"d": 27, "inv": 1388, "vol": 16520}, {"d": 28, "inv": 1450, "vol": 14867}, {"d": 29, "inv": 1368, "vol": 15555}, {"d": 30, "inv": 2088, "vol": 20910}], "promos": [{"nom": "CH ICA CHIN 2%", "vig": 31, "gasto": 6095}, {"nom": "BFD G1 MIN 2%", "vig": 31, "gasto": 4980}, {"nom": "FAV NN 2%", "vig": 31, "gasto": 4745}, {"nom": "BFD LNSCH MIN 2%", "vig": 31, "gasto": 4553}, {"nom": "FAV NN 2%", "vig": 31, "gasto": 4538}], "n": 83}};
+const LAST=30, HOY=15, PL=0.003, PH=0.015; // pérdida: 0.3%–1.5% del volumen impactado
+const fmt=n=>Math.round(n).toLocaleString('es-PE');
+let cat=Object.keys(CATS)[0], pos='quincena', ndays=5;
+
+// poblar selector
+const selCat=document.getElementById('cat');
+Object.keys(CATS).forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; selCat.appendChild(o); });
+selCat.value=cat;
+
+function serie(){return CATS[cat].serie;}
+function win(){
+  if(pos==='inicio') return [1, ndays];
+  if(pos==='fin')    return [LAST-ndays+1, LAST];
+  return [16-ndays, 15];
+}
+function sumInv(lo,hi){let a=0;serie().forEach(x=>{if(x.d>=lo&&x.d<=hi)a+=x.inv;});return a;}
+function calc(){
+  const [lo,hi]=win(); let ahorro=0, vol=0;
+  serie().forEach(x=>{ if(x.d>=lo&&x.d<=hi){ahorro+=x.inv; vol+=x.vol;} });
+  return {lo,hi,ahorro,vol};
+}
+function perdidaTxt(volKg){
+  const t=volKg/1000, lo=Math.round(t*PL), hi=Math.round(t*PH);
+  if(hi<1) return '< 1 tn';
+  if(lo<1) return 'hasta '+hi+' tn';
+  return lo+' a '+hi+' tn';
+}
+function render(){
+  document.getElementById('cat-name').textContent=cat;
+  document.getElementById('cat-name2').textContent=cat;
+  document.getElementById('cat-med').textContent='S/ '+fmt(CATS[cat].med);
+  const r=calc();
+  document.getElementById('r-ahorro').textContent='S/ '+fmt(r.ahorro);
+  document.getElementById('r-imp').textContent=(r.vol/1000).toFixed(0)+' tn';
+  document.getElementById('r-comp').textContent=perdidaTxt(r.vol);
+
+  const banner=document.getElementById('banner'), bm=document.getElementById('b-m'), bt=document.getElementById('b-t');
+  if(r.lo > HOY){
+    banner.className='banner ok'; bm.textContent='✓';
+    bt.innerHTML='<b>Aún alcanza este mes.</b> Faltan estos días (del '+r.lo+' al '+r.hi+'). Ahorro capturable en septiembre: <b>S/ '+fmt(r.ahorro)+'</b>.';
+  } else if(r.hi <= HOY){
+    banner.className='banner wait'; bm.textContent='!';
+    bt.innerHTML='<b>Esta ventana ya transcurrió en septiembre</b> (hoy es día '+HOY+'). Aplícala en <b>octubre</b> — ahorro proyectado <b>S/ '+fmt(r.ahorro)+'</b>.';
+  } else {
+    const em=sumInv(HOY+1, r.hi);
+    banner.className='banner wait'; bm.textContent='◐';
+    bt.innerHTML='<b>Ventana parcial.</b> Quedan '+(r.hi-HOY)+' de '+ndays+' días este mes (ahorro <b>S/ '+fmt(em)+'</b>); la ventana completa, en <b>octubre</b>.';
+  }
+  document.querySelectorAll('#v-sim .seg button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.p===pos));
+  drawChart(r); drawTable();
+}
+function drawChart(r){
+  const svg=document.getElementById('chart-v-sim'), S=serie();
+  const W=900,H=300,mL=42,mR=44,mT=16,mB=26, iw=W-mL-mR, ih=H-mT-mB;
+  const n=S.length, step=iw/n, bw=step*0.6;
+  const maxInv=Math.max(...S.map(d=>d.inv))*1.08, maxVol=Math.max(...S.map(d=>d.vol))*1.08;
+  const yI=v=>mT+ih-v/maxInv*ih, yV=v=>mT+ih-v/maxVol*ih, x=i=>mL+step*i+(step-bw)/2;
+  let s='';
+  const xh=mL+step*HOY;
+  s+=`<rect class="pastfill" x="${mL}" y="${mT}" width="${(xh-mL).toFixed(1)}" height="${ih}"/>`;
+  for(let g=0;g<=4;g++){const val=maxInv*g/4,yy=yI(val);
+    s+=`<line class="gl" x1="${mL}" y1="${yy.toFixed(1)}" x2="${W-mR}" y2="${yy.toFixed(1)}"/>`;
+    s+=`<text class="axis" x="${mL-6}" y="${(yy+3).toFixed(1)}" text-anchor="end">${Math.round(val/1000)}k</text>`;}
+  s+=`<line class="hoy" x1="${xh.toFixed(1)}" y1="${mT}" x2="${xh.toFixed(1)}" y2="${mT+ih}"/>`;
+  s+=`<text class="dlab" x="${(xh-6).toFixed(1)}" y="${mT+10}" text-anchor="end">transcurrido</text>`;
+  s+=`<text class="dlab" x="${(xh+6).toFixed(1)}" y="${mT+10}" text-anchor="start">hoy ▸ por venir</text>`;
+  S.forEach((d,i)=>{
+    const cut=d.d>=r.lo&&d.d<=r.hi, yb=yI(d.inv), hb=(mT+ih)-yb;
+    const col=cut?'var(--gasto)':'var(--hair-strong)'; const proy=d.d>15; const op=cut?(proy?0.7:1):(proy?0.35:0.55);
+    s+=`<rect x="${x(i).toFixed(1)}" y="${yb.toFixed(1)}" width="${bw.toFixed(1)}" height="${hb.toFixed(1)}" rx="1" fill="${col}" opacity="${op}"/>`;
+    if(d.d%3===1||d.d===30) s+=`<text class="axis" x="${(x(i)+bw/2).toFixed(1)}" y="${H-8}" text-anchor="middle">${d.d}</text>`;
+  });
+  let p='';S.forEach((d,i)=>{p+=(i===0?'M':'L')+(x(i)+bw/2).toFixed(1)+' '+yV(d.vol).toFixed(1)+' ';});
+  s+=`<path d="${p.trim()}" fill="none" stroke="var(--vol)" stroke-width="2.4" stroke-linejoin="round"/>`;
+  for(let g=0;g<=4;g++){const val=maxVol*g/4,yy=yV(val);
+    s+=`<text class="axis" x="${W-mR+6}" y="${(yy+3).toFixed(1)}" text-anchor="start" style="fill:var(--vol)">${Math.round(val/1000)}k</text>`;}
+  svg.innerHTML=s;
+}
+function drawTable(){
+  const tbl=document.getElementById('tbl');
+  tbl.querySelectorAll('.pr').forEach(e=>e.remove());
+  CATS[cat].promos.forEach(pr=>{ const el=document.createElement('div'); el.className='pr';
+    el.innerHTML=`<div class="nm">${pr.nom}</div><div class="r">${pr.vig} días</div><div class="r">S/ ${fmt(pr.gasto)}</div>`;
+    tbl.appendChild(el); });
+}
+selCat.addEventListener('change',()=>{cat=selCat.value; render();});
+document.querySelectorAll('#v-sim .seg button').forEach(b=>b.addEventListener('click',()=>{pos=b.dataset.p; render();}));
+const sl=document.getElementById('days');
+sl.addEventListener('input',()=>{ndays=+sl.value; document.getElementById('nd').textContent=ndays; render();});
+render();
+
+})();
+/* === v-apil === */
+(function(){
+
+const B=['0','1','2','3','4+'];
+const AC=[1.4,2.7,4.2,4.6,4.6];      // Aceites tasa %
+const DE=[0.4,2.2,3.1,3.0,3.7];      // Detergentes tasa %
+(function(){
+  const W=900,H=300,mL=42,mR=20,mT=16,mB=40, iw=W-mL-mR, ih=H-mT-mB;
+  const n=B.length, grp=iw/n, bw=grp*0.30, gap=grp*0.06;
+  const maxV=5;
+  const y=v=>mT+ih-v/maxV*ih;
+  let s='';
+  for(let g=0;g<=5;g++){const val=g,yy=y(val);
+    s+=`<line class="gl" x1="${mL}" y1="${yy.toFixed(1)}" x2="${W-mR}" y2="${yy.toFixed(1)}"/>`;
+    s+=`<text class="axis" x="${mL-6}" y="${(yy+3).toFixed(1)}" text-anchor="end">${val}%</text>`;}
+  B.forEach((lab,i)=>{
+    const cx=mL+grp*i+grp/2;
+    const x1=cx-bw-gap/2, x2=cx+gap/2;
+    const h1=(mT+ih)-y(AC[i]), h2=(mT+ih)-y(DE[i]);
+    s+=`<rect x="${x1.toFixed(1)}" y="${y(AC[i]).toFixed(1)}" width="${bw.toFixed(1)}" height="${h1.toFixed(1)}" rx="2" fill="var(--accent)"/>`;
+    s+=`<rect x="${x2.toFixed(1)}" y="${y(DE[i]).toFixed(1)}" width="${bw.toFixed(1)}" height="${h2.toFixed(1)}" rx="2" fill="var(--gasto)"/>`;
+    s+=`<text class="axis" x="${cx.toFixed(1)}" y="${H-22}" text-anchor="middle">${lab} promo${lab==='1'?'':'s'}</text>`;
+  });
+  document.getElementById('chart-v-apil').innerHTML=s;
+})();
+
+})();
+/* ===== conmutador de pestañas ===== */
+document.querySelectorAll('.tabbar button').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var id=btn.getAttribute('data-t');
+    document.querySelectorAll('.tabbar button').forEach(function(b){b.classList.toggle('active',b===btn);});
+    document.querySelectorAll('.view').forEach(function(v){v.classList.toggle('active',v.id===id);});
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
