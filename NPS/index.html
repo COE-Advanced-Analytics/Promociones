@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Encuesta NPS · cuotas</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#2D9C9C; --teal-lt:#E8F4F4; --teal-dk:#1f7070;
+  --gold:#D4A853; --gold-lt:#FBF4E5;
+  --coral:#E85D4C; --coral-lt:#FDECEA;
+  --vi:#7C5CBF;   --vi-lt:#EDE9F8;
+  --green:#1a7a1a; --green-lt:#e8f5e8;
+  --bg:#F0EDE8;   --card:#FFFFFF;
+  --ink:#222220;  --gray:#6B6864; --muted:#A09E9B; --line:#E2DDD8;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+.shell{max-width:1380px;margin:0 auto;padding:24px 32px 40px;display:flex;flex-direction:column;gap:12px}
+.jump{position:sticky;top:8px;z-index:40;display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:7px 10px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.jump-k{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 4px}
+.jump a{text-decoration:none;font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--ink);background:#f6f3ee;border:1px solid transparent;border-radius:20px;padding:5px 11px;transition:background .15s,color .15s,border-color .15s}
+.jump a:hover{background:var(--teal-lt);color:var(--teal-dk)}
+.jump a.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.jump-sep{width:1px;height:18px;background:var(--line);margin:0 4px;flex-shrink:0}
+.jump a.dx{background:var(--teal-lt);color:var(--teal-dk)}
+.jump a.dx.on{background:var(--teal-dk);color:#fff}
+.jump a.dx-ma{background:var(--gold-lt);color:#8a6010}
+.jump a.dx-ma.on{background:var(--gold);color:#fff}
+[id^="sec-"],[id^="dex-"]{scroll-margin-top:64px}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.tb-badge{display:inline-block;background:var(--teal);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:5px}
+.tb-title{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1.1}
+.tb-title em{color:var(--teal);font-style:normal}
+.tb-sub{font-size:12px;color:var(--gray);margin-top:4px}
+.coe{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:40px;padding:6px 14px 6px 7px;box-shadow:0 1px 5px rgba(0,0,0,.06);flex-shrink:0}
+.coe svg{width:26px;height:26px;display:block;flex-shrink:0}
+.coe-name{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--ink);line-height:1.3}
+.coe-sub{font-size:10px;color:var(--gray)}
+.acline{height:2px;border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--teal) 50%,transparent)}
+.banner{background:var(--teal);color:#fff;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.banner.warn{background:#8a6010}
+.banner-icon{font-size:20px;flex-shrink:0}
+.banner b{font-size:14px;font-weight:600;display:block;line-height:1.4}
+.banner small{font-size:11.5px;opacity:.82;margin-top:3px;display:block}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{background:var(--card);border-radius:8px;padding:12px 13px 10px;box-shadow:0 1px 4px rgba(0,0,0,.05);border-top:2.5px solid var(--teal)}
+.kpi.rd{border-top-color:var(--coral)}.kpi.au{border-top-color:var(--gold)}.kpi.vi{border-top-color:var(--vi)}
+.kpi-lbl{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.kpi-n{display:flex;flex-direction:column}
+.kpi-tag{font-size:9px;font-weight:500;color:var(--muted);margin-bottom:2px}
+.kpi-v{font-size:26px;font-weight:700;line-height:1}
+.neg{color:var(--coral)}.tl{color:var(--teal)}.au{color:var(--gold)}.vi{color:var(--vi)}
+.kpi-chip{display:inline-block;margin-top:7px;font-size:9.5px;font-weight:500;padding:3px 10px;border-radius:20px}
+.ch-tl{background:var(--teal-lt);color:var(--teal-dk)}.ch-rd{background:var(--coral-lt);color:var(--coral)}.ch-au{background:var(--gold-lt);color:#8a6010}.ch-vi{background:var(--vi-lt);color:var(--vi)}
+.tbl-card{background:var(--card);border-radius:10px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.tbl-hd{margin-bottom:12px}
+.tbl-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
+.tbl-kicker{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+.tbl-note{font-size:10px;color:var(--gray);margin-top:6px;line-height:1.7;border-left:3px solid var(--teal-lt);padding-left:10px}
+table{width:100%;border-collapse:collapse}
+th{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:7px 11px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.th-t{background:#f4fafa;color:var(--teal-dk)}
+.th-h{background:#fffdf5;color:#9a7020}
+.th-v{background:#f4f0fb;color:var(--vi)}
+.th-f{background:var(--coral-lt);color:var(--coral)}
+thead th[rowspan]{vertical-align:bottom}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.sep{color:var(--gold);font-weight:700}
+th.num{text-align:right}
+tbody td{padding:8px 11px;border-bottom:1px solid #edeae4;vertical-align:middle;white-space:nowrap;font-size:12px;color:var(--ink)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:not(.tot):not(.subtot):hover td{background:#f8f5f0}
+.tot td{background:var(--teal-lt);font-weight:600;border-bottom:none}
+.subtot td{background:#f3f0ea;font-weight:600}
+.r-neg{display:inline-block;background:var(--coral-lt);color:var(--coral);font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px}
+.r-pos{display:inline-block;background:var(--teal-lt);color:var(--teal-dk);font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px}
+.r-ok{display:inline-block;background:var(--green-lt);color:var(--green);font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px}
+.footer{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--line);gap:16px}
+.footer span{font-size:10px;color:var(--muted)}
+.cmp-strip{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+.cmp-box{flex:1;min-width:170px;background:var(--card);border-radius:8px;padding:10px 13px;border:1px solid var(--line);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.cmp-box.est{background:var(--gold-lt);border-color:#e6d4a0}
+.cmp-lbl{font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.cmp-v{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;line-height:1.2;color:var(--ink)}
+.cmp-sub{font-size:11px;color:var(--gray);margin-top:4px}
+.sec-label{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.08em;text-transform:uppercase;margin:6px 0 0}
+.bars{display:flex;flex-direction:column;gap:7px}
+.bar-row{display:grid;grid-template-columns:140px 1fr 44px;gap:10px;align-items:center}
+.bar-lbl{font-size:11px;color:var(--ink);font-weight:500}
+.bar-track{height:20px;background:#f3f0ea;border-radius:4px;overflow:hidden;display:flex}
+.bar-seg{height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700}
+.bar-n{background:var(--teal-dk)}
+.bar-ma{background:var(--teal)}
+.bar-co{background:var(--vi)}
+.bar-dx{background:var(--teal-dk)}
+.bar-rest{background:#d9d4cc}
+.bar-tot{font-size:12px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.bar-seg.seg-dia{background:var(--teal-dk)}
+.bar-seg.seg-oro{background:var(--gold)}
+.bar-seg.seg-pla{background:var(--teal)}
+.bar-seg.seg-bro{background:var(--coral)}
+.bar-seg.seg-pro{background:var(--vi)}
+.bar-seg.seg-sin{background:#8a8680}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 14px}
+.leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink)}
+.leg i{width:10px;height:10px;border-radius:2px;display:inline-block;flex-shrink:0}
+.leg b{font-variant-numeric:tabular-nums}
+.col-foot{display:flex;justify-content:flex-end;align-items:baseline;gap:8px;margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
+.col-foot span{font-size:11px;color:var(--gray)}
+.col-foot b{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--ink)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.boca-hd{background:var(--card);border-radius:10px;padding:14px 16px 12px;box-shadow:0 1px 4px rgba(0,0,0,.05);border-top:3px solid var(--teal)}
+.boca-hd.ma{border-top-color:var(--gold)}
+.boca-hd .tb-title{font-size:20px}
+.boca-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:8px}
+.boca-meta span{font-size:12px;color:var(--gray)}
+.boca-meta b{color:var(--ink);font-variant-numeric:tabular-nums}
+.dex-break{margin:10px 0 4px;padding-top:22px;border-top:2px solid var(--line)}
+.intro-hd{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin:2px 0 8px}
+.intro-uni{margin:0 0 16px;display:flex;flex-direction:column;gap:7px;padding:0}
+.intro-uni li{list-style:none;font-size:13px;color:var(--ink);padding:7px 12px;background:#f8f5f0;border-radius:6px;border-left:3px solid var(--teal)}
+.intro-uni b{font-weight:700}
+td[rowspan]{vertical-align:middle;font-weight:600;background:#f8f5f0}
+.copy td{color:var(--muted);font-style:italic}
+.met-wrap{display:flex;flex-direction:column;gap:14px;margin-top:4px}
+.met-block{padding-top:10px;border-top:1px solid var(--line)}
+.met-block:first-child{border-top:none;padding-top:0}
+.met-name{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.met-row{display:grid;grid-template-columns:120px 1fr 110px;gap:8px;align-items:center;margin-bottom:7px}
+.met-dual{display:flex;flex-direction:column;gap:3px}
+.met-track{height:8px;background:#f3f0ea;border-radius:3px;overflow:hidden}
+.met-fill-t{height:100%;background:var(--teal);border-radius:3px}
+.met-fill-s{height:100%;background:var(--gold);border-radius:3px}
+.met-vals{font-size:10px;text-align:right;font-variant-numeric:tabular-nums;line-height:1.35}
+.met-vals .t{color:var(--teal-dk);display:block}
+.met-vals .s{color:#8a6010;display:block}
+.met-tot .bar-lbl{font-weight:700}
+
+
+/* ---- añadidos del reporte de cuotas ---- */
+.kpis{grid-template-columns:repeat(4,1fr)}
+.kpi-sub{font-size:10.5px;color:var(--gray);margin-top:7px;line-height:1.4}
+.r-mid{display:inline-block;background:var(--gold-lt);color:#8a6010;font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px;white-space:nowrap}
+.r-neg,.r-ok,.r-pos{white-space:nowrap}
+.lectura{background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:9px 14px;font-size:12px;color:var(--gray)}
+.tbl-scroll{overflow-x:auto}
+td.txt{white-space:normal;min-width:200px}
+td.txt .unidad{white-space:normal}
+.unidad{display:block;font-size:10.5px;color:var(--muted);font-weight:400}
+tr.rec td{background:var(--teal-lt)}
+tr.sin td{color:#9aa3a8}
+.tag{font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--teal);color:#fff;vertical-align:middle;letter-spacing:.04em}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab-btn{font-family:'Space Grotesk',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.04em;border:1px solid var(--line);background:#f6f3ee;padding:5px 14px;border-radius:20px;cursor:pointer;color:var(--ink)}
+.tab-btn:hover{background:var(--teal-lt);color:var(--teal-dk)}
+.tab-btn.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.step{display:flex;gap:10px;background:#f8f5f0;border-radius:8px;padding:11px 12px}
+.step-n{background:var(--teal);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex:none}
+.step-t{font-weight:700;font-size:12.5px}.step-d{font-size:11.5px;color:var(--gray)}
+.opt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.opt{background:#f8f5f0;border-radius:8px;padding:11px 14px;border-left:3px solid var(--teal)}
+.opt-t{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;margin-bottom:4px}
+.opt-d{font-size:12px;color:var(--gray)}.opt-d ul{margin:4px 0 0 16px;padding:0}
+.bar-tot{font-size:12px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.ej-box{background:#f8f5f0;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:13px;line-height:1.7}
+.ej-box .f{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--teal-dk)}
+.ej-box ol{margin:6px 0 0 18px}
+.ej-box li{margin-bottom:4px}
+.tbl-card p{font-size:13px;color:var(--ink);margin-bottom:8px;line-height:1.6}
+.sheets{display:flex;gap:6px}
+.jump button.sheet-btn{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--ink);background:#f6f3ee;border:1px solid transparent;border-radius:20px;padding:5px 14px;cursor:pointer}
+.jump button.sheet-btn:hover{background:var(--teal-lt);color:var(--teal-dk)}
+.jump button.sheet-btn.on{background:var(--teal-dk);color:#fff}
+.jump-grp{display:none;align-items:center;flex-wrap:wrap;gap:6px 8px}
+.jump-grp.on{display:flex}
+.sheet{display:none;flex-direction:column;gap:12px}
+.sheet.on{display:flex}
+@media(max-width:900px){.kpis,.steps,.opt-grid{grid-template-columns:1fr 1fr}.twocol{grid-template-columns:1fr}}
+@media(max-width:560px){.kpis,.steps,.opt-grid{grid-template-columns:1fr}.shell{padding:16px}}
+
+.r-gray{display:inline-block;background:#eeeae4;color:#6b6864;font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px;white-space:nowrap}
+
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div>
+      <div class="tb-badge">Cuotas · Diseño de muestra</div>
+      <div class="tb-title">Encuesta NPS: <em>cuotas de respuestas</em></div>
+      <div class="tb-sub">Minorista: 1,400 respuestas entre BO, PM y MA · Mayorista: CODIS y mayoristas</div>
+    </div>
+    <div class="coe"><svg viewBox="0 0 40 40" fill="none" width="26" height="26" aria-hidden="true">
+<rect width="40" height="40" rx="10" fill="url(#lgH1)"></rect>
+<circle cx="12" cy="15" r="3" fill="white"></circle><circle cx="12" cy="20" r="3" fill="white"></circle>
+<circle cx="12" cy="25" r="3" fill="white"></circle><circle cx="20" cy="17" r="3" fill="white" fill-opacity="0.7"></circle>
+<circle cx="20" cy="23" r="3" fill="white" fill-opacity="0.7"></circle><circle cx="28" cy="20" r="4" fill="#D4A853"></circle>
+<defs><linearGradient id="lgH1" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#2D9C9C"></stop><stop offset="1" stop-color="#1f7070"></stop></linearGradient></defs></svg><div><div class="coe-name">COE Advanced Analytics</div><div class="coe-sub">Alicorp · GTM 2.0</div></div></div>
+  </div>
+  <div class="acline"></div>
+  <nav class="jump" aria-label="Ir a sección">
+    <span class="jump-k">Hoja</span>
+    <button class="sheet-btn on" data-hoja="minorista" onclick="cambiarHoja('minorista')">Minorista</button>
+    <button class="sheet-btn" data-hoja="mayorista" onclick="cambiarHoja('mayorista')">Mayorista</button>
+    <span class="jump-sep" aria-hidden="true"></span>
+    <span class="jump-grp on" data-hoja="minorista"><span class="jump-k">Ir a</span>
+      <a href="#sec-total">Totales</a><a href="#sec-segmento">Segmento</a><a href="#sec-dex">DEX</a></span>
+    <span class="jump-grp" data-hoja="mayorista"><span class="jump-k">Ir a</span>
+      <a href="#sec-m-total">Mayorista</a></span>
+  </nav>
+  <div class="sheet on" id="hoja-minorista">
+  <div class="sec-label" id="sec-total">1 · Cuotas totales</div>
+<div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Por boca</div><div class="tbl-title">Cuota total: 1,400 respuestas</div></div></div>
+<div class="tbl-scroll"><table>
+<thead><tr><th class="">Boca</th><th class="num">Población (clientes)</th><th class="num">Cuota total (respuestas)</th><th class="num">Cuota cliente perfecto</th><th class="num">Cuota no perfecto</th></tr></thead>
+<tbody>
+<tr class=""><td class=""><b>BO</b></td><td class="num">99,969</td><td class="num"><b>769</b></td><td class="num">100</td><td class="num">669</td></tr>
+<tr class=""><td class=""><b>PM</b></td><td class="num">25,572</td><td class="num"><b>389</b></td><td class="num">100</td><td class="num">289</td></tr>
+<tr class=""><td class=""><b>MA</b></td><td class="num">9,894</td><td class="num"><b>242</b></td><td class="num">25</td><td class="num">217</td></tr>
+<tr class="tot"><td class=""><b>Total</b></td><td class="num">135,435</td><td class="num"><b>1,400</b></td><td class="num">225</td><td class="num">1,175</td></tr>
+</tbody></table></div>
+<div class="tbl-note">Población = clientes del universo. Cuota = respuestas que se piden a la agencia.</div></div>
+<div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Por región</div><div class="tbl-title">La misma cuota, vista por región</div></div></div>
+<div class="tbl-scroll"><table>
+<thead><tr><th class="">Región</th><th class="num">Población (clientes)</th><th class="num">Cuota BO</th><th class="num">Cuota PM</th><th class="num">Cuota MA</th><th class="num">Cuota total (respuestas)</th></tr></thead>
+<tbody>
+<tr class=""><td class=""><b>Lima</b></td><td class="num">47,750</td><td class="num">204</td><td class="num">153</td><td class="num">48</td><td class="num"><b>405</b></td></tr>
+<tr class=""><td class=""><b>Sur</b></td><td class="num">30,170</td><td class="num">186</td><td class="num">70</td><td class="num">53</td><td class="num"><b>309</b></td></tr>
+<tr class=""><td class=""><b>Norte</b></td><td class="num">25,345</td><td class="num">155</td><td class="num">72</td><td class="num">50</td><td class="num"><b>277</b></td></tr>
+<tr class=""><td class=""><b>Sur Chico</b></td><td class="num">10,929</td><td class="num">59</td><td class="num">29</td><td class="num">24</td><td class="num"><b>112</b></td></tr>
+<tr class=""><td class=""><b>Centro</b></td><td class="num">9,765</td><td class="num">73</td><td class="num">22</td><td class="num">26</td><td class="num"><b>121</b></td></tr>
+<tr class=""><td class=""><b>Oriente</b></td><td class="num">6,326</td><td class="num">55</td><td class="num">23</td><td class="num">26</td><td class="num"><b>104</b></td></tr>
+<tr class=""><td class=""><b>Norte Chico</b></td><td class="num">5,150</td><td class="num">37</td><td class="num">20</td><td class="num">15</td><td class="num"><b>72</b></td></tr>
+<tr class="tot"><td class=""><b>Total</b></td><td class="num">135,435</td><td class="num">769</td><td class="num">389</td><td class="num">242</td><td class="num"><b>1,400</b></td></tr>
+</tbody></table></div>
+<div class="tbl-note">La cuota por región es la suma de la cuota de sus DEX y de los clientes perfectos de esa región; las columnas BO, PM y MA suman igual que la tabla por boca.</div></div>
+
+  <div class="sec-label" id="sec-segmento">2 · Por segmento</div>
+<div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Cliente perfecto y no perfecto, por separado</div><div class="tbl-title">Respuestas esperadas por segmento</div></div></div>
+<div class="tbl-scroll"><table>
+<thead><tr><th class="">Segmento</th><th class="">Grupo</th><th class="num">Población (clientes)</th><th class="num">Respuestas esperadas (no es cuota)</th></tr></thead>
+<tbody>
+<tr class=""><td class=""><b>Oro+</b></td><td class="">Cliente perfecto</td><td class="num">1,660</td><td class="num"><b>40</b></td></tr>
+<tr class=""><td class=""></td><td class="">No perfecto</td><td class="num">3,505</td><td class="num"><b>25</b></td></tr>
+<tr class=""><td class=""><b>Oro</b></td><td class="">Cliente perfecto</td><td class="num">3,292</td><td class="num"><b>79</b></td></tr>
+<tr class=""><td class=""></td><td class="">No perfecto</td><td class="num">10,089</td><td class="num"><b>106</b></td></tr>
+<tr class=""><td class=""><b>Plata</b></td><td class="">Cliente perfecto</td><td class="num">2,667</td><td class="num"><b>68</b></td></tr>
+<tr class=""><td class=""></td><td class="">No perfecto</td><td class="num">24,766</td><td class="num"><b>222</b></td></tr>
+<tr class=""><td class=""><b>Bronce</b></td><td class="">Cliente perfecto</td><td class="num">1,229</td><td class="num"><b>38</b></td></tr>
+<tr class=""><td class=""></td><td class="">No perfecto</td><td class="num">88,227</td><td class="num"><b>822</b></td></tr>
+<tr class="subtot"><td class=""><b>Total cliente perfecto</b></td><td class=""></td><td class="num">8,848</td><td class="num"><b>225</b></td></tr>
+<tr class="subtot"><td class=""><b>Total no perfecto</b></td><td class=""></td><td class="num">126,587</td><td class="num"><b>1,175</b></td></tr>
+<tr class="tot"><td class=""><b>Total</b></td><td class=""></td><td class="num">135,435</td><td class="num"><b>1,400</b></td></tr>
+</tbody></table></div>
+<div class="tbl-note">El segmento no lleva cuota propia: son las respuestas que <i>esperamos</i> al repartir en proporción dentro de cada grupo (enteros que suman la cuota). El ajuste de segmento se hace por separado para clientes perfectos y no perfectos, cada uno con su propia mezcla de segmentos. Si una celda queda con menos de unas 10 respuestas, se juntan segmentos vecinos antes de calcular el peso.</div></div>
+
+  <div class="sec-label" id="sec-dex">3 · Por DEX y segmento</div>
+<div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Cuotas por región, DEX y segmento</div><div class="tbl-title">¿Cuántas respuestas le pedimos a cada DEX?</div></div></div>
+<div class="tabgroup"><div class="tabs"><button class="tab-btn active" onclick="mostrarTab(event,'dex-0')">DEX (bocas sumadas)</button><button class="tab-btn" onclick="mostrarTab(event,'dex-1')">BO</button><button class="tab-btn" onclick="mostrarTab(event,'dex-2')">PM</button><button class="tab-btn" onclick="mostrarTab(event,'dex-3')">MA</button></div><div id="dex-0" class="tab-panel active"><div class="tbl-scroll"><table>
+<thead><tr><th class="">DEX</th><th class="">Región(es)</th><th class="num">Población (clientes)</th><th class="num">Cuota BO</th><th class="num">Cuota PM</th><th class="num">Cuota MA</th><th class="num">Cuota total (respuestas)</th></tr></thead>
+<tbody>
+<tr class=""><td class=""><span title="FUERZADEX S.A.C.">FUERZADEX</span></td><td class="">Lima</td><td class="num">14,612</td><td class="num">48</td><td class="num">24</td><td class="num">11</td><td class="num"><b>83</b></td></tr>
+<tr class=""><td class=""><span title="DISTRIBUIDORA CUNZA S.A.">DISTRIBUIDORA CUNZA</span></td><td class="">Lima</td><td class="num">13,512</td><td class="num">45</td><td class="num">24</td><td class="num">13</td><td class="num"><b>82</b></td></tr>
+<tr class=""><td class=""><span title="ATIPANA DEX S.A.C.">ATIPANA DEX</span></td><td class="">Lima</td><td class="num">8,265</td><td class="num">34</td><td class="num">20</td><td class="num">12</td><td class="num"><b>66</b></td></tr>
+<tr class=""><td class=""><span title="ROSET DISTRIBUCIONES EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA">ROSET DISTRIBUCIONES</span></td><td class="">Sur</td><td class="num">8,525</td><td class="num">39</td><td class="num">12</td><td class="num">10</td><td class="num"><b>61</b></td></tr>
+<tr class=""><td class=""><span title="DISTRIBUCIONES EXCLUSIVAS DEL SUR SOCIEDAD ANONIMA CERRADA">DISTRIBUCIONES EXCLUSIVAS DEL SUR</span></td><td class="">Sur</td><td class="num">8,105</td><td class="num">38</td><td class="num">10</td><td class="num">12</td><td class="num"><b>60</b></td></tr>
+<tr class=""><td class=""><span title="PACIFICO DEX SOCIEDAD ANONIMA CERRADA">PACIFICO DEX</span></td><td class="">Sur Chico</td><td class="num">6,905</td><td class="num">33</td><td class="num">13</td><td class="num">12</td><td class="num"><b>58</b></td></tr>
+<tr class=""><td class=""><span title="D.L.F. MEDINA RIVERA S.A.">D.L.F. MEDINA RIVERA</span></td><td class="">Lima</td><td class="num">6,549</td><td class="num">31</td><td class="num">17</td><td class="num">8</td><td class="num"><b>56</b></td></tr>
+<tr class=""><td class=""><span title="DISTRIBUIDORA SOL DEL VALLE S.A.C.">DISTRIBUIDORA SOL DEL VALLE</span></td><td class="">Norte</td><td class="num">6,474</td><td class="num">32</td><td class="num">15</td><td class="num">8</td><td class="num"><b>55</b></td></tr>
+<tr class=""><td class=""><span title="ATUQ DEX S.A.C.">ATUQ DEX</span></td><td class="">Norte</td><td class="num">6,070</td><td class="num">32</td><td class="num">13</td><td class="num">9</td><td class="num"><b>54</b></td></tr>
+<tr class=""><td class=""><span title="DEX PARDADEX S.A.C.">DEX PARDADEX</span></td><td class="">Norte</td><td class="num">5,381</td><td class="num">30</td><td class="num">12</td><td class="num">9</td><td class="num"><b>51</b></td></tr>
+<tr class=""><td class=""><span title="ALMA DISTRIBUCIONES E.I.R.L.">ALMA DISTRIBUCIONES</span></td><td class="">Sur</td><td class="num">4,802</td><td class="num">27</td><td class="num">13</td><td class="num">11</td><td class="num"><b>51</b></td></tr>
+<tr class=""><td class=""><span title="MBA DEX SOCIEDAD ANONIMA CERRADA">MBA DEX</span></td><td class="">Centro</td><td class="num">5,722</td><td class="num">32</td><td class="num">8</td><td class="num">11</td><td class="num"><b>51</b></td></tr>
+<tr class=""><td class=""><span title="DISTRIBUIDORA MADEX SOCIEDAD ANONIMA CERRADA">DISTRIBUIDORA MADEX</span></td><td class="">Sur</td><td class="num">4,231</td><td class="num">25</td><td class="num">14</td><td class="num">6</td><td class="num"><b>45</b></td></tr>
+<tr class=""><td class=""><span title="DALIMNORT S.A.C.">DALIMNORT</span></td><td class="">Norte Chico</td><td class="num">3,744</td><td class="num">23</td><td class="num">13</td><td class="num">8</td><td class="num"><b>44</b></td></tr>
+<tr class=""><td class=""><span title="DISTRIBUIDORA AURELIO SOCIEDAD ANONIMA CERRADA">DISTRIBUIDORA AURELIO</span></td><td class="">Sur Chico</td><td class="num">3,705</td><td class="num">24</td><td class="num">12</td><td class="num">7</td><td class="num"><b>43</b></td></tr>
+<tr class=""><td class=""><span title="VITALE DEX S.A.C.">VITALE DEX</span></td><td class="">Norte</td><td class="num">3,686</td><td class="num">24</td><td class="num">11</td><td class="num">5</td><td class="num"><b>40</b></td></tr>
+<tr class=""><td class=""><span title="DALIDELO E.I.R.L.">DALIDELO</span></td><td class="">Oriente</td><td class="num">2,206</td><td class="num">18</td><td class="num">8</td><td class="num">8</td><td class="num"><b>34</b></td></tr>
+<tr class=""><td class=""><span title="MED DISTRIBUCIONES EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA">MED DISTRIBUCIONES</span></td><td class="">Oriente</td><td class="num">2,125</td><td class="num">19</td><td class="num">6</td><td class="num">8</td><td class="num"><b>33</b></td></tr>
+<tr class=""><td class=""><span title="DEX MINALI SOCIEDAD ANONIMA CERRADA">DEX MINALI</span></td><td class="">Centro</td><td class="num">1,814</td><td class="num">17</td><td class="num">7</td><td class="num">8</td><td class="num"><b>32</b></td></tr>
+<tr class=""><td class=""><span title="DISTRIBUIDORA RODRIGUEZ S.A.">DISTRIBUIDORA RODRIGUEZ</span></td><td class="">Norte</td><td class="num">2,249</td><td class="num">20</td><td class="num">6</td><td class="num">6</td><td class="num"><b>32</b></td></tr>
+<tr class=""><td class=""><span title="DISTRIBUCIONES DEL NORTE ORIENTE SOCIEDAD ANONIMA CERRADA">DISTRIBUCIONES DEL NORTE ORIENTE</span></td><td class="">Oriente</td><td class="num">1,830</td><td class="num">16</td><td class="num">7</td><td class="num">9</td><td class="num"><b>32</b></td></tr>
+<tr class=""><td class=""><span title="SELVA DEX S.A.C">SELVA DEX</span></td><td class="">Centro</td><td class="num">1,880</td><td class="num">18</td><td class="num">6</td><td class="num">7</td><td class="num"><b>31</b></td></tr>
+<tr class=""><td class=""><span title="DIXIAL S.A.C.">DIXIAL</span></td><td class="">Norte Chico</td><td class="num">1,406</td><td class="num">14</td><td class="num">7</td><td class="num">7</td><td class="num"><b>28</b></td></tr>
+<tr class=""><td class=""><span title="RTDEX E.I.R.L.">RTDEX</span></td><td class="">Sur</td><td class="num">1,454</td><td class="num">15</td><td class="num">7</td><td class="num">5</td><td class="num"><b>27</b></td></tr>
+<tr class=""><td class=""><span title="DEX APURIMAC S.A.C.">DEX APURIMAC</span></td><td class="">Sur</td><td class="num">1,329</td><td class="num">15</td><td class="num">4</td><td class="num">7</td><td class="num"><b>26</b></td></tr>
+<tr class="sin"><td class=""><span title="DISTRIBUIDORA ATIX S.A.C.">DISTRIBUIDORA ATIX</span></td><td class="">Sur Chico</td><td class="num">3</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr class="sin"><td class=""><span title="DISTRIBUIDORA COMERCIAL LUIS ARTURO &amp; XIMENA E.I.R.L.">DISTRIBUIDORA COMERCIAL LUIS ARTURO &amp; XIMENA</span></td><td class="">Oriente</td><td class="num">3</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr class="rec"><td class=""><b>Cliente perfecto</b> (todas las DEX)</td><td class="">Todas</td><td class="num">8,848</td><td class="num">100</td><td class="num">100</td><td class="num">25</td><td class="num"><b>225</b></td></tr>
+<tr class="tot"><td class=""><b>Total</b></td><td class=""></td><td class="num">135,435</td><td class="num">769</td><td class="num">389</td><td class="num">242</td><td class="num"><b>1,400</b></td></tr>
+</tbody></table></div></div><div id="dex-1" class="tab-panel"><div class="tbl-scroll"><table>
+<thead><tr><th class="">Región</th><th class="">DEX</th><th class="num">Población (clientes)</th><th class="num">Cuota (respuestas)</th><th class="num">Oro+ · esperadas</th><th class="num">Oro · esperadas</th><th class="num">Plata · esperadas</th><th class="num">Bronce · esperadas</th></tr></thead>
+<tbody>
+<tr class=""><td class="">Centro</td><td class=""><span title="MBA DEX SOCIEDAD ANONIMA CERRADA">MBA DEX</span></td><td class="num">4,791</td><td class="num"><b>32</b></td><td class="num">1</td><td class="num">3</td><td class="num">7</td><td class="num">21</td></tr>
+<tr class=""><td class="">Centro</td><td class=""><span title="SELVA DEX S.A.C">SELVA DEX</span></td><td class="num">1,461</td><td class="num"><b>18</b></td><td class="num">1</td><td class="num">2</td><td class="num">5</td><td class="num">10</td></tr>
+<tr class=""><td class="">Centro</td><td class=""><span title="DEX MINALI SOCIEDAD ANONIMA CERRADA">DEX MINALI</span></td><td class="num">1,299</td><td class="num"><b>17</b></td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">11</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="FUERZADEX S.A.C.">FUERZADEX</span></td><td class="num">10,800</td><td class="num"><b>48</b></td><td class="num">1</td><td class="num">4</td><td class="num">10</td><td class="num">33</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="DISTRIBUIDORA CUNZA S.A.">DISTRIBUIDORA CUNZA</span></td><td class="num">9,481</td><td class="num"><b>45</b></td><td class="num">1</td><td class="num">3</td><td class="num">8</td><td class="num">33</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="ATIPANA DEX S.A.C.">ATIPANA DEX</span></td><td class="num">5,446</td><td class="num"><b>34</b></td><td class="num">0</td><td class="num">2</td><td class="num">6</td><td class="num">26</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="D.L.F. MEDINA RIVERA S.A.">D.L.F. MEDINA RIVERA</span></td><td class="num">4,596</td><td class="num"><b>31</b></td><td class="num">0</td><td class="num">2</td><td class="num">6</td><td class="num">23</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="ATUQ DEX S.A.C.">ATUQ DEX</span></td><td class="num">4,761</td><td class="num"><b>32</b></td><td class="num">1</td><td class="num">2</td><td class="num">6</td><td class="num">23</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="DISTRIBUIDORA SOL DEL VALLE S.A.C.">DISTRIBUIDORA SOL DEL VALLE</span></td><td class="num">4,838</td><td class="num"><b>32</b></td><td class="num">0</td><td class="num">2</td><td class="num">7</td><td class="num">23</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="DEX PARDADEX S.A.C.">DEX PARDADEX</span></td><td class="num">4,236</td><td class="num"><b>30</b></td><td class="num">1</td><td class="num">3</td><td class="num">7</td><td class="num">19</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="VITALE DEX S.A.C.">VITALE DEX</span></td><td class="num">2,825</td><td class="num"><b>24</b></td><td class="num">0</td><td class="num">2</td><td class="num">5</td><td class="num">17</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="DISTRIBUIDORA RODRIGUEZ S.A.">DISTRIBUIDORA RODRIGUEZ</span></td><td class="num">1,895</td><td class="num"><b>20</b></td><td class="num">1</td><td class="num">2</td><td class="num">4</td><td class="num">13</td></tr>
+<tr class=""><td class="">Norte Chico</td><td class=""><span title="DALIMNORT S.A.C.">DALIMNORT</span></td><td class="num">2,546</td><td class="num"><b>23</b></td><td class="num">1</td><td class="num">3</td><td class="num">5</td><td class="num">14</td></tr>
+<tr class=""><td class="">Norte Chico</td><td class=""><span title="DIXIAL S.A.C.">DIXIAL</span></td><td class="num">937</td><td class="num"><b>14</b></td><td class="num">0</td><td class="num">2</td><td class="num">3</td><td class="num">9</td></tr>
+<tr class=""><td class="">Oriente</td><td class=""><span title="MED DISTRIBUCIONES EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA">MED DISTRIBUCIONES</span></td><td class="num">1,611</td><td class="num"><b>19</b></td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">13</td></tr>
+<tr class=""><td class="">Oriente</td><td class=""><span title="DALIDELO E.I.R.L.">DALIDELO</span></td><td class="num">1,547</td><td class="num"><b>18</b></td><td class="num">0</td><td class="num">2</td><td class="num">4</td><td class="num">12</td></tr>
+<tr class=""><td class="">Oriente</td><td class=""><span title="DISTRIBUCIONES DEL NORTE ORIENTE SOCIEDAD ANONIMA CERRADA">DISTRIBUCIONES DEL NORTE ORIENTE</span></td><td class="num">1,208</td><td class="num"><b>16</b></td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">10</td></tr>
+<tr class="sin"><td class="">Oriente</td><td class=""><span title="DISTRIBUIDORA COMERCIAL LUIS ARTURO &amp; XIMENA E.I.R.L.">DISTRIBUIDORA COMERCIAL LUIS ARTURO &amp; XIMENA</span></td><td class="num">3</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="ROSET DISTRIBUCIONES EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA">ROSET DISTRIBUCIONES</span></td><td class="num">7,295</td><td class="num"><b>39</b></td><td class="num">1</td><td class="num">3</td><td class="num">9</td><td class="num">26</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="DISTRIBUCIONES EXCLUSIVAS DEL SUR SOCIEDAD ANONIMA CERRADA">DISTRIBUCIONES EXCLUSIVAS DEL SUR</span></td><td class="num">6,831</td><td class="num"><b>38</b></td><td class="num">1</td><td class="num">4</td><td class="num">8</td><td class="num">25</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="ALMA DISTRIBUCIONES E.I.R.L.">ALMA DISTRIBUCIONES</span></td><td class="num">3,346</td><td class="num"><b>27</b></td><td class="num">2</td><td class="num">3</td><td class="num">6</td><td class="num">16</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="DISTRIBUIDORA MADEX SOCIEDAD ANONIMA CERRADA">DISTRIBUIDORA MADEX</span></td><td class="num">3,052</td><td class="num"><b>25</b></td><td class="num">1</td><td class="num">2</td><td class="num">6</td><td class="num">16</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="DEX APURIMAC S.A.C.">DEX APURIMAC</span></td><td class="num">1,029</td><td class="num"><b>15</b></td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">9</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="RTDEX E.I.R.L.">RTDEX</span></td><td class="num">1,074</td><td class="num"><b>15</b></td><td class="num">0</td><td class="num">2</td><td class="num">4</td><td class="num">9</td></tr>
+<tr class=""><td class="">Sur Chico</td><td class=""><span title="PACIFICO DEX SOCIEDAD ANONIMA CERRADA">PACIFICO DEX</span></td><td class="num">5,255</td><td class="num"><b>33</b></td><td class="num">1</td><td class="num">3</td><td class="num">6</td><td class="num">23</td></tr>
+<tr class=""><td class="">Sur Chico</td><td class=""><span title="DISTRIBUIDORA AURELIO SOCIEDAD ANONIMA CERRADA">DISTRIBUIDORA AURELIO</span></td><td class="num">2,673</td><td class="num"><b>24</b></td><td class="num">2</td><td class="num">3</td><td class="num">6</td><td class="num">13</td></tr>
+<tr class="sin"><td class="">Sur Chico</td><td class=""><span title="DISTRIBUIDORA ATIX S.A.C.">DISTRIBUIDORA ATIX</span></td><td class="num">1</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr class="rec"><td class="">Lima</td><td class=""><b>Cliente perfecto</b></td><td class="num">2,374</td><td class="num"><b>46</b></td><td class="num">9</td><td class="num">20</td><td class="num">14</td><td class="num">3</td></tr>
+<tr class="rec"><td class="">Sur</td><td class=""><b>Cliente perfecto</b></td><td class="num">1,366</td><td class="num"><b>27</b></td><td class="num">6</td><td class="num">12</td><td class="num">8</td><td class="num">1</td></tr>
+<tr class="rec"><td class="">Norte</td><td class=""><b>Cliente perfecto</b></td><td class="num">875</td><td class="num"><b>17</b></td><td class="num">3</td><td class="num">8</td><td class="num">5</td><td class="num">1</td></tr>
+<tr class="rec"><td class="">Centro</td><td class=""><b>Cliente perfecto</b></td><td class="num">302</td><td class="num"><b>6</b></td><td class="num">1</td><td class="num">3</td><td class="num">2</td><td class="num">0</td></tr>
+<tr class="rec"><td class="">Sur Chico</td><td class=""><b>Cliente perfecto</b></td><td class="num">129</td><td class="num"><b>2</b></td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr>
+<tr class="rec"><td class="">Oriente</td><td class=""><b>Cliente perfecto</b></td><td class="num">86</td><td class="num"><b>2</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">0</td></tr>
+<tr class="tot"><td class=""><b>Total de la boca</b></td><td class=""></td><td class="num">99,969</td><td class="num"><b>769</b></td><td class="num">40</td><td class="num">107</td><td class="num">170</td><td class="num">452</td></tr>
+</tbody></table></div></div><div id="dex-2" class="tab-panel"><div class="tbl-scroll"><table>
+<thead><tr><th class="">Región</th><th class="">DEX</th><th class="num">Población (clientes)</th><th class="num">Cuota (respuestas)</th><th class="num">Oro+ · esperadas</th><th class="num">Oro · esperadas</th><th class="num">Plata · esperadas</th><th class="num">Bronce · esperadas</th></tr></thead>
+<tbody>
+<tr class=""><td class="">Centro</td><td class=""><span title="MBA DEX SOCIEDAD ANONIMA CERRADA">MBA DEX</span></td><td class="num">372</td><td class="num"><b>8</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">6</td></tr>
+<tr class=""><td class="">Centro</td><td class=""><span title="DEX MINALI SOCIEDAD ANONIMA CERRADA">DEX MINALI</span></td><td class="num">240</td><td class="num"><b>7</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">5</td></tr>
+<tr class=""><td class="">Centro</td><td class=""><span title="SELVA DEX S.A.C">SELVA DEX</span></td><td class="num">177</td><td class="num"><b>6</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">3</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="DISTRIBUIDORA CUNZA S.A.">DISTRIBUIDORA CUNZA</span></td><td class="num">3,251</td><td class="num"><b>24</b></td><td class="num">0</td><td class="num">1</td><td class="num">4</td><td class="num">19</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="FUERZADEX S.A.C.">FUERZADEX</span></td><td class="num">3,198</td><td class="num"><b>24</b></td><td class="num">0</td><td class="num">2</td><td class="num">4</td><td class="num">18</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="ATIPANA DEX S.A.C.">ATIPANA DEX</span></td><td class="num">2,106</td><td class="num"><b>20</b></td><td class="num">0</td><td class="num">1</td><td class="num">3</td><td class="num">16</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="D.L.F. MEDINA RIVERA S.A.">D.L.F. MEDINA RIVERA</span></td><td class="num">1,628</td><td class="num"><b>17</b></td><td class="num">0</td><td class="num">1</td><td class="num">3</td><td class="num">13</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="DISTRIBUIDORA SOL DEL VALLE S.A.C.">DISTRIBUIDORA SOL DEL VALLE</span></td><td class="num">1,288</td><td class="num"><b>15</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">12</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="ATUQ DEX S.A.C.">ATUQ DEX</span></td><td class="num">929</td><td class="num"><b>13</b></td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">9</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="DEX PARDADEX S.A.C.">DEX PARDADEX</span></td><td class="num">729</td><td class="num"><b>12</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">9</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="VITALE DEX S.A.C.">VITALE DEX</span></td><td class="num">717</td><td class="num"><b>11</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">8</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="DISTRIBUIDORA RODRIGUEZ S.A.">DISTRIBUIDORA RODRIGUEZ</span></td><td class="num">203</td><td class="num"><b>6</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">4</td></tr>
+<tr class=""><td class="">Norte Chico</td><td class=""><span title="DALIMNORT S.A.C.">DALIMNORT</span></td><td class="num">864</td><td class="num"><b>13</b></td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">9</td></tr>
+<tr class=""><td class="">Norte Chico</td><td class=""><span title="DIXIAL S.A.C.">DIXIAL</span></td><td class="num">252</td><td class="num"><b>7</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">5</td></tr>
+<tr class=""><td class="">Oriente</td><td class=""><span title="DALIDELO E.I.R.L.">DALIDELO</span></td><td class="num">326</td><td class="num"><b>8</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">6</td></tr>
+<tr class=""><td class="">Oriente</td><td class=""><span title="DISTRIBUCIONES DEL NORTE ORIENTE SOCIEDAD ANONIMA CERRADA">DISTRIBUCIONES DEL NORTE ORIENTE</span></td><td class="num">260</td><td class="num"><b>7</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">5</td></tr>
+<tr class=""><td class="">Oriente</td><td class=""><span title="MED DISTRIBUCIONES EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA">MED DISTRIBUCIONES</span></td><td class="num">206</td><td class="num"><b>6</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">4</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="DISTRIBUIDORA MADEX SOCIEDAD ANONIMA CERRADA">DISTRIBUIDORA MADEX</span></td><td class="num">1,019</td><td class="num"><b>14</b></td><td class="num">0</td><td class="num">1</td><td class="num">3</td><td class="num">10</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="ALMA DISTRIBUCIONES E.I.R.L.">ALMA DISTRIBUCIONES</span></td><td class="num">877</td><td class="num"><b>13</b></td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">9</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="ROSET DISTRIBUCIONES EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA">ROSET DISTRIBUCIONES</span></td><td class="num">774</td><td class="num"><b>12</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">9</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="DISTRIBUCIONES EXCLUSIVAS DEL SUR SOCIEDAD ANONIMA CERRADA">DISTRIBUCIONES EXCLUSIVAS DEL SUR</span></td><td class="num">555</td><td class="num"><b>10</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">7</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="RTDEX E.I.R.L.">RTDEX</span></td><td class="num">246</td><td class="num"><b>7</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">4</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="DEX APURIMAC S.A.C.">DEX APURIMAC</span></td><td class="num">71</td><td class="num"><b>4</b></td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">3</td></tr>
+<tr class=""><td class="">Sur Chico</td><td class=""><span title="PACIFICO DEX SOCIEDAD ANONIMA CERRADA">PACIFICO DEX</span></td><td class="num">904</td><td class="num"><b>13</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">10</td></tr>
+<tr class=""><td class="">Sur Chico</td><td class=""><span title="DISTRIBUIDORA AURELIO SOCIEDAD ANONIMA CERRADA">DISTRIBUIDORA AURELIO</span></td><td class="num">803</td><td class="num"><b>12</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">9</td></tr>
+<tr class="rec"><td class="">Lima</td><td class=""><b>Cliente perfecto</b></td><td class="num">2,419</td><td class="num"><b>68</b></td><td class="num">12</td><td class="num">18</td><td class="num">20</td><td class="num">18</td></tr>
+<tr class="rec"><td class="">Norte</td><td class=""><b>Cliente perfecto</b></td><td class="num">536</td><td class="num"><b>15</b></td><td class="num">2</td><td class="num">4</td><td class="num">5</td><td class="num">4</td></tr>
+<tr class="rec"><td class="">Sur</td><td class=""><b>Cliente perfecto</b></td><td class="num">347</td><td class="num"><b>10</b></td><td class="num">2</td><td class="num">3</td><td class="num">3</td><td class="num">2</td></tr>
+<tr class="rec"><td class="">Sur Chico</td><td class=""><b>Cliente perfecto</b></td><td class="num">160</td><td class="num"><b>4</b></td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr>
+<tr class="rec"><td class="">Oriente</td><td class=""><b>Cliente perfecto</b></td><td class="num">70</td><td class="num"><b>2</b></td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">1</td></tr>
+<tr class="rec"><td class="">Centro</td><td class=""><b>Cliente perfecto</b></td><td class="num">45</td><td class="num"><b>1</b></td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td></tr>
+<tr class="tot"><td class=""><b>Total de la boca</b></td><td class=""></td><td class="num">25,572</td><td class="num"><b>389</b></td><td class="num">20</td><td class="num">51</td><td class="num">80</td><td class="num">238</td></tr>
+</tbody></table></div></div><div id="dex-3" class="tab-panel"><div class="tbl-scroll"><table>
+<thead><tr><th class="">Región</th><th class="">DEX</th><th class="num">Población (clientes)</th><th class="num">Cuota (respuestas)</th><th class="num">Oro+ · esperadas</th><th class="num">Oro · esperadas</th><th class="num">Plata · esperadas</th><th class="num">Bronce · esperadas</th></tr></thead>
+<tbody>
+<tr class=""><td class="">Centro</td><td class=""><span title="MBA DEX SOCIEDAD ANONIMA CERRADA">MBA DEX</span></td><td class="num">559</td><td class="num"><b>11</b></td><td class="num">0</td><td class="num">0</td><td class="num">2</td><td class="num">9</td></tr>
+<tr class=""><td class="">Centro</td><td class=""><span title="DEX MINALI SOCIEDAD ANONIMA CERRADA">DEX MINALI</span></td><td class="num">275</td><td class="num"><b>8</b></td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">4</td></tr>
+<tr class=""><td class="">Centro</td><td class=""><span title="SELVA DEX S.A.C">SELVA DEX</span></td><td class="num">242</td><td class="num"><b>7</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">5</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="DISTRIBUIDORA CUNZA S.A.">DISTRIBUIDORA CUNZA</span></td><td class="num">780</td><td class="num"><b>13</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">11</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="ATIPANA DEX S.A.C.">ATIPANA DEX</span></td><td class="num">713</td><td class="num"><b>12</b></td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">11</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="FUERZADEX S.A.C.">FUERZADEX</span></td><td class="num">614</td><td class="num"><b>11</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">9</td></tr>
+<tr class=""><td class="">Lima</td><td class=""><span title="D.L.F. MEDINA RIVERA S.A.">D.L.F. MEDINA RIVERA</span></td><td class="num">325</td><td class="num"><b>8</b></td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">7</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="ATUQ DEX S.A.C.">ATUQ DEX</span></td><td class="num">380</td><td class="num"><b>9</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">6</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="DEX PARDADEX S.A.C.">DEX PARDADEX</span></td><td class="num">416</td><td class="num"><b>9</b></td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">8</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="DISTRIBUIDORA SOL DEL VALLE S.A.C.">DISTRIBUIDORA SOL DEL VALLE</span></td><td class="num">348</td><td class="num"><b>8</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">6</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="DISTRIBUIDORA RODRIGUEZ S.A.">DISTRIBUIDORA RODRIGUEZ</span></td><td class="num">151</td><td class="num"><b>6</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">3</td></tr>
+<tr class=""><td class="">Norte</td><td class=""><span title="VITALE DEX S.A.C.">VITALE DEX</span></td><td class="num">144</td><td class="num"><b>5</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">3</td></tr>
+<tr class=""><td class="">Norte Chico</td><td class=""><span title="DALIMNORT S.A.C.">DALIMNORT</span></td><td class="num">334</td><td class="num"><b>8</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">6</td></tr>
+<tr class=""><td class="">Norte Chico</td><td class=""><span title="DIXIAL S.A.C.">DIXIAL</span></td><td class="num">217</td><td class="num"><b>7</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">5</td></tr>
+<tr class=""><td class="">Oriente</td><td class=""><span title="DISTRIBUCIONES DEL NORTE ORIENTE SOCIEDAD ANONIMA CERRADA">DISTRIBUCIONES DEL NORTE ORIENTE</span></td><td class="num">362</td><td class="num"><b>9</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">6</td></tr>
+<tr class=""><td class="">Oriente</td><td class=""><span title="DALIDELO E.I.R.L.">DALIDELO</span></td><td class="num">333</td><td class="num"><b>8</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">5</td></tr>
+<tr class=""><td class="">Oriente</td><td class=""><span title="MED DISTRIBUCIONES EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA">MED DISTRIBUCIONES</span></td><td class="num">308</td><td class="num"><b>8</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">6</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="DISTRIBUCIONES EXCLUSIVAS DEL SUR SOCIEDAD ANONIMA CERRADA">DISTRIBUCIONES EXCLUSIVAS DEL SUR</span></td><td class="num">719</td><td class="num"><b>12</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">9</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="ALMA DISTRIBUCIONES E.I.R.L.">ALMA DISTRIBUCIONES</span></td><td class="num">579</td><td class="num"><b>11</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">9</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="ROSET DISTRIBUCIONES EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA">ROSET DISTRIBUCIONES</span></td><td class="num">456</td><td class="num"><b>10</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">8</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="DEX APURIMAC S.A.C.">DEX APURIMAC</span></td><td class="num">229</td><td class="num"><b>7</b></td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">6</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="DISTRIBUIDORA MADEX SOCIEDAD ANONIMA CERRADA">DISTRIBUIDORA MADEX</span></td><td class="num">160</td><td class="num"><b>6</b></td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">4</td></tr>
+<tr class=""><td class="">Sur</td><td class=""><span title="RTDEX E.I.R.L.">RTDEX</span></td><td class="num">134</td><td class="num"><b>5</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">3</td></tr>
+<tr class=""><td class="">Sur Chico</td><td class=""><span title="PACIFICO DEX SOCIEDAD ANONIMA CERRADA">PACIFICO DEX</span></td><td class="num">746</td><td class="num"><b>12</b></td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">9</td></tr>
+<tr class=""><td class="">Sur Chico</td><td class=""><span title="DISTRIBUIDORA AURELIO SOCIEDAD ANONIMA CERRADA">DISTRIBUIDORA AURELIO</span></td><td class="num">229</td><td class="num"><b>7</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">5</td></tr>
+<tr class="sin"><td class="">Sur Chico</td><td class=""><span title="DISTRIBUIDORA ATIX S.A.C.">DISTRIBUIDORA ATIX</span></td><td class="num">2</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr class="rec"><td class="">Norte</td><td class=""><b>Cliente perfecto</b></td><td class="num">74</td><td class="num"><b>13</b></td><td class="num">2</td><td class="num">4</td><td class="num">4</td><td class="num">3</td></tr>
+<tr class="rec"><td class="">Sur Chico</td><td class=""><b>Cliente perfecto</b></td><td class="num">27</td><td class="num"><b>5</b></td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">1</td></tr>
+<tr class="rec"><td class="">Lima</td><td class=""><b>Cliente perfecto</b></td><td class="num">19</td><td class="num"><b>4</b></td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">3</td></tr>
+<tr class="rec"><td class="">Sur</td><td class=""><b>Cliente perfecto</b></td><td class="num">11</td><td class="num"><b>2</b></td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">0</td></tr>
+<tr class="rec"><td class="">Oriente</td><td class=""><b>Cliente perfecto</b></td><td class="num">6</td><td class="num"><b>1</b></td><td class="num">0</td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr>
+<tr class="sin"><td class="">Centro</td><td class=""><b>Cliente perfecto</b></td><td class="num">2</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr class="tot"><td class=""><b>Total de la boca</b></td><td class=""></td><td class="num">9,894</td><td class="num"><b>242</b></td><td class="num">5</td><td class="num">27</td><td class="num">40</td><td class="num">170</td></tr>
+</tbody></table></div></div></div>
+<div class="tbl-note">Cada fila es una cuota: un grupo DEX dentro de una boca. Las filas «Cliente perfecto» (en verde) son los clientes perfectos de cada región; no se cruzan con DEX. Las columnas «esperadas» por segmento no son cuotas: son enteros que suman la cuota de la fila. «—» = grupo sin cuota (menos de 30 clientes o muy pocos clientes perfectos); su población igual se incluye en el total.</div></div>
+
+  </div>
+  <div class="sheet" id="hoja-mayorista">
+  <div class="sec-label" id="sec-m-total">1 · Cuotas del canal mayorista</div>
+<div class="kpis"><div class="kpi "><div class="kpi-lbl">Población (clientes)</div><div class="kpi-n"><div class="kpi-v">309</div></div><div class="kpi-sub">CODIS 122 · mayoristas 187</div></div>
+<div class="kpi au"><div class="kpi-lbl">Cuota total</div><div class="kpi-n"><div class="kpi-v">125</div></div><div class="kpi-sub">respuestas a lograr</div></div>
+<div class="kpi vi"><div class="kpi-lbl">CODIS</div><div class="kpi-n"><div class="kpi-v">57</div></div><div class="kpi-sub">respuestas a lograr</div></div>
+<div class="kpi rd"><div class="kpi-lbl">Mayoristas (MA)</div><div class="kpi-n"><div class="kpi-v">68</div></div><div class="kpi-sub">respuestas a lograr</div></div>
+</div>
+<div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">CODIS</div><div class="tbl-title">Cuota: 57 respuestas</div></div></div>
+<div class="tbl-scroll"><table>
+<thead><tr><th class="">Región</th><th class="num">Población (clientes)</th><th class="num">Cuota (respuestas)</th></tr></thead>
+<tbody>
+<tr class=""><td class=""><b>Lima</b></td><td class="num">36</td><td class="num"><b>17</b></td></tr>
+<tr class=""><td class=""><b>Norte</b></td><td class="num">27</td><td class="num"><b>13</b></td></tr>
+<tr class=""><td class=""><b>Sur</b></td><td class="num">20</td><td class="num"><b>9</b></td></tr>
+<tr class=""><td class=""><b>Oriente</b></td><td class="num">17</td><td class="num"><b>8</b></td></tr>
+<tr class=""><td class=""><b>Centro</b></td><td class="num">13</td><td class="num"><b>6</b></td></tr>
+<tr class=""><td class=""><b>Sur Chico</b></td><td class="num">5</td><td class="num"><b>2</b></td></tr>
+<tr class=""><td class=""><b>Norte Chico</b></td><td class="num">4</td><td class="num"><b>2</b></td></tr>
+<tr class="tot"><td class=""><b>Total</b></td><td class="num">122</td><td class="num"><b>57</b></td></tr>
+</tbody></table></div>
+<div class="tbl-note">Población = clientes del universo. Cuota = respuestas a lograr; por región es proporcional al tamaño.</div></div>
+<div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Mayoristas (MA)</div><div class="tbl-title">Cuota: 68 respuestas, repartidas primero por segmento</div></div></div>
+<div class="tabgroup"><div class="tabs"><button class="tab-btn active" onclick="mostrarTab(event,'may-0')">Por segmento</button><button class="tab-btn" onclick="mostrarTab(event,'may-1')">Segmento × región</button><button class="tab-btn" onclick="mostrarTab(event,'may-2')">Por región</button></div><div id="may-0" class="tab-panel active"><div class="tbl-scroll"><table>
+<thead><tr><th class="">Segmento</th><th class="num">Población (clientes)</th><th class="num">Cuota (respuestas)</th><th class="num">Cuota como % de la población</th></tr></thead>
+<tbody>
+<tr class=""><td class=""><b>Bronce</b></td><td class="num">103</td><td class="num"><b>25</b></td><td class="num">24%</td></tr>
+<tr class=""><td class=""><b>Plata</b></td><td class="num">40</td><td class="num"><b>15</b></td><td class="num">38%</td></tr>
+<tr class=""><td class=""><b>Diamante</b></td><td class="num">18</td><td class="num"><b>10</b></td><td class="num">56%</td></tr>
+<tr class=""><td class=""><b>Oro</b></td><td class="num">14</td><td class="num"><b>9</b></td><td class="num">64%</td></tr>
+<tr class=""><td class=""><b>Productores</b></td><td class="num">12</td><td class="num"><b>9</b></td><td class="num">75%</td></tr>
+<tr class="tot"><td class=""><b>Total</b></td><td class="num">187</td><td class="num"><b>68</b></td><td class="num">36%</td></tr>
+</tbody></table></div></div><div id="may-1" class="tab-panel"><div class="tbl-scroll"><table>
+<thead><tr><th class="">Segmento</th><th class="">Región</th><th class="num">Población (clientes)</th><th class="num">Cuota (respuestas)</th></tr></thead>
+<tbody>
+<tr class=""><td class="">Bronce</td><td class="">Lima</td><td class="num">30</td><td class="num"><b>7</b></td></tr>
+<tr class=""><td class=""></td><td class="">Sur</td><td class="num">29</td><td class="num"><b>7</b></td></tr>
+<tr class=""><td class=""></td><td class="">Norte</td><td class="num">17</td><td class="num"><b>4</b></td></tr>
+<tr class=""><td class=""></td><td class="">Centro</td><td class="num">15</td><td class="num"><b>4</b></td></tr>
+<tr class=""><td class=""></td><td class="">Norte Chico</td><td class="num">7</td><td class="num"><b>2</b></td></tr>
+<tr class=""><td class=""></td><td class="">Sur Chico</td><td class="num">4</td><td class="num"><b>1</b></td></tr>
+<tr class="sin"><td class=""></td><td class="">Oriente</td><td class="num">1</td><td class="num"><b>—</b></td></tr>
+<tr class=""><td class="">Plata</td><td class="">Sur</td><td class="num">13</td><td class="num"><b>5</b></td></tr>
+<tr class=""><td class=""></td><td class="">Lima</td><td class="num">11</td><td class="num"><b>4</b></td></tr>
+<tr class=""><td class=""></td><td class="">Norte</td><td class="num">8</td><td class="num"><b>3</b></td></tr>
+<tr class=""><td class=""></td><td class="">Centro</td><td class="num">5</td><td class="num"><b>2</b></td></tr>
+<tr class=""><td class=""></td><td class="">Norte Chico</td><td class="num">3</td><td class="num"><b>1</b></td></tr>
+<tr class=""><td class="">Diamante</td><td class="">Norte</td><td class="num">7</td><td class="num"><b>4</b></td></tr>
+<tr class=""><td class=""></td><td class="">Sur</td><td class="num">6</td><td class="num"><b>3</b></td></tr>
+<tr class=""><td class=""></td><td class="">Lima</td><td class="num">3</td><td class="num"><b>2</b></td></tr>
+<tr class=""><td class=""></td><td class="">Centro</td><td class="num">1</td><td class="num"><b>1</b></td></tr>
+<tr class="sin"><td class=""></td><td class="">Norte Chico</td><td class="num">1</td><td class="num"><b>—</b></td></tr>
+<tr class=""><td class="">Oro</td><td class="">Lima</td><td class="num">7</td><td class="num"><b>4</b></td></tr>
+<tr class=""><td class=""></td><td class="">Norte</td><td class="num">3</td><td class="num"><b>2</b></td></tr>
+<tr class=""><td class=""></td><td class="">Sur</td><td class="num">3</td><td class="num"><b>2</b></td></tr>
+<tr class=""><td class=""></td><td class="">Oriente</td><td class="num">1</td><td class="num"><b>1</b></td></tr>
+<tr class=""><td class="">Productores</td><td class="">Lima</td><td class="num">12</td><td class="num"><b>9</b></td></tr>
+<tr class="tot"><td class=""><b>Total</b></td><td class=""></td><td class="num">187</td><td class="num"><b>68</b></td></tr>
+</tbody></table></div></div><div id="may-2" class="tab-panel"><div class="tbl-scroll"><table>
+<thead><tr><th class="">Región</th><th class="num">Población (clientes)</th><th class="num">Cuota (respuestas)</th></tr></thead>
+<tbody>
+<tr class=""><td class=""><b>Lima</b></td><td class="num">63</td><td class="num"><b>26</b></td></tr>
+<tr class=""><td class=""><b>Sur</b></td><td class="num">51</td><td class="num"><b>17</b></td></tr>
+<tr class=""><td class=""><b>Norte</b></td><td class="num">35</td><td class="num"><b>13</b></td></tr>
+<tr class=""><td class=""><b>Centro</b></td><td class="num">21</td><td class="num"><b>7</b></td></tr>
+<tr class=""><td class=""><b>Norte Chico</b></td><td class="num">11</td><td class="num"><b>3</b></td></tr>
+<tr class=""><td class=""><b>Sur Chico</b></td><td class="num">4</td><td class="num"><b>1</b></td></tr>
+<tr class=""><td class=""><b>Oriente</b></td><td class="num">2</td><td class="num"><b>1</b></td></tr>
+<tr class="tot"><td class=""><b>Total</b></td><td class="num">187</td><td class="num"><b>68</b></td></tr>
+</tbody></table></div></div></div>
+<div class="tbl-note">La cuota total (68) se reparte primero entre segmentos con la raíz cuadrada de la población, para que los segmentos chicos (Diamante, Oro, Productores) tengan más respuestas que con un reparto proporcional; después, dentro de cada segmento, se reparte por región según la población. La cuota por región es la suma de sus celdas, y las tres pestañas suman lo mismo. «—» = celda sin cuota propia.</div></div>
+
+  </div>
+  <div class="footer"><span>Minorista: cuotas_nps_dex_v4.xlsx · Mayorista: cuotas_codis_ma_v1.xlsx</span><span>COE Advanced Analytics · Alicorp</span></div>
+</div>
+<script>
+function mostrarTab(ev,id){var g=ev.target.closest('.tabgroup');
+g.querySelectorAll(':scope > .tabs > .tab-btn').forEach(function(b){b.classList.remove('active')});
+g.querySelectorAll(':scope > .tab-panel').forEach(function(p){p.classList.remove('active')});
+ev.target.classList.add('active');g.querySelector('#'+id).classList.add('active');}
+function cambiarHoja(id){
+document.querySelectorAll('.sheet').forEach(function(e){e.classList.toggle('on',e.id==='hoja-'+id)});
+document.querySelectorAll('.sheet-btn').forEach(function(e){e.classList.toggle('on',e.dataset.hoja===id)});
+document.querySelectorAll('.jump-grp').forEach(function(e){e.classList.toggle('on',e.dataset.hoja===id)});
+window.scrollTo({top:0});}
+</script>
+</body>
+</html>
