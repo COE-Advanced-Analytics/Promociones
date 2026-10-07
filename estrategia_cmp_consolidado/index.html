@@ -386,9 +386,9 @@ function lamina2(ci) {
    <div class="kpis k6 kp k2" style="margin:0 0 14px"></div>
    <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:center;font-size:11.5px;color:var(--tx2);margin:0 0 4px;padding:6px 12px;background:#F7F4EF;border-radius:8px">
      <b style="color:var(--tx1)">Cómo leer:</b>
-     <span><i style="width:14px;height:11px;border-radius:2px;background:#2D9C9C;display:inline-block;vertical-align:-1px"></i> pedidos que cobran</span>
-     <span><i style="width:14px;height:11px;border-radius:2px;background:#CFD8D5;display:inline-block;vertical-align:-1px"></i> pedidos que no cobran</span>
-     <span>número de arriba: <b style="color:#1F8F8F">verde = % de pedidos</b> · <b style="color:#5A6560">gris = % del volumen</b></span>
+     <span><i style="width:14px;height:11px;border-radius:2px;background:#2D9C9C;display:inline-block;vertical-align:-1px"></i> clientes que cobran</span>
+     <span><i style="width:14px;height:11px;border-radius:2px;background:#CFD8D5;display:inline-block;vertical-align:-1px"></i> clientes que no cobran</span>
+     <span>número de arriba: <b style="color:#1F8F8F">verde = % de clientes</b> · <b style="color:#5A6560">gris = % del volumen</b></span>
      <span><i style="width:14px;height:0;border-top:2px dashed #6C5CE7;display:inline-block;vertical-align:3px"></i> ticket promedio de los pedidos que cobran</span></div>
    <div class="g2" style="margin-bottom:10px"></div>
    <div style="flex:1;min-height:0;overflow:auto;border-top:1px solid var(--line)"><table class="apretada mini tb2"></table></div>` +
@@ -398,11 +398,11 @@ function lamina2(ci) {
 function filas(ci, f) { const c = D.cats[ci]; const mk = f.mk || 'Todas', vr = f.vr || 'Todas'; return celdas(c, f.ap).filter(r => r.tasa && r.mk === mk && r.vr === vr && (f.of === 'Total' || r.of === f.of) && (f.ap !== 'zona' || !f.zona || f.zona === 'Todas' || r.zona === f.zona) && (!f.boca || f.boca === 'Todas' || r.boca === f.boca) && (!f.seg || f.seg === 'Todos' || r.seg === f.seg)); }
 function grafico(ci) {
   const c = D.cats[ci], st = ST[ci], rs = filas(ci, st), g = juntar(rs), G2 = c.G2[st.boca === 'Todas' ? 'Todas' : st.boca];
-  const CT = sum(g.p), KT = sum(g.kg);
-  if (!CT) return '<div class="note">Sin pedidos para este filtro.</div>';
-  // distribución de pedidos por ticket: los que cobran el descuento (verde) y los que no (gris claro)
-  const t = G2.slice(0, -1).map((lo, j) => { let pc = 0, p = 0, k = 0; for (let i = 0; i < NB; i++) if (E[i] >= lo && E[i] < G2[j + 1]) { pc += g.pc[i]; p += g.p[i]; k += g.kg[i]; }
-    return { lo, hi: G2[j + 1], cob: pc / CT, nco: (p - pc) / CT, cli: p / CT, vol: k / (KT || 1) }; });
+  const CT = sum(g.cl) + sum(g.cn), KT = sum(g.ck) + sum(g.ckn);
+  if (!CT) return '<div class="note">Sin clientes para este filtro.</div>';
+  // distribución de clientes por ticket: los que cobran el descuento (verde) y los que no (gris claro)
+  const t = G2.slice(0, -1).map((lo, j) => { let cl = 0, cn = 0, k = 0; for (let i = 0; i < NB; i++) if (E[i] >= lo && E[i] < G2[j + 1]) { cl += g.cl[i]; cn += g.cn[i]; k += g.ck[i] + g.ckn[i]; }
+    return { lo, hi: G2[j + 1], cob: cl / CT, nco: cn / CT, cli: (cl + cn) / CT, vol: k / (KT || 1) }; });
   const mx = Math.max(...t.map(x => x.cli)) || 1, paso = mx > .3 ? .1 : .05, top = Math.ceil(mx / paso) * paso;
   const W = 1200, x0 = 46, y0 = 170, bw = (W - x0 - 10) / t.length, Y = f => y0 - f / top * 132;
   let s = `<svg viewBox="0 -22 ${W} 236" style="width:100%;height:auto">`;
@@ -421,7 +421,7 @@ function grafico(ci) {
   if (pr.length) s += pill(Math.min(...pr), 'propuesta: ' + rngTxt(pr), '#1F8F8F', 1);
   // ticket promedio de los pedidos que cobran (misma base que los p25 · p50 · p75 de la tabla)
   if (c.hayTicket && sum(g.pc) && sum(g.tkc)) { const tp = Math.round(sum(g.tkc) / sum(g.pc)); s += pill(tp, 'ticket promedio: S/ ' + tp, '#6C5CE7', 2); }
-  return s + `<text x="${x0}" y="${y0 + 38}" font-size="11" fill="#5A6560" font-weight="700">ticket del pedido (S/)</text></svg>`;
+  return s + `<text x="${x0}" y="${y0 + 38}" font-size="11" fill="#5A6560" font-weight="700">ticket (S/)</text></svg>`;
 }
 function pinta2(ci) {
   const c = D.cats[ci], st = ST[ci], s = document.querySelectorAll('.slide[data-tipo="l2"]')[ci];
