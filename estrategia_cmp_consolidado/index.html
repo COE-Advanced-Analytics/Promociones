@@ -229,11 +229,13 @@ function botones(el, ops, cur, fn, cls = 'ofb') { el.innerHTML = ops.map(([v, l]
 const KEYS = ['p', 'pc', 'inv', 'kg', 'kgc', 'cl', 'ck', 'cn', 'ckn', 'tk', 'tkc'];
 function juntar(rows) { const g = {}; KEYS.forEach(k => g[k] = new Array(NB).fill(0)); rows.forEach(r => KEYS.forEach(k => { for (let i = 0; i < NB; i++) g[k][i] += r[k][i]; })); return g; }
 function ev(g, p, M) {
-  let ah = 0, cl = 0, pc = 0, kg = 0, ck = 0, rn = 0, rkn = 0;
+  let ah = 0, cl = 0, pc = 0, kg = 0, ck = 0, rn = 0, rkn = 0, incS = 0, incK = 0;
   const p0 = g.phoy ? g.phoy[0] : 0;   // piso de hoy: los que ya estaban debajo no los reta el piso nuevo
   for (let i = 0; i < NB && E[i] < p; i++) { ah += g.inv[i]; cl += g.cl[i]; pc += g.pc[i]; kg += g.kgc[i]; ck += g.ck[i];
+    const tk = (g.tkc || [])[i] || 0, falta = g.pc[i] * p - tk;   // soles que le faltan a esos pedidos para llegar al piso
+    if (tk > 0 && falta > 0) { incS += falta; incK += falta * g.kgc[i] / tk; }
     if (E[i] >= p0) { rn += (g.cn || [])[i] || 0; rkn += (g.ckn || [])[i] || 0; } }
-  return { hoy: sum(g.inv) / M, ah: ah / M, cl, C: sum(g.cl), CN: sum(g.cn || []), rn, rkn, pc, P: sum(g.pc), PA: sum(g.p), kg, K: sum(g.kgc), ck, CK: sum(g.ck) };
+  return { hoy: sum(g.inv) / M, ah: ah / M, cl, C: sum(g.cl), CN: sum(g.cn || []), rn, rkn, pc, P: sum(g.pc), PA: sum(g.p), kg, K: sum(g.kgc), ck, CK: sum(g.ck), incS: incS / M, incK: incK / M };
 }
 const MIN_CL = 30;   // zona con menos clientes que cobran: usa el piso de su oficina
 function rec(g) { const p = g.padre && sum(g.cl) < MIN_CL ? recBase(g.padre) : recBase(g); return Math.max(p, g.phoy ? g.phoy[0] : 0); }   // si la propuesta sale por debajo del piso de hoy, se queda el de hoy   // piso mínimo: nunca por debajo del de hoy
@@ -242,10 +244,10 @@ function pctl(g, q) { const t = sum(g.pc); let c = 0; for (let i = 0; i < NB; i+
 function promedio(g) { let s = 0, n = 0; for (let i = 0; i < NB; i++) { const mid = i + 1 < NB ? (E[i] + E[i + 1]) / 2 : E[i]; s += g.pc[i] * mid; n += g.pc[i]; } return n ? s / n : 0; }
 // evalúa un conjunto de celdas, cada una con su piso (sugerido o editado) y su tasa
 function evalRows(rs, cat, pisoDe, tasaDe) {
-  const T = { hoy: 0, nue: 0, ah: 0, cl: 0, C: 0, CN: 0, rn: 0, rkn: 0, pc: 0, P: 0, PA: 0, kg: 0, K: 0, ck: 0, CK: 0, pisos: [] };
+  const T = { hoy: 0, nue: 0, ah: 0, cl: 0, C: 0, CN: 0, rn: 0, rkn: 0, pc: 0, P: 0, PA: 0, kg: 0, K: 0, ck: 0, CK: 0, incS: 0, incK: 0, pisos: [] };
   rs.forEach(r => { const p = pisoDe(r), x = ev(r, p, cat.M), t = tasaDe ? tasaDe(r) : null, f = t == null || !r.tasa ? 1 : t / r.tasa;
     const nue = (x.hoy - x.ah) * f; T.hoy += x.hoy; T.nue += nue; T.ah += x.hoy - nue;
-    ['cl', 'C', 'CN', 'rn', 'rkn', 'pc', 'P', 'PA', 'kg', 'K', 'ck', 'CK'].forEach(k => T[k] += x[k]); T.pisos.push(p); });
+    ['cl', 'C', 'CN', 'rn', 'rkn', 'pc', 'P', 'PA', 'kg', 'K', 'ck', 'CK', 'incS', 'incK'].forEach(k => T[k] += x[k]); T.pisos.push(p); });
   return T;
 }
 const rngTxt = a => { const v = a.filter(x => x > 0); if (!v.length) return '—'; const mn = Math.min(...v), mx = Math.max(...v); return mn === mx ? 'S/ ' + mn : 'S/ ' + mn + '–' + mx; };
@@ -253,6 +255,7 @@ function kpis(cat, T, kgTot) {
   const tot = T.C + T.CN, ret = T.cl + T.rn, hoyC = T.C / (tot || 1), nueC = (T.C - T.cl) / (tot || 1);
   return `<div class="kpi"><b>${fK(T.hoy)}</b><span>Inversión que se puede tocar</span><small>de ${fK(cat.total)} en total al mes</small></div>
    <div class="kpi"><b style="color:var(--green)">${fS(T.ah)}</b><span>Ahorro estimado/mes</span><small>${fP(T.ah / (T.hoy || 1), 1)} de lo tocable · ${fP(T.ah / cat.total, 1)} del total</small></div>
+   ${cat.hayTkc ? `<div class="kpi"><b style="color:#1F6F6F">+${fKg(T.incK)}</b><span>Volumen incremental/mes</span><small>si los pedidos retados suben al piso nuevo · +${fK(T.incS)} de venta · ${fP(T.incK / (kgTot || 1), 1)} del volumen</small></div>` : ''}
    <div class="kpi"><b class="warn">${fN(T.cl)}</b><span>Clientes retados que cobran hoy</span><small>${fP(T.cl / (T.C || 1), 1)} de los ${fN(T.C)} que cobran · con los que no cobraban: ${fN(ret)} (${fP(ret / (tot || 1), 1)} de ${fN(tot)})</small></div>
    <div class="kpi"><b>${fP(T.ck / cat.M / (kgTot || 1), 1)}</b><span>Volumen de los retados que cobran</span><small>del total de ${cat.cat.toLowerCase()} · con los que no cobraban: ${fP((T.ck + T.rkn) / cat.M / (kgTot || 1), 1)}</small></div>
    <div class="kpi"><b>${fP(hoyC, 0)} → ${fP(nueC, 0)}</b><span>Clientes que cobran</span><small>hoy → con el piso sugerido · de ${fN(tot)} clientes de ${cat.linea}</small></div>`;
@@ -263,6 +266,7 @@ function kpis(cat, T, kgTot) {
 D.cats.forEach(c => {
   c.rows.forEach(r => { KEYS.forEach(k => { const a = new Array(NB).fill(0); const s = r.sp[k]; if (s) s[0].forEach((i, n) => a[i] = s[1][n]); r[k] = a; }); delete r.sp; r.mk = r.mk || 'Todas'; r.vr = r.vr || 'Todas'; });
   c.conMA = c.rows.some(r => r.boca === 'MA'); c.marcas = c.marcas || {};
+  c.hayTkc = c.rows.some(r => sum(r.tkc || []) > 0);   // trae el monto de los pedidos que cobran (no viene en Salsas/Pastas)
   c.rowsZ = c.rows;
   const G = {};
   c.rows.forEach(r => { const k = r.boca + '|' + r.of + '|' + r.seg + '|' + r.mk + '|' + r.vr;
@@ -435,13 +439,13 @@ function pinta2(ci) {
   $('.k2', s).innerHTML = kpis(c, T, kgDe(c, st));
   $('.t2', s).innerHTML = `${c.cat}${st.mk !== 'Todas' ? ' · ' + st.mk + (st.vr !== 'Todas' ? ' ' + st.vr : '') : ''} <em>${st.ap === 'zona' && st.zona !== 'Todas' ? 'en ' + st.zona : st.of === 'Total' ? 'total' : 'en ' + st.of}</em>${st.boca === 'Todas' ? '' : ' · ' + (st.boca === 'BO' ? 'bodegas' : 'mercados')}`;
   $('.g2', s).innerHTML = grafico(ci);
-  let h = `<thead><tr><th>Segmento · boca</th><th class="num">Clientes</th><th class="num">Piso hoy<br>(según zona)</th><th class="num">Tasa<br>hoy</th><th class="num">Ticket de los que cobran<br>p25 · p50 · p75</th><th class="num">Piso mínimo<br>sugerido</th><th class="num">Clientes retados<br>(cobran hoy)</th><th class="num">Pedidos que<br>dejan de cobrar</th><th class="num">Volumen de los<br>retados/mes</th></tr></thead><tbody>`;
+  let h = `<thead><tr><th>Segmento · boca</th><th class="num">Clientes</th><th class="num">Piso hoy<br>(según zona)</th><th class="num">Tasa<br>hoy</th>${c.hayTkc ? '<th class="num">Ticket<br>promedio</th>' : ''}<th class="num">Ticket de los que cobran<br>p25 · p50 · p75</th><th class="num">Piso mínimo<br>sugerido</th><th class="num">Clientes retados<br>(cobran hoy)</th><th class="num">Pedidos que<br>dejan de cobrar</th><th class="num">Volumen de los<br>retados/mes</th></tr></thead><tbody>`;
   const grupos = {}; rsO.forEach(r => (grupos[r.seg + '|' + r.boca] = grupos[r.seg + '|' + r.boca] || []).push(r));
   const CTOT = evalRows(rsO, c, r => rec(r)); const cliTot = (CTOT.C + CTOT.CN) || 1;
   Object.entries(grupos).sort((a, b) => sum(b[1].map(r => sum(r.inv))) - sum(a[1].map(r => sum(r.inv)))).forEach(([k, rs]) => {
     const [sg, bo] = k.split('|'), g = juntar(rs), x = evalRows(rs, c, r => rec(r)), on = st.seg === sg && st.boca === bo;
     const tasas = [...new Set(rs.map(r => r.tasa))].sort((a, b) => b - a).map(t => t + '%').join(' / ');
-    h += `<tr class="${on ? 'tot' : ''}" style="cursor:pointer" data-sg="${sg}" data-bo="${bo}"><td><b>${sg.replace(/^\d\s*/, '')}</b> · ${bo}</td><td class="num">${fN(x.C + x.CN)} <span class="mut">· ${fP((x.C + x.CN) / cliTot, 0)}</span></td><td class="num mut">${rngTxt(rs.flatMap(r => r.phoy))}</td><td class="num mut">${tasas}</td><td class="num">S/ ${pctl(g, .25)} · <b>${pctl(g, .5)}</b> · ${pctl(g, .75)}</td><td class="num"><b>${rngTxt(x.pisos)}</b></td>
+    h += `<tr class="${on ? 'tot' : ''}" style="cursor:pointer" data-sg="${sg}" data-bo="${bo}"><td><b>${sg.replace(/^\d\s*/, '')}</b> · ${bo}</td><td class="num">${fN(x.C + x.CN)} <span class="mut">· ${fP((x.C + x.CN) / cliTot, 0)}</span></td><td class="num mut">${rngTxt(rs.flatMap(r => r.phoy))}</td><td class="num mut">${tasas}</td>${c.hayTkc ? `<td class="num">S/ ${sum(g.pc) ? Math.round(sum(g.tkc) / sum(g.pc)) : 0}</td>` : ''}<td class="num">S/ ${pctl(g, .25)} · <b>${pctl(g, .5)}</b> · ${pctl(g, .75)}</td><td class="num"><b>${rngTxt(x.pisos)}</b></td>
       <td class="num">${fN(x.cl)} <span class="mut">· ${fP(x.cl / (x.C || 1), 0)}</span></td><td class="num">${fN(x.pc / c.M)}/mes <span class="mut">· ${fP(x.pc / (x.P || 1), 0)}</span></td><td class="num">${fKg(x.ck / c.M)}</td></tr>`; });
   $('.tb2', s).innerHTML = h + '</tbody>';
   $('.tb2', s).querySelectorAll('tr[data-sg]').forEach(tr => tr.onclick = () => { st.seg = tr.dataset.sg; st.boca = tr.dataset.bo; pinta2(ci); });
@@ -474,9 +478,9 @@ function pinta3(ci) {
   const tasaDe = r => { const e = st.ed[st.ap + r.boca + r.of + r.zona + r.seg]; return e && e.t != null ? e.t : null; };
   const T = evalRows(rs, c, pisoDe, tasaDe);
   $('.k3', s).innerHTML = kpis(c, T, kgDe(c, st));
-  let h = `<thead><tr><th>Boca · ${st.ap === 'zona' ? 'zona' : 'oficina'} · segmento</th><th class="num">Hoy/mes</th><th class="num">Piso hoy</th><th class="num">Tasa hoy</th><th class="num">Piso</th><th class="num">Tasa %</th><th class="num">Nuevo/mes</th><th class="num">Ahorro/mes</th><th class="num">Clientes retados<br>(cobran hoy)</th><th class="num">Pedidos que<br>dejan de cobrar</th><th class="num">Volumen de los<br>retados/mes</th></tr></thead><tbody>`;
+  let h = `<thead><tr><th>Boca · ${st.ap === 'zona' ? 'zona' : 'oficina'} · segmento</th><th class="num">Hoy/mes</th><th class="num">Piso hoy</th><th class="num">Tasa hoy</th>${c.hayTkc ? '<th class="num">Ticket<br>promedio</th>' : ''}<th class="num">Piso</th><th class="num">Tasa %</th><th class="num">Nuevo/mes</th><th class="num">Ahorro/mes</th><th class="num">Clientes retados<br>(cobran hoy)</th><th class="num">Pedidos que<br>dejan de cobrar</th><th class="num">Volumen de los<br>retados/mes</th></tr></thead><tbody>`;
   rs.forEach(r => { const k = st.ap + r.boca + r.of + r.zona + r.seg, x = evalRows([r], c, pisoDe, tasaDe), t = tasaDe(r);
-    h += `<tr data-k="${k}"><td><b>${r.boca} · ${st.ap === 'zona' ? r.zona : r.of} · ${r.seg.replace(/^\d\s*/, '')}</b></td><td class="num">${fK(x.hoy)}</td><td class="num mut">S/${r.phoy[0]}–${r.phoy[1]}</td><td class="num mut">${r.tasa}%</td>
+    h += `<tr data-k="${k}"><td><b>${r.boca} · ${st.ap === 'zona' ? r.zona : r.of} · ${r.seg.replace(/^\d\s*/, '')}</b></td><td class="num">${fK(x.hoy)}</td><td class="num mut">S/${r.phoy[0]}–${r.phoy[1]}</td><td class="num mut">${r.tasa}%</td>${c.hayTkc ? `<td class="num">S/ ${sum(r.pc) ? Math.round(sum(r.tkc) / sum(r.pc)) : 0}</td>` : ''}
      <td class="num"><input class="su" data-c="p" type="number" min="0" step="1" value="${pisoDe(r)}"></td><td class="num"><input class="st" data-c="t" type="number" min="0" max="10" step="0.5" value="${t == null ? '' : t}" placeholder="hoy"></td>
      <td class="num">${fK(x.nue)}</td><td class="num ${x.ah >= 0 ? 'hot' : 'warn'}">${fS(x.ah)}</td><td class="num">${fN(x.cl)} <span class="mut">· ${fP(x.cl / (x.C || 1), 0)}</span></td><td class="num">${fN(x.pc / c.M)}/mes</td><td class="num">${fKg(x.ck / c.M)}</td></tr>`; });
   $('.tb3', s).innerHTML = h + '</tbody>';
