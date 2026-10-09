@@ -1,0 +1,527 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elasticidad al descuento · Canal DEX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>:root{--teal:#2D9C9C;--teal-l:#E8F6F6;--teal-d:#1F6F6F;--teal-m:#5EBABA;
+--gold:#D4A853;--gold-d:#B8862F;--coral:#E85D4C;--coral-l:#FEF0EE;
+--text:#3D3A36;--text2:#7a7a8a;--text3:#9CA3AF;--bg:#FDFBF7;--bg2:#F8F5F0;--border:#E8E4DD}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+.wrap{max-width:1020px;margin:0 auto;padding:0 26px 64px}
+.hero{padding:52px 0 8px}
+.eyebrow{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;
+color:var(--teal);letter-spacing:.1em;margin-bottom:14px}
+.big{font-family:'Space Grotesk',sans-serif;font-size:clamp(56px,10vw,104px);font-weight:800;
+line-height:.92;letter-spacing:-.035em;color:var(--coral)}
+.big-s{font-family:'Space Grotesk',sans-serif;font-size:clamp(17px,2.2vw,24px);
+font-weight:700;margin-top:10px;max-width:22ch;line-height:1.25}
+section{padding:40px 0;border-top:1px solid var(--border)}
+h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(19px,2.3vw,27px);font-weight:800;
+line-height:1.2;letter-spacing:-.015em;margin-bottom:16px}
+ul{list-style:none;margin:12px 0 0}
+li{font-size:13.5px;color:var(--text2);line-height:1.6;padding-left:17px;position:relative;margin-bottom:7px}
+li:before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;
+border-radius:50%;background:var(--teal-m)}
+li b{color:var(--text);font-weight:600}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:4px 0 0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:14px}
+.pc{background:#fff;border:1px solid var(--border);border-radius:12px;padding:15px 17px;
+box-shadow:0 2px 10px rgba(26,26,46,.05)}
+.pc-l{font-size:11px;color:var(--text3);font-weight:500}
+.pc-v{font-family:'Space Grotesk',sans-serif;font-size:27px;font-weight:800;line-height:1.1;margin:5px 0 2px}
+.pc-p{font-size:11.5px;color:var(--text2);line-height:1.45}
+.chart{width:100%;height:auto;display:block;margin:4px 0 2px}
+.iv{stroke:var(--text3);stroke-width:3;stroke-linecap:round}
+.ivh{fill:transparent}
+.ivg{cursor:default}
+.ivg:hover .ivh,.ivg:focus .ivh{fill:var(--bg2)}
+.ivg:hover .iv,.ivg:focus .iv{stroke:var(--teal-d)}
+.ivg:hover .pt,.ivg:focus .pt{fill:var(--teal-d)}
+.ivg:focus{outline:none}
+.pt{fill:var(--text)}.zona{fill:var(--teal-l)}
+.zonaL{fill:var(--teal-d);font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700}
+.cero{stroke:var(--coral);stroke-width:2}
+.ceroL{fill:var(--coral);font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700}
+.ety{fill:var(--text);font-size:12px;font-weight:600}
+.etr{fill:var(--text3);font-weight:400}
+.etr2{fill:var(--text3);font-size:10px;font-weight:400;
+font-family:'DM Sans',sans-serif}
+.eiv{fill:var(--text2);font-family:'JetBrains Mono',monospace;font-size:10.5px}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;background:#fff;
+border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:14px}
+.tbl th{text-align:left;padding:10px 12px;font-family:'Space Grotesk',sans-serif;font-size:9.5px;
+font-weight:700;letter-spacing:.09em;color:var(--text3);background:var(--bg2);border-bottom:1px solid var(--border)}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--border)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono',monospace}
+.sub{font-size:11px;color:var(--text3);font-weight:400;margin-top:1px}
+.rg{color:var(--text3);font-size:11px}
+.chip{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--teal-l);
+color:var(--teal-d);padding:3px 8px;border-radius:5px;font-weight:600;white-space:nowrap}
+.chip.nula{background:#F1F0ED;color:var(--text2)}
+.bw{background:var(--bg2);border-radius:4px;height:15px;min-width:110px}
+.bar{height:15px;background:var(--teal);border-radius:4px;position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--coral);opacity:.85}
+.verdict{background:linear-gradient(135deg,var(--teal-d),#0f4f4f);color:#eafaf7;
+border-radius:14px;padding:24px 26px;margin-top:18px}
+.verdict h3{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:800;
+color:#fff;margin-bottom:6px;max-width:34ch}
+.verdict p{font-size:13.5px;opacity:.92;max-width:72ch}
+.ad{background:#fff;border:1px solid var(--border);border-left:4px solid var(--gold);
+border-radius:10px;padding:14px 18px;margin-bottom:10px}
+.ad b{font-family:'Space Grotesk',sans-serif;font-size:14px;display:block;margin-bottom:3px}
+.ad span{font-size:13px;color:var(--text2);line-height:1.6}
+footer{padding:22px 0 0;border-top:1px solid var(--border);font-size:11.5px;color:var(--text3)}
+.big-p{font-size:14px;color:var(--text2);margin-top:8px;max-width:40ch}
+.lead{font-size:13.5px;color:var(--text2);margin:-6px 0 2px;max-width:70ch}
+.filtros{display:flex;gap:24px;flex-wrap:wrap;margin:2px 0 16px}
+.fg{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.fl{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;
+letter-spacing:.1em;color:var(--text3)}
+.fbs{display:flex;gap:5px;flex-wrap:wrap}
+.fb{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;
+padding:5px 11px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text2)}
+.fb:hover{border-color:var(--teal-m)}
+.fb.on{background:var(--teal-d);border-color:var(--teal-d);color:#fff}
+.fb:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.mhead{display:grid;grid-template-columns:150px 1fr 66px 90px;gap:12px;
+padding:0 0 7px;border-bottom:1px solid var(--border);
+font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;
+letter-spacing:.09em;color:var(--text3)}
+.mhead .r{text-align:right}
+.meje{display:grid;grid-template-columns:150px 1fr 66px 90px;gap:12px;padding:3px 0 2px}
+.met{position:relative;height:11px}
+.met span{position:absolute;top:0;font-family:'JetBrains Mono',monospace;font-size:9px;
+color:var(--text3);transform:translateX(-50%)}
+.met span:first-child{transform:none}
+.mrow{display:grid;grid-template-columns:150px 1fr 66px 90px;gap:12px;align-items:center;
+padding:5px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.mrow:last-child{border-bottom:0}
+.mcat{font-weight:600;line-height:1.25}
+.mcat i{display:block;font-style:normal;font-size:10.5px;color:var(--text3);font-weight:400}
+.mbw{background:var(--bg2);border-radius:4px;height:17px}
+.mb{height:17px;border-radius:4px;background:var(--teal)}
+.mb.nulo{background:#C9C6C0}
+.mnum{text-align:right;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600}
+.mnum.nulo{color:var(--text3)}
+.minv{text-align:right;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2)}
+.vacio{padding:24px 0;color:var(--text3);font-size:13.5px}
+@media(max-width:560px){.mrow{grid-template-columns:106px 1fr 52px 72px;font-size:11.5px}}
+@media(max-width:820px){.g4{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}
+.g3{grid-template-columns:1fr}}
+@media(max-width:540px){.g4{grid-template-columns:1fr}.wrap{padding:0 16px 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* ---- deck ---- */
+html,body{height:100%}
+body{overflow:hidden}
+.deck{height:100vh;height:100dvh;display:flex;flex-direction:column}
+.slide{flex:1;min-height:0;overflow:hidden;display:none;
+padding:clamp(18px,3vh,38px) clamp(20px,4vw,56px) 78px}
+.slide.on{display:flex;align-items:center;justify-content:center}
+/* El contenido se centra cuando sobra espacio y se achica cuando falta, asi
+   cada lamina entra en una pantalla sin barra de scroll. */
+.inner{max-width:1000px;width:100%;transform-origin:center center}
+.nav{position:fixed;left:0;right:0;bottom:0;height:62px;background:rgba(253,251,247,.96);
+border-top:1px solid var(--border);display:flex;align-items:center;gap:14px;
+padding:0 clamp(20px,4vw,56px);backdrop-filter:blur(6px);z-index:9}
+.dots{display:flex;gap:7px;flex:1}
+.dot{width:26px;height:4px;border-radius:2px;background:var(--border);border:0;
+cursor:pointer;padding:0}
+.dot.on{background:var(--teal-d)}
+.dot:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+.nb{font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;
+padding:7px 14px;border-radius:7px;border:1px solid var(--border);background:#fff;
+color:var(--text2)}
+.nb:hover{border-color:var(--teal-m)}
+.nb[disabled]{opacity:.35;cursor:default}
+.pg{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text3);min-width:46px;
+text-align:right}
+.stit{margin-top:0;font-family:'Space Grotesk',sans-serif;font-size:clamp(21px,2.9vw,33px);font-weight:800;
+line-height:1.16;letter-spacing:-.018em;margin-bottom:5px}
+.slab{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;
+letter-spacing:.14em;color:var(--teal);margin-bottom:9px}
+/* embudo */
+.emb{margin:14px 0 2px}
+.eb{display:grid;grid-template-columns:220px 1fr 100px;gap:13px;align-items:center;
+margin-bottom:7px}
+.ebl{font-size:13px;font-weight:600}
+.ebl i{display:block;font-style:normal;font-size:11px;color:var(--text3);font-weight:400}
+.ebb{height:30px;border-radius:5px;background:var(--teal-d)}
+.ebb.g{background:var(--teal)}.ebb.n{background:#C9C6C0}.ebb.r{background:var(--coral)}
+.ebv{text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600}
+/* embudo: barra apilada y el bloque de los tres pedazos de adentro */
+.ebst{height:30px;border-radius:5px;overflow:hidden;display:flex}
+.ebst i{display:block;height:30px}
+.ebst i.g{background:var(--teal)}.ebst i.r{background:var(--coral)}.ebst i.n{background:#C9C6C0}
+.ebk{border-left:3px solid var(--teal-m);padding-left:17px;margin:11px 0 2px}
+.ebk-t{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;
+letter-spacing:.11em;color:var(--text3);margin-bottom:8px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px;
+vertical-align:0}
+.sw.g{background:var(--teal)}.sw.r{background:var(--coral)}.sw.n{background:#C9C6C0}
+/* ejemplo del metodo */
+.pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:14px 0 4px}
+.pa{background:#fff;border:1px solid var(--border);padding:16px 18px;position:relative}
+.pa:first-child{border-radius:10px 0 0 10px}
+.pa:last-child{border-radius:0 10px 10px 0;background:var(--teal-l);border-color:var(--teal-m)}
+.pa+.pa{border-left:0}
+.pa-n{font-family:'Space Grotesk',sans-serif;font-size:9.5px;font-weight:700;
+letter-spacing:.12em;color:var(--text3);margin-bottom:8px}
+.pa-v{font-family:'Space Grotesk',sans-serif;font-size:25px;font-weight:800;line-height:1.1}
+.pa-v s{text-decoration:none;color:var(--text3);font-size:17px}
+.pa-d{font-size:12px;color:var(--text2);line-height:1.5;margin-top:6px}
+.pa-x{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:800;color:var(--teal-d)}
+.nota{font-size:11.5px;color:var(--text3);margin-top:8px}
+/* comparacion region por region */
+.cmp{display:grid;grid-template-columns:168px 1fr;gap:16px;align-items:start;
+padding:11px 0;border-bottom:1px solid var(--border)}
+.cmp:last-child{border-bottom:0}
+.cmp-h{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;line-height:1.2}
+.cmp-h i{display:block;font-style:normal;font-family:'DM Sans',sans-serif;font-size:11px;
+color:var(--text3);font-weight:400;margin-top:2px}
+.cmp-b{display:flex;flex-direction:column;gap:4px}
+.cmp-r{display:grid;grid-template-columns:92px 1fr 44px;gap:10px;align-items:center}
+.cmp-n{font-size:11.5px;color:var(--text2)}
+.cmp-bar{background:var(--bg2);border-radius:3px;height:14px}
+.cmp-bar i{display:block;height:14px;border-radius:3px;background:var(--teal)}
+.cmp-e{text-align:right;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600}
+@media(max-width:700px){.cmp{grid-template-columns:1fr}.cmp-r{grid-template-columns:76px 1fr 40px}}
+/* dispersion */
+.dp{display:grid;grid-template-columns:195px 1fr 84px;gap:13px;align-items:center;
+padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.dp:last-child{border-bottom:0}
+.dpn{font-weight:600;line-height:1.2}
+.dpn i{display:block;font-style:normal;font-size:10.5px;color:var(--text3);font-weight:400}
+.dpt{position:relative;height:22px}
+.dpl{position:absolute;top:10px;height:3px;background:var(--teal-m);border-radius:2px}
+.dpp{position:absolute;top:5px;width:13px;height:13px;border-radius:50%;background:#fff;
+border:2.5px solid var(--teal-d);margin-left:-6px}
+.dpe{position:absolute;top:0;font-family:'JetBrains Mono',monospace;font-size:10px;
+color:var(--text3)}
+@media(max-width:700px){.eb{grid-template-columns:1fr}.ebv{text-align:left}
+.dp{grid-template-columns:1fr}.dpt{margin:6px 0}}
+</style></head><body>
+<div class="deck"><div class="slide on" data-i="0"><div class="inner"><div class="slab">Elasticidad al descuento · Canal DEX · CP1 y CP2</div>
+<div class="big">S/ 31.7M</div>
+<div class="big-s">de descuento al año que no se paga solo</div>
+<div class="big-p">Es el 49% de la inversión promocional que pudimos medir.
+Una parte no mueve volumen; la otra lo mueve, pero no lo suficiente para cubrir
+el descuento que se dio.</div></div></div><div class="slide" data-i="1"><div class="inner"><div class="slab">Cómo se calculó</div>
+<div class="stit">Se compara cada cliente consigo mismo</div>
+<p class="lead">Dos años de ventas, producto por producto. Se mira qué compró el mismo cliente
+en meses con y sin descuento.</p>
+<div class="pasos">
+<div class="pa"><div class="pa-n">UN MES NORMAL</div>
+<div class="pa-v">100 cajas</div>
+<div class="pa-d">Lo que ese cliente compra sin promoción.</div></div>
+<div class="pa"><div class="pa-n">CON 2% DE DESCUENTO</div>
+<div class="pa-v">112 cajas</div>
+<div class="pa-d">Subió 12%. Pero ese mes <b>todo el mercado
+subió 3%</b>, así que no todo es mérito del descuento.</div></div>
+<div class="pa"><div class="pa-n">EFECTO PROPIO</div>
+<div class="pa-v">+8.7% <span class="pa-x">→ -4.1</span></div>
+<div class="pa-d">Sacando el mercado quedan 108.7 cajas. Un punto de descuento
+trajo <b>4.1 puntos de volumen</b>.</div></div>
+</div>
+<div class="nota">Ejemplo para explicar la lógica. El cálculo real corre sobre
+22,679 combinaciones de producto y región.</div>
+<ul>
+<li>Cuanto <b>más negativa</b> la elasticidad, más responde la categoría al descuento.</li>
+<li>Cada número viene con un rango. <b>Si ese rango incluye el cero</b>, no alcanza para
+afirmar que el descuento mueva algo.</li>
+<li>Entran los productos que tuvieron variación real de descuento. Los que no respondieron
+<b>también entran</b>: descartarlos inflaría el resultado.</li>
+</ul></div></div><div class="slide" data-i="2"><div class="inner"><div class="slab">La foto</div>
+<div class="stit">De cada S/ 100 de descuento, ¿cuántos vuelven?</div>
+<div class="emb"><div class="eb"><div class="ebl">Inversión del canal<i>todas las promociones del año</i></div>
+<div class="ebb " style="width:100.0%"></div>
+<div class="ebv">S/ 115.7M</div></div><div class="eb"><div class="ebl">Se pudo medir<i>el resto no tiene datos suficientes</i></div>
+<div class="ebst" style="width:56.3%"><i class="g" style="width:51.2%"></i><i class="r" style="width:32.4%"></i><i class="n" style="width:16.4%"></i></div>
+<div class="ebv">S/ 65.2M</div></div>
+<div class="ebk"><div class="ebk-t">LOS TRES PEDAZOS DE ESOS S/ 65.2M</div>
+<div class="eb"><div class="ebl"><span class="sw g"></span>Mueve volumen y se paga<i>el volumen extra cubre lo que se dio</i></div>
+<div class="ebb g" style="width:51.2%"></div>
+<div class="ebv">S/ 33.4M</div></div><div class="eb"><div class="ebl"><span class="sw r"></span>Mueve, pero no se paga<i>trae volumen, pero no el suficiente</i></div>
+<div class="ebb r" style="width:32.4%"></div>
+<div class="ebv">S/ 21.1M</div></div><div class="eb"><div class="ebl"><span class="sw n"></span>No mueve volumen<i>no se puede vincular con más venta</i></div>
+<div class="ebb n" style="width:16.4%"></div>
+<div class="ebv">S/ 10.7M</div></div></div></div>
+<ul>
+<li><b>S/ 65.2M</b> se pudo medir. El resto no tiene suficientes productos,
+plata o variación de descuento: <b>no quiere decir que funcione ni que no</b>.</li>
+<li>Esos S/ 65.2M son la barra de arriba partida en tres:
+<span class="sw g"></span><b>S/ 33.4M se paga solo</b>,
+<span class="sw r"></span><b>S/ 21.1M se queda corto</b> y
+<span class="sw n"></span><b>S/ 10.7M no mueve nada</b>.</li>
+<li>Los <b>S/ 31.7M</b> de los dos últimos pedazos son los que hay que revisar.</li>
+<li>Las tres categorías más grandes se llevan el <b>48%</b> de lo medido
+y Lima sola el <b>38%</b>: mover pocas cosas alcanza para mover el total.</li>
+</ul></div></div><div class="slide" data-i="3"><div class="inner"><div class="slab">Responder no es lo mismo que convenir</div>
+<div class="stit">El descuento se paga sobre todo el volumen</div>
+<p class="lead">Siete casos reales, con sus números. Si se da 2% de descuento, ese 2% también
+se paga sobre las toneladas que se iban a vender igual: el volumen extra tiene que cubrir
+eso, no solo existir.</p>
+<table class="tbl"><thead><tr><th>Caso</th><th class="num">Descuento</th>
+<th class="num">Elast.</th><th class="num">Volumen que trae</th>
+<th class="num">Volumen que necesita</th><th class="num">¿Se paga?</th></tr></thead>
+<tbody><tr><td><b>Aceites</b><div class="sub">LIMA · Regulares</div></td>
+<td class="num">2.5%</td><td class="num">-1.72</td>
+<td class="num" style="color:var(--teal-d);font-weight:600">+4.5%</td>
+<td class="num">9.2%</td>
+<td class="num"><span class="chip nula">no</span></td></tr><tr><td><b>Salsas</b><div class="sub">SUR · Regulares</div></td>
+<td class="num">3.3%</td><td class="num">-6.55</td>
+<td class="num" style="color:var(--teal-d);font-weight:600">+24.3%</td>
+<td class="num">12.2%</td>
+<td class="num"><span class="chip ">se paga</span></td></tr><tr><td><b>Detergentes</b><div class="sub">LIMA · Combo DEX</div></td>
+<td class="num">1.6%</td><td class="num">-10.86</td>
+<td class="num" style="color:var(--teal-d);font-weight:600">+19.7%</td>
+<td class="num">5.8%</td>
+<td class="num"><span class="chip ">se paga</span></td></tr><tr><td><b>Cereales</b><div class="sub">LIMA · Regulares</div></td>
+<td class="num">8.4%</td><td class="num">-1.26</td>
+<td class="num" style="color:var(--teal-d);font-weight:600">+11.7%</td>
+<td class="num">39.1%</td>
+<td class="num"><span class="chip nula">no</span></td></tr><tr><td><b>Salsas</b><div class="sub">LIMA · Combo DEX</div></td>
+<td class="num">1.6%</td><td class="num">-6.75</td>
+<td class="num" style="color:var(--teal-d);font-weight:600">+11.7%</td>
+<td class="num">5.7%</td>
+<td class="num"><span class="chip ">se paga</span></td></tr><tr><td><b>Aceites</b><div class="sub">SUR · Regulares</div></td>
+<td class="num">1.6%</td><td class="num">-5.78</td>
+<td class="num" style="color:var(--teal-d);font-weight:600">+9.9%</td>
+<td class="num">5.7%</td>
+<td class="num"><span class="chip ">se paga</span></td></tr><tr><td><b>Detergentes</b><div class="sub">SUR · Combo DEX</div></td>
+<td class="num">1.4%</td><td class="num">-7.36</td>
+<td class="num" style="color:var(--teal-d);font-weight:600">+10.8%</td>
+<td class="num">4.8%</td>
+<td class="num"><span class="chip ">se paga</span></td></tr></tbody></table>
+<div class="nota">Son datos reales del cálculo, no ejemplos. «Volumen que necesita» es el
+mínimo con el que el descuento se devuelve, con una UB de 30%.</div>
+<ul>
+<li><b>Aceites en Lima</b> trae 4.5% de volumen con 2.5% de descuento, pero necesitaba 9.2%:
+responde, y aun así pierde plata.</li>
+<li><b>Cereales en Lima</b> es el caso extremo: con 8.4% de descuento necesitaría +39% de
+volumen. Ninguna categoría da eso.</li>
+<li><b>53 de las 96</b> combinaciones que responden pasan ese mínimo. Las otras
+<b>43 no llegan</b>, y son los S/ 21.1M.</li>
+</ul></div></div><div class="slide" data-i="4"><div class="inner"><div class="slab">Donde no se puede probar efecto</div>
+<div class="stit">S/ 10.7M al año sin efecto comprobable</div>
+<p class="lead">Son 17 combinaciones de categoría, región y concepto. Cada elasticidad viene
+con un rango: el tramo dentro del cual está el efecto real. Cuando ese rango <b>llega al
+cero</b>, uno de los valores posibles es que el descuento no haya movido nada, y entonces
+no se puede probar que mueva.</p>
+<svg viewBox="0 0 900 517" class="chart" role="img" aria-label="Las 17 combinaciones donde el rango llega al cero"><rect x="298" y="16" width="348.4" height="497" class="zona"/><line class="cero" x1="646.4" x2="646.4" y1="12" y2="513"/><text class="zonaL" x="306" y="9">el descuento mueve volumen</text><text class="ceroL" x="653.4" y="9">cero</text><g class="ivg" tabindex="0" role="listitem" aria-label="Aceites, NORTE, Regulares: elasticidad -0.29, rango -1.46 a 0.78, inversion S/ 2.3M"><rect x="298" y="18.0" width="504" height="29" class="ivh"/><title>Aceites · NORTE · Regulares
+elasticidad -0.29  ·  rango -1.46 a 0.78
+inversion S/ 2.3M</title><line class="iv" x1="555.6" x2="695.0" y1="32.5" y2="32.5"/><circle class="pt" cx="628.4" cy="32.5" r="4"/><text class="ety" x="288" y="31.0" text-anchor="end">Aceites</text><text class="etr2" x="288" y="41.0" text-anchor="end">NORTE · Regulares</text><text class="eiv" x="894" y="32.5" text-anchor="end" dominant-baseline="central">S/ 2.3M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Detergentes, SUR, Regulares: elasticidad -0.36, rango -1.14 a 0.34, inversion S/ 2.2M"><rect x="298" y="47.0" width="504" height="29" class="ivh"/><title>Detergentes · SUR · Regulares
+elasticidad -0.36  ·  rango -1.14 a 0.34
+inversion S/ 2.2M</title><line class="iv" x1="575.5" x2="667.6" y1="61.5" y2="61.5"/><circle class="pt" cx="624.0" cy="61.5" r="4"/><text class="ety" x="288" y="60.0" text-anchor="end">Detergentes</text><text class="etr2" x="288" y="70.0" text-anchor="end">SUR · Regulares</text><text class="eiv" x="894" y="61.5" text-anchor="end" dominant-baseline="central">S/ 2.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Aceites, ORIENTE, Regulares: elasticidad -1.45, rango -2.36 a 0.05, inversion S/ 1.2M"><rect x="298" y="76.0" width="504" height="29" class="ivh"/><title>Aceites · ORIENTE · Regulares
+elasticidad -1.45  ·  rango -2.36 a 0.05
+inversion S/ 1.2M</title><line class="iv" x1="499.6" x2="649.6" y1="90.5" y2="90.5"/><circle class="pt" cx="556.2" cy="90.5" r="4"/><text class="ety" x="288" y="89.0" text-anchor="end">Aceites</text><text class="etr2" x="288" y="99.0" text-anchor="end">ORIENTE · Regulares</text><text class="eiv" x="894" y="90.5" text-anchor="end" dominant-baseline="central">S/ 1.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, SUR, Regulares: elasticidad -0.78, rango -3.62 a 1.73, inversion S/ 1.2M"><rect x="298" y="105.0" width="504" height="29" class="ivh"/><title>Galletas · SUR · Regulares
+elasticidad -0.78  ·  rango -3.62 a 1.73
+inversion S/ 1.2M</title><line class="iv" x1="421.2" x2="754.1" y1="119.5" y2="119.5"/><circle class="pt" cx="597.9" cy="119.5" r="4"/><text class="ety" x="288" y="118.0" text-anchor="end">Galletas</text><text class="etr2" x="288" y="128.0" text-anchor="end">SUR · Regulares</text><text class="eiv" x="894" y="119.5" text-anchor="end" dominant-baseline="central">S/ 1.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, SUR CHICO, Regulares: elasticidad -0.22, rango -0.9 a 0.47, inversion S/ 0.9M"><rect x="298" y="134.0" width="504" height="29" class="ivh"/><title>Galletas · SUR CHICO · Regulares
+elasticidad -0.22  ·  rango -0.9 a 0.47
+inversion S/ 0.9M</title><line class="iv" x1="590.4" x2="675.7" y1="148.5" y2="148.5"/><circle class="pt" cx="632.8" cy="148.5" r="4"/><text class="ety" x="288" y="147.0" text-anchor="end">Galletas</text><text class="etr2" x="288" y="157.0" text-anchor="end">SUR CHICO · Regulares</text><text class="eiv" x="894" y="148.5" text-anchor="end" dominant-baseline="central">S/ 0.9M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Aceites, NORTE CHICO, Regulares: elasticidad -0.57, rango -1.32 a 0.3, inversion S/ 0.7M"><rect x="298" y="163.0" width="504" height="29" class="ivh"/><title>Aceites · NORTE CHICO · Regulares
+elasticidad -0.57  ·  rango -1.32 a 0.3
+inversion S/ 0.7M</title><line class="iv" x1="564.3" x2="665.1" y1="177.5" y2="177.5"/><circle class="pt" cx="611.0" cy="177.5" r="4"/><text class="ety" x="288" y="176.0" text-anchor="end">Aceites</text><text class="etr2" x="288" y="186.0" text-anchor="end">NORTE CHICO · Regulares</text><text class="eiv" x="894" y="177.5" text-anchor="end" dominant-baseline="central">S/ 0.7M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, NORTE CHICO, Regulares: elasticidad -0.71, rango -1.52 a 0.02, inversion S/ 0.5M"><rect x="298" y="192.0" width="504" height="29" class="ivh"/><title>Galletas · NORTE CHICO · Regulares
+elasticidad -0.71  ·  rango -1.52 a 0.02
+inversion S/ 0.5M</title><line class="iv" x1="551.9" x2="647.7" y1="206.5" y2="206.5"/><circle class="pt" cx="602.3" cy="206.5" r="4"/><text class="ety" x="288" y="205.0" text-anchor="end">Galletas</text><text class="etr2" x="288" y="215.0" text-anchor="end">NORTE CHICO · Regulares</text><text class="eiv" x="894" y="206.5" text-anchor="end" dominant-baseline="central">S/ 0.5M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Pasta Dental, LIMA, Regulares: elasticidad -2.18, rango -4.5 a 0.16, inversion S/ 0.4M"><rect x="298" y="221.0" width="504" height="29" class="ivh"/><title>Pasta Dental · LIMA · Regulares
+elasticidad -2.18  ·  rango -4.5 a 0.16
+inversion S/ 0.4M</title><line class="iv" x1="366.4" x2="656.4" y1="235.5" y2="235.5"/><circle class="pt" cx="510.8" cy="235.5" r="4"/><text class="ety" x="288" y="234.0" text-anchor="end">Pasta Dental</text><text class="etr2" x="288" y="244.0" text-anchor="end">LIMA · Regulares</text><text class="eiv" x="894" y="235.5" text-anchor="end" dominant-baseline="central">S/ 0.4M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, ORIENTE, Regulares: elasticidad 0.22, rango -1.56 a 2.11, inversion S/ 0.3M"><rect x="298" y="250.0" width="504" height="29" class="ivh"/><title>Galletas · ORIENTE · Regulares
+elasticidad 0.22  ·  rango -1.56 a 2.11
+inversion S/ 0.3M</title><line class="iv" x1="549.4" x2="777.7" y1="264.5" y2="264.5"/><circle class="pt" cx="660.1" cy="264.5" r="4"/><text class="ety" x="288" y="263.0" text-anchor="end">Galletas</text><text class="etr2" x="288" y="273.0" text-anchor="end">ORIENTE · Regulares</text><text class="eiv" x="894" y="264.5" text-anchor="end" dominant-baseline="central">S/ 0.3M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Harinas, LIMA, Combo DEX: elasticidad -2.93, rango -5.27 a 0.78, inversion S/ 0.3M"><rect x="298" y="279.0" width="504" height="29" class="ivh"/><title>Harinas · LIMA · Combo DEX
+elasticidad -2.93  ·  rango -5.27 a 0.78
+inversion S/ 0.3M</title><line class="iv" x1="318.5" x2="695.0" y1="293.5" y2="293.5"/><circle class="pt" cx="464.1" cy="293.5" r="4"/><text class="ety" x="288" y="292.0" text-anchor="end">Harinas</text><text class="etr2" x="288" y="302.0" text-anchor="end">LIMA · Combo DEX</text><text class="eiv" x="894" y="293.5" text-anchor="end" dominant-baseline="central">S/ 0.3M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Lavavajillas, LIMA, Combo DEX: elasticidad -0.97, rango -2.0 a 0.62, inversion S/ 0.2M"><rect x="298" y="308.0" width="504" height="29" class="ivh"/><title>Lavavajillas · LIMA · Combo DEX
+elasticidad -0.97  ·  rango -2.0 a 0.62
+inversion S/ 0.2M</title><line class="iv" x1="522.0" x2="685.0" y1="322.5" y2="322.5"/><circle class="pt" cx="586.1" cy="322.5" r="4"/><text class="ety" x="288" y="321.0" text-anchor="end">Lavavajillas</text><text class="etr2" x="288" y="331.0" text-anchor="end">LIMA · Combo DEX</text><text class="eiv" x="894" y="322.5" text-anchor="end" dominant-baseline="central">S/ 0.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Harinas, LIMA, Digitales: elasticidad -2.33, rango -4.45 a 0.98, inversion S/ 0.1M"><rect x="298" y="337.0" width="504" height="29" class="ivh"/><title>Harinas · LIMA · Digitales
+elasticidad -2.33  ·  rango -4.45 a 0.98
+inversion S/ 0.1M</title><line class="iv" x1="369.6" x2="707.4" y1="351.5" y2="351.5"/><circle class="pt" cx="501.5" cy="351.5" r="4"/><text class="ety" x="288" y="350.0" text-anchor="end">Harinas</text><text class="etr2" x="288" y="360.0" text-anchor="end">LIMA · Digitales</text><text class="eiv" x="894" y="351.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Jabon Liquido, LIMA, Regulares: elasticidad -0.9, rango -2.0 a 0.21, inversion S/ 0.1M"><rect x="298" y="366.0" width="504" height="29" class="ivh"/><title>Jabon Liquido · LIMA · Regulares
+elasticidad -0.9  ·  rango -2.0 a 0.21
+inversion S/ 0.1M</title><line class="iv" x1="522.0" x2="659.5" y1="380.5" y2="380.5"/><circle class="pt" cx="590.4" cy="380.5" r="4"/><text class="ety" x="288" y="379.0" text-anchor="end">Jabon Liquido</text><text class="etr2" x="288" y="389.0" text-anchor="end">LIMA · Regulares</text><text class="eiv" x="894" y="380.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Pasta Dental, SUR CHICO, Regulares: elasticidad -0.99, rango -3.62 a 1.81, inversion S/ 0.1M"><rect x="298" y="395.0" width="504" height="29" class="ivh"/><title>Pasta Dental · SUR CHICO · Regulares
+elasticidad -0.99  ·  rango -3.62 a 1.81
+inversion S/ 0.1M</title><line class="iv" x1="421.2" x2="759.1" y1="409.5" y2="409.5"/><circle class="pt" cx="584.8" cy="409.5" r="4"/><text class="ety" x="288" y="408.0" text-anchor="end">Pasta Dental</text><text class="etr2" x="288" y="418.0" text-anchor="end">SUR CHICO · Regulares</text><text class="eiv" x="894" y="409.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Refrescos, SUR, Combo DEX: elasticidad -1.04, rango -2.79 a 0.74, inversion S/ 0.1M"><rect x="298" y="424.0" width="504" height="29" class="ivh"/><title>Refrescos · SUR · Combo DEX
+elasticidad -1.04  ·  rango -2.79 a 0.74
+inversion S/ 0.1M</title><line class="iv" x1="472.8" x2="692.5" y1="438.5" y2="438.5"/><circle class="pt" cx="581.7" cy="438.5" r="4"/><text class="ety" x="288" y="437.0" text-anchor="end">Refrescos</text><text class="etr2" x="288" y="447.0" text-anchor="end">SUR · Combo DEX</text><text class="eiv" x="894" y="438.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Lavavajillas, SUR, Combo DEX: elasticidad -0.65, rango -1.43 a 0.51, inversion S/ 0.1M"><rect x="298" y="453.0" width="504" height="29" class="ivh"/><title>Lavavajillas · SUR · Combo DEX
+elasticidad -0.65  ·  rango -1.43 a 0.51
+inversion S/ 0.1M</title><line class="iv" x1="557.5" x2="678.2" y1="467.5" y2="467.5"/><circle class="pt" cx="606.0" cy="467.5" r="4"/><text class="ety" x="288" y="466.0" text-anchor="end">Lavavajillas</text><text class="etr2" x="288" y="476.0" text-anchor="end">SUR · Combo DEX</text><text class="eiv" x="894" y="467.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Limpiadores Light Duty, NORTE, Regulares: elasticidad 0.7, rango -0.42 a 2.23, inversion S/ 0.1M"><rect x="298" y="482.0" width="504" height="29" class="ivh"/><title>Limpiadores Light Duty · NORTE · Regulares
+elasticidad 0.7  ·  rango -0.42 a 2.23
+inversion S/ 0.1M</title><line class="iv" x1="620.3" x2="785.2" y1="496.5" y2="496.5"/><circle class="pt" cx="690.0" cy="496.5" r="4"/><text class="ety" x="288" y="495.0" text-anchor="end">Limpiadores Light Duty</text><text class="etr2" x="288" y="505.0" text-anchor="end">NORTE · Regulares</text><text class="eiv" x="894" y="496.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g></svg>
+<ul><li>Cada línea es un rango y el punto es el valor medido. Si la línea
+<b>cruza la raya roja del cero</b>, no alcanza para afirmar efecto.</li>
+<li>No es que el descuento no funcione: es que con estos datos <b>no se puede probar</b>
+que funcione. Son las primeras que convendría probar sin promoción.</li>
+<li><b>Aceites y Galletas</b> aparecen en cuatro regiones cada una, y las dos primeras filas
+concentran <b>S/ 4.5M</b> de los S/ 10.7M.</li></ul></div></div><div class="slide" data-i="5"><div class="inner"><div class="slab">Plata contra respuesta</div>
+<div class="stit">Regulares: más plata, menos respuesta</div>
+<p class="lead">Los tres conceptos, con cuánta plata mueven, cuánto de eso se pudo medir
+y cuánto no muestra efecto.</p>
+<table class="tbl"><thead><tr><th>Concepto</th><th class="num">Inversión</th>
+<th class="num">% del total</th><th class="num">Se pudo medir</th>
+<th class="num">Elast.</th><th class="num">Sin efecto comprobable</th></tr></thead>
+<tbody>
+<tr><td><b>Regulares</b><div class="sub">Trade · 54 combinaciones · 43% escalonado</div></td><td class="num">S/ 62.1M</td><td class="num">54%</td><td class="num">S/ 37.6M<div class="sub">61% de lo suyo</div></td><td class="num"><span class="chip">-3.02</span></td><td class="num">S/ 10.0M<div class="sub">27% de lo medido</div></td></tr>
+<tr><td><b>Combo DEX</b><div class="sub">DEX · 44 combinaciones · 100% escalonado</div></td><td class="num">S/ 43.0M</td><td class="num">37%</td><td class="num">S/ 22.8M<div class="sub">53% de lo suyo</div></td><td class="num"><span class="chip">-7.43</span></td><td class="num">S/ 0.6M<div class="sub">3% de lo medido</div></td></tr>
+<tr><td><b>Promociones Digitales</b><div class="sub">Digital · 16 combinaciones · 0% escalonado</div></td><td class="num">S/ 10.7M</td><td class="num">9%</td><td class="num">S/ 4.9M<div class="sub">46% de lo suyo</div></td><td class="num"><span class="chip">-3.43</span></td><td class="num">S/ 0.1M<div class="sub">2% de lo medido</div></td></tr>
+</tbody></table>
+<div class="g3">
+<div class="pc"><div class="pc-l">Lo que no se puede probar</div>
+<div class="pc-v" style="color:var(--coral)">27%</div>
+<div class="pc-p">de lo que se midió en Regulares no muestra efecto. En Combo DEX es
+3% y en Digitales 2%.</div></div>
+<div class="pc"><div class="pc-l">Dónde se concentra</div>
+<div class="pc-v" style="color:var(--coral)">94%</div>
+<div class="pc-p">de los S/ 10.7M sin efecto comprobable son Regulares. El problema
+es de un solo concepto.</div></div>
+<div class="pc"><div class="pc-l">Alcance de la medición</div>
+<div class="pc-v" style="color:var(--teal-d)">56%</div>
+<div class="pc-p">de la inversión se pudo medir: 61% de Regulares,
+53% de Combo DEX y 46% de Digitales.</div></div>
+</div>
+<ul><li>Regulares se lleva el <b>54%</b> de la plata y es el que
+<b>menos responde</b> de los tres.</li>
+<li>Combo DEX responde más, pero el <b>100% de sus promociones es escalonada</b>: el descuento
+se gana comprando más, así que parte de esa elasticidad es la mecánica y no el precio.
+<b>No es comparable</b> con los otros dos.</li>
+<li>Digitales es el más chico y el que menos se pudo medir, pero casi todo lo que se midió
+<b>sí responde</b>.</li></ul></div></div><div class="slide" data-i="6"><div class="inner"><div class="slab">Explorar</div>
+<div class="stit">Elasticidad por categoría</div>
+<p class="lead">Las <b>15 categorías de mayor inversión</b>. Los botones filtran por zona y por
+concepto; la barra es cuánto volumen trae cada punto de descuento.</p>
+<div class="filtros">
+<div class="fg"><span class="fl">Zona</span><div class="fbs" id="fz">
+<button class="fb on" data-z="">Todas</button><button class="fb" data-z="CENTRO">CENTRO</button><button class="fb" data-z="LIMA">LIMA</button><button class="fb" data-z="NORTE">NORTE</button><button class="fb" data-z="NORTE CHICO">NORTE CHICO</button><button class="fb" data-z="ORIENTE">ORIENTE</button><button class="fb" data-z="SUR">SUR</button><button class="fb" data-z="SUR CHICO">SUR CHICO</button></div></div>
+<div class="fg"><span class="fl">Concepto</span><div class="fbs" id="fc">
+<button class="fb on" data-c="">Todos</button><button class="fb" data-c="Combo DEX">Combo DEX</button><button class="fb" data-c="Promociones Digitales">Promociones Digitales</button><button class="fb" data-c="Regulares">Regulares</button></div></div></div>
+<div class="mhead"><span>Categoría</span>
+<span>Cuánto volumen trae cada punto de descuento</span>
+<span class="r">Elast.</span><span class="r">Inversión</span></div>
+<div class="meje"><span class="mel"></span><span class="met"><span style="left:0.0%">0</span><span style="left:26.3%">-5</span><span style="left:52.6%">-10</span><span style="left:78.9%">-15</span></span>
+<span></span><span></span></div>
+<div id="mres"></div>
+<ul><li>La barra está en escala fija: <b>la misma longitud significa siempre lo mismo</b>,
+cambie el filtro que cambie. Más larga, más responde.</li>
+<li><b>Gris</b>: el rango llega al cero, no se puede probar efecto.</li>
+<li>No toda zona × concepto tiene datos suficientes; cuando no los hay,
+la categoría no aparece.</li></ul></div></div><div class="slide" data-i="7"><div class="inner"><div class="slab">El hallazgo operativo</div>
+<div class="stit">La misma categoría responde muy distinto según la región</div>
+<p class="lead">Tres ejemplos. Cada punto es una región; el número es su elasticidad.</p>
+<div class="cmp"><div class="cmp-h">Aceites<i>Regulares · S/ 7.1M</i></div><div class="cmp-b"><div class="cmp-r"><span class="cmp-n">SUR</span><span class="cmp-bar"><i style="width:53.2%"></i></span><span class="cmp-e">-5.78</span></div><div class="cmp-r"><span class="cmp-n">CENTRO</span><span class="cmp-bar"><i style="width:40.3%"></i></span><span class="cmp-e">-4.38</span></div><div class="cmp-r"><span class="cmp-n">SUR CHICO</span><span class="cmp-bar"><i style="width:16.5%"></i></span><span class="cmp-e">-1.79</span></div><div class="cmp-r"><span class="cmp-n">LIMA</span><span class="cmp-bar"><i style="width:15.8%"></i></span><span class="cmp-e">-1.72</span></div></div></div><div class="cmp"><div class="cmp-h">Cereales<i>Regulares · S/ 5.5M</i></div><div class="cmp-b"><div class="cmp-r"><span class="cmp-n">NORTE</span><span class="cmp-bar"><i style="width:26.1%"></i></span><span class="cmp-e">-2.83</span></div><div class="cmp-r"><span class="cmp-n">ORIENTE</span><span class="cmp-bar"><i style="width:13.9%"></i></span><span class="cmp-e">-1.51</span></div><div class="cmp-r"><span class="cmp-n">NORTE CHICO</span><span class="cmp-bar"><i style="width:11.6%"></i></span><span class="cmp-e">-1.26</span></div><div class="cmp-r"><span class="cmp-n">LIMA</span><span class="cmp-bar"><i style="width:11.6%"></i></span><span class="cmp-e">-1.26</span></div><div class="cmp-r"><span class="cmp-n">CENTRO</span><span class="cmp-bar"><i style="width:2.9%"></i></span><span class="cmp-e">-0.32</span></div></div></div><div class="cmp"><div class="cmp-h">Detergentes<i>Combo DEX · S/ 5.8M</i></div><div class="cmp-b"><div class="cmp-r"><span class="cmp-n">LIMA</span><span class="cmp-bar"><i style="width:100.0%"></i></span><span class="cmp-e">-10.86</span></div><div class="cmp-r"><span class="cmp-n">NORTE CHICO</span><span class="cmp-bar"><i style="width:72.8%"></i></span><span class="cmp-e">-7.91</span></div><div class="cmp-r"><span class="cmp-n">NORTE</span><span class="cmp-bar"><i style="width:70.2%"></i></span><span class="cmp-e">-7.62</span></div><div class="cmp-r"><span class="cmp-n">SUR</span><span class="cmp-bar"><i style="width:67.8%"></i></span><span class="cmp-e">-7.36</span></div></div></div>
+<ul>
+<li><b>Aceites</b> responde tres veces más en Sur que en Lima, y Lima es donde está
+<b>casi la mitad</b> de su inversión.</li>
+<li><b>Cereales</b> casi no responde en ninguna región, y en Centro directamente nada.</li>
+<li><b>Detergentes</b> es parejo: responde fuerte en las cuatro. Ahí sí se puede decidir
+a nivel categoría.</li>
+</ul></div></div><div class="slide" data-i="8"><div class="inner"><div class="slab">Qué sigue</div>
+<div class="stit">Tres movimientos</div>
+<div class="g2" style="margin-top:16px">
+<div class="pc"><div class="pc-l">Primero</div>
+<div class="pc-v" style="font-size:18px;color:var(--teal-d)">Revisar los S/ 10.7M</div>
+<div class="pc-p">Las 17 combinaciones sin efecto comprobable, empezando por Aceites y
+Detergentes, que son la mitad.</div></div>
+<div class="pc"><div class="pc-l">Segundo</div>
+<div class="pc-v" style="font-size:18px;color:var(--teal-d)">Bajar profundidad donde no paga</div>
+<div class="pc-p">S/ 21.1M mueven volumen pero no cubren el descuento. No es cortar:
+es ajustar el nivel.</div></div>
+</div>
+<div class="g2" style="margin-top:14px">
+<div class="pc" style="border-left:4px solid var(--gold)"><div class="pc-l">Para poder afirmarlo</div>
+<div class="pc-v" style="font-size:18px;color:var(--teal-d)">Dejar zonas sin promoción</div>
+<div class="pc-p">Dos o tres categorías, un período. Es lo único que convierte el “no responde”
+en algo que se sostiene, porque hoy no sabemos si la promoción se puso justo donde la categoría
+ya venía cayendo.</div></div>
+<div class="pc"><div class="pc-l">Base</div><div class="pc-p" style="margin-top:6px">
+Canal DEX, CP1 y CP2, dos años. De 478 combinaciones, 114 tienen estimación
+y 96 muestran efecto. Cobertura 77.8% del volumen.</div></div>
+</div></div></div></div>
+<div class="nav">
+  <button class="nb" id="bp">Anterior</button>
+  <button class="nb" id="bn">Siguiente</button>
+  <div class="dots"><button class="dot on" data-g="0" aria-label="Lámina 1"></button><button class="dot" data-g="1" aria-label="Lámina 2"></button><button class="dot" data-g="2" aria-label="Lámina 3"></button><button class="dot" data-g="3" aria-label="Lámina 4"></button><button class="dot" data-g="4" aria-label="Lámina 5"></button><button class="dot" data-g="5" aria-label="Lámina 6"></button><button class="dot" data-g="6" aria-label="Lámina 7"></button><button class="dot" data-g="7" aria-label="Lámina 8"></button><button class="dot" data-g="8" aria-label="Lámina 9"></button></div>
+  <div class="pg" id="pg">1 / 9</div>
+</div>
+<script>
+const M = [{"cat":"Aceites","z":"CENTRO","c":"Regulares","e":-4.38,"lo":-5.0,"hi":-3.6,"i":1017307.55,"v":"mide"},{"cat":"Aceites","z":"LIMA","c":"Regulares","e":-1.72,"lo":-2.08,"hi":-1.3,"i":3128404.54,"v":"mide"},{"cat":"Aceites","z":"NORTE","c":"Regulares","e":-0.29,"lo":-1.46,"hi":0.78,"i":2334145.99,"v":"nulo"},{"cat":"Aceites","z":"NORTE","c":"Promociones Digitales","e":-5.26,"lo":-6.64,"hi":-3.94,"i":551443.94,"v":"mide"},{"cat":"Aceites","z":"NORTE CHICO","c":"Regulares","e":-0.57,"lo":-1.32,"hi":0.3,"i":687665.89,"v":"nulo"},{"cat":"Aceites","z":"ORIENTE","c":"Regulares","e":-1.45,"lo":-2.36,"hi":0.05,"i":1236807.92,"v":"nulo"},{"cat":"Aceites","z":"SUR","c":"Regulares","e":-5.78,"lo":-6.81,"hi":-4.72,"i":1828476.46,"v":"mide"},{"cat":"Aceites","z":"SUR","c":"Combo DEX","e":-6.59,"lo":-8.44,"hi":-4.89,"i":907897.45,"v":"mide"},{"cat":"Aceites","z":"SUR CHICO","c":"Regulares","e":-1.79,"lo":-2.79,"hi":-0.56,"i":1175780.84,"v":"mide"},{"cat":"Cereales","z":"CENTRO","c":"Regulares","e":-0.32,"lo":-0.62,"hi":-0.09,"i":693346.5,"v":"mide"},{"cat":"Cereales","z":"LIMA","c":"Regulares","e":-1.26,"lo":-1.54,"hi":-1.0,"i":2365747.6,"v":"mide"},{"cat":"Cereales","z":"NORTE","c":"Regulares","e":-2.83,"lo":-3.8,"hi":-1.83,"i":1543329.79,"v":"mide"},{"cat":"Cereales","z":"NORTE","c":"Combo DEX","e":-6.45,"lo":-7.58,"hi":-5.38,"i":140408.64,"v":"mide"},{"cat":"Cereales","z":"NORTE CHICO","c":"Regulares","e":-1.26,"lo":-1.73,"hi":-0.76,"i":361704.74,"v":"mide"},{"cat":"Cereales","z":"ORIENTE","c":"Regulares","e":-1.51,"lo":-1.82,"hi":-1.16,"i":504080.99,"v":"mide"},{"cat":"Cereales","z":"SUR","c":"Combo DEX","e":-9.38,"lo":-10.94,"hi":-7.49,"i":161711.88,"v":"mide"},{"cat":"Conservas","z":"CENTRO","c":"Regulares","e":-12.76,"lo":-15.85,"hi":-9.19,"i":444790.69,"v":"mide"},{"cat":"Conservas","z":"CENTRO","c":"Promociones Digitales","e":-3.63,"lo":-4.36,"hi":-1.12,"i":65510.25,"v":"mide"},{"cat":"Conservas","z":"LIMA","c":"Combo DEX","e":-18.87,"lo":-22.63,"hi":-10.66,"i":679869.8,"v":"mide"},{"cat":"Conservas","z":"LIMA","c":"Promociones Digitales","e":-7.56,"lo":-9.62,"hi":-4.54,"i":427334.86,"v":"mide"},{"cat":"Conservas","z":"NORTE","c":"Regulares","e":-3.88,"lo":-5.63,"hi":-2.56,"i":445315.36,"v":"mide"},{"cat":"Conservas","z":"NORTE","c":"Promociones Digitales","e":-4.63,"lo":-5.57,"hi":-3.97,"i":156691.02,"v":"mide"},{"cat":"Conservas","z":"NORTE CHICO","c":"Regulares","e":-11.42,"lo":-13.08,"hi":-9.37,"i":95430.32,"v":"mide"},{"cat":"Conservas","z":"SUR","c":"Promociones Digitales","e":-3.6,"lo":-5.07,"hi":-1.96,"i":90890.28,"v":"mide"},{"cat":"Conservas","z":"SUR CHICO","c":"Regulares","e":-11.45,"lo":-12.73,"hi":-10.49,"i":252540.81,"v":"mide"},{"cat":"Detergentes","z":"LIMA","c":"Combo DEX","e":-10.86,"lo":-12.39,"hi":-9.13,"i":2646526.07,"v":"mide"},{"cat":"Detergentes","z":"LIMA","c":"Regulares","e":-6.06,"lo":-7.12,"hi":-4.84,"i":1580758.0,"v":"mide"},{"cat":"Detergentes","z":"LIMA","c":"Promociones Digitales","e":-3.04,"lo":-3.76,"hi":-2.33,"i":1055442.95,"v":"mide"},{"cat":"Detergentes","z":"NORTE","c":"Combo DEX","e":-7.62,"lo":-8.85,"hi":-6.38,"i":893110.04,"v":"mide"},{"cat":"Detergentes","z":"NORTE CHICO","c":"Combo DEX","e":-7.91,"lo":-9.32,"hi":-6.43,"i":478137.06,"v":"mide"},{"cat":"Detergentes","z":"SUR","c":"Regulares","e":-0.36,"lo":-1.14,"hi":0.34,"i":2167257.27,"v":"nulo"},{"cat":"Detergentes","z":"SUR","c":"Combo DEX","e":-7.36,"lo":-8.21,"hi":-6.31,"i":1776603.38,"v":"mide"},{"cat":"Galletas","z":"CENTRO","c":"Combo DEX","e":-12.23,"lo":-15.84,"hi":-6.67,"i":775616.93,"v":"mide"},{"cat":"Galletas","z":"LIMA","c":"Combo DEX","e":-6.99,"lo":-7.97,"hi":-5.9,"i":1545705.05,"v":"mide"},{"cat":"Galletas","z":"LIMA","c":"Promociones Digitales","e":-0.35,"lo":-0.43,"hi":-0.25,"i":222516.45,"v":"mide"},{"cat":"Galletas","z":"NORTE CHICO","c":"Regulares","e":-0.71,"lo":-1.52,"hi":0.02,"i":503240.75,"v":"nulo"},{"cat":"Galletas","z":"ORIENTE","c":"Regulares","e":0.22,"lo":-1.56,"hi":2.11,"i":332220.5,"v":"nulo"},{"cat":"Galletas","z":"SUR","c":"Regulares","e":-0.78,"lo":-3.62,"hi":1.73,"i":1170683.56,"v":"nulo"},{"cat":"Galletas","z":"SUR CHICO","c":"Regulares","e":-0.22,"lo":-0.9,"hi":0.47,"i":917374.25,"v":"nulo"},{"cat":"Galletas","z":"SUR CHICO","c":"Combo DEX","e":-9.39,"lo":-11.15,"hi":-7.19,"i":842370.32,"v":"mide"},{"cat":"Harinas","z":"CENTRO","c":"Regulares","e":-8.66,"lo":-10.02,"hi":-4.36,"i":87030.38,"v":"mide"},{"cat":"Harinas","z":"LIMA","c":"Combo DEX","e":-2.93,"lo":-5.27,"hi":0.78,"i":266925.84,"v":"nulo"},{"cat":"Harinas","z":"LIMA","c":"Promociones Digitales","e":-2.33,"lo":-4.45,"hi":0.98,"i":104826.2,"v":"nulo"},{"cat":"Harinas","z":"NORTE","c":"Regulares","e":-2.41,"lo":-3.75,"hi":-0.4,"i":334491.48,"v":"mide"},{"cat":"Harinas","z":"NORTE CHICO","c":"Combo DEX","e":-4.65,"lo":-7.03,"hi":-1.78,"i":56316.9,"v":"mide"},{"cat":"Harinas","z":"ORIENTE","c":"Regulares","e":-3.66,"lo":-4.19,"hi":-2.92,"i":89504.82,"v":"mide"},{"cat":"Harinas","z":"SUR","c":"Combo DEX","e":-1.21,"lo":-1.84,"hi":-0.33,"i":124595.18,"v":"mide"},{"cat":"Jabon Liquido","z":"LIMA","c":"Regulares","e":-0.9,"lo":-2.0,"hi":0.21,"i":86108.72,"v":"nulo"},{"cat":"Jabon Liquido","z":"LIMA","c":"Combo DEX","e":-2.9,"lo":-3.19,"hi":-2.47,"i":54828.21,"v":"mide"},{"cat":"Jabones de Lavar","z":"CENTRO","c":"Regulares","e":-6.65,"lo":-8.12,"hi":-4.21,"i":259771.16,"v":"mide"},{"cat":"Jabones de Lavar","z":"NORTE CHICO","c":"Regulares","e":-6.15,"lo":-7.04,"hi":-5.51,"i":225067.11,"v":"mide"},{"cat":"Jabones de Lavar","z":"ORIENTE","c":"Regulares","e":-6.35,"lo":-7.2,"hi":-4.45,"i":204329.79,"v":"mide"},{"cat":"Jabones de Lavar","z":"SUR","c":"Regulares","e":-8.1,"lo":-10.41,"hi":-5.2,"i":284525.85,"v":"mide"},{"cat":"Jabones de Lavar","z":"SUR CHICO","c":"Regulares","e":-8.79,"lo":-10.41,"hi":-6.86,"i":378598.32,"v":"mide"},{"cat":"Lavavajillas","z":"LIMA","c":"Combo DEX","e":-0.97,"lo":-2.0,"hi":0.62,"i":170677.89,"v":"nulo"},{"cat":"Lavavajillas","z":"LIMA","c":"Promociones Digitales","e":-1.85,"lo":-2.3,"hi":-0.72,"i":86617.32,"v":"mide"},{"cat":"Lavavajillas","z":"NORTE","c":"Combo DEX","e":-3.27,"lo":-4.13,"hi":-2.15,"i":72953.76,"v":"mide"},{"cat":"Lavavajillas","z":"SUR","c":"Combo DEX","e":-0.65,"lo":-1.43,"hi":0.51,"i":63458.45,"v":"nulo"},{"cat":"Lejias","z":"LIMA","c":"Combo DEX","e":-1.92,"lo":-2.42,"hi":-1.36,"i":64609.75,"v":"mide"},{"cat":"Limpiadores Light Duty","z":"LIMA","c":"Regulares","e":-1.45,"lo":-1.99,"hi":-0.95,"i":127100.26,"v":"mide"},{"cat":"Limpiadores Light Duty","z":"LIMA","c":"Combo DEX","e":-1.65,"lo":-2.04,"hi":-1.11,"i":68650.74,"v":"mide"},{"cat":"Limpiadores Light Duty","z":"NORTE","c":"Regulares","e":0.7,"lo":-0.42,"hi":2.23,"i":60843.46,"v":"nulo"},{"cat":"Pasta Dental","z":"LIMA","c":"Regulares","e":-2.18,"lo":-4.5,"hi":0.16,"i":408236.56,"v":"nulo"},{"cat":"Pasta Dental","z":"LIMA","c":"Combo DEX","e":-11.69,"lo":-13.24,"hi":-8.85,"i":171377.41,"v":"mide"},{"cat":"Pasta Dental","z":"LIMA","c":"Promociones Digitales","e":-4.84,"lo":-6.22,"hi":-3.08,"i":74818.17,"v":"mide"},{"cat":"Pasta Dental","z":"SUR CHICO","c":"Regulares","e":-0.99,"lo":-3.62,"hi":1.81,"i":72986.84,"v":"nulo"},{"cat":"Pastas","z":"CENTRO","c":"Combo DEX","e":-3.41,"lo":-4.48,"hi":-2.35,"i":142786.95,"v":"mide"},{"cat":"Pastas","z":"LIMA","c":"Combo DEX","e":-5.77,"lo":-7.47,"hi":-3.75,"i":1364317.97,"v":"mide"},{"cat":"Pastas","z":"LIMA","c":"Promociones Digitales","e":-2.4,"lo":-3.21,"hi":-1.34,"i":614696.3,"v":"mide"},{"cat":"Pastas","z":"NORTE","c":"Combo DEX","e":-7.18,"lo":-8.58,"hi":-5.8,"i":1431432.69,"v":"mide"},{"cat":"Pastas","z":"ORIENTE","c":"Regulares","e":-2.26,"lo":-2.8,"hi":-1.13,"i":1587554.22,"v":"mide"},{"cat":"Pastas","z":"SUR","c":"Regulares","e":-2.1,"lo":-3.19,"hi":-1.14,"i":1644889.11,"v":"mide"},{"cat":"Pastas","z":"SUR","c":"Combo DEX","e":-7.41,"lo":-9.07,"hi":-5.33,"i":1411130.03,"v":"mide"},{"cat":"Postres","z":"CENTRO","c":"Regulares","e":-2.24,"lo":-2.67,"hi":-1.8,"i":182995.2,"v":"mide"},{"cat":"Postres","z":"CENTRO","c":"Combo DEX","e":-2.31,"lo":-2.91,"hi":-1.51,"i":73454.05,"v":"mide"},{"cat":"Postres","z":"LIMA","c":"Regulares","e":-2.21,"lo":-3.26,"hi":-1.26,"i":138777.01,"v":"mide"},{"cat":"Postres","z":"LIMA","c":"Combo DEX","e":-2.2,"lo":-2.9,"hi":-0.94,"i":72821.16,"v":"mide"},{"cat":"Postres","z":"NORTE","c":"Regulares","e":-5.3,"lo":-7.18,"hi":-3.12,"i":644264.23,"v":"mide"},{"cat":"Postres","z":"NORTE","c":"Promociones Digitales","e":-3.52,"lo":-4.25,"hi":-1.67,"i":68654.09,"v":"mide"},{"cat":"Postres","z":"NORTE CHICO","c":"Regulares","e":-2.19,"lo":-3.18,"hi":-1.17,"i":64176.34,"v":"mide"},{"cat":"Postres","z":"ORIENTE","c":"Regulares","e":-4.43,"lo":-6.75,"hi":-2.07,"i":89456.92,"v":"mide"},{"cat":"Postres","z":"SUR","c":"Regulares","e":-0.77,"lo":-1.12,"hi":-0.31,"i":784292.27,"v":"mide"},{"cat":"Postres","z":"SUR CHICO","c":"Regulares","e":-2.72,"lo":-3.52,"hi":-1.65,"i":154632.85,"v":"mide"},{"cat":"Postres","z":"SUR CHICO","c":"Combo DEX","e":-7.18,"lo":-9.0,"hi":-5.17,"i":78910.61,"v":"mide"},{"cat":"Quitamanchas","z":"LIMA","c":"Combo DEX","e":-2.76,"lo":-3.01,"hi":-2.11,"i":59397.34,"v":"mide"},{"cat":"Refrescos","z":"LIMA","c":"Regulares","e":1.09,"lo":0.33,"hi":1.65,"i":104527.45,"v":"inv"},{"cat":"Refrescos","z":"NORTE","c":"Combo DEX","e":-3.04,"lo":-3.89,"hi":-2.14,"i":94224.62,"v":"mide"},{"cat":"Refrescos","z":"SUR","c":"Regulares","e":-1.28,"lo":-1.81,"hi":-0.67,"i":148504.99,"v":"mide"},{"cat":"Refrescos","z":"SUR","c":"Combo DEX","e":-1.04,"lo":-2.79,"hi":0.74,"i":72160.86,"v":"nulo"},{"cat":"Refrescos","z":"SUR CHICO","c":"Regulares","e":-0.75,"lo":-1.52,"hi":-0.04,"i":60828.84,"v":"mide"},{"cat":"Salsas","z":"CENTRO","c":"Regulares","e":-5.14,"lo":-6.14,"hi":-4.2,"i":326714.78,"v":"mide"},{"cat":"Salsas","z":"CENTRO","c":"Promociones Digitales","e":-0.81,"lo":-1.13,"hi":-0.32,"i":57744.06,"v":"mide"},{"cat":"Salsas","z":"LIMA","c":"Combo DEX","e":-6.75,"lo":-8.63,"hi":-4.2,"i":2040914.45,"v":"mide"},{"cat":"Salsas","z":"LIMA","c":"Promociones Digitales","e":-2.87,"lo":-3.74,"hi":-1.82,"i":966946.55,"v":"mide"},{"cat":"Salsas","z":"NORTE CHICO","c":"Regulares","e":-4.64,"lo":-5.7,"hi":-3.45,"i":242902.14,"v":"mide"},{"cat":"Salsas","z":"NORTE CHICO","c":"Combo DEX","e":-6.36,"lo":-7.36,"hi":-5.06,"i":204411.71,"v":"mide"},{"cat":"Salsas","z":"SUR","c":"Regulares","e":-6.55,"lo":-8.07,"hi":-5.07,"i":2942535.79,"v":"mide"},{"cat":"Salsas","z":"SUR","c":"Combo DEX","e":-3.08,"lo":-4.42,"hi":-1.43,"i":1322274.55,"v":"mide"},{"cat":"Salsas","z":"SUR CHICO","c":"Regulares","e":-7.16,"lo":-8.72,"hi":-5.22,"i":593498.35,"v":"mide"},{"cat":"Salsas","z":"SUR CHICO","c":"Combo DEX","e":-11.42,"lo":-13.79,"hi":-8.91,"i":508474.5,"v":"mide"},{"cat":"Semolas","z":"SUR","c":"Combo DEX","e":-2.06,"lo":-3.04,"hi":-1.32,"i":65798.98,"v":"mide"},{"cat":"Shampoo","z":"NORTE","c":"Regulares","e":-1.81,"lo":-2.35,"hi":-1.36,"i":118415.34,"v":"mide"},{"cat":"Shampoo","z":"SUR","c":"Combo DEX","e":-2.94,"lo":-3.74,"hi":-2.18,"i":53062.39,"v":"mide"},{"cat":"Suavizantes","z":"LIMA","c":"Combo DEX","e":-3.02,"lo":-4.22,"hi":-1.8,"i":168746.69,"v":"mide"},{"cat":"Suavizantes","z":"LIMA","c":"Promociones Digitales","e":-3.27,"lo":-4.12,"hi":-2.45,"i":76039.86,"v":"mide"},{"cat":"Suavizantes","z":"SUR","c":"Combo DEX","e":-1.57,"lo":-2.18,"hi":-0.92,"i":129842.49,"v":"mide"},{"cat":"Untables Domesticos","z":"CENTRO","c":"Combo DEX","e":-2.21,"lo":-2.91,"hi":-1.3,"i":107577.19,"v":"mide"},{"cat":"Untables Domesticos","z":"LIMA","c":"Combo DEX","e":-3.47,"lo":-5.51,"hi":-1.13,"i":742775.44,"v":"mide"},{"cat":"Untables Domesticos","z":"LIMA","c":"Promociones Digitales","e":-1.78,"lo":-2.78,"hi":-0.88,"i":253568.45,"v":"mide"},{"cat":"Untables Domesticos","z":"NORTE","c":"Combo DEX","e":-5.44,"lo":-6.87,"hi":-3.3,"i":346582.46,"v":"mide"},{"cat":"Untables Domesticos","z":"NORTE","c":"Regulares","e":-13.0,"lo":-17.28,"hi":-6.15,"i":209519.15,"v":"mide"},{"cat":"Untables Domesticos","z":"NORTE CHICO","c":"Combo DEX","e":-3.26,"lo":-3.81,"hi":-2.59,"i":72552.39,"v":"mide"},{"cat":"Untables Domesticos","z":"SUR CHICO","c":"Combo DEX","e":-8.2,"lo":-10.62,"hi":-5.92,"i":235074.94,"v":"mide"},{"cat":"Untables Domesticos","z":"SUR CHICO","c":"Regulares","e":-8.04,"lo":-9.51,"hi":-6.18,"i":141304.2,"v":"mide"}];
+let fz = "", fc = "";
+const sol = v => "S/ " + (v >= 1e6 ? (v/1e6).toFixed(1) + "M" : Math.round(v/1e3) + "K");
+function pinta(){
+  const d = M.filter(r => (!fz || r.z === fz) && (!fc || r.c === fc));
+  const g = {};
+  for (const r of d){
+    const k = r.cat;
+    if (!g[k]) g[k] = {cat:k, i:0, we:0, n:0, nulo:0};
+    g[k].i += r.i; g[k].we += r.e * r.i; g[k].n++; if (r.v === "nulo") g[k].nulo++;
+  }
+  const f = Object.values(g)
+    .map(x => ({cat:x.cat, i:x.i, e:x.we / x.i, n:x.n,
+                v: x.nulo === x.n ? "nulo" : (x.nulo ? "mixto" : "mide")}))
+    .sort((a,b) => b.i - a.i).slice(0, 15);
+  const box = document.getElementById("mres");
+  if (!f.length){
+    box.innerHTML = '<div class="vacio">No hay categor\u00edas medibles con esa combinaci\u00f3n.'
+      + ' Prob\u00e1 con otra zona o con todos los conceptos.</div>';
+    return;
+  }
+  box.innerHTML = f.map(x => {
+    const w = Math.min(100, Math.abs(x.e) / 19 * 100);
+    const cls = x.v === "nulo" ? "nulo" : "";
+    return '<div class="mrow"><div class="mcat">' + x.cat
+      + (x.n > 1 ? '<i>' + x.n + ' combinaciones</i>' : '')
+      + '</div><div class="mbw"><div class="mb ' + cls + '" style="width:'
+      + w.toFixed(1) + '%"></div></div><div class="mnum ' + cls + '">'
+      + x.e.toFixed(2) + '</div><div class="minv">' + sol(x.i) + '</div></div>';
+  }).join("");
+}
+for (const par of [["fz", v => fz = v], ["fc", v => fc = v]]){
+  document.getElementById(par[0]).addEventListener("click", e => {
+    const b = e.target.closest(".fb"); if (!b) return;
+    Array.from(b.parentNode.children).forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    par[1](b.dataset.z !== undefined ? b.dataset.z : (b.dataset.c || ""));
+    pinta();
+  });
+}
+pinta();
+</script>
+<script>
+(function(){
+  const sl=[...document.querySelectorAll(".slide")],
+        dt=[...document.querySelectorAll(".dot")],
+        pg=document.getElementById("pg"),
+        bp=document.getElementById("bp"), bn=document.getElementById("bn");
+  let i=0;
+  let ir=function(n){
+    i=Math.max(0,Math.min(sl.length-1,n));
+    sl.forEach((s,k)=>s.classList.toggle("on",k===i));
+    dt.forEach((d,k)=>d.classList.toggle("on",k===i));
+    pg.textContent=(i+1)+" / "+sl.length;
+    bp.disabled=i===0; bn.disabled=i===sl.length-1;
+    sl[i].scrollTop=0;
+  };
+  bp.onclick=()=>ir(i-1); bn.onclick=()=>ir(i+1);
+  dt.forEach(d=>d.onclick=()=>ir(+d.dataset.g));
+  document.addEventListener("keydown",e=>{
+    if(e.target.tagName==="INPUT")return;
+    if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" ")  {e.preventDefault();ir(i+1);}
+    if(e.key==="ArrowLeft" ||e.key==="PageUp")                 {e.preventDefault();ir(i-1);}
+  });
+  // cada lamina entra en una pantalla: si el contenido no cabe, se achica
+  function encajar(){
+    const s=sl[i], c=s.querySelector&&s.querySelector(".inner");
+    if(!c||!c.style) return;
+    c.style.transform="none";
+    const libre=s.clientHeight-parseFloat(getComputedStyle(s).paddingTop)
+                -parseFloat(getComputedStyle(s).paddingBottom);
+    const alto=c.scrollHeight;
+    if(alto>libre && libre>0){
+      // piso de 0.68: por debajo el texto deja de leerse y conviene recortar
+      c.style.transform="scale("+Math.max(0.68, libre/alto).toFixed(3)+")";
+    }
+  }
+  const _ir=ir; ir=function(n){ _ir(n); requestAnimationFrame(encajar); };
+  window.addEventListener("resize",()=>requestAnimationFrame(encajar));
+  ir(0);
+})();
+</script>
+</body></html>
