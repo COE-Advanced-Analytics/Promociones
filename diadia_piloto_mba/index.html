@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Piloto MBA · recorte de promociones de piso</title>
+<title>Piloto MBA · recorte de promociones de piso · segmentos y clientes antiguos</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -111,6 +111,38 @@ tbody tr:not(.sep):not(.tot):hover td{background:#f8f5f0}
 .tab-btn:hover{color:var(--teal-dk)}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
+
+.scroll-x{overflow-x:auto}
+table.seg tbody td{vertical-align:top;padding:8px 10px}
+.mv{font-size:11.5px;color:var(--ink);white-space:nowrap}
+.mvv{margin-top:3px}
+.muted-v{color:var(--muted)}
+.mtabs{display:flex;gap:8px;margin:6px 0 2px}
+.mt{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--gray);background:var(--card);border:1px solid var(--line);border-radius:30px;padding:9px 22px;cursor:pointer}
+.mt.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.mt:hover:not(.on){color:var(--teal-dk);border-color:var(--teal)}
+.stabs{display:flex;gap:6px;margin:10px 0 4px;border-bottom:1px solid var(--line)}
+.st{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--muted);background:none;border:none;padding:8px 16px;cursor:pointer;border-bottom:2.5px solid transparent}
+.st.on{color:var(--teal-dk);border-bottom-color:var(--teal)}
+.pn{display:none}
+.pn.on{display:block}
+.mpn{flex-direction:column;gap:12px}
+.mpn.on{display:flex}
+.stack{display:flex;flex-direction:column;gap:12px}
+.dv{background:#fbfaf7;border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.dv-ttl{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.dv-grp{display:flex;justify-content:space-between;font-size:11.5px;font-weight:600;color:var(--ink);margin:10px 0 3px;padding-top:7px;border-top:1px solid var(--line)}
+.dv-ttl+.dv-grp{border-top:none;padding-top:0;margin-top:6px}
+.dv-net{font-weight:500;color:var(--gray);font-size:11px}
+.dv-row{display:grid;grid-template-columns:108px 1fr 96px;gap:8px;align-items:center;margin:3px 0}
+.dv-lbl{font-size:11px;color:var(--gray)}
+.dv-track{position:relative;height:14px}
+.dv-zero{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:#c9c3b8}
+.dv-bar{position:absolute;top:0;bottom:0}
+.dv-pos{left:50%;background:var(--teal);border-radius:0 4px 4px 0}
+.dv-neg{right:50%;background:var(--coral);border-radius:4px 0 0 4px}
+.dv-val{font-size:11px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.dv-note{font-size:12.5px;color:var(--ink);background:var(--teal-lt);border-radius:8px;padding:9px 12px;margin-bottom:12px}
 </style>
 </head>
 <body>
@@ -120,7 +152,7 @@ tbody tr:not(.sep):not(.tot):hover td{background:#f8f5f0}
     <div>
       <div class="tb-badge">Reporte Ejecutivo · Piloto Promocional</div>
       <div class="tb-title">Piloto MBA <em>recorte de promociones de piso</em></div>
-      <div class="tb-sub">Canal digital (diadia) vs tradicional (nitro) · DEX MBA + 8 compañías de comparación · jun-set 2026, set 2025 vs 2026 · meses completos (cierre al 30-set-2026)</div>
+      <div class="tb-sub">Canal digital (diadia) vs tradicional (nitro) · DEX MBA + 8 compañías de comparación · jun-set 2026, set 2025 vs 2026 · meses completos (cierre al 30-set-2026) · sin panetones ni papas fritas</div>
     </div>
     <div class="coe">
       <svg viewBox="0 0 40 40" fill="none" width="26" height="26" aria-hidden="true">
@@ -141,29 +173,6 @@ tbody tr:not(.sep):not(.tot):hover td{background:#f8f5f0}
 
   <div class="acline"></div>
 
-  <div class="kpis">
-    <div class="kpi">
-      <div class="kpi-lbl">Venta neta / cliente · interanual</div>
-      <div class="kpi-nums"><div class="kpi-n"><span class="kpi-tag">2025 → 2026</span><span class="kpi-v tl">+9.7%</span></div></div>
-      <span class="kpi-chip ch-tl">Pre/Post: +8.3%</span>
-    </div>
-    <div class="kpi au">
-      <div class="kpi-lbl">Ticket / cliente · interanual</div>
-      <div class="kpi-nums"><div class="kpi-n"><span class="kpi-tag">2025 → 2026</span><span class="kpi-v tl">+1.3%</span></div></div>
-      <span class="kpi-chip ch-au">Pre/Post: +10.1%</span>
-    </div>
-    <div class="kpi vi">
-      <div class="kpi-lbl">Clientes distintos · interanual</div>
-      <div class="kpi-nums"><div class="kpi-n"><span class="kpi-tag">2025 → 2026</span><span class="kpi-v vi">+6.5%</span></div></div>
-      <span class="kpi-chip ch-vi">Pre/Post: +1.7%</span>
-    </div>
-    <div class="kpi rd">
-      <div class="kpi-lbl">GTN (Inversión/Venta neta) · interanual</div>
-      <div class="kpi-nums"><div class="kpi-n"><span class="kpi-tag">4.35% → 3.21%</span><span class="kpi-v tl">-1.14 pp</span></div></div>
-      <span class="kpi-chip ch-rd">Pre/Post: +0.31 pp</span>
-    </div>
-  </div>
-
   <div class="cmp-strip">
     <div class="cmp-box">
       <div class="cmp-lbl">Qué se recortó</div>
@@ -175,110 +184,564 @@ tbody tr:not(.sep):not(.tot):hover td{background:#f8f5f0}
       <div class="cmp-v">Empujar a canal digital</div>
       <div class="cmp-sub">Migrar venta y clientes de nitro hacia diadia.</div>
     </div>
-
   </div>
 
+  <div class="mtabs">
+    <button class="mt on" data-g="main" onclick="sw(event,'main','p-gtn')">Gross to Net</button>
+    <button class="mt" data-g="main" onclick="sw(event,'main','p-met')">Métricas</button>
+    <button class="mt" data-g="main" onclick="sw(event,'main','p-ant')">Métricas clientes antiguos</button>
+  </div>
+
+  <div id="p-gtn" data-g="main" class="pn mpn on">
   <div class="sec-label">Gross to Net</div>
   <div class="tbl-card">
     <div class="tbl-hd"><div><div class="tbl-kicker">Inversión / venta neta</div><div class="tbl-title">¿Cuánta inversión promocional cuesta cada sol de venta neta?</div></div></div>
-    <div class="formula">GTN = Inversión / Venta neta
+    <div class="stabs">
+      <button class="st on" data-g="gtn" onclick="sw(event,'gtn','gtn-pp')">PRE VS POST</button>
+      <button class="st" data-g="gtn" onclick="sw(event,'gtn','gtn-int')">INTERANUAL</button>
     </div>
+    <div id="gtn-pp" data-g="gtn" class="pn on">
     <div class="tbl-kicker" style="margin:14px 0 6px">Pre vs Post 2026 · S/ promedio mensual (pre = jun-ago) vs set 2026</div>
 <table>
 <thead><tr><th>Vista / concepto</th><th class="num th-t">Pre (prom. mensual)</th><th class="num th-t">Post (set)</th><th class="num">Var %</th></tr></thead>
 <tbody>
 <tr class="tot"><td colspan="4">Total (diadia+nitro)</td></tr>
-<tr><td>Inversión</td><td class="num">S/ 85,349</td><td class="num">S/ 104,203</td><td class="num">+22.1%</td></tr>
-<tr><td>Venta neta</td><td class="num">S/ 2,948,574</td><td class="num">S/ 3,247,246</td><td class="num"><span class="r-pos">+10.1%</span></td></tr>
-<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">2.89%</td><td class="num">3.21%</td><td class="num"><span class="r-neg">+0.31 pp</span></td></tr>
+<tr><td>Inversión</td><td class="num">S/ 83,909</td><td class="num">S/ 88,718</td><td class="num">+5.7%</td></tr>
+<tr><td>Venta neta</td><td class="num">S/ 2,897,852</td><td class="num">S/ 3,044,632</td><td class="num"><span class="r-pos">+5.1%</span></td></tr>
+<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">2.90%</td><td class="num">2.91%</td><td class="num"><span class="r-neg">+0.02 pp</span></td></tr>
 <tr class="tot"><td colspan="4">Diadia</td></tr>
-<tr><td>Inversión</td><td class="num">S/ 57,269</td><td class="num">S/ 91,483</td><td class="num">+59.7%</td></tr>
-<tr><td>Venta neta</td><td class="num">S/ 1,955,894</td><td class="num">S/ 2,757,676</td><td class="num"><span class="r-pos">+41.0%</span></td></tr>
-<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">2.93%</td><td class="num">3.32%</td><td class="num"><span class="r-neg">+0.39 pp</span></td></tr>
+<tr><td>Inversión</td><td class="num">S/ 56,265</td><td class="num">S/ 79,782</td><td class="num">+41.8%</td></tr>
+<tr><td>Venta neta</td><td class="num">S/ 1,909,087</td><td class="num">S/ 2,585,381</td><td class="num"><span class="r-pos">+35.4%</span></td></tr>
+<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">2.95%</td><td class="num">3.09%</td><td class="num"><span class="r-neg">+0.14 pp</span></td></tr>
 <tr class="tot"><td colspan="4">Nitro</td></tr>
-<tr><td>Inversión</td><td class="num">S/ 28,080</td><td class="num">S/ 12,720</td><td class="num">-54.7%</td></tr>
-<tr><td>Venta neta</td><td class="num">S/ 992,680</td><td class="num">S/ 489,570</td><td class="num"><span class="r-neg">-50.7%</span></td></tr>
-<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">2.83%</td><td class="num">2.60%</td><td class="num"><span class="r-pos">-0.23 pp</span></td></tr>
+<tr><td>Inversión</td><td class="num">S/ 27,644</td><td class="num">S/ 8,936</td><td class="num">-67.7%</td></tr>
+<tr><td>Venta neta</td><td class="num">S/ 988,765</td><td class="num">S/ 459,251</td><td class="num"><span class="r-neg">-53.6%</span></td></tr>
+<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">2.80%</td><td class="num">1.95%</td><td class="num"><span class="r-pos">-0.85 pp</span></td></tr>
 </tbody></table>
-    <div class="tbl-kicker" style="margin:18px 0 6px">Interanual · S/ de setiembre, 2025 vs 2026</div>
+    </div>
+    <div id="gtn-int" data-g="gtn" class="pn">
+    <div class="tbl-kicker" style="margin:14px 0 6px">Interanual · S/ de setiembre, 2025 vs 2026</div>
 <table>
 <thead><tr><th>Vista / concepto</th><th class="num th-t">Set 2025</th><th class="num th-t">Set 2026</th><th class="num">Var %</th></tr></thead>
 <tbody>
 <tr class="tot"><td colspan="4">Total (diadia+nitro)</td></tr>
-<tr><td>Inversión</td><td class="num">S/ 121,003</td><td class="num">S/ 104,203</td><td class="num">-13.9%</td></tr>
-<tr><td>Venta neta</td><td class="num">S/ 2,779,528</td><td class="num">S/ 3,247,246</td><td class="num"><span class="r-pos">+16.8%</span></td></tr>
-<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">4.35%</td><td class="num">3.21%</td><td class="num"><span class="r-pos">-1.14 pp</span></td></tr>
+<tr><td>Inversión</td><td class="num">S/ 108,157</td><td class="num">S/ 88,718</td><td class="num">-18.0%</td></tr>
+<tr><td>Venta neta</td><td class="num">S/ 2,643,144</td><td class="num">S/ 3,044,632</td><td class="num"><span class="r-pos">+15.2%</span></td></tr>
+<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">4.09%</td><td class="num">2.91%</td><td class="num"><span class="r-pos">-1.18 pp</span></td></tr>
 <tr class="tot"><td colspan="4">Diadia</td></tr>
-<tr><td>Inversión</td><td class="num">S/ 63,176</td><td class="num">S/ 91,483</td><td class="num">+44.8%</td></tr>
-<tr><td>Venta neta</td><td class="num">S/ 1,577,145</td><td class="num">S/ 2,757,676</td><td class="num"><span class="r-pos">+74.9%</span></td></tr>
-<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">4.01%</td><td class="num">3.32%</td><td class="num"><span class="r-pos">-0.69 pp</span></td></tr>
+<tr><td>Inversión</td><td class="num">S/ 56,546</td><td class="num">S/ 79,782</td><td class="num">+41.1%</td></tr>
+<tr><td>Venta neta</td><td class="num">S/ 1,501,630</td><td class="num">S/ 2,585,381</td><td class="num"><span class="r-pos">+72.2%</span></td></tr>
+<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">3.77%</td><td class="num">3.09%</td><td class="num"><span class="r-pos">-0.68 pp</span></td></tr>
 <tr class="tot"><td colspan="4">Nitro</td></tr>
-<tr><td>Inversión</td><td class="num">S/ 57,827</td><td class="num">S/ 12,720</td><td class="num">-78.0%</td></tr>
-<tr><td>Venta neta</td><td class="num">S/ 1,202,383</td><td class="num">S/ 489,570</td><td class="num"><span class="r-neg">-59.3%</span></td></tr>
-<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">4.81%</td><td class="num">2.60%</td><td class="num"><span class="r-pos">-2.21 pp</span></td></tr>
+<tr><td>Inversión</td><td class="num">S/ 51,611</td><td class="num">S/ 8,936</td><td class="num">-82.7%</td></tr>
+<tr><td>Venta neta</td><td class="num">S/ 1,141,514</td><td class="num">S/ 459,251</td><td class="num"><span class="r-neg">-59.8%</span></td></tr>
+<tr><td><b>GTN</b><span class="unidad">inversión / venta neta</span></td><td class="num">4.52%</td><td class="num">1.95%</td><td class="num"><span class="r-pos">-2.58 pp</span></td></tr>
 </tbody></table>
+    </div>
     <div class="tbl-note" style="margin-top:12px">
-      Contra el año pasado (interanual), el GTN <b>mejora</b> (baja) en los tres cortes — total -1.14 pp, diadia -0.69 pp, nitro -2.21 pp: se necesita menos inversión por sol de venta neta que en 2025. Contra el trimestre inmediato anterior (pre/post), el GTN total <b>empeora</b> (sube +0.31 pp) porque diadia empeora (+0.39 pp) — la inversión en digital creció más rápido que la venta neta que generó. En nitro, en cambio, el GTN pre/post mejora levemente (-0.23 pp).
+      Contra el año pasado (interanual), el GTN <b>mejora</b> (baja) en los tres cortes — total -1.18 pp, diadia -0.68 pp, nitro -2.58 pp: se necesita menos inversión por sol de venta neta que en 2025. Contra el trimestre inmediato anterior (pre/post), el GTN total <b>empeora</b> (sube +0.02 pp) porque diadia empeora (+0.14 pp) — la inversión en digital creció más rápido que la venta neta que generó. En nitro, en cambio, el GTN pre/post mejora levemente (-0.85 pp).
     </div>
   </div>
+  </div>
 
+  <div id="p-met" data-g="main" class="pn mpn">
+    <div class="stabs" style="margin:0">
+      <button class="st on" data-g="met" onclick="sw(event,'met','met-pp')">PRE VS POST</button>
+      <button class="st" data-g="met" onclick="sw(event,'met','met-int')">INTERANUAL</button>
+    </div>
+
+<div id="met-pp" data-g="met" class="pn on"><div class="stack">
   <div class="sec-label">MBA · Vista total (diadia + nitro combinado)</div>
   <div class="tbl-card">
     <div class="tbl-hd"><div>
-      <div class="tbl-kicker">Interanual · setiembre, 2025 vs 2026</div>
-      <div class="tbl-title">Venta neta +9.7% y clientes +6.5%; el ticket casi no se mueve (+1.3%)</div>
-    </div></div>
-
-<table>
-<thead><tr><th>Métrica</th><th class="num">2025</th><th class="num th-t">2026</th><th class="num">Var %</th></tr></thead>
-<tbody>
-<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
-        <td class="num">S/ 493</td><td class="num">S/ 541</td>
-        <td class="num"><span class="r-pos">+9.7%</span></td></tr>
-<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
-        <td class="num">S/ 168</td><td class="num">S/ 170</td>
-        <td class="num"><span class="r-pos">+1.3%</span></td></tr>
-<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
-        <td class="num">54</td><td class="num">56</td>
-        <td class="num"><span class="r-pos">+4.5%</span></td></tr>
-<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos (max entre canales)</span></td>
-        <td class="num">17.3</td><td class="num">19.1</td>
-        <td class="num"><span class="r-pos">+10.1%</span></td></tr>
-<tr><td>Mix Familia / cliente<span class="unidad">familias distintas (max entre canales)</span></td>
-        <td class="num">11.3</td><td class="num">12.4</td>
-        <td class="num"><span class="r-pos">+9.7%</span></td></tr>
-<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
-    <td class="num">5,640</td><td class="num">6,007</td>
-    <td class="num"><span class="r-pos">+6.5%</span></td></tr>
-</tbody></table>
-  </div>
-  <div class="tbl-card">
-    <div class="tbl-hd"><div>
       <div class="tbl-kicker">Pre vs Post · jun-ago vs set 2026</div>
-      <div class="tbl-title">Contra el trimestre anterior, el crecimiento viene del ticket (+10.1%), no de más clientes (+1.7%)</div>
+      <div class="tbl-title">Contra el trimestre anterior, el crecimiento viene del ticket (+7.5%), no de más clientes (-0.2%)</div>
     </div></div>
 
 <table>
 <thead><tr><th>Métrica</th><th class="num">Pre (jun-ago)</th><th class="num th-t">Post (set)</th><th class="num">Var %</th></tr></thead>
 <tbody>
 <tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
-        <td class="num">S/ 499</td><td class="num">S/ 541</td>
-        <td class="num"><span class="r-pos">+8.3%</span></td></tr>
+        <td class="num">S/ 489</td><td class="num">S/ 515</td>
+        <td class="num"><span class="r-pos">+5.3%</span></td></tr>
 <tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
-        <td class="num">S/ 154</td><td class="num">S/ 170</td>
-        <td class="num"><span class="r-pos">+10.1%</span></td></tr>
+        <td class="num">S/ 154</td><td class="num">S/ 165</td>
+        <td class="num"><span class="r-pos">+7.5%</span></td></tr>
 <tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
         <td class="num">53</td><td class="num">56</td>
-        <td class="num"><span class="r-pos">+7.0%</span></td></tr>
+        <td class="num"><span class="r-pos">+5.5%</span></td></tr>
 <tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos (max entre canales)</span></td>
-        <td class="num">18.6</td><td class="num">19.1</td>
-        <td class="num"><span class="r-pos">+2.8%</span></td></tr>
+        <td class="num">18.0</td><td class="num">18.5</td>
+        <td class="num"><span class="r-pos">+2.5%</span></td></tr>
 <tr><td>Mix Familia / cliente<span class="unidad">familias distintas (max entre canales)</span></td>
-        <td class="num">12.1</td><td class="num">12.4</td>
-        <td class="num"><span class="r-pos">+2.4%</span></td></tr>
+        <td class="num">11.7</td><td class="num">11.9</td>
+        <td class="num"><span class="r-pos">+1.5%</span></td></tr>
 <tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
-    <td class="num">5,909</td><td class="num">6,007</td>
-    <td class="num"><span class="r-pos">+1.7%</span></td></tr>
+    <td class="num">5,924</td><td class="num">5,912</td>
+    <td class="num"><span class="r-neg">-0.2%</span></td></tr>
+</tbody></table>
+  </div>
+
+  <div class="sec-label">MBA · Por canal (diadia vs nitro)</div>
+  <div class="twocol">
+    <div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Diadia · Pre vs Post 2026</div><div class="tbl-title">Ticket +20.0%, mix SKU +10.0%</div></div></div>
+<table>
+<thead><tr><th>Métrica</th><th class="num">Pre</th><th class="num th-t">Post</th><th class="num">Var %</th></tr></thead>
+<tbody>
+<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
+        <td class="num">S/ 401</td><td class="num">S/ 502</td>
+        <td class="num"><span class="r-pos">+25.0%</span></td></tr>
+<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
+        <td class="num">S/ 157</td><td class="num">S/ 188</td>
+        <td class="num"><span class="r-pos">+20.0%</span></td></tr>
+<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
+        <td class="num">43</td><td class="num">54</td>
+        <td class="num"><span class="r-pos">+26.2%</span></td></tr>
+<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos</span></td>
+        <td class="num">17.3</td><td class="num">19.1</td>
+        <td class="num"><span class="r-pos">+10.0%</span></td></tr>
+<tr><td>Mix Familia / cliente<span class="unidad">familias distintas</span></td>
+        <td class="num">11.2</td><td class="num">12.2</td>
+        <td class="num"><span class="r-pos">+8.9%</span></td></tr>
+<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
+    <td class="num">4,756</td><td class="num">5,154</td>
+    <td class="num"><span class="r-pos">+8.4%</span></td></tr>
+</tbody></table></div>
+    <div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Nitro · Pre vs Post 2026</div><div class="tbl-title">Ticket -38.9%, mix SKU -28.5%</div></div></div>
+<table>
+<thead><tr><th>Métrica</th><th class="num">Pre</th><th class="num th-t">Post</th><th class="num">Var %</th></tr></thead>
+<tbody>
+<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
+        <td class="num">S/ 255</td><td class="num">S/ 144</td>
+        <td class="num"><span class="r-neg">-43.8%</span></td></tr>
+<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
+        <td class="num">S/ 127</td><td class="num">S/ 78</td>
+        <td class="num"><span class="r-neg">-38.9%</span></td></tr>
+<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
+        <td class="num">28</td><td class="num">16</td>
+        <td class="num"><span class="r-neg">-43.4%</span></td></tr>
+<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos</span></td>
+        <td class="num">10.7</td><td class="num">7.7</td>
+        <td class="num"><span class="r-neg">-28.5%</span></td></tr>
+<tr><td>Mix Familia / cliente<span class="unidad">familias distintas</span></td>
+        <td class="num">7.3</td><td class="num">5.4</td>
+        <td class="num"><span class="r-neg">-26.0%</span></td></tr>
+<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
+    <td class="num">3,872</td><td class="num">3,200</td>
+    <td class="num"><span class="r-neg">-17.4%</span></td></tr>
+</tbody></table></div>
+  </div>
+
+  <div class="sec-label">MBA · Por segmento transaccional</div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">Todas las métricas · periodo 1 → periodo 2 y variación</div>
+      <div class="tbl-title">Cómo se mueve cada segmento: total y por canal</div>
+    </div></div>
+    <div class="stabs">
+      <button class="st on" data-g="seg-pp" onclick="sw(event,'seg-pp','seg-pp-total')">TOTAL</button>
+      <button class="st" data-g="seg-pp" onclick="sw(event,'seg-pp','seg-pp-diadia')">DIADIA</button>
+      <button class="st" data-g="seg-pp" onclick="sw(event,'seg-pp','seg-pp-nitro')">NITRO</button>
+    </div>
+<div id="seg-pp-total" data-g="seg-pp" class="pn on">
+<div class="tbl-kicker" style="margin:10px 0 6px">Pre vs Post 2026 · pre = jun-ago (promedio mensual) → post = set 2026</div>
+<div class="scroll-x"><table class="seg">
+<thead><tr><th>Segmento transaccional</th><th class="num">Venta neta / cliente</th><th class="num">Ticket / cliente</th><th class="num">Volumen / cliente (kg)</th><th class="num">Mix SKU</th><th class="num">Mix familia</th><th class="num">Clientes (prom. mensual)</th><th class="num">GTN</th></tr></thead>
+<tbody>
+<tr><td>1 Oro+</td><td class="num "><div class="mv">S/ 2,733 → S/ 2,875</div><div class="mvv"><span class="r-pos">+5.2%</span></div></td><td class="num "><div class="mv">S/ 670 → S/ 742</div><div class="mvv"><span class="r-pos">+10.6%</span></div></td><td class="num "><div class="mv">299 → 313</div><div class="mvv"><span class="r-pos">+4.6%</span></div></td><td class="num "><div class="mv">41.1 → 41.9</div><div class="mvv"><span class="r-pos">+2.1%</span></div></td><td class="num "><div class="mv">23.1 → 23.2</div><div class="mvv"><span class="r-pos">+0.3%</span></div></td><td class="num "><div class="mv">227 → 229</div><div class="mvv"><span class="r-pos">+0.9%</span></div></td><td class="num "><div class="mv">3.91% → 3.65%</div><div class="mvv"><span class="r-pos">-0.26 pp</span></div></td></tr>
+<tr><td>2 Oro</td><td class="num "><div class="mv">S/ 1,200 → S/ 1,264</div><div class="mvv"><span class="r-pos">+5.3%</span></div></td><td class="num "><div class="mv">S/ 301 → S/ 333</div><div class="mvv"><span class="r-pos">+10.7%</span></div></td><td class="num "><div class="mv">130 → 137</div><div class="mvv"><span class="r-pos">+5.5%</span></div></td><td class="num "><div class="mv">33.8 → 35.1</div><div class="mvv"><span class="r-pos">+3.9%</span></div></td><td class="num "><div class="mv">20.5 → 21.1</div><div class="mvv"><span class="r-pos">+2.6%</span></div></td><td class="num "><div class="mv">586 → 580</div><div class="mvv"><span class="r-neg">-1.0%</span></div></td><td class="num "><div class="mv">3.33% → 3.12%</div><div class="mvv"><span class="r-pos">-0.21 pp</span></div></td></tr>
+<tr><td>3 Plata</td><td class="num "><div class="mv">S/ 594 → S/ 616</div><div class="mvv"><span class="r-pos">+3.6%</span></div></td><td class="num "><div class="mv">S/ 182 → S/ 196</div><div class="mvv"><span class="r-pos">+7.7%</span></div></td><td class="num "><div class="mv">64 → 66</div><div class="mvv"><span class="r-pos">+3.9%</span></div></td><td class="num "><div class="mv">23.4 → 23.8</div><div class="mvv"><span class="r-pos">+1.6%</span></div></td><td class="num "><div class="mv">15.2 → 15.3</div><div class="mvv"><span class="r-pos">+0.7%</span></div></td><td class="num "><div class="mv">1,189 → 1,180</div><div class="mvv"><span class="r-neg">-0.8%</span></div></td><td class="num "><div class="mv">2.58% → 2.53%</div><div class="mvv"><span class="r-pos">-0.05 pp</span></div></td></tr>
+<tr><td>4 Bronce</td><td class="num "><div class="mv">S/ 218 → S/ 232</div><div class="mvv"><span class="r-pos">+6.3%</span></div></td><td class="num "><div class="mv">S/ 92 → S/ 97</div><div class="mvv"><span class="r-pos">+6.1%</span></div></td><td class="num "><div class="mv">23 → 25</div><div class="mvv"><span class="r-pos">+7.4%</span></div></td><td class="num "><div class="mv">12.5 → 12.8</div><div class="mvv"><span class="r-pos">+1.9%</span></div></td><td class="num "><div class="mv">8.6 → 8.7</div><div class="mvv"><span class="r-pos">+1.4%</span></div></td><td class="num "><div class="mv">3,696 → 3,626</div><div class="mvv"><span class="r-neg">-1.9%</span></div></td><td class="num "><div class="mv">2.02% → 2.49%</div><div class="mvv"><span class="r-neg">+0.47 pp</span></div></td></tr>
+<tr><td>Por definir</td><td class="num "><div class="mv">S/ 279 → S/ 295</div><div class="mvv"><span class="r-pos">+5.9%</span></div></td><td class="num "><div class="mv">S/ 115 → S/ 100</div><div class="mvv"><span class="r-neg">-13.6%</span></div></td><td class="num "><div class="mv">30 → 31</div><div class="mvv"><span class="r-pos">+2.7%</span></div></td><td class="num "><div class="mv">15.6 → 16.4</div><div class="mvv"><span class="r-pos">+4.6%</span></div></td><td class="num "><div class="mv">9.9 → 10.4</div><div class="mvv"><span class="r-pos">+4.1%</span></div></td><td class="num "><div class="mv">225 → 297</div><div class="mvv"><span class="r-pos">+32.0%</span></div></td><td class="num "><div class="mv">2.73% → 2.84%</div><div class="mvv"><span class="r-neg">+0.11 pp</span></div></td></tr>
+<tr class="tot"><td>Total MBA</td><td class="num tot"><div class="mv">S/ 489 → S/ 515</div><div class="mvv"><span class="r-pos">+5.3%</span></div></td><td class="num tot"><div class="mv">S/ 154 → S/ 165</div><div class="mvv"><span class="r-pos">+7.5%</span></div></td><td class="num tot"><div class="mv">53 → 56</div><div class="mvv"><span class="r-pos">+5.5%</span></div></td><td class="num tot"><div class="mv">18.0 → 18.5</div><div class="mvv"><span class="r-pos">+2.5%</span></div></td><td class="num tot"><div class="mv">11.7 → 11.9</div><div class="mvv"><span class="r-pos">+1.5%</span></div></td><td class="num tot"><div class="mv">5,924 → 5,912</div><div class="mvv"><span class="r-neg">-0.2%</span></div></td><td class="num tot"><div class="mv">2.90% → 2.91%</div><div class="mvv"><span class="r-neg">+0.02 pp</span></div></td></tr>
+</tbody></table></div>
+</div>
+<div id="seg-pp-diadia" data-g="seg-pp" class="pn">
+<div class="tbl-kicker" style="margin:10px 0 6px">Pre vs Post 2026 · pre = jun-ago (promedio mensual) → post = set 2026</div>
+<div class="scroll-x"><table class="seg">
+<thead><tr><th>Segmento transaccional</th><th class="num">Venta neta / cliente</th><th class="num">Ticket / cliente</th><th class="num">Volumen / cliente (kg)</th><th class="num">Mix SKU</th><th class="num">Mix familia</th><th class="num">Clientes (prom. mensual)</th><th class="num">GTN</th></tr></thead>
+<tbody>
+<tr><td>1 Oro+</td><td class="num "><div class="mv">S/ 1,675 → S/ 2,470</div><div class="mvv"><span class="r-pos">+47.5%</span></div></td><td class="num "><div class="mv">S/ 433 → S/ 712</div><div class="mvv"><span class="r-pos">+64.5%</span></div></td><td class="num "><div class="mv">183 → 273</div><div class="mvv"><span class="r-pos">+49.5%</span></div></td><td class="num "><div class="mv">32.5 → 40.7</div><div class="mvv"><span class="r-pos">+25.2%</span></div></td><td class="num "><div class="mv">18.2 → 22.5</div><div class="mvv"><span class="r-pos">+23.4%</span></div></td><td class="num "><div class="mv">198 → 216</div><div class="mvv"><span class="r-pos">+9.3%</span></div></td><td class="num "><div class="mv">4.37% → 3.96%</div><div class="mvv"><span class="r-pos">-0.40 pp</span></div></td></tr>
+<tr><td>2 Oro</td><td class="num "><div class="mv">S/ 808 → S/ 1,103</div><div class="mvv"><span class="r-pos">+36.4%</span></div></td><td class="num "><div class="mv">S/ 254 → S/ 338</div><div class="mvv"><span class="r-pos">+33.1%</span></div></td><td class="num "><div class="mv">85 → 118</div><div class="mvv"><span class="r-pos">+38.1%</span></div></td><td class="num "><div class="mv">27.3 → 34.2</div><div class="mvv"><span class="r-pos">+25.0%</span></div></td><td class="num "><div class="mv">16.6 → 20.5</div><div class="mvv"><span class="r-pos">+23.7%</span></div></td><td class="num "><div class="mv">516 → 545</div><div class="mvv"><span class="r-pos">+5.6%</span></div></td><td class="num "><div class="mv">3.50% → 3.33%</div><div class="mvv"><span class="r-pos">-0.17 pp</span></div></td></tr>
+<tr><td>3 Plata</td><td class="num "><div class="mv">S/ 479 → S/ 574</div><div class="mvv"><span class="r-pos">+19.7%</span></div></td><td class="num "><div class="mv">S/ 186 → S/ 216</div><div class="mvv"><span class="r-pos">+16.0%</span></div></td><td class="num "><div class="mv">51 → 61</div><div class="mvv"><span class="r-pos">+20.7%</span></div></td><td class="num "><div class="mv">21.0 → 23.2</div><div class="mvv"><span class="r-pos">+10.5%</span></div></td><td class="num "><div class="mv">13.6 → 14.9</div><div class="mvv"><span class="r-pos">+9.6%</span></div></td><td class="num "><div class="mv">1,020 → 1,085</div><div class="mvv"><span class="r-pos">+6.4%</span></div></td><td class="num "><div class="mv">2.63% → 2.68%</div><div class="mvv"><span class="r-neg">+0.05 pp</span></div></td></tr>
+<tr><td>4 Bronce</td><td class="num "><div class="mv">S/ 219 → S/ 244</div><div class="mvv"><span class="r-pos">+11.5%</span></div></td><td class="num "><div class="mv">S/ 111 → S/ 119</div><div class="mvv"><span class="r-pos">+7.7%</span></div></td><td class="num "><div class="mv">23 → 26</div><div class="mvv"><span class="r-pos">+12.3%</span></div></td><td class="num "><div class="mv">13.2 → 13.5</div><div class="mvv"><span class="r-pos">+2.3%</span></div></td><td class="num "><div class="mv">8.9 → 9.1</div><div class="mvv"><span class="r-pos">+2.3%</span></div></td><td class="num "><div class="mv">2,864 → 3,057</div><div class="mvv"><span class="r-pos">+6.7%</span></div></td><td class="num "><div class="mv">2.09% → 2.63%</div><div class="mvv"><span class="r-neg">+0.54 pp</span></div></td></tr>
+<tr><td>Por definir</td><td class="num "><div class="mv">S/ 288 → S/ 330</div><div class="mvv"><span class="r-pos">+14.7%</span></div></td><td class="num "><div class="mv">S/ 136 → S/ 129</div><div class="mvv"><span class="r-neg">-5.5%</span></div></td><td class="num "><div class="mv">32 → 35</div><div class="mvv"><span class="r-pos">+8.8%</span></div></td><td class="num "><div class="mv">17.0 → 17.7</div><div class="mvv"><span class="r-pos">+4.5%</span></div></td><td class="num "><div class="mv">10.7 → 11.1</div><div class="mvv"><span class="r-pos">+3.7%</span></div></td><td class="num "><div class="mv">158 → 251</div><div class="mvv"><span class="r-pos">+58.9%</span></div></td><td class="num "><div class="mv">2.68% → 2.84%</div><div class="mvv"><span class="r-neg">+0.16 pp</span></div></td></tr>
+<tr class="tot"><td>Total MBA</td><td class="num tot"><div class="mv">S/ 401 → S/ 502</div><div class="mvv"><span class="r-pos">+25.0%</span></div></td><td class="num tot"><div class="mv">S/ 157 → S/ 188</div><div class="mvv"><span class="r-pos">+20.0%</span></div></td><td class="num tot"><div class="mv">43 → 54</div><div class="mvv"><span class="r-pos">+26.2%</span></div></td><td class="num tot"><div class="mv">17.3 → 19.1</div><div class="mvv"><span class="r-pos">+10.0%</span></div></td><td class="num tot"><div class="mv">11.2 → 12.2</div><div class="mvv"><span class="r-pos">+8.9%</span></div></td><td class="num tot"><div class="mv">4,756 → 5,154</div><div class="mvv"><span class="r-pos">+8.4%</span></div></td><td class="num tot"><div class="mv">2.95% → 3.09%</div><div class="mvv"><span class="r-neg">+0.14 pp</span></div></td></tr>
+</tbody></table></div>
+</div>
+<div id="seg-pp-nitro" data-g="seg-pp" class="pn">
+<div class="tbl-kicker" style="margin:10px 0 6px">Pre vs Post 2026 · pre = jun-ago (promedio mensual) → post = set 2026</div>
+<div class="scroll-x"><table class="seg">
+<thead><tr><th>Segmento transaccional</th><th class="num">Venta neta / cliente</th><th class="num">Ticket / cliente</th><th class="num">Volumen / cliente (kg)</th><th class="num">Mix SKU</th><th class="num">Mix familia</th><th class="num">Clientes (prom. mensual)</th><th class="num">GTN</th></tr></thead>
+<tbody>
+<tr><td>1 Oro+</td><td class="num "><div class="mv">S/ 1,547 → S/ 849</div><div class="mvv"><span class="r-neg">-45.1%</span></div></td><td class="num "><div class="mv">S/ 765 → S/ 419</div><div class="mvv"><span class="r-neg">-45.2%</span></div></td><td class="num "><div class="mv">170 → 86</div><div class="mvv"><span class="r-neg">-49.3%</span></div></td><td class="num "><div class="mv">25.3 → 12.2</div><div class="mvv"><span class="r-neg">-51.8%</span></div></td><td class="num "><div class="mv">15.1 → 7.6</div><div class="mvv"><span class="r-neg">-49.4%</span></div></td><td class="num "><div class="mv">187 → 147</div><div class="mvv"><span class="r-neg">-21.4%</span></div></td><td class="num "><div class="mv">3.39% → 2.30%</div><div class="mvv"><span class="r-pos">-1.08 pp</span></div></td></tr>
+<tr><td>2 Oro</td><td class="num "><div class="mv">S/ 613 → S/ 334</div><div class="mvv"><span class="r-neg">-45.6%</span></div></td><td class="num "><div class="mv">S/ 269 → S/ 178</div><div class="mvv"><span class="r-neg">-33.7%</span></div></td><td class="num "><div class="mv">69 → 38</div><div class="mvv"><span class="r-neg">-44.0%</span></div></td><td class="num "><div class="mv">20.2 → 11.5</div><div class="mvv"><span class="r-neg">-43.2%</span></div></td><td class="num "><div class="mv">12.9 → 7.6</div><div class="mvv"><span class="r-neg">-41.3%</span></div></td><td class="num "><div class="mv">466 → 395</div><div class="mvv"><span class="r-neg">-15.2%</span></div></td><td class="num "><div class="mv">3.08% → 2.18%</div><div class="mvv"><span class="r-pos">-0.90 pp</span></div></td></tr>
+<tr><td>3 Plata</td><td class="num "><div class="mv">S/ 260 → S/ 151</div><div class="mvv"><span class="r-neg">-41.9%</span></div></td><td class="num "><div class="mv">S/ 129 → S/ 86</div><div class="mvv"><span class="r-neg">-33.7%</span></div></td><td class="num "><div class="mv">29 → 17</div><div class="mvv"><span class="r-neg">-40.1%</span></div></td><td class="num "><div class="mv">13.0 → 9.5</div><div class="mvv"><span class="r-neg">-27.2%</span></div></td><td class="num "><div class="mv">8.8 → 6.6</div><div class="mvv"><span class="r-neg">-25.3%</span></div></td><td class="num "><div class="mv">840 → 688</div><div class="mvv"><span class="r-neg">-18.1%</span></div></td><td class="num "><div class="mv">2.47% → 1.67%</div><div class="mvv"><span class="r-pos">-0.80 pp</span></div></td></tr>
+<tr><td>4 Bronce</td><td class="num "><div class="mv">S/ 80 → S/ 52</div><div class="mvv"><span class="r-neg">-34.7%</span></div></td><td class="num "><div class="mv">S/ 47 → S/ 30</div><div class="mvv"><span class="r-neg">-35.8%</span></div></td><td class="num "><div class="mv">9 → 6</div><div class="mvv"><span class="r-neg">-31.1%</span></div></td><td class="num "><div class="mv">6.8 → 5.9</div><div class="mvv"><span class="r-neg">-13.2%</span></div></td><td class="num "><div class="mv">5.0 → 4.4</div><div class="mvv"><span class="r-neg">-12.7%</span></div></td><td class="num "><div class="mv">2,237 → 1,804</div><div class="mvv"><span class="r-neg">-19.4%</span></div></td><td class="num "><div class="mv">1.76% → 1.40%</div><div class="mvv"><span class="r-pos">-0.36 pp</span></div></td></tr>
+<tr><td>Por definir</td><td class="num "><div class="mv">S/ 121 → S/ 29</div><div class="mvv"><span class="r-neg">-76.3%</span></div></td><td class="num "><div class="mv">S/ 75 → S/ 20</div><div class="mvv"><span class="r-neg">-73.2%</span></div></td><td class="num "><div class="mv">12 → 3</div><div class="mvv"><span class="r-neg">-74.5%</span></div></td><td class="num "><div class="mv">9.6 → 6.7</div><div class="mvv"><span class="r-neg">-30.0%</span></div></td><td class="num "><div class="mv">6.4 → 4.7</div><div class="mvv"><span class="r-neg">-25.6%</span></div></td><td class="num "><div class="mv">143 → 166</div><div class="mvv"><span class="r-pos">+16.4%</span></div></td><td class="num "><div class="mv">2.87% → 2.88%</div><div class="mvv"><span class="r-neg">+0.01 pp</span></div></td></tr>
+<tr class="tot"><td>Total MBA</td><td class="num tot"><div class="mv">S/ 255 → S/ 144</div><div class="mvv"><span class="r-neg">-43.8%</span></div></td><td class="num tot"><div class="mv">S/ 127 → S/ 78</div><div class="mvv"><span class="r-neg">-38.9%</span></div></td><td class="num tot"><div class="mv">28 → 16</div><div class="mvv"><span class="r-neg">-43.4%</span></div></td><td class="num tot"><div class="mv">10.7 → 7.7</div><div class="mvv"><span class="r-neg">-28.5%</span></div></td><td class="num tot"><div class="mv">7.3 → 5.4</div><div class="mvv"><span class="r-neg">-26.0%</span></div></td><td class="num tot"><div class="mv">3,872 → 3,200</div><div class="mvv"><span class="r-neg">-17.4%</span></div></td><td class="num tot"><div class="mv">2.80% → 1.95%</div><div class="mvv"><span class="r-pos">-0.85 pp</span></div></td></tr>
+</tbody></table></div>
+</div>
+
+    <div class="tbl-note" style="margin-top:12px">
+      Segmento transaccional vigente a ago-2026, asignado por cliente (se aplica igual a 2025 y 2026; «Por definir» = clientes sin segmento). Cada celda muestra periodo 1 → periodo 2 y su variación; la fila <b>Total MBA</b> coincide con las tablas de la vista total/canal. En venta neta por cliente pre/post (total), el segmento que más crece es <b>4 Bronce</b> (+6.3%) y el que menos <b>3 Plata</b> (+3.6%).
+    </div>
+  </div>
+
+  <div class="sec-label">MBA vs. las demás compañías</div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">9 DEX de la muestra · barras: venta neta/cliente, pre/post</div>
+      <div class="tbl-title">En total MBA está en la mitad de la tabla (4.º de 9); en diadia es la que más crece</div>
+    </div></div>
+
+    <div class="stabs">
+      <button class="st on" data-g="comp-pp" onclick="sw(event,'comp-pp','comp-pp-total')">TOTAL</button>
+      <button class="st" data-g="comp-pp" onclick="sw(event,'comp-pp','comp-pp-diadia')">DIADIA</button>
+      <button class="st" data-g="comp-pp" onclick="sw(event,'comp-pp','comp-pp-nitro')">NITRO</button>
+    </div>
+
+    <div id="comp-pp-total" data-g="comp-pp" class="pn on">
+      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA ★</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-ma" style="position:absolute;left:50%;width:26.9%;justify-content:center">+5.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:50.0%;justify-content:center">+9.8%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:39.3%;justify-content:center">+7.7%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:6.8%;justify-content:center">-1.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:7.4%;justify-content:center">-1.4%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">MADEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:7.9%;justify-content:center">+1.5%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:38.3%;justify-content:center">+7.5%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:38.7%;justify-content:center">-7.6%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:10.8%;justify-content:center">-2.1%</div>
+          </div><div class="bar-tot">&nbsp;</div></div></div>
+      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
+      <table style="margin-top:16px">
+        <thead><tr><th>Compañía</th>
+          <th class="num th-h">Venta neta/cliente, var %</th><th class="num th-v">Clientes, var %</th>
+          <th class="num th-t">Ticket/cliente, var %</th><th class="num th-h">Mix SKU, var %</th>
+          <th class="num th-v">GTN, Δ pp</th></tr></thead>
+        <tbody><tr class="rec"><td>MBA <span class="tag ma">PILOTO</span></td>
+          <td class="num">+5.3%</td>
+          <td class="num">-0.2%</td>
+          <td class="num">+7.5%</td>
+          <td class="num">+2.5%</td>
+          <td class="num">+0.02 pp</td>
+        </tr><tr><td>ALMA</td>
+          <td class="num">+9.8%</td>
+          <td class="num">-1.9%</td>
+          <td class="num">+10.4%</td>
+          <td class="num">+0.7%</td>
+          <td class="num">-0.41 pp</td>
+        </tr><tr><td>DEX APURIMAC</td>
+          <td class="num">+7.7%</td>
+          <td class="num">+1.5%</td>
+          <td class="num">+2.5%</td>
+          <td class="num">+0.6%</td>
+          <td class="num">-0.03 pp</td>
+        </tr><tr><td>DEX MINALI</td>
+          <td class="num">-1.3%</td>
+          <td class="num">+0.9%</td>
+          <td class="num">-3.4%</td>
+          <td class="num">-0.8%</td>
+          <td class="num">+0.06 pp</td>
+        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
+          <td class="num">-1.4%</td>
+          <td class="num">-1.2%</td>
+          <td class="num">-2.4%</td>
+          <td class="num">-5.1%</td>
+          <td class="num">-0.21 pp</td>
+        </tr><tr><td>MADEX</td>
+          <td class="num">+1.5%</td>
+          <td class="num">+0.5%</td>
+          <td class="num">-5.5%</td>
+          <td class="num">-2.8%</td>
+          <td class="num">-0.20 pp</td>
+        </tr><tr><td>ROSET</td>
+          <td class="num">+7.5%</td>
+          <td class="num">-0.1%</td>
+          <td class="num">+4.6%</td>
+          <td class="num">+2.8%</td>
+          <td class="num">-0.18 pp</td>
+        </tr><tr><td>RTDEX</td>
+          <td class="num">-7.6%</td>
+          <td class="num">-5.9%</td>
+          <td class="num">-7.3%</td>
+          <td class="num">-7.3%</td>
+          <td class="num">-0.56 pp</td>
+        </tr><tr><td>SELVA DEX</td>
+          <td class="num">-2.1%</td>
+          <td class="num">-1.3%</td>
+          <td class="num">-0.1%</td>
+          <td class="num">-5.1%</td>
+          <td class="num">+0.08 pp</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div id="comp-pp-diadia" data-g="comp-pp" class="pn">
+      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA ★</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-ma" style="position:absolute;left:50%;width:50.0%;justify-content:center">+25.0%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:11.2%;justify-content:center">+5.6%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:9.7%;justify-content:center">+4.8%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:0.4%;justify-content:center">+0.2%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:31.8%;justify-content:center">+15.9%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">MADEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:3.6%;justify-content:center">-1.8%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:4.5%;justify-content:center">+2.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:24.5%;justify-content:center">-12.2%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:1.1%;justify-content:center">+0.5%</div>
+          </div><div class="bar-tot">&nbsp;</div></div></div>
+      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
+      <table style="margin-top:16px">
+        <thead><tr><th>Compañía</th>
+          <th class="num th-h">Venta neta/cliente, var %</th><th class="num th-v">Clientes, var %</th>
+          <th class="num th-t">Ticket/cliente, var %</th><th class="num th-h">Mix SKU, var %</th>
+          <th class="num th-v">GTN, Δ pp</th></tr></thead>
+        <tbody><tr class="rec"><td>MBA <span class="tag ma">PILOTO</span></td>
+          <td class="num">+25.0%</td>
+          <td class="num">+8.4%</td>
+          <td class="num">+20.0%</td>
+          <td class="num">+10.0%</td>
+          <td class="num">+0.14 pp</td>
+        </tr><tr><td>ALMA</td>
+          <td class="num">+5.6%</td>
+          <td class="num">+16.3%</td>
+          <td class="num">+1.9%</td>
+          <td class="num">-3.6%</td>
+          <td class="num">-0.31 pp</td>
+        </tr><tr><td>DEX APURIMAC</td>
+          <td class="num">+4.8%</td>
+          <td class="num">+28.2%</td>
+          <td class="num">+0.9%</td>
+          <td class="num">-3.6%</td>
+          <td class="num">+0.00 pp</td>
+        </tr><tr><td>DEX MINALI</td>
+          <td class="num">+0.2%</td>
+          <td class="num">+4.4%</td>
+          <td class="num">-1.6%</td>
+          <td class="num">+0.9%</td>
+          <td class="num">-0.03 pp</td>
+        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
+          <td class="num">+15.9%</td>
+          <td class="num">+11.6%</td>
+          <td class="num">+12.9%</td>
+          <td class="num">+6.8%</td>
+          <td class="num">+0.02 pp</td>
+        </tr><tr><td>MADEX</td>
+          <td class="num">-1.8%</td>
+          <td class="num">+13.7%</td>
+          <td class="num">-3.4%</td>
+          <td class="num">-6.2%</td>
+          <td class="num">-0.13 pp</td>
+        </tr><tr><td>ROSET</td>
+          <td class="num">+2.3%</td>
+          <td class="num">+16.6%</td>
+          <td class="num">-1.4%</td>
+          <td class="num">-2.2%</td>
+          <td class="num">-0.15 pp</td>
+        </tr><tr><td>RTDEX</td>
+          <td class="num">-12.2%</td>
+          <td class="num">-0.6%</td>
+          <td class="num">-9.4%</td>
+          <td class="num">-12.4%</td>
+          <td class="num">-0.53 pp</td>
+        </tr><tr><td>SELVA DEX</td>
+          <td class="num">+0.5%</td>
+          <td class="num">+1.4%</td>
+          <td class="num">-1.3%</td>
+          <td class="num">-3.9%</td>
+          <td class="num">+0.00 pp</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div id="comp-pp-nitro" data-g="comp-pp" class="pn">
+      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA ★</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-ma" style="position:absolute;right:50%;width:50.0%;justify-content:center">-43.8%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:2.4%;justify-content:center">-2.1%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:8.6%;justify-content:center">-7.6%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:8.2%;justify-content:center">-7.2%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:18.6%;justify-content:center">-16.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">MADEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:4.8%;justify-content:center">-4.2%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:2.1%;justify-content:center">+1.9%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:6.7%;justify-content:center">-5.9%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:20.1%;justify-content:center">-17.6%</div>
+          </div><div class="bar-tot">&nbsp;</div></div></div>
+      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
+      <table style="margin-top:16px">
+        <thead><tr><th>Compañía</th>
+          <th class="num th-h">Venta neta/cliente, var %</th><th class="num th-v">Clientes, var %</th>
+          <th class="num th-t">Ticket/cliente, var %</th><th class="num th-h">Mix SKU, var %</th>
+          <th class="num th-v">GTN, Δ pp</th></tr></thead>
+        <tbody><tr class="rec"><td>MBA <span class="tag ma">PILOTO</span></td>
+          <td class="num">-43.8%</td>
+          <td class="num">-17.4%</td>
+          <td class="num">-38.9%</td>
+          <td class="num">-28.5%</td>
+          <td class="num">-0.85 pp</td>
+        </tr><tr><td>ALMA</td>
+          <td class="num">-2.1%</td>
+          <td class="num">-14.5%</td>
+          <td class="num">+4.8%</td>
+          <td class="num">-7.4%</td>
+          <td class="num">-0.59 pp</td>
+        </tr><tr><td>DEX APURIMAC</td>
+          <td class="num">-7.6%</td>
+          <td class="num">-4.8%</td>
+          <td class="num">-5.2%</td>
+          <td class="num">-6.1%</td>
+          <td class="num">-0.14 pp</td>
+        </tr><tr><td>DEX MINALI</td>
+          <td class="num">-7.2%</td>
+          <td class="num">-5.7%</td>
+          <td class="num">-17.0%</td>
+          <td class="num">-10.9%</td>
+          <td class="num">+0.33 pp</td>
+        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
+          <td class="num">-16.3%</td>
+          <td class="num">-3.7%</td>
+          <td class="num">-9.6%</td>
+          <td class="num">-15.0%</td>
+          <td class="num">-0.35 pp</td>
+        </tr><tr><td>MADEX</td>
+          <td class="num">-4.2%</td>
+          <td class="num">+0.1%</td>
+          <td class="num">-8.7%</td>
+          <td class="num">-6.9%</td>
+          <td class="num">-0.30 pp</td>
+        </tr><tr><td>ROSET</td>
+          <td class="num">+1.9%</td>
+          <td class="num">-3.9%</td>
+          <td class="num">+4.3%</td>
+          <td class="num">+0.2%</td>
+          <td class="num">-0.24 pp</td>
+        </tr><tr><td>RTDEX</td>
+          <td class="num">-5.9%</td>
+          <td class="num">-7.8%</td>
+          <td class="num">-9.3%</td>
+          <td class="num">-4.8%</td>
+          <td class="num">-0.59 pp</td>
+        </tr><tr><td>SELVA DEX</td>
+          <td class="num">-17.6%</td>
+          <td class="num">-10.8%</td>
+          <td class="num">-17.1%</td>
+          <td class="num">-16.1%</td>
+          <td class="num">+0.71 pp</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div class="tbl-note" style="margin-top:12px">
+      ALMA crece +9.8% en venta neta pre/post y +11.6% interanual <b>sin ningún recorte de promociones</b> — más que MBA en ambas ventanas (+5.3% y +8.8%). Eso no invalida el piloto, pero significa que parte del crecimiento de MBA es tendencia de mercado. Por canal, la lectura es consistente con el objetivo: en diadia MBA es la que más crece pre/post (+25.0%) y en nitro la que más cae (-43.8%).
+    </div>
+  </div>
+</div></div>
+
+<div id="met-int" data-g="met" class="pn"><div class="stack">
+  <div class="sec-label">MBA · Vista total (diadia + nitro combinado)</div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">Interanual · setiembre, 2025 vs 2026</div>
+      <div class="tbl-title">Venta neta +8.8% y clientes +5.9%; el ticket casi no se mueve (+1.5%)</div>
+    </div></div>
+
+<table>
+<thead><tr><th>Métrica</th><th class="num">2025</th><th class="num th-t">2026</th><th class="num">Var %</th></tr></thead>
+<tbody>
+<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
+        <td class="num">S/ 473</td><td class="num">S/ 515</td>
+        <td class="num"><span class="r-pos">+8.8%</span></td></tr>
+<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
+        <td class="num">S/ 163</td><td class="num">S/ 165</td>
+        <td class="num"><span class="r-pos">+1.5%</span></td></tr>
+<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
+        <td class="num">53</td><td class="num">56</td>
+        <td class="num"><span class="r-pos">+4.8%</span></td></tr>
+<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos (max entre canales)</span></td>
+        <td class="num">17.2</td><td class="num">18.5</td>
+        <td class="num"><span class="r-pos">+7.6%</span></td></tr>
+<tr><td>Mix Familia / cliente<span class="unidad">familias distintas (max entre canales)</span></td>
+        <td class="num">11.1</td><td class="num">11.9</td>
+        <td class="num"><span class="r-pos">+7.0%</span></td></tr>
+<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
+    <td class="num">5,585</td><td class="num">5,912</td>
+    <td class="num"><span class="r-pos">+5.9%</span></td></tr>
 </tbody></table>
   </div>
 
@@ -289,589 +752,577 @@ tbody tr:not(.sep):not(.tot):hover td{background:#f8f5f0}
 <thead><tr><th>Métrica</th><th class="num">2025</th><th class="num th-t">2026</th><th class="num">Var %</th></tr></thead>
 <tbody>
 <tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
-        <td class="num">S/ 376</td><td class="num">S/ 527</td>
-        <td class="num"><span class="r-pos">+40.3%</span></td></tr>
+        <td class="num">S/ 363</td><td class="num">S/ 502</td>
+        <td class="num"><span class="r-pos">+38.3%</span></td></tr>
 <tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
-        <td class="num">S/ 161</td><td class="num">S/ 196</td>
-        <td class="num"><span class="r-pos">+21.3%</span></td></tr>
+        <td class="num">S/ 156</td><td class="num">S/ 188</td>
+        <td class="num"><span class="r-pos">+20.5%</span></td></tr>
 <tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
-        <td class="num">40</td><td class="num">55</td>
-        <td class="num"><span class="r-pos">+35.4%</span></td></tr>
+        <td class="num">40</td><td class="num">54</td>
+        <td class="num"><span class="r-pos">+34.6%</span></td></tr>
 <tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos</span></td>
-        <td class="num">16.1</td><td class="num">19.7</td>
-        <td class="num"><span class="r-pos">+22.5%</span></td></tr>
+        <td class="num">16.0</td><td class="num">19.1</td>
+        <td class="num"><span class="r-pos">+19.0%</span></td></tr>
 <tr><td>Mix Familia / cliente<span class="unidad">familias distintas</span></td>
-        <td class="num">10.5</td><td class="num">12.7</td>
-        <td class="num"><span class="r-pos">+21.0%</span></td></tr>
+        <td class="num">10.4</td><td class="num">12.2</td>
+        <td class="num"><span class="r-pos">+17.2%</span></td></tr>
 <tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
-    <td class="num">4,198</td><td class="num">5,233</td>
-    <td class="num"><span class="r-pos">+24.7%</span></td></tr>
+    <td class="num">4,139</td><td class="num">5,154</td>
+    <td class="num"><span class="r-pos">+24.5%</span></td></tr>
 </tbody></table></div>
     <div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Nitro · Interanual</div><div class="tbl-title">Canal tradicional, setiembre 2025 vs 2026</div></div></div>
 <table>
 <thead><tr><th>Métrica</th><th class="num">2025</th><th class="num th-t">2026</th><th class="num">Var %</th></tr></thead>
 <tbody>
 <tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
-        <td class="num">S/ 307</td><td class="num">S/ 147</td>
-        <td class="num"><span class="r-neg">-52.0%</span></td></tr>
+        <td class="num">S/ 295</td><td class="num">S/ 144</td>
+        <td class="num"><span class="r-neg">-51.4%</span></td></tr>
 <tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
-        <td class="num">S/ 153</td><td class="num">S/ 80</td>
+        <td class="num">S/ 149</td><td class="num">S/ 78</td>
         <td class="num"><span class="r-neg">-47.7%</span></td></tr>
 <tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
         <td class="num">34</td><td class="num">16</td>
-        <td class="num"><span class="r-neg">-54.4%</span></td></tr>
+        <td class="num"><span class="r-neg">-52.8%</span></td></tr>
 <tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos</span></td>
-        <td class="num">11.6</td><td class="num">7.9</td>
-        <td class="num"><span class="r-neg">-32.2%</span></td></tr>
+        <td class="num">11.5</td><td class="num">7.7</td>
+        <td class="num"><span class="r-neg">-33.6%</span></td></tr>
 <tr><td>Mix Familia / cliente<span class="unidad">familias distintas</span></td>
-        <td class="num">7.9</td><td class="num">5.6</td>
-        <td class="num"><span class="r-neg">-28.5%</span></td></tr>
+        <td class="num">7.7</td><td class="num">5.4</td>
+        <td class="num"><span class="r-neg">-30.1%</span></td></tr>
 <tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
-    <td class="num">3,913</td><td class="num">3,321</td>
-    <td class="num"><span class="r-neg">-15.1%</span></td></tr>
-</tbody></table></div>
-  </div>
-  <div class="twocol">
-    <div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Diadia · Pre vs Post 2026</div><div class="tbl-title">Ticket +22.4%, mix SKU +10.6%</div></div></div>
-<table>
-<thead><tr><th>Métrica</th><th class="num">Pre</th><th class="num th-t">Post</th><th class="num">Var %</th></tr></thead>
-<tbody>
-<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
-        <td class="num">S/ 411</td><td class="num">S/ 527</td>
-        <td class="num"><span class="r-pos">+28.2%</span></td></tr>
-<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
-        <td class="num">S/ 160</td><td class="num">S/ 196</td>
-        <td class="num"><span class="r-pos">+22.4%</span></td></tr>
-<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
-        <td class="num">43</td><td class="num">55</td>
-        <td class="num"><span class="r-pos">+27.5%</span></td></tr>
-<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos</span></td>
-        <td class="num">17.8</td><td class="num">19.7</td>
-        <td class="num"><span class="r-pos">+10.6%</span></td></tr>
-<tr><td>Mix Familia / cliente<span class="unidad">familias distintas</span></td>
-        <td class="num">11.6</td><td class="num">12.7</td>
-        <td class="num"><span class="r-pos">+10.1%</span></td></tr>
-<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
-    <td class="num">4,757</td><td class="num">5,233</td>
-    <td class="num"><span class="r-pos">+10.0%</span></td></tr>
-</tbody></table></div>
-    <div class="tbl-card"><div class="tbl-hd"><div><div class="tbl-kicker">Nitro · Pre vs Post 2026</div><div class="tbl-title">Ticket -36.2%, mix SKU -28.1%</div></div></div>
-<table>
-<thead><tr><th>Métrica</th><th class="num">Pre</th><th class="num th-t">Post</th><th class="num">Var %</th></tr></thead>
-<tbody>
-<tr><td>Venta neta / cliente<span class="unidad">S/ por cliente-mes</span></td>
-        <td class="num">S/ 254</td><td class="num">S/ 147</td>
-        <td class="num"><span class="r-neg">-42.0%</span></td></tr>
-<tr><td>Ticket / cliente<span class="unidad">S/ por pedido</span></td>
-        <td class="num">S/ 126</td><td class="num">S/ 80</td>
-        <td class="num"><span class="r-neg">-36.2%</span></td></tr>
-<tr><td>Volumen / cliente<span class="unidad">kg por cliente-mes</span></td>
-        <td class="num">27</td><td class="num">16</td>
-        <td class="num"><span class="r-neg">-42.8%</span></td></tr>
-<tr><td>Mix SKU / cliente<span class="unidad">SKUs distintos</span></td>
-        <td class="num">11.0</td><td class="num">7.9</td>
-        <td class="num"><span class="r-neg">-28.1%</span></td></tr>
-<tr><td>Mix Familia / cliente<span class="unidad">familias distintas</span></td>
-        <td class="num">7.5</td><td class="num">5.6</td>
-        <td class="num"><span class="r-neg">-25.3%</span></td></tr>
-<tr><td>Clientes distintos<span class="unidad">promedio mensual</span></td>
-    <td class="num">3,905</td><td class="num">3,321</td>
-    <td class="num"><span class="r-neg">-15.0%</span></td></tr>
+    <td class="num">3,865</td><td class="num">3,200</td>
+    <td class="num"><span class="r-neg">-17.2%</span></td></tr>
 </tbody></table></div>
   </div>
 
+  <div class="sec-label">MBA · Por segmento transaccional</div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">Todas las métricas · periodo 1 → periodo 2 y variación</div>
+      <div class="tbl-title">Cómo se mueve cada segmento: total y por canal</div>
+    </div></div>
+    <div class="stabs">
+      <button class="st on" data-g="seg-int" onclick="sw(event,'seg-int','seg-int-total')">TOTAL</button>
+      <button class="st" data-g="seg-int" onclick="sw(event,'seg-int','seg-int-diadia')">DIADIA</button>
+      <button class="st" data-g="seg-int" onclick="sw(event,'seg-int','seg-int-nitro')">NITRO</button>
+    </div>
+<div id="seg-int-total" data-g="seg-int" class="pn on">
+<div class="tbl-kicker" style="margin:10px 0 6px">Interanual · set 2025 → set 2026</div>
+<div class="scroll-x"><table class="seg">
+<thead><tr><th>Segmento transaccional</th><th class="num">Venta neta / cliente</th><th class="num">Ticket / cliente</th><th class="num">Volumen / cliente (kg)</th><th class="num">Mix SKU</th><th class="num">Mix familia</th><th class="num">Clientes (prom. mensual)</th><th class="num">GTN</th></tr></thead>
+<tbody>
+<tr><td>1 Oro+</td><td class="num "><div class="mv">S/ 2,816 → S/ 2,875</div><div class="mvv"><span class="r-pos">+2.1%</span></div></td><td class="num "><div class="mv">S/ 729 → S/ 742</div><div class="mvv"><span class="r-pos">+1.7%</span></div></td><td class="num "><div class="mv">319 → 313</div><div class="mvv"><span class="r-neg">-2.0%</span></div></td><td class="num "><div class="mv">39.1 → 41.9</div><div class="mvv"><span class="r-pos">+7.4%</span></div></td><td class="num "><div class="mv">22.1 → 23.2</div><div class="mvv"><span class="r-pos">+4.8%</span></div></td><td class="num "><div class="mv">231 → 229</div><div class="mvv"><span class="r-neg">-0.9%</span></div></td><td class="num "><div class="mv">5.30% → 3.65%</div><div class="mvv"><span class="r-pos">-1.65 pp</span></div></td></tr>
+<tr><td>2 Oro</td><td class="num "><div class="mv">S/ 1,131 → S/ 1,264</div><div class="mvv"><span class="r-pos">+11.7%</span></div></td><td class="num "><div class="mv">S/ 340 → S/ 333</div><div class="mvv"><span class="r-neg">-2.3%</span></div></td><td class="num "><div class="mv">129 → 137</div><div class="mvv"><span class="r-pos">+6.1%</span></div></td><td class="num "><div class="mv">32.0 → 35.1</div><div class="mvv"><span class="r-pos">+9.8%</span></div></td><td class="num "><div class="mv">19.5 → 21.1</div><div class="mvv"><span class="r-pos">+8.2%</span></div></td><td class="num "><div class="mv">598 → 580</div><div class="mvv"><span class="r-neg">-3.0%</span></div></td><td class="num "><div class="mv">4.50% → 3.12%</div><div class="mvv"><span class="r-pos">-1.38 pp</span></div></td></tr>
+<tr><td>3 Plata</td><td class="num "><div class="mv">S/ 539 → S/ 616</div><div class="mvv"><span class="r-pos">+14.1%</span></div></td><td class="num "><div class="mv">S/ 188 → S/ 196</div><div class="mvv"><span class="r-pos">+4.2%</span></div></td><td class="num "><div class="mv">60 → 66</div><div class="mvv"><span class="r-pos">+10.5%</span></div></td><td class="num "><div class="mv">21.9 → 23.8</div><div class="mvv"><span class="r-pos">+8.6%</span></div></td><td class="num "><div class="mv">14.3 → 15.3</div><div class="mvv"><span class="r-pos">+7.0%</span></div></td><td class="num "><div class="mv">1,204 → 1,180</div><div class="mvv"><span class="r-neg">-2.0%</span></div></td><td class="num "><div class="mv">3.68% → 2.53%</div><div class="mvv"><span class="r-pos">-1.14 pp</span></div></td></tr>
+<tr><td>4 Bronce</td><td class="num "><div class="mv">S/ 189 → S/ 232</div><div class="mvv"><span class="r-pos">+22.8%</span></div></td><td class="num "><div class="mv">S/ 87 → S/ 97</div><div class="mvv"><span class="r-pos">+11.2%</span></div></td><td class="num "><div class="mv">21 → 25</div><div class="mvv"><span class="r-pos">+20.2%</span></div></td><td class="num "><div class="mv">11.7 → 12.8</div><div class="mvv"><span class="r-pos">+9.3%</span></div></td><td class="num "><div class="mv">7.9 → 8.7</div><div class="mvv"><span class="r-pos">+9.9%</span></div></td><td class="num "><div class="mv">3,522 → 3,626</div><div class="mvv"><span class="r-pos">+3.0%</span></div></td><td class="num "><div class="mv">2.89% → 2.49%</div><div class="mvv"><span class="r-pos">-0.40 pp</span></div></td></tr>
+<tr><td>Por definir</td><td class="num "><div class="mv">S/ 87 → S/ 295</div><div class="mvv"><span class="r-pos">+237.1%</span></div></td><td class="num "><div class="mv">S/ 64 → S/ 100</div><div class="mvv"><span class="r-pos">+56.6%</span></div></td><td class="num "><div class="mv">10 → 31</div><div class="mvv"><span class="r-pos">+197.8%</span></div></td><td class="num "><div class="mv">8.0 → 16.4</div><div class="mvv"><span class="r-pos">+105.4%</span></div></td><td class="num "><div class="mv">5.5 → 10.4</div><div class="mvv"><span class="r-pos">+88.2%</span></div></td><td class="num "><div class="mv">30 → 297</div><div class="mvv"><span class="r-pos">+890.0%</span></div></td><td class="num "><div class="mv">5.24% → 2.84%</div><div class="mvv"><span class="r-pos">-2.39 pp</span></div></td></tr>
+<tr class="tot"><td>Total MBA</td><td class="num tot"><div class="mv">S/ 473 → S/ 515</div><div class="mvv"><span class="r-pos">+8.8%</span></div></td><td class="num tot"><div class="mv">S/ 163 → S/ 165</div><div class="mvv"><span class="r-pos">+1.5%</span></div></td><td class="num tot"><div class="mv">53 → 56</div><div class="mvv"><span class="r-pos">+4.8%</span></div></td><td class="num tot"><div class="mv">17.2 → 18.5</div><div class="mvv"><span class="r-pos">+7.6%</span></div></td><td class="num tot"><div class="mv">11.1 → 11.9</div><div class="mvv"><span class="r-pos">+7.0%</span></div></td><td class="num tot"><div class="mv">5,585 → 5,912</div><div class="mvv"><span class="r-pos">+5.9%</span></div></td><td class="num tot"><div class="mv">4.09% → 2.91%</div><div class="mvv"><span class="r-pos">-1.18 pp</span></div></td></tr>
+</tbody></table></div>
+</div>
+<div id="seg-int-diadia" data-g="seg-int" class="pn">
+<div class="tbl-kicker" style="margin:10px 0 6px">Interanual · set 2025 → set 2026</div>
+<div class="scroll-x"><table class="seg">
+<thead><tr><th>Segmento transaccional</th><th class="num">Venta neta / cliente</th><th class="num">Ticket / cliente</th><th class="num">Volumen / cliente (kg)</th><th class="num">Mix SKU</th><th class="num">Mix familia</th><th class="num">Clientes (prom. mensual)</th><th class="num">GTN</th></tr></thead>
+<tbody>
+<tr><td>1 Oro+</td><td class="num "><div class="mv">S/ 1,517 → S/ 2,470</div><div class="mvv"><span class="r-pos">+62.8%</span></div></td><td class="num "><div class="mv">S/ 484 → S/ 712</div><div class="mvv"><span class="r-pos">+47.2%</span></div></td><td class="num "><div class="mv">171 → 273</div><div class="mvv"><span class="r-pos">+59.2%</span></div></td><td class="num "><div class="mv">28.8 → 40.7</div><div class="mvv"><span class="r-pos">+41.5%</span></div></td><td class="num "><div class="mv">16.7 → 22.5</div><div class="mvv"><span class="r-pos">+34.3%</span></div></td><td class="num "><div class="mv">189 → 216</div><div class="mvv"><span class="r-pos">+14.3%</span></div></td><td class="num "><div class="mv">5.38% → 3.96%</div><div class="mvv"><span class="r-pos">-1.42 pp</span></div></td></tr>
+<tr><td>2 Oro</td><td class="num "><div class="mv">S/ 705 → S/ 1,103</div><div class="mvv"><span class="r-pos">+56.4%</span></div></td><td class="num "><div class="mv">S/ 252 → S/ 338</div><div class="mvv"><span class="r-pos">+34.3%</span></div></td><td class="num "><div class="mv">79 → 118</div><div class="mvv"><span class="r-pos">+48.9%</span></div></td><td class="num "><div class="mv">24.3 → 34.2</div><div class="mvv"><span class="r-pos">+40.9%</span></div></td><td class="num "><div class="mv">15.0 → 20.5</div><div class="mvv"><span class="r-pos">+36.9%</span></div></td><td class="num "><div class="mv">488 → 545</div><div class="mvv"><span class="r-pos">+11.7%</span></div></td><td class="num "><div class="mv">4.25% → 3.33%</div><div class="mvv"><span class="r-pos">-0.92 pp</span></div></td></tr>
+<tr><td>3 Plata</td><td class="num "><div class="mv">S/ 423 → S/ 574</div><div class="mvv"><span class="r-pos">+35.6%</span></div></td><td class="num "><div class="mv">S/ 181 → S/ 216</div><div class="mvv"><span class="r-pos">+19.6%</span></div></td><td class="num "><div class="mv">46 → 61</div><div class="mvv"><span class="r-pos">+33.9%</span></div></td><td class="num "><div class="mv">19.5 → 23.2</div><div class="mvv"><span class="r-pos">+18.8%</span></div></td><td class="num "><div class="mv">12.7 → 14.9</div><div class="mvv"><span class="r-pos">+17.3%</span></div></td><td class="num "><div class="mv">975 → 1,085</div><div class="mvv"><span class="r-pos">+11.3%</span></div></td><td class="num "><div class="mv">3.39% → 2.68%</div><div class="mvv"><span class="r-pos">-0.71 pp</span></div></td></tr>
+<tr><td>4 Bronce</td><td class="num "><div class="mv">S/ 184 → S/ 244</div><div class="mvv"><span class="r-pos">+32.3%</span></div></td><td class="num "><div class="mv">S/ 103 → S/ 119</div><div class="mvv"><span class="r-pos">+16.0%</span></div></td><td class="num "><div class="mv">20 → 26</div><div class="mvv"><span class="r-pos">+29.0%</span></div></td><td class="num "><div class="mv">12.1 → 13.5</div><div class="mvv"><span class="r-pos">+11.8%</span></div></td><td class="num "><div class="mv">8.1 → 9.1</div><div class="mvv"><span class="r-pos">+12.1%</span></div></td><td class="num "><div class="mv">2,475 → 3,057</div><div class="mvv"><span class="r-pos">+23.5%</span></div></td><td class="num "><div class="mv">2.73% → 2.63%</div><div class="mvv"><span class="r-pos">-0.10 pp</span></div></td></tr>
+<tr><td>Por definir</td><td class="num "><div class="mv">S/ 176 → S/ 330</div><div class="mvv"><span class="r-pos">+87.0%</span></div></td><td class="num "><div class="mv">S/ 98 → S/ 129</div><div class="mvv"><span class="r-pos">+31.5%</span></div></td><td class="num "><div class="mv">21 → 35</div><div class="mvv"><span class="r-pos">+69.9%</span></div></td><td class="num "><div class="mv">11.3 → 17.7</div><div class="mvv"><span class="r-pos">+56.5%</span></div></td><td class="num "><div class="mv">7.0 → 11.1</div><div class="mvv"><span class="r-pos">+59.1%</span></div></td><td class="num "><div class="mv">12 → 251</div><div class="mvv"><span class="r-pos">+1991.7%</span></div></td><td class="num "><div class="mv">2.06% → 2.84%</div><div class="mvv"><span class="r-neg">+0.78 pp</span></div></td></tr>
+<tr class="tot"><td>Total MBA</td><td class="num tot"><div class="mv">S/ 363 → S/ 502</div><div class="mvv"><span class="r-pos">+38.3%</span></div></td><td class="num tot"><div class="mv">S/ 156 → S/ 188</div><div class="mvv"><span class="r-pos">+20.5%</span></div></td><td class="num tot"><div class="mv">40 → 54</div><div class="mvv"><span class="r-pos">+34.6%</span></div></td><td class="num tot"><div class="mv">16.0 → 19.1</div><div class="mvv"><span class="r-pos">+19.0%</span></div></td><td class="num tot"><div class="mv">10.4 → 12.2</div><div class="mvv"><span class="r-pos">+17.2%</span></div></td><td class="num tot"><div class="mv">4,139 → 5,154</div><div class="mvv"><span class="r-pos">+24.5%</span></div></td><td class="num tot"><div class="mv">3.77% → 3.09%</div><div class="mvv"><span class="r-pos">-0.68 pp</span></div></td></tr>
+</tbody></table></div>
+</div>
+<div id="seg-int-nitro" data-g="seg-int" class="pn">
+<div class="tbl-kicker" style="margin:10px 0 6px">Interanual · set 2025 → set 2026</div>
+<div class="scroll-x"><table class="seg">
+<thead><tr><th>Segmento transaccional</th><th class="num">Venta neta / cliente</th><th class="num">Ticket / cliente</th><th class="num">Volumen / cliente (kg)</th><th class="num">Mix SKU</th><th class="num">Mix familia</th><th class="num">Clientes (prom. mensual)</th><th class="num">GTN</th></tr></thead>
+<tbody>
+<tr><td>1 Oro+</td><td class="num "><div class="mv">S/ 1,846 → S/ 849</div><div class="mvv"><span class="r-neg">-54.0%</span></div></td><td class="num "><div class="mv">S/ 836 → S/ 419</div><div class="mvv"><span class="r-neg">-49.9%</span></div></td><td class="num "><div class="mv">210 → 86</div><div class="mvv"><span class="r-neg">-58.9%</span></div></td><td class="num "><div class="mv">27.3 → 12.2</div><div class="mvv"><span class="r-neg">-55.4%</span></div></td><td class="num "><div class="mv">16.1 → 7.6</div><div class="mvv"><span class="r-neg">-52.7%</span></div></td><td class="num "><div class="mv">197 → 147</div><div class="mvv"><span class="r-neg">-25.4%</span></div></td><td class="num "><div class="mv">5.24% → 2.30%</div><div class="mvv"><span class="r-pos">-2.94 pp</span></div></td></tr>
+<tr><td>2 Oro</td><td class="num "><div class="mv">S/ 674 → S/ 334</div><div class="mvv"><span class="r-neg">-50.5%</span></div></td><td class="num "><div class="mv">S/ 329 → S/ 178</div><div class="mvv"><span class="r-neg">-45.7%</span></div></td><td class="num "><div class="mv">78 → 38</div><div class="mvv"><span class="r-neg">-50.9%</span></div></td><td class="num "><div class="mv">20.7 → 11.5</div><div class="mvv"><span class="r-neg">-44.5%</span></div></td><td class="num "><div class="mv">13.0 → 7.6</div><div class="mvv"><span class="r-neg">-41.9%</span></div></td><td class="num "><div class="mv">493 → 395</div><div class="mvv"><span class="r-neg">-19.9%</span></div></td><td class="num "><div class="mv">4.75% → 2.18%</div><div class="mvv"><span class="r-pos">-2.57 pp</span></div></td></tr>
+<tr><td>3 Plata</td><td class="num "><div class="mv">S/ 277 → S/ 151</div><div class="mvv"><span class="r-neg">-45.3%</span></div></td><td class="num "><div class="mv">S/ 144 → S/ 86</div><div class="mvv"><span class="r-neg">-40.7%</span></div></td><td class="num "><div class="mv">32 → 17</div><div class="mvv"><span class="r-neg">-46.6%</span></div></td><td class="num "><div class="mv">13.3 → 9.5</div><div class="mvv"><span class="r-neg">-28.7%</span></div></td><td class="num "><div class="mv">9.1 → 6.6</div><div class="mvv"><span class="r-neg">-27.8%</span></div></td><td class="num "><div class="mv">856 → 688</div><div class="mvv"><span class="r-neg">-19.6%</span></div></td><td class="num "><div class="mv">4.17% → 1.67%</div><div class="mvv"><span class="r-pos">-2.51 pp</span></div></td></tr>
+<tr><td>4 Bronce</td><td class="num "><div class="mv">S/ 91 → S/ 52</div><div class="mvv"><span class="r-neg">-42.7%</span></div></td><td class="num "><div class="mv">S/ 54 → S/ 30</div><div class="mvv"><span class="r-neg">-43.9%</span></div></td><td class="num "><div class="mv">10 → 6</div><div class="mvv"><span class="r-neg">-40.6%</span></div></td><td class="num "><div class="mv">7.6 → 5.9</div><div class="mvv"><span class="r-neg">-23.1%</span></div></td><td class="num "><div class="mv">5.4 → 4.4</div><div class="mvv"><span class="r-neg">-19.1%</span></div></td><td class="num "><div class="mv">2,293 → 1,804</div><div class="mvv"><span class="r-neg">-21.3%</span></div></td><td class="num "><div class="mv">3.26% → 1.40%</div><div class="mvv"><span class="r-pos">-1.86 pp</span></div></td></tr>
+<tr><td>Por definir</td><td class="num "><div class="mv">S/ 19 → S/ 29</div><div class="mvv"><span class="r-pos">+46.8%</span></div></td><td class="num "><div class="mv">S/ 34 → S/ 20</div><div class="mvv"><span class="r-neg">-40.7%</span></div></td><td class="num "><div class="mv">3 → 3</div><div class="mvv"><span class="r-pos">+20.8%</span></div></td><td class="num "><div class="mv">6.7 → 6.7</div><div class="mvv"><span class="r-pos">+0.9%</span></div></td><td class="num "><div class="mv">4.8 → 4.7</div><div class="mvv"><span class="r-neg">-1.5%</span></div></td><td class="num "><div class="mv">26 → 166</div><div class="mvv"><span class="r-pos">+538.5%</span></div></td><td class="num "><div class="mv">18.51% → 2.88%</div><div class="mvv"><span class="r-pos">-15.63 pp</span></div></td></tr>
+<tr class="tot"><td>Total MBA</td><td class="num tot"><div class="mv">S/ 295 → S/ 144</div><div class="mvv"><span class="r-neg">-51.4%</span></div></td><td class="num tot"><div class="mv">S/ 149 → S/ 78</div><div class="mvv"><span class="r-neg">-47.7%</span></div></td><td class="num tot"><div class="mv">34 → 16</div><div class="mvv"><span class="r-neg">-52.8%</span></div></td><td class="num tot"><div class="mv">11.5 → 7.7</div><div class="mvv"><span class="r-neg">-33.6%</span></div></td><td class="num tot"><div class="mv">7.7 → 5.4</div><div class="mvv"><span class="r-neg">-30.1%</span></div></td><td class="num tot"><div class="mv">3,865 → 3,200</div><div class="mvv"><span class="r-neg">-17.2%</span></div></td><td class="num tot"><div class="mv">4.52% → 1.95%</div><div class="mvv"><span class="r-pos">-2.58 pp</span></div></td></tr>
+</tbody></table></div>
+</div>
+
+    <div class="tbl-note" style="margin-top:12px">
+      Segmento transaccional vigente a ago-2026, asignado por cliente (se aplica igual a 2025 y 2026; «Por definir» = clientes sin segmento). Cada celda muestra periodo 1 → periodo 2 y su variación; la fila <b>Total MBA</b> coincide con las tablas de la vista total/canal. En venta neta por cliente pre/post (total), el segmento que más crece es <b>4 Bronce</b> (+6.3%) y el que menos <b>3 Plata</b> (+3.6%).
+    </div>
+  </div>
 
   <div class="sec-label">MBA vs. las demás compañías</div>
   <div class="tbl-card">
     <div class="tbl-hd"><div>
-      <div class="tbl-kicker">9 DEX de la muestra · barras: venta neta/cliente, pre/post</div>
-      <div class="tbl-title">En total MBA está en la mitad de la tabla (4.º de 9); en diadia es la que más crece</div>
+      <div class="tbl-kicker">9 DEX de la muestra · barras: venta neta/cliente, interanual</div>
+      <div class="tbl-title">Interanual: MBA es 5.º de 9 en total y 3.º de 9 en diadia</div>
     </div></div>
 
-    <div class="tabs">
-      <button class="tab-btn active" onclick="mostrarTab(event,'tab-total')">TOTAL</button>
-      <button class="tab-btn" onclick="mostrarTab(event,'tab-diadia')">DIADIA</button>
-      <button class="tab-btn" onclick="mostrarTab(event,'tab-nitro')">NITRO</button>
+    <div class="stabs">
+      <button class="st on" data-g="comp-int" onclick="sw(event,'comp-int','comp-int-total')">TOTAL</button>
+      <button class="st" data-g="comp-int" onclick="sw(event,'comp-int','comp-int-diadia')">DIADIA</button>
+      <button class="st" data-g="comp-int" onclick="sw(event,'comp-int','comp-int-nitro')">NITRO</button>
     </div>
 
-    <div id="tab-total" class="tab-panel active">
+    <div id="comp-int-total" data-g="comp-int" class="pn on">
       <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA ★</div>
           <div class="bar-track" style="position:relative;background:#f3f0ea">
             <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-ma" style="position:absolute;left:50%;width:25.3%;justify-content:center">+8.3%</div>
+            <div class="bar-seg bar-ma" style="position:absolute;left:50%;width:16.9%;justify-content:center">+8.8%</div>
           </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
           <div class="bar-track" style="position:relative;background:#f3f0ea">
             <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:50.0%;justify-content:center">+16.5%</div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:22.3%;justify-content:center">+11.6%</div>
           </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
           <div class="bar-track" style="position:relative;background:#f3f0ea">
             <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:33.1%;justify-content:center">+10.9%</div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:20.7%;justify-content:center">+10.8%</div>
           </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
           <div class="bar-track" style="position:relative;background:#f3f0ea">
             <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:0.6%;justify-content:center">+0.2%</div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:11.4%;justify-content:center">+5.9%</div>
           </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
           <div class="bar-track" style="position:relative;background:#f3f0ea">
             <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:9.7%;justify-content:center">+3.2%</div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:14.7%;justify-content:center">-7.7%</div>
           </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">MADEX</div>
           <div class="bar-track" style="position:relative;background:#f3f0ea">
             <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:12.0%;justify-content:center">+3.9%</div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:6.2%;justify-content:center">-3.2%</div>
           </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
           <div class="bar-track" style="position:relative;background:#f3f0ea">
             <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:29.9%;justify-content:center">+9.9%</div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:39.1%;justify-content:center">+20.4%</div>
           </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
           <div class="bar-track" style="position:relative;background:#f3f0ea">
             <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:1.6%;justify-content:center">-0.5%</div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:50.0%;justify-content:center">+26.1%</div>
           </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
           <div class="bar-track" style="position:relative;background:#f3f0ea">
             <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:0.9%;justify-content:center">-0.3%</div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:1.9%;justify-content:center">-1.0%</div>
           </div><div class="bar-tot">&nbsp;</div></div></div>
       <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
       <table style="margin-top:16px">
-        <thead>
-          <tr><th rowspan="2">Compañía</th>
-            <th class="grp g-hist" colspan="2">Venta neta/cliente, var %</th>
-            <th class="grp g-vi" colspan="2">Clientes, var %</th>
-            <th class="grp g-tpo" colspan="2">Ticket/cliente, var %</th>
-            <th class="grp g-hist" colspan="2">Mix SKU, var %</th>
-            <th class="grp g-vi" colspan="2">GTN, Δ pp</th></tr>
-          <tr><th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
-            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th>
-            <th class="num th-t">Interanual</th><th class="num th-t">Pre/Post</th>
-            <th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
-            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th></tr>
-        </thead>
+        <thead><tr><th>Compañía</th>
+          <th class="num th-h">Venta neta/cliente, var %</th><th class="num th-v">Clientes, var %</th>
+          <th class="num th-t">Ticket/cliente, var %</th><th class="num th-h">Mix SKU, var %</th>
+          <th class="num th-v">GTN, Δ pp</th></tr></thead>
         <tbody><tr class="rec"><td>MBA <span class="tag ma">PILOTO</span></td>
-          <td class="num">+9.7%</td>
-          <td class="num">+8.3%</td>
-          <td class="num">+6.5%</td>
-          <td class="num">+1.7%</td>
-          <td class="num">+1.3%</td>
-          <td class="num">+10.1%</td>
-          <td class="num">+10.1%</td>
-          <td class="num">+2.8%</td>
-          <td class="num">-1.14 pp</td>
-          <td class="num">+0.31 pp</td>
-        </tr><tr><td>ALMA</td>
-          <td class="num">+16.9%</td>
-          <td class="num">+16.5%</td>
-          <td class="num">+4.2%</td>
-          <td class="num">-0.6%</td>
-          <td class="num">-0.2%</td>
-          <td class="num">+15.6%</td>
-          <td class="num">+13.7%</td>
-          <td class="num">+1.5%</td>
-          <td class="num">-1.25 pp</td>
-          <td class="num">-0.24 pp</td>
-        </tr><tr><td>DEX APURIMAC</td>
-          <td class="num">+12.2%</td>
-          <td class="num">+10.9%</td>
-          <td class="num">+28.3%</td>
-          <td class="num">+11.6%</td>
-          <td class="num">+14.3%</td>
-          <td class="num">+14.3%</td>
-          <td class="num">-2.9%</td>
-          <td class="num">-1.6%</td>
-          <td class="num">-0.72 pp</td>
-          <td class="num">+0.14 pp</td>
-        </tr><tr><td>DEX MINALI</td>
-          <td class="num">+5.5%</td>
-          <td class="num">+0.2%</td>
-          <td class="num">-0.9%</td>
-          <td class="num">+2.7%</td>
-          <td class="num">-2.8%</td>
-          <td class="num">-1.4%</td>
-          <td class="num">+16.9%</td>
-          <td class="num">-0.2%</td>
-          <td class="num">-1.28 pp</td>
-          <td class="num">+0.29 pp</td>
-        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
-          <td class="num">-6.7%</td>
-          <td class="num">+3.2%</td>
-          <td class="num">+4.5%</td>
-          <td class="num">-0.3%</td>
-          <td class="num">-6.2%</td>
-          <td class="num">+1.9%</td>
-          <td class="num">+1.6%</td>
-          <td class="num">-4.3%</td>
-          <td class="num">-0.66 pp</td>
-          <td class="num">+0.08 pp</td>
-        </tr><tr><td>MADEX</td>
-          <td class="num">-2.5%</td>
-          <td class="num">+3.9%</td>
-          <td class="num">+8.0%</td>
-          <td class="num">+1.8%</td>
-          <td class="num">-7.4%</td>
-          <td class="num">-4.3%</td>
-          <td class="num">+0.8%</td>
-          <td class="num">-2.2%</td>
-          <td class="num">-0.36 pp</td>
-          <td class="num">-0.07 pp</td>
-        </tr><tr><td>ROSET</td>
-          <td class="num">+25.5%</td>
-          <td class="num">+9.9%</td>
-          <td class="num">-5.7%</td>
-          <td class="num">+1.2%</td>
-          <td class="num">+12.3%</td>
+          <td class="num">+8.8%</td>
           <td class="num">+5.9%</td>
-          <td class="num">+21.5%</td>
-          <td class="num">+3.0%</td>
-          <td class="num">-1.17 pp</td>
-          <td class="num">+0.03 pp</td>
-        </tr><tr><td>RTDEX</td>
-          <td class="num">+29.2%</td>
-          <td class="num">-0.5%</td>
-          <td class="num">-14.9%</td>
-          <td class="num">-4.5%</td>
-          <td class="num">+35.1%</td>
-          <td class="num">-1.7%</td>
-          <td class="num">+19.5%</td>
-          <td class="num">-5.6%</td>
-          <td class="num">-0.39 pp</td>
-          <td class="num">-0.38 pp</td>
-        </tr><tr><td>SELVA DEX</td>
-          <td class="num">-3.5%</td>
-          <td class="num">-0.3%</td>
-          <td class="num">+20.5%</td>
-          <td class="num">+1.1%</td>
-          <td class="num">-26.9%</td>
-          <td class="num">+1.4%</td>
-          <td class="num">+2.4%</td>
-          <td class="num">-4.8%</td>
-          <td class="num">-1.19 pp</td>
-          <td class="num">+0.23 pp</td>
-        </tr></tbody>
-      </table>
-    </div>
-
-    <div id="tab-diadia" class="tab-panel">
-      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA ★</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-ma" style="position:absolute;left:50%;width:50.0%;justify-content:center">+28.2%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:17.9%;justify-content:center">+10.1%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:12.7%;justify-content:center">+7.2%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:5.0%;justify-content:center">+2.8%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:34.6%;justify-content:center">+19.5%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">MADEX</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:0.5%;justify-content:center">-0.3%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:5.7%;justify-content:center">+3.2%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:17.9%;justify-content:center">-10.1%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:5.6%;justify-content:center">+3.2%</div>
-          </div><div class="bar-tot">&nbsp;</div></div></div>
-      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
-      <table style="margin-top:16px">
-        <thead>
-          <tr><th rowspan="2">Compañía</th>
-            <th class="grp g-hist" colspan="2">Venta neta/cliente, var %</th>
-            <th class="grp g-vi" colspan="2">Clientes, var %</th>
-            <th class="grp g-tpo" colspan="2">Ticket/cliente, var %</th>
-            <th class="grp g-hist" colspan="2">Mix SKU, var %</th>
-            <th class="grp g-vi" colspan="2">GTN, Δ pp</th></tr>
-          <tr><th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
-            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th>
-            <th class="num th-t">Interanual</th><th class="num th-t">Pre/Post</th>
-            <th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
-            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th></tr>
-        </thead>
-        <tbody><tr class="rec"><td>MBA <span class="tag ma">PILOTO</span></td>
-          <td class="num">+40.3%</td>
-          <td class="num">+28.2%</td>
-          <td class="num">+24.7%</td>
-          <td class="num">+10.0%</td>
-          <td class="num">+21.3%</td>
-          <td class="num">+22.4%</td>
-          <td class="num">+22.5%</td>
-          <td class="num">+10.6%</td>
-          <td class="num">-0.69 pp</td>
-          <td class="num">+0.39 pp</td>
-        </tr><tr><td>ALMA</td>
-          <td class="num">-18.4%</td>
-          <td class="num">+10.1%</td>
-          <td class="num">+348.8%</td>
-          <td class="num">+17.8%</td>
-          <td class="num">-56.9%</td>
-          <td class="num">+6.5%</td>
-          <td class="num">+42.3%</td>
-          <td class="num">-3.0%</td>
-          <td class="num">-4.22 pp</td>
-          <td class="num">-0.22 pp</td>
-        </tr><tr><td>DEX APURIMAC</td>
-          <td class="num">+45.4%</td>
-          <td class="num">+7.2%</td>
-          <td class="num">+62.4%</td>
-          <td class="num">+31.8%</td>
-          <td class="num">+40.6%</td>
-          <td class="num">+4.1%</td>
-          <td class="num">+15.8%</td>
-          <td class="num">-2.8%</td>
-          <td class="num">-0.63 pp</td>
-          <td class="num">+0.05 pp</td>
-        </tr><tr><td>DEX MINALI</td>
-          <td class="num">+5.2%</td>
-          <td class="num">+2.8%</td>
-          <td class="num">+54.7%</td>
-          <td class="num">+5.7%</td>
-          <td class="num">-3.9%</td>
-          <td class="num">+2.2%</td>
-          <td class="num">+12.5%</td>
-          <td class="num">+1.3%</td>
-          <td class="num">-1.56 pp</td>
-          <td class="num">+0.12 pp</td>
-        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
-          <td class="num">+33.4%</td>
-          <td class="num">+19.5%</td>
-          <td class="num">+5.0%</td>
-          <td class="num">+12.7%</td>
-          <td class="num">+26.1%</td>
-          <td class="num">+17.1%</td>
-          <td class="num">+26.9%</td>
-          <td class="num">+7.1%</td>
-          <td class="num">-0.48 pp</td>
-          <td class="num">+0.18 pp</td>
-        </tr><tr><td>MADEX</td>
-          <td class="num">+35.4%</td>
-          <td class="num">-0.3%</td>
-          <td class="num">+20.1%</td>
-          <td class="num">+15.4%</td>
-          <td class="num">+34.7%</td>
-          <td class="num">-1.6%</td>
-          <td class="num">+24.2%</td>
-          <td class="num">-5.8%</td>
-          <td class="num">+0.06 pp</td>
-          <td class="num">-0.05 pp</td>
-        </tr><tr><td>ROSET</td>
-          <td class="num">+9.5%</td>
-          <td class="num">+3.2%</td>
-          <td class="num">+22.2%</td>
-          <td class="num">+18.0%</td>
-          <td class="num">-1.7%</td>
-          <td class="num">-0.7%</td>
-          <td class="num">+6.5%</td>
-          <td class="num">-2.0%</td>
-          <td class="num">-0.96 pp</td>
-          <td class="num">-0.03 pp</td>
-        </tr><tr><td>RTDEX</td>
-          <td class="num">+71.6%</td>
-          <td class="num">-10.1%</td>
-          <td class="num">+22.8%</td>
-          <td class="num">+0.6%</td>
-          <td class="num">+44.8%</td>
-          <td class="num">-6.4%</td>
-          <td class="num">+47.0%</td>
-          <td class="num">-11.0%</td>
-          <td class="num">-0.36 pp</td>
-          <td class="num">-0.34 pp</td>
-        </tr><tr><td>SELVA DEX</td>
-          <td class="num">+12.3%</td>
-          <td class="num">+3.2%</td>
-          <td class="num">+23.9%</td>
-          <td class="num">+3.1%</td>
-          <td class="num">-19.8%</td>
-          <td class="num">+1.2%</td>
-          <td class="num">+11.8%</td>
-          <td class="num">-3.4%</td>
-          <td class="num">-1.19 pp</td>
-          <td class="num">+0.12 pp</td>
-        </tr></tbody>
-      </table>
-    </div>
-
-    <div id="tab-nitro" class="tab-panel">
-      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA ★</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-ma" style="position:absolute;right:50%;width:50.0%;justify-content:center">-42.0%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:6.3%;justify-content:center">+5.3%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:1.7%;justify-content:center">+1.5%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:11.1%;justify-content:center">-9.3%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:14.1%;justify-content:center">-11.8%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">MADEX</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:3.0%;justify-content:center">-2.5%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:5.2%;justify-content:center">+4.4%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:6.3%;justify-content:center">+5.3%</div>
-          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
-          <div class="bar-track" style="position:relative;background:#f3f0ea">
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
-            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:23.7%;justify-content:center">-19.9%</div>
-          </div><div class="bar-tot">&nbsp;</div></div></div>
-      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
-      <table style="margin-top:16px">
-        <thead>
-          <tr><th rowspan="2">Compañía</th>
-            <th class="grp g-hist" colspan="2">Venta neta/cliente, var %</th>
-            <th class="grp g-vi" colspan="2">Clientes, var %</th>
-            <th class="grp g-tpo" colspan="2">Ticket/cliente, var %</th>
-            <th class="grp g-hist" colspan="2">Mix SKU, var %</th>
-            <th class="grp g-vi" colspan="2">GTN, Δ pp</th></tr>
-          <tr><th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
-            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th>
-            <th class="num th-t">Interanual</th><th class="num th-t">Pre/Post</th>
-            <th class="num th-h">Interanual</th><th class="num th-h">Pre/Post</th>
-            <th class="num th-v">Interanual</th><th class="num th-v">Pre/Post</th></tr>
-        </thead>
-        <tbody><tr class="rec"><td>MBA <span class="tag ma">PILOTO</span></td>
-          <td class="num">-52.0%</td>
-          <td class="num">-42.0%</td>
-          <td class="num">-15.1%</td>
-          <td class="num">-15.0%</td>
-          <td class="num">-47.7%</td>
-          <td class="num">-36.2%</td>
-          <td class="num">-32.2%</td>
-          <td class="num">-28.1%</td>
-          <td class="num">-2.21 pp</td>
-          <td class="num">-0.23 pp</td>
-        </tr><tr><td>ALMA</td>
-          <td class="num">-34.2%</td>
-          <td class="num">+5.3%</td>
-          <td class="num">-26.4%</td>
-          <td class="num">-11.5%</td>
-          <td class="num">-29.7%</td>
-          <td class="num">+13.4%</td>
-          <td class="num">-32.7%</td>
-          <td class="num">-7.0%</td>
-          <td class="num">-0.24 pp</td>
-          <td class="num">-0.24 pp</td>
-        </tr><tr><td>DEX APURIMAC</td>
-          <td class="num">-13.3%</td>
           <td class="num">+1.5%</td>
-          <td class="num">+16.5%</td>
-          <td class="num">+7.5%</td>
-          <td class="num">-0.7%</td>
-          <td class="num">+12.5%</td>
-          <td class="num">-18.0%</td>
-          <td class="num">-7.7%</td>
-          <td class="num">-0.81 pp</td>
-          <td class="num">+0.20 pp</td>
-        </tr><tr><td>DEX MINALI</td>
-          <td class="num">-30.7%</td>
-          <td class="num">-9.3%</td>
-          <td class="num">-27.9%</td>
+          <td class="num">+7.6%</td>
+          <td class="num">-1.18 pp</td>
+        </tr><tr><td>ALMA</td>
+          <td class="num">+11.6%</td>
+          <td class="num">+4.9%</td>
           <td class="num">-2.4%</td>
-          <td class="num">-28.8%</td>
-          <td class="num">-19.9%</td>
-          <td class="num">-22.2%</td>
-          <td class="num">-10.1%</td>
-          <td class="num">-0.60 pp</td>
-          <td class="num">+0.83 pp</td>
-        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
-          <td class="num">-29.4%</td>
-          <td class="num">-11.8%</td>
-          <td class="num">+10.2%</td>
-          <td class="num">-2.4%</td>
-          <td class="num">-17.4%</td>
-          <td class="num">-5.4%</td>
-          <td class="num">-10.4%</td>
-          <td class="num">-14.3%</td>
-          <td class="num">-0.69 pp</td>
-          <td class="num">+0.06 pp</td>
-        </tr><tr><td>MADEX</td>
-          <td class="num">-18.0%</td>
-          <td class="num">-2.5%</td>
-          <td class="num">+1.2%</td>
-          <td class="num">+2.2%</td>
-          <td class="num">-19.8%</td>
-          <td class="num">-7.7%</td>
-          <td class="num">-10.0%</td>
-          <td class="num">-6.7%</td>
-          <td class="num">-0.71 pp</td>
-          <td class="num">-0.14 pp</td>
-        </tr><tr><td>ROSET</td>
-          <td class="num">+15.4%</td>
-          <td class="num">+4.4%</td>
-          <td class="num">-7.8%</td>
-          <td class="num">-1.7%</td>
           <td class="num">+11.0%</td>
-          <td class="num">+6.2%</td>
-          <td class="num">+20.8%</td>
-          <td class="num">+0.2%</td>
-          <td class="num">-1.36 pp</td>
-          <td class="num">+0.05 pp</td>
-        </tr><tr><td>RTDEX</td>
-          <td class="num">+5.4%</td>
-          <td class="num">+5.3%</td>
-          <td class="num">-25.4%</td>
-          <td class="num">-5.9%</td>
+          <td class="num">-1.34 pp</td>
+        </tr><tr><td>DEX APURIMAC</td>
+          <td class="num">+10.8%</td>
+          <td class="num">+18.2%</td>
+          <td class="num">+0.1%</td>
+          <td class="num">-1.6%</td>
+          <td class="num">-0.73 pp</td>
+        </tr><tr><td>DEX MINALI</td>
+          <td class="num">+5.9%</td>
+          <td class="num">-2.3%</td>
+          <td class="num">-1.5%</td>
+          <td class="num">+14.6%</td>
+          <td class="num">-1.33 pp</td>
+        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
+          <td class="num">-7.7%</td>
+          <td class="num">+4.0%</td>
+          <td class="num">-6.4%</td>
+          <td class="num">-1.5%</td>
+          <td class="num">-0.79 pp</td>
+        </tr><tr><td>MADEX</td>
+          <td class="num">-3.2%</td>
+          <td class="num">+8.2%</td>
+          <td class="num">-5.8%</td>
+          <td class="num">-2.0%</td>
+          <td class="num">-0.48 pp</td>
+        </tr><tr><td>ROSET</td>
+          <td class="num">+20.4%</td>
+          <td class="num">-4.7%</td>
+          <td class="num">+9.8%</td>
           <td class="num">+16.5%</td>
-          <td class="num">+1.6%</td>
-          <td class="num">-6.9%</td>
-          <td class="num">-3.4%</td>
-          <td class="num">-0.30 pp</td>
-          <td class="num">-0.44 pp</td>
+          <td class="num">-1.21 pp</td>
+        </tr><tr><td>RTDEX</td>
+          <td class="num">+26.1%</td>
+          <td class="num">-14.3%</td>
+          <td class="num">+39.1%</td>
+          <td class="num">+16.2%</td>
+          <td class="num">-0.47 pp</td>
         </tr><tr><td>SELVA DEX</td>
-          <td class="num">-52.0%</td>
-          <td class="num">-19.9%</td>
-          <td class="num">+17.7%</td>
-          <td class="num">-5.7%</td>
-          <td class="num">-55.1%</td>
-          <td class="num">-12.5%</td>
-          <td class="num">-31.9%</td>
-          <td class="num">-15.8%</td>
-          <td class="num">-0.39 pp</td>
-          <td class="num">+1.12 pp</td>
+          <td class="num">-1.0%</td>
+          <td class="num">+20.1%</td>
+          <td class="num">-24.7%</td>
+          <td class="num">+1.1%</td>
+          <td class="num">-1.04 pp</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div id="comp-int-diadia" data-g="comp-int" class="pn">
+      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA ★</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-ma" style="position:absolute;left:50%;width:27.3%;justify-content:center">+38.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:15.0%;justify-content:center">-21.1%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:30.9%;justify-content:center">+43.2%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:3.6%;justify-content:center">+5.0%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:21.6%;justify-content:center">+30.2%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">MADEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:23.6%;justify-content:center">+33.0%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:4.9%;justify-content:center">+6.8%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:50.0%;justify-content:center">+70.0%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:10.2%;justify-content:center">+14.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div></div>
+      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
+      <table style="margin-top:16px">
+        <thead><tr><th>Compañía</th>
+          <th class="num th-h">Venta neta/cliente, var %</th><th class="num th-v">Clientes, var %</th>
+          <th class="num th-t">Ticket/cliente, var %</th><th class="num th-h">Mix SKU, var %</th>
+          <th class="num th-v">GTN, Δ pp</th></tr></thead>
+        <tbody><tr class="rec"><td>MBA <span class="tag ma">PILOTO</span></td>
+          <td class="num">+38.3%</td>
+          <td class="num">+24.5%</td>
+          <td class="num">+20.5%</td>
+          <td class="num">+19.0%</td>
+          <td class="num">-0.68 pp</td>
+        </tr><tr><td>ALMA</td>
+          <td class="num">-21.1%</td>
+          <td class="num">+344.6%</td>
+          <td class="num">-57.9%</td>
+          <td class="num">+38.9%</td>
+          <td class="num">-4.10 pp</td>
+        </tr><tr><td>DEX APURIMAC</td>
+          <td class="num">+43.2%</td>
+          <td class="num">+60.5%</td>
+          <td class="num">+37.0%</td>
+          <td class="num">+14.4%</td>
+          <td class="num">-0.61 pp</td>
+        </tr><tr><td>DEX MINALI</td>
+          <td class="num">+5.0%</td>
+          <td class="num">+53.3%</td>
+          <td class="num">-4.2%</td>
+          <td class="num">+10.4%</td>
+          <td class="num">-1.51 pp</td>
+        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
+          <td class="num">+30.2%</td>
+          <td class="num">+4.7%</td>
+          <td class="num">+23.1%</td>
+          <td class="num">+22.3%</td>
+          <td class="num">-0.52 pp</td>
+        </tr><tr><td>MADEX</td>
+          <td class="num">+33.0%</td>
+          <td class="num">+19.0%</td>
+          <td class="num">+31.2%</td>
+          <td class="num">+22.5%</td>
+          <td class="num">+0.08 pp</td>
+        </tr><tr><td>ROSET</td>
+          <td class="num">+6.8%</td>
+          <td class="num">+22.0%</td>
+          <td class="num">-3.4%</td>
+          <td class="num">+3.1%</td>
+          <td class="num">-0.95 pp</td>
+        </tr><tr><td>RTDEX</td>
+          <td class="num">+70.0%</td>
+          <td class="num">+21.9%</td>
+          <td class="num">+42.8%</td>
+          <td class="num">+43.6%</td>
+          <td class="num">-0.47 pp</td>
+        </tr><tr><td>SELVA DEX</td>
+          <td class="num">+14.3%</td>
+          <td class="num">+23.6%</td>
+          <td class="num">-18.2%</td>
+          <td class="num">+10.4%</td>
+          <td class="num">-1.03 pp</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <div id="comp-int-nitro" data-g="comp-int" class="pn">
+      <div class="bars"><div class="bar-row"><div class="bar-lbl">MBA ★</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-ma" style="position:absolute;right:50%;width:50.0%;justify-content:center">-51.4%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ALMA</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:35.3%;justify-content:center">-36.3%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX APURIMAC</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:19.4%;justify-content:center">-20.0%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">DEX MINALI</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:25.9%;justify-content:center">-26.6%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">EXCLUSIVAS DEL SUR</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:28.8%;justify-content:center">-29.6%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">MADEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:16.2%;justify-content:center">-16.7%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">ROSET</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:11.1%;justify-content:center">+11.4%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">RTDEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;left:50%;width:1.6%;justify-content:center">+1.6%</div>
+          </div><div class="bar-tot">&nbsp;</div></div><div class="bar-row"><div class="bar-lbl">SELVA DEX</div>
+          <div class="bar-track" style="position:relative;background:#f3f0ea">
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#c9c3b8"></div>
+            <div class="bar-seg bar-def" style="position:absolute;right:50%;width:45.2%;justify-content:center">-46.4%</div>
+          </div><div class="bar-tot">&nbsp;</div></div></div>
+      <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>MBA (piloto)</span><span class="leg"><span class="dot" style="background:#c4bfb6"></span>Compañías de comparación</span></div>
+      <table style="margin-top:16px">
+        <thead><tr><th>Compañía</th>
+          <th class="num th-h">Venta neta/cliente, var %</th><th class="num th-v">Clientes, var %</th>
+          <th class="num th-t">Ticket/cliente, var %</th><th class="num th-h">Mix SKU, var %</th>
+          <th class="num th-v">GTN, Δ pp</th></tr></thead>
+        <tbody><tr class="rec"><td>MBA <span class="tag ma">PILOTO</span></td>
+          <td class="num">-51.4%</td>
+          <td class="num">-17.2%</td>
+          <td class="num">-47.7%</td>
+          <td class="num">-33.6%</td>
+          <td class="num">-2.58 pp</td>
+        </tr><tr><td>ALMA</td>
+          <td class="num">-36.3%</td>
+          <td class="num">-28.2%</td>
+          <td class="num">-32.8%</td>
+          <td class="num">-33.7%</td>
+          <td class="num">-0.54 pp</td>
+        </tr><tr><td>DEX APURIMAC</td>
+          <td class="num">-20.0%</td>
+          <td class="num">+5.0%</td>
+          <td class="num">-18.5%</td>
+          <td class="num">-18.4%</td>
+          <td class="num">-0.97 pp</td>
+        </tr><tr><td>DEX MINALI</td>
+          <td class="num">-26.6%</td>
+          <td class="num">-30.1%</td>
+          <td class="num">-23.2%</td>
+          <td class="num">-23.6%</td>
+          <td class="num">-0.91 pp</td>
+        </tr><tr><td>EXCLUSIVAS DEL SUR</td>
+          <td class="num">-29.6%</td>
+          <td class="num">+9.2%</td>
+          <td class="num">-17.2%</td>
+          <td class="num">-12.8%</td>
+          <td class="num">-0.94 pp</td>
+        </tr><tr><td>MADEX</td>
+          <td class="num">-16.7%</td>
+          <td class="num">+0.3%</td>
+          <td class="num">-17.6%</td>
+          <td class="num">-11.9%</td>
+          <td class="num">-0.90 pp</td>
+        </tr><tr><td>ROSET</td>
+          <td class="num">+11.4%</td>
+          <td class="num">-7.8%</td>
+          <td class="num">+8.4%</td>
+          <td class="num">+15.9%</td>
+          <td class="num">-1.46 pp</td>
+        </tr><tr><td>RTDEX</td>
+          <td class="num">+1.6%</td>
+          <td class="num">-25.6%</td>
+          <td class="num">+14.3%</td>
+          <td class="num">-8.4%</td>
+          <td class="num">-0.36 pp</td>
+        </tr><tr><td>SELVA DEX</td>
+          <td class="num">-46.4%</td>
+          <td class="num">+13.9%</td>
+          <td class="num">-54.2%</td>
+          <td class="num">-32.0%</td>
+          <td class="num">-0.49 pp</td>
         </tr></tbody>
       </table>
     </div>
 
     <div class="tbl-note" style="margin-top:12px">
-      ALMA crece +16.5% en venta neta pre/post y +16.9% interanual <b>sin ningún recorte de promociones</b> — más que MBA en ambas ventanas (+8.3% y +9.7%). Eso no invalida el piloto, pero significa que parte del crecimiento de MBA es tendencia de mercado. Por canal, la lectura es consistente con el objetivo: en diadia MBA es la que más crece pre/post (+28.2%) y en nitro la que más cae (-42.0%).
+      ALMA crece +9.8% en venta neta pre/post y +11.6% interanual <b>sin ningún recorte de promociones</b> — más que MBA en ambas ventanas (+5.3% y +8.8%). Eso no invalida el piloto, pero significa que parte del crecimiento de MBA es tendencia de mercado. Por canal, la lectura es consistente con el objetivo: en diadia MBA es la que más crece pre/post (+25.0%) y en nitro la que más cae (-43.8%).
     </div>
+  </div>
+</div></div>
+
+  </div>
+
+  <div id="p-ant" data-g="main" class="pn mpn">
+  <div class="sec-label">MBA · Perfiles de canal en agosto → setiembre</div>
+
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">Lectura rápida · agosto → setiembre 2026 · cambio en S/ del mes</div>
+      <div class="tbl-title">La venta y la inversión se trasladaron del canal nitro al canal diadia</div>
+    </div></div>
+    <div class="dv-note">Con todos los clientes de agosto, la venta neta salió del canal nitro (−S/ 546 mil) y entró al canal diadia (+S/ 549 mil): neto +S/ 2.4 mil. La inversión se movió igual: nitro −S/ 21.2 mil, diadia +S/ 20.8 mil, neto −S/ 0.4 mil.</div>
+    <div class="twocol">
+<div class="dv"><div class="dv-ttl">Venta neta · cambio agosto → setiembre</div><div class="dv-grp"><span>Todos los clientes de agosto</span><span class="dv-net">neto +S/ 2.4 mil</span></div><div class="dv-row" title="Todos los clientes de agosto · Canal nitro: S/ 987,850 → S/ 441,646 (−S/ 546 mil; -55.3%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:49.8%"></div></div><div class="dv-val">−S/ 546 mil</div></div><div class="dv-row" title="Todos los clientes de agosto · Canal diadia: S/ 1,974,697 → S/ 2,523,280 (+S/ 549 mil; +27.8%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:50.0%"></div></div><div class="dv-val">+S/ 549 mil</div></div><div class="dv-grp"><span>Cliente solo nitro</span><span class="dv-net">neto +S/ 46.7 mil</span></div><div class="dv-row" title="Cliente solo nitro · Canal nitro: S/ 331,029 → S/ 232,327 (−S/ 98.7 mil; -29.8%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:9.0%"></div></div><div class="dv-val">−S/ 98.7 mil</div></div><div class="dv-row" title="Cliente solo nitro · Canal diadia: S/ 0 → S/ 145,356 (+S/ 145 mil; sin ventas en agosto en este canal)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:13.2%"></div></div><div class="dv-val">+S/ 145 mil</div></div><div class="dv-grp"><span>Cliente solo diadia</span><span class="dv-net">neto +S/ 57.0 mil</span></div><div class="dv-row" title="Cliente solo diadia · Canal nitro: S/ 0 → S/ 6,026 (+S/ 6.0 mil; sin ventas en agosto en este canal)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:0.5%"></div></div><div class="dv-val">+S/ 6.0 mil</div></div><div class="dv-row" title="Cliente solo diadia · Canal diadia: S/ 695,547 → S/ 746,538 (+S/ 51.0 mil; +7.3%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:4.6%"></div></div><div class="dv-val">+S/ 51.0 mil</div></div><div class="dv-grp"><span>Cliente mixto (nitro + diadia)</span><span class="dv-net">neto −S/ 101 mil</span></div><div class="dv-row" title="Cliente mixto (nitro + diadia) · Canal nitro: S/ 656,820 → S/ 203,293 (−S/ 454 mil; -69.0%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:41.3%"></div></div><div class="dv-val">−S/ 454 mil</div></div><div class="dv-row" title="Cliente mixto (nitro + diadia) · Canal diadia: S/ 1,279,150 → S/ 1,631,386 (+S/ 352 mil; +27.5%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:32.1%"></div></div><div class="dv-val">+S/ 352 mil</div></div></div>
+<div class="dv"><div class="dv-ttl">Inversión · cambio agosto → setiembre</div><div class="dv-grp"><span>Todos los clientes de agosto</span><span class="dv-net">neto −S/ 0.4 mil</span></div><div class="dv-row" title="Todos los clientes de agosto · Canal nitro: S/ 29,777 → S/ 8,596 (−S/ 21.2 mil; -71.1%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:50.0%"></div></div><div class="dv-val">−S/ 21.2 mil</div></div><div class="dv-row" title="Todos los clientes de agosto · Canal diadia: S/ 57,187 → S/ 77,964 (+S/ 20.8 mil; +36.3%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:49.0%"></div></div><div class="dv-val">+S/ 20.8 mil</div></div><div class="dv-grp"><span>Cliente solo nitro</span><span class="dv-net">neto +S/ 0.2 mil</span></div><div class="dv-row" title="Cliente solo nitro · Canal nitro: S/ 7,829 → S/ 3,289 (−S/ 4.5 mil; -58.0%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:10.7%"></div></div><div class="dv-val">−S/ 4.5 mil</div></div><div class="dv-row" title="Cliente solo nitro · Canal diadia: S/ 0 → S/ 4,732 (+S/ 4.7 mil; sin ventas en agosto en este canal)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:11.2%"></div></div><div class="dv-val">+S/ 4.7 mil</div></div><div class="dv-grp"><span>Cliente solo diadia</span><span class="dv-net">neto +S/ 3.8 mil</span></div><div class="dv-row" title="Cliente solo diadia · Canal nitro: S/ 0 → S/ 876 (+S/ 0.9 mil; sin ventas en agosto en este canal)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:2.1%"></div></div><div class="dv-val">+S/ 0.9 mil</div></div><div class="dv-row" title="Cliente solo diadia · Canal diadia: S/ 20,168 → S/ 23,091 (+S/ 2.9 mil; +14.5%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:6.9%"></div></div><div class="dv-val">+S/ 2.9 mil</div></div><div class="dv-grp"><span>Cliente mixto (nitro + diadia)</span><span class="dv-net">neto −S/ 4.4 mil</span></div><div class="dv-row" title="Cliente mixto (nitro + diadia) · Canal nitro: S/ 21,948 → S/ 4,431 (−S/ 17.5 mil; -79.8%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:41.4%"></div></div><div class="dv-val">−S/ 17.5 mil</div></div><div class="dv-row" title="Cliente mixto (nitro + diadia) · Canal diadia: S/ 37,018 → S/ 50,141 (+S/ 13.1 mil; +35.4%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:31.0%"></div></div><div class="dv-val">+S/ 13.1 mil</div></div></div>
+    </div>
+    <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>Sube (barra a la derecha)</span><span class="leg"><span class="dot" style="background:var(--coral)"></span>Baja (barra a la izquierda)</span></div>
+    <div class="tbl-note" style="margin-top:8px">Cada gráfico tiene su propia escala. Pase el cursor sobre una barra para ver agosto → setiembre y la variación %; el detalle completo está en las tablas de abajo.</div>
+  </div>
+
+  <div class="sec-label">MBA · Lectura rápida por boca de salida y segmento</div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">Lectura rápida · agosto → setiembre 2026 · cambio en S/ del mes · sin «Por definir»</div>
+      <div class="tbl-title">El traslado del canal nitro al canal diadia, por boca de salida y segmento</div>
+    </div></div>
+    <div class="stabs">
+      <button class="st on" data-g="lr" onclick="sw(event,'lr','lr-BO')">BOCA BO</button>
+      <button class="st" data-g="lr" onclick="sw(event,'lr','lr-MM')">BOCA MM</button>
+      <button class="st" data-g="lr" onclick="sw(event,'lr','lr-PM')">BOCA PM</button>
+    </div>
+<div id="lr-BO" data-g="lr" class="pn on">
+<div class="dv-note">Boca BO: la venta neta cambió −S/ 385 mil en el canal nitro y +S/ 434 mil en el canal diadia (neto +S/ 49.7 mil); la inversión −S/ 15.6 mil en nitro y +S/ 17.5 mil en diadia (neto +S/ 1.9 mil).</div>
+<div class="twocol">
+<div class="dv"><div class="dv-ttl">Venta neta · cambio agosto → setiembre</div><div class="dv-grp"><span>Total 4 segmentos · 5,102 clientes</span><span class="dv-net">neto +S/ 49.7 mil</span></div><div class="dv-row" title="Total 4 segmentos · 5,102 clientes · Canal nitro: S/ 749,229 → S/ 364,598 (−S/ 385 mil; -51.3%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:44.3%"></div></div><div class="dv-val">−S/ 385 mil</div></div><div class="dv-row" title="Total 4 segmentos · 5,102 clientes · Canal diadia: S/ 1,603,135 → S/ 2,037,469 (+S/ 434 mil; +27.1%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:50.0%"></div></div><div class="dv-val">+S/ 434 mil</div></div><div class="dv-grp"><span>1 Oro+ · 176 clientes</span><span class="dv-net">neto +S/ 26.0 mil</span></div><div class="dv-row" title="1 Oro+ · 176 clientes · Canal nitro: S/ 218,340 → S/ 109,970 (−S/ 108 mil; -49.6%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:12.5%"></div></div><div class="dv-val">−S/ 108 mil</div></div><div class="dv-row" title="1 Oro+ · 176 clientes · Canal diadia: S/ 244,734 → S/ 379,085 (+S/ 134 mil; +54.9%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:15.5%"></div></div><div class="dv-val">+S/ 134 mil</div></div><div class="dv-grp"><span>2 Oro · 521 clientes</span><span class="dv-net">neto +S/ 37.1 mil</span></div><div class="dv-row" title="2 Oro · 521 clientes · Canal nitro: S/ 207,518 → S/ 96,592 (−S/ 111 mil; -53.5%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:12.8%"></div></div><div class="dv-val">−S/ 111 mil</div></div><div class="dv-row" title="2 Oro · 521 clientes · Canal diadia: S/ 355,929 → S/ 503,924 (+S/ 148 mil; +41.6%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:17.0%"></div></div><div class="dv-val">+S/ 148 mil</div></div><div class="dv-grp"><span>3 Plata · 1,074 clientes</span><span class="dv-net">neto −S/ 8.1 mil</span></div><div class="dv-row" title="3 Plata · 1,074 clientes · Canal nitro: S/ 181,553 → S/ 82,624 (−S/ 98.9 mil; -54.5%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:11.4%"></div></div><div class="dv-val">−S/ 98.9 mil</div></div><div class="dv-row" title="3 Plata · 1,074 clientes · Canal diadia: S/ 435,588 → S/ 526,374 (+S/ 90.8 mil; +20.8%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:10.5%"></div></div><div class="dv-val">+S/ 90.8 mil</div></div><div class="dv-grp"><span>4 Bronce · 3,331 clientes</span><span class="dv-net">neto −S/ 5.2 mil</span></div><div class="dv-row" title="4 Bronce · 3,331 clientes · Canal nitro: S/ 141,819 → S/ 75,411 (−S/ 66.4 mil; -46.8%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:7.6%"></div></div><div class="dv-val">−S/ 66.4 mil</div></div><div class="dv-row" title="4 Bronce · 3,331 clientes · Canal diadia: S/ 566,884 → S/ 628,086 (+S/ 61.2 mil; +10.8%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:7.0%"></div></div><div class="dv-val">+S/ 61.2 mil</div></div></div>
+<div class="dv"><div class="dv-ttl">Inversión · cambio agosto → setiembre</div><div class="dv-grp"><span>Total 4 segmentos · 5,102 clientes</span><span class="dv-net">neto +S/ 1.9 mil</span></div><div class="dv-row" title="Total 4 segmentos · 5,102 clientes · Canal nitro: S/ 22,681 → S/ 7,040 (−S/ 15.6 mil; -69.0%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:44.6%"></div></div><div class="dv-val">−S/ 15.6 mil</div></div><div class="dv-row" title="Total 4 segmentos · 5,102 clientes · Canal diadia: S/ 45,302 → S/ 62,819 (+S/ 17.5 mil; +38.7%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:50.0%"></div></div><div class="dv-val">+S/ 17.5 mil</div></div><div class="dv-grp"><span>1 Oro+ · 176 clientes</span><span class="dv-net">neto −S/ 0.3 mil</span></div><div class="dv-row" title="1 Oro+ · 176 clientes · Canal nitro: S/ 8,102 → S/ 2,584 (−S/ 5.5 mil; -68.1%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:15.8%"></div></div><div class="dv-val">−S/ 5.5 mil</div></div><div class="dv-row" title="1 Oro+ · 176 clientes · Canal diadia: S/ 10,365 → S/ 15,568 (+S/ 5.2 mil; +50.2%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:14.9%"></div></div><div class="dv-val">+S/ 5.2 mil</div></div><div class="dv-grp"><span>2 Oro · 521 clientes</span><span class="dv-net">neto −S/ 0.2 mil</span></div><div class="dv-row" title="2 Oro · 521 clientes · Canal nitro: S/ 7,067 → S/ 2,004 (−S/ 5.1 mil; -71.6%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:14.5%"></div></div><div class="dv-val">−S/ 5.1 mil</div></div><div class="dv-row" title="2 Oro · 521 clientes · Canal diadia: S/ 12,097 → S/ 16,972 (+S/ 4.9 mil; +40.3%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:13.9%"></div></div><div class="dv-val">+S/ 4.9 mil</div></div><div class="dv-grp"><span>3 Plata · 1,074 clientes</span><span class="dv-net">neto −S/ 0.5 mil</span></div><div class="dv-row" title="3 Plata · 1,074 clientes · Canal nitro: S/ 4,698 → S/ 1,379 (−S/ 3.3 mil; -70.6%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:9.5%"></div></div><div class="dv-val">−S/ 3.3 mil</div></div><div class="dv-row" title="3 Plata · 1,074 clientes · Canal diadia: S/ 11,278 → S/ 14,068 (+S/ 2.8 mil; +24.7%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:8.0%"></div></div><div class="dv-val">+S/ 2.8 mil</div></div><div class="dv-grp"><span>4 Bronce · 3,331 clientes</span><span class="dv-net">neto +S/ 2.9 mil</span></div><div class="dv-row" title="4 Bronce · 3,331 clientes · Canal nitro: S/ 2,815 → S/ 1,074 (−S/ 1.7 mil; -61.9%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:5.0%"></div></div><div class="dv-val">−S/ 1.7 mil</div></div><div class="dv-row" title="4 Bronce · 3,331 clientes · Canal diadia: S/ 11,563 → S/ 16,210 (+S/ 4.6 mil; +40.2%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:13.3%"></div></div><div class="dv-val">+S/ 4.6 mil</div></div></div>
+</div></div>
+<div id="lr-MM" data-g="lr" class="pn">
+<div class="dv-note">Boca MM: la venta neta cambió −S/ 51.7 mil en el canal nitro y +S/ 40.2 mil en el canal diadia (neto −S/ 11.5 mil); la inversión −S/ 1.4 mil en nitro y +S/ 1.1 mil en diadia (neto −S/ 0.3 mil).</div>
+<div class="twocol">
+<div class="dv"><div class="dv-ttl">Venta neta · cambio agosto → setiembre</div><div class="dv-grp"><span>Total 4 segmentos · 104 clientes</span><span class="dv-net">neto −S/ 11.5 mil</span></div><div class="dv-row" title="Total 4 segmentos · 104 clientes · Canal nitro: S/ 63,310 → S/ 11,593 (−S/ 51.7 mil; -81.7%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:50.0%"></div></div><div class="dv-val">−S/ 51.7 mil</div></div><div class="dv-row" title="Total 4 segmentos · 104 clientes · Canal diadia: S/ 92,903 → S/ 133,097 (+S/ 40.2 mil; +43.3%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:38.9%"></div></div><div class="dv-val">+S/ 40.2 mil</div></div><div class="dv-grp"><span>1 Oro+ · 31 clientes</span><span class="dv-net">neto −S/ 7.1 mil</span></div><div class="dv-row" title="1 Oro+ · 31 clientes · Canal nitro: S/ 43,356 → S/ 6,723 (−S/ 36.6 mil; -84.5%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:35.4%"></div></div><div class="dv-val">−S/ 36.6 mil</div></div><div class="dv-row" title="1 Oro+ · 31 clientes · Canal diadia: S/ 49,636 → S/ 79,157 (+S/ 29.5 mil; +59.5%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:28.5%"></div></div><div class="dv-val">+S/ 29.5 mil</div></div><div class="dv-grp"><span>2 Oro · 25 clientes</span><span class="dv-net">neto −S/ 1.8 mil</span></div><div class="dv-row" title="2 Oro · 25 clientes · Canal nitro: S/ 13,187 → S/ 2,950 (−S/ 10.2 mil; -77.6%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:9.9%"></div></div><div class="dv-val">−S/ 10.2 mil</div></div><div class="dv-row" title="2 Oro · 25 clientes · Canal diadia: S/ 23,391 → S/ 31,842 (+S/ 8.5 mil; +36.1%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:8.2%"></div></div><div class="dv-val">+S/ 8.5 mil</div></div><div class="dv-grp"><span>3 Plata · 26 clientes</span><span class="dv-net">neto −S/ 1.4 mil</span></div><div class="dv-row" title="3 Plata · 26 clientes · Canal nitro: S/ 5,934 → S/ 1,390 (−S/ 4.5 mil; -76.6%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:4.4%"></div></div><div class="dv-val">−S/ 4.5 mil</div></div><div class="dv-row" title="3 Plata · 26 clientes · Canal diadia: S/ 12,326 → S/ 15,453 (+S/ 3.1 mil; +25.4%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:3.0%"></div></div><div class="dv-val">+S/ 3.1 mil</div></div><div class="dv-grp"><span>4 Bronce · 22 clientes</span><span class="dv-net">neto −S/ 1.2 mil</span></div><div class="dv-row" title="4 Bronce · 22 clientes · Canal nitro: S/ 834 → S/ 531 (−S/ 0.3 mil; -36.4%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:0.3%"></div></div><div class="dv-val">−S/ 0.3 mil</div></div><div class="dv-row" title="4 Bronce · 22 clientes · Canal diadia: S/ 7,550 → S/ 6,644 (−S/ 0.9 mil; -12.0%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:0.9%"></div></div><div class="dv-val">−S/ 0.9 mil</div></div></div>
+<div class="dv"><div class="dv-ttl">Inversión · cambio agosto → setiembre</div><div class="dv-grp"><span>Total 4 segmentos · 104 clientes</span><span class="dv-net">neto −S/ 0.3 mil</span></div><div class="dv-row" title="Total 4 segmentos · 104 clientes · Canal nitro: S/ 1,620 → S/ 196 (−S/ 1.4 mil; -87.9%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:50.0%"></div></div><div class="dv-val">−S/ 1.4 mil</div></div><div class="dv-row" title="Total 4 segmentos · 104 clientes · Canal diadia: S/ 3,172 → S/ 4,263 (+S/ 1.1 mil; +34.4%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:38.3%"></div></div><div class="dv-val">+S/ 1.1 mil</div></div><div class="dv-grp"><span>1 Oro+ · 31 clientes</span><span class="dv-net">neto −S/ 0.3 mil</span></div><div class="dv-row" title="1 Oro+ · 31 clientes · Canal nitro: S/ 1,160 → S/ 94 (−S/ 1.1 mil; -91.9%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:37.4%"></div></div><div class="dv-val">−S/ 1.1 mil</div></div><div class="dv-row" title="1 Oro+ · 31 clientes · Canal diadia: S/ 2,045 → S/ 2,800 (+S/ 0.8 mil; +36.9%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:26.5%"></div></div><div class="dv-val">+S/ 0.8 mil</div></div><div class="dv-grp"><span>2 Oro · 25 clientes</span><span class="dv-net">neto −S/ 0.1 mil</span></div><div class="dv-row" title="2 Oro · 25 clientes · Canal nitro: S/ 308 → S/ 58 (−S/ 0.3 mil; -81.2%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:8.8%"></div></div><div class="dv-val">−S/ 0.3 mil</div></div><div class="dv-row" title="2 Oro · 25 clientes · Canal diadia: S/ 701 → S/ 867 (+S/ 0.2 mil; +23.6%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:5.8%"></div></div><div class="dv-val">+S/ 0.2 mil</div></div><div class="dv-grp"><span>3 Plata · 26 clientes</span><span class="dv-net">neto +S/ 0.1 mil</span></div><div class="dv-row" title="3 Plata · 26 clientes · Canal nitro: S/ 132 → S/ 42 (−S/ 0.1 mil; -68.5%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:3.2%"></div></div><div class="dv-val">−S/ 0.1 mil</div></div><div class="dv-row" title="3 Plata · 26 clientes · Canal diadia: S/ 263 → S/ 436 (+S/ 0.2 mil; +65.5%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:6.1%"></div></div><div class="dv-val">+S/ 0.2 mil</div></div><div class="dv-grp"><span>4 Bronce · 22 clientes</span><span class="dv-net">neto −S/ 0.0 mil</span></div><div class="dv-row" title="4 Bronce · 22 clientes · Canal nitro: S/ 19 → S/ 2 (−S/ 0.0 mil; -90.2%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:0.6%"></div></div><div class="dv-val">−S/ 0.0 mil</div></div><div class="dv-row" title="4 Bronce · 22 clientes · Canal diadia: S/ 163 → S/ 161 (−S/ 0.0 mil; -0.9%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:0.1%"></div></div><div class="dv-val">−S/ 0.0 mil</div></div></div>
+</div></div>
+<div id="lr-PM" data-g="lr" class="pn">
+<div class="dv-note">Boca PM: la venta neta cambió −S/ 83.0 mil en el canal nitro y +S/ 61.1 mil en el canal diadia (neto −S/ 21.9 mil); la inversión −S/ 3.2 mil en nitro y +S/ 1.7 mil en diadia (neto −S/ 1.6 mil).</div>
+<div class="twocol">
+<div class="dv"><div class="dv-ttl">Venta neta · cambio agosto → setiembre</div><div class="dv-grp"><span>Total 4 segmentos · 409 clientes</span><span class="dv-net">neto −S/ 21.9 mil</span></div><div class="dv-row" title="Total 4 segmentos · 409 clientes · Canal nitro: S/ 127,851 → S/ 44,873 (−S/ 83.0 mil; -64.9%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:50.0%"></div></div><div class="dv-val">−S/ 83.0 mil</div></div><div class="dv-row" title="Total 4 segmentos · 409 clientes · Canal diadia: S/ 210,566 → S/ 271,623 (+S/ 61.1 mil; +29.0%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:36.8%"></div></div><div class="dv-val">+S/ 61.1 mil</div></div><div class="dv-grp"><span>1 Oro+ · 18 clientes</span><span class="dv-net">neto −S/ 7.7 mil</span></div><div class="dv-row" title="1 Oro+ · 18 clientes · Canal nitro: S/ 42,200 → S/ 5,246 (−S/ 37.0 mil; -87.6%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:22.3%"></div></div><div class="dv-val">−S/ 37.0 mil</div></div><div class="dv-row" title="1 Oro+ · 18 clientes · Canal diadia: S/ 38,933 → S/ 68,219 (+S/ 29.3 mil; +75.2%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:17.6%"></div></div><div class="dv-val">+S/ 29.3 mil</div></div><div class="dv-grp"><span>2 Oro · 37 clientes</span><span class="dv-net">neto −S/ 7.3 mil</span></div><div class="dv-row" title="2 Oro · 37 clientes · Canal nitro: S/ 40,432 → S/ 13,505 (−S/ 26.9 mil; -66.6%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:16.2%"></div></div><div class="dv-val">−S/ 26.9 mil</div></div><div class="dv-row" title="2 Oro · 37 clientes · Canal diadia: S/ 41,393 → S/ 61,015 (+S/ 19.6 mil; +47.4%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:11.8%"></div></div><div class="dv-val">+S/ 19.6 mil</div></div><div class="dv-grp"><span>3 Plata · 77 clientes</span><span class="dv-net">neto −S/ 1.9 mil</span></div><div class="dv-row" title="3 Plata · 77 clientes · Canal nitro: S/ 27,011 → S/ 14,600 (−S/ 12.4 mil; -45.9%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:7.5%"></div></div><div class="dv-val">−S/ 12.4 mil</div></div><div class="dv-row" title="3 Plata · 77 clientes · Canal diadia: S/ 55,340 → S/ 65,832 (+S/ 10.5 mil; +19.0%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:6.3%"></div></div><div class="dv-val">+S/ 10.5 mil</div></div><div class="dv-grp"><span>4 Bronce · 277 clientes</span><span class="dv-net">neto −S/ 5.0 mil</span></div><div class="dv-row" title="4 Bronce · 277 clientes · Canal nitro: S/ 18,208 → S/ 11,522 (−S/ 6.7 mil; -36.7%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:4.0%"></div></div><div class="dv-val">−S/ 6.7 mil</div></div><div class="dv-row" title="4 Bronce · 277 clientes · Canal diadia: S/ 74,900 → S/ 76,557 (+S/ 1.7 mil; +2.2%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:1.0%"></div></div><div class="dv-val">+S/ 1.7 mil</div></div></div>
+<div class="dv"><div class="dv-ttl">Inversión · cambio agosto → setiembre</div><div class="dv-grp"><span>Total 4 segmentos · 409 clientes</span><span class="dv-net">neto −S/ 1.6 mil</span></div><div class="dv-row" title="Total 4 segmentos · 409 clientes · Canal nitro: S/ 4,035 → S/ 798 (−S/ 3.2 mil; -80.2%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:50.0%"></div></div><div class="dv-val">−S/ 3.2 mil</div></div><div class="dv-row" title="Total 4 segmentos · 409 clientes · Canal diadia: S/ 6,903 → S/ 8,581 (+S/ 1.7 mil; +24.3%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:25.9%"></div></div><div class="dv-val">+S/ 1.7 mil</div></div><div class="dv-grp"><span>1 Oro+ · 18 clientes</span><span class="dv-net">neto −S/ 0.4 mil</span></div><div class="dv-row" title="1 Oro+ · 18 clientes · Canal nitro: S/ 1,328 → S/ 128 (−S/ 1.2 mil; -90.4%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:18.5%"></div></div><div class="dv-val">−S/ 1.2 mil</div></div><div class="dv-row" title="1 Oro+ · 18 clientes · Canal diadia: S/ 1,728 → S/ 2,552 (+S/ 0.8 mil; +47.7%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:12.7%"></div></div><div class="dv-val">+S/ 0.8 mil</div></div><div class="dv-grp"><span>2 Oro · 37 clientes</span><span class="dv-net">neto −S/ 0.7 mil</span></div><div class="dv-row" title="2 Oro · 37 clientes · Canal nitro: S/ 1,297 → S/ 305 (−S/ 1.0 mil; -76.5%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:15.3%"></div></div><div class="dv-val">−S/ 1.0 mil</div></div><div class="dv-row" title="2 Oro · 37 clientes · Canal diadia: S/ 1,670 → S/ 1,999 (+S/ 0.3 mil; +19.7%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:5.1%"></div></div><div class="dv-val">+S/ 0.3 mil</div></div><div class="dv-grp"><span>3 Plata · 77 clientes</span><span class="dv-net">neto −S/ 0.3 mil</span></div><div class="dv-row" title="3 Plata · 77 clientes · Canal nitro: S/ 788 → S/ 223 (−S/ 0.6 mil; -71.8%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:8.7%"></div></div><div class="dv-val">−S/ 0.6 mil</div></div><div class="dv-row" title="3 Plata · 77 clientes · Canal diadia: S/ 1,504 → S/ 1,751 (+S/ 0.2 mil; +16.4%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:3.8%"></div></div><div class="dv-val">+S/ 0.2 mil</div></div><div class="dv-grp"><span>4 Bronce · 277 clientes</span><span class="dv-net">neto −S/ 0.2 mil</span></div><div class="dv-row" title="4 Bronce · 277 clientes · Canal nitro: S/ 623 → S/ 143 (−S/ 0.5 mil; -77.1%)"><div class="dv-lbl">Canal nitro</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-neg" style="width:7.4%"></div></div><div class="dv-val">−S/ 0.5 mil</div></div><div class="dv-row" title="4 Bronce · 277 clientes · Canal diadia: S/ 2,001 → S/ 2,279 (+S/ 0.3 mil; +13.9%)"><div class="dv-lbl">Canal diadia</div><div class="dv-track"><div class="dv-zero"></div><div class="dv-bar dv-pos" style="width:4.3%"></div></div><div class="dv-val">+S/ 0.3 mil</div></div></div>
+</div></div>
+
+    <div class="legend"><span class="leg"><span class="dot" style="background:var(--teal)"></span>Sube (barra a la derecha)</span><span class="leg"><span class="dot" style="background:var(--coral)"></span>Baja (barra a la izquierda)</span></div>
+    <div class="tbl-note" style="margin-top:8px">Clientes de MBA que compraron en agosto, por boca de salida y segmento transaccional (1 Oro+, 2 Oro, 3 Plata, 4 Bronce); se excluye «Por definir». Solo se abren las bocas con clientes en los 4 segmentos (BO, MM, PM); las demás bocas son muy chicas o solo tienen «Por definir». Cada gráfico tiene su propia escala. Pase el cursor sobre una barra para ver agosto → setiembre y la variación %.</div>
+  </div>
+  <div class="tbl-card">
+    <div class="tbl-hd"><div>
+      <div class="tbl-kicker">Detalle por perfil · clientes según el canal en que compraron en agosto</div>
+      <div class="tbl-title">Detalle por perfil del cliente: clientes activos, retención, venta, inversión, GTN, ticket, mix SKU y volumen</div>
+    </div></div>
+    <div class="stabs">
+      <button class="st on" data-g="cmp" onclick="sw(event,'cmp','cmp-todos')">TODOS LOS CLIENTES</button>
+      <button class="st" data-g="cmp" onclick="sw(event,'cmp','cmp-solo_nitro')">CLIENTE SOLO NITRO</button>
+      <button class="st" data-g="cmp" onclick="sw(event,'cmp','cmp-solo_diadia')">CLIENTE SOLO DIADIA</button>
+      <button class="st" data-g="cmp" onclick="sw(event,'cmp','cmp-mixtos')">CLIENTE MIXTO</button>
+    </div>
+<div id="cmp-todos" data-g="cmp" class="pn on">
+<div class="tbl-kicker" style="margin:10px 0 6px">Todos los clientes de agosto · 5,934 clientes de MBA en agosto · agosto 2026 → setiembre 2026</div>
+<div class="scroll-x"><table>
+<thead><tr><th rowspan="2">Métrica</th><th class="grp g-hist" colspan="3">Total ambos canales (diadia + nitro)</th><th class="grp g-tpo" colspan="3">Canal diadia</th><th class="grp g-vi" colspan="3">Canal nitro</th></tr>
+<tr><th class="num th-h">Ago</th><th class="num th-h">Set</th><th class="num th-h">Var</th><th class="num th-t">Ago</th><th class="num th-t">Set</th><th class="num th-t">Var</th><th class="num th-v">Ago</th><th class="num th-v">Set</th><th class="num th-v">Var</th></tr></thead>
+<tbody>
+<tr><td>Clientes activos<span class="unidad">clientes del perfil que compran en el mes</span></td><td class="num">5,934</td><td class="num">5,616</td><td class="num"><span class="r-neg">-5.4%</span></td><td class="num">4,926</td><td class="num">4,940</td><td class="num"><span class="r-pos">+0.3%</span></td><td class="num">3,891</td><td class="num">3,051</td><td class="num"><span class="r-neg">-21.6%</span></td></tr>
+<tr><td>Retención<span class="unidad">% de los clientes del perfil que compran en el mes</span></td><td class="num">100.0%</td><td class="num">94.6%</td><td class="num"><span class="r-neg">-5.36 pp</span></td><td class="num">83.0%</td><td class="num">83.2%</td><td class="num"><span class="r-pos">+0.24 pp</span></td><td class="num">65.6%</td><td class="num">51.4%</td><td class="num"><span class="r-neg">-14.16 pp</span></td></tr>
+<tr><td>Venta neta<span class="unidad">S/ del mes</span></td><td class="num">S/ 2,962,546</td><td class="num">S/ 2,964,926</td><td class="num"><span class="r-pos">+0.1%</span></td><td class="num">S/ 1,974,697</td><td class="num">S/ 2,523,280</td><td class="num"><span class="r-pos">+27.8%</span></td><td class="num">S/ 987,850</td><td class="num">S/ 441,646</td><td class="num"><span class="r-neg">-55.3%</span></td></tr>
+<tr><td>Inversión<span class="unidad">S/ del mes</span></td><td class="num">S/ 86,964</td><td class="num">S/ 86,560</td><td class="num">-0.5%</td><td class="num">S/ 57,187</td><td class="num">S/ 77,964</td><td class="num">+36.3%</td><td class="num">S/ 29,777</td><td class="num">S/ 8,596</td><td class="num">-71.1%</td></tr>
+<tr><td>GTN<span class="unidad">inversión / venta neta</span></td><td class="num">2.94%</td><td class="num">2.92%</td><td class="num"><span class="r-pos">-0.02 pp</span></td><td class="num">2.90%</td><td class="num">3.09%</td><td class="num"><span class="r-neg">+0.19 pp</span></td><td class="num">3.01%</td><td class="num">1.95%</td><td class="num"><span class="r-pos">-1.07 pp</span></td></tr>
+<tr><td>Ticket<span class="unidad">S/ por pedido, por cliente activo</span></td><td class="num">S/ 154</td><td class="num">S/ 165</td><td class="num"><span class="r-pos">+7.0%</span></td><td class="num">S/ 157</td><td class="num">S/ 188</td><td class="num"><span class="r-pos">+19.5%</span></td><td class="num">S/ 128</td><td class="num">S/ 77</td><td class="num"><span class="r-neg">-40.1%</span></td></tr>
+<tr><td>Mix SKU<span class="unidad">SKUs distintos por cliente activo</span></td><td class="num">18.2</td><td class="num">18.9</td><td class="num"><span class="r-pos">+3.8%</span></td><td class="num">17.4</td><td class="num">19.3</td><td class="num"><span class="r-pos">+11.2%</span></td><td class="num">10.4</td><td class="num">7.8</td><td class="num"><span class="r-neg">-24.8%</span></td></tr>
+<tr><td>Volumen<span class="unidad">kg del mes</span></td><td class="num">322,551</td><td class="num">319,022</td><td class="num"><span class="r-neg">-1.1%</span></td><td class="num">211,281</td><td class="num">270,490</td><td class="num"><span class="r-pos">+28.0%</span></td><td class="num">111,269</td><td class="num">48,532</td><td class="num"><span class="r-neg">-56.4%</span></td></tr>
+</tbody></table></div>
+</div>
+<div id="cmp-solo_nitro" data-g="cmp" class="pn">
+<div class="tbl-kicker" style="margin:10px 0 6px">Cliente solo nitro · 1,008 clientes de MBA en agosto · agosto 2026 → setiembre 2026</div>
+<div class="scroll-x"><table>
+<thead><tr><th rowspan="2">Métrica</th><th class="grp g-hist" colspan="3">Total ambos canales (diadia + nitro)</th><th class="grp g-tpo" colspan="3">Canal diadia</th><th class="grp g-vi" colspan="3">Canal nitro</th></tr>
+<tr><th class="num th-h">Ago</th><th class="num th-h">Set</th><th class="num th-h">Var</th><th class="num th-t">Ago</th><th class="num th-t">Set</th><th class="num th-t">Var</th><th class="num th-v">Ago</th><th class="num th-v">Set</th><th class="num th-v">Var</th></tr></thead>
+<tbody>
+<tr><td>Clientes activos<span class="unidad">clientes del perfil que compran en el mes</span></td><td class="num">1,008</td><td class="num">900</td><td class="num"><span class="r-neg">-10.7%</span></td><td class="num">0</td><td class="num">392</td><td class="num"><span class="muted-v">—</span></td><td class="num">1,008</td><td class="num">737</td><td class="num"><span class="r-neg">-26.9%</span></td></tr>
+<tr><td>Retención<span class="unidad">% de los clientes del perfil que compran en el mes</span></td><td class="num">100.0%</td><td class="num">89.3%</td><td class="num"><span class="r-neg">-10.71 pp</span></td><td class="num">0.0%</td><td class="num">38.9%</td><td class="num"><span class="r-pos">+38.89 pp</span></td><td class="num">100.0%</td><td class="num">73.1%</td><td class="num"><span class="r-neg">-26.88 pp</span></td></tr>
+<tr><td>Venta neta<span class="unidad">S/ del mes</span></td><td class="num">S/ 331,029</td><td class="num">S/ 377,683</td><td class="num"><span class="r-pos">+14.1%</span></td><td class="num">S/ 0</td><td class="num">S/ 145,356</td><td class="num"><span class="muted-v">—</span></td><td class="num">S/ 331,029</td><td class="num">S/ 232,327</td><td class="num"><span class="r-neg">-29.8%</span></td></tr>
+<tr><td>Inversión<span class="unidad">S/ del mes</span></td><td class="num">S/ 7,829</td><td class="num">S/ 8,021</td><td class="num">+2.4%</td><td class="num">S/ 0</td><td class="num">S/ 4,732</td><td class="num">—</td><td class="num">S/ 7,829</td><td class="num">S/ 3,289</td><td class="num">-58.0%</td></tr>
+<tr><td>GTN<span class="unidad">inversión / venta neta</span></td><td class="num">2.37%</td><td class="num">2.12%</td><td class="num"><span class="r-pos">-0.24 pp</span></td><td class="num">—</td><td class="num">3.26%</td><td class="num"><span class="muted-v">—</span></td><td class="num">2.37%</td><td class="num">1.42%</td><td class="num"><span class="r-pos">-0.95 pp</span></td></tr>
+<tr><td>Ticket<span class="unidad">S/ por pedido, por cliente activo</span></td><td class="num">S/ 177</td><td class="num">S/ 187</td><td class="num"><span class="r-pos">+6.0%</span></td><td class="num">—</td><td class="num">S/ 224</td><td class="num"><span class="muted-v">—</span></td><td class="num">S/ 177</td><td class="num">S/ 161</td><td class="num"><span class="r-neg">-8.9%</span></td></tr>
+<tr><td>Mix SKU<span class="unidad">SKUs distintos por cliente activo</span></td><td class="num">10.8</td><td class="num">12.4</td><td class="num"><span class="r-pos">+14.9%</span></td><td class="num">—</td><td class="num">12.9</td><td class="num"><span class="muted-v">—</span></td><td class="num">10.8</td><td class="num">10.1</td><td class="num"><span class="r-neg">-6.8%</span></td></tr>
+<tr><td>Volumen<span class="unidad">kg del mes</span></td><td class="num">37,811</td><td class="num">40,388</td><td class="num"><span class="r-pos">+6.8%</span></td><td class="num">0</td><td class="num">15,467</td><td class="num"><span class="muted-v">—</span></td><td class="num">37,811</td><td class="num">24,921</td><td class="num"><span class="r-neg">-34.1%</span></td></tr>
+</tbody></table></div>
+</div>
+<div id="cmp-solo_diadia" data-g="cmp" class="pn">
+<div class="tbl-kicker" style="margin:10px 0 6px">Cliente solo diadia · 2,043 clientes de MBA en agosto · agosto 2026 → setiembre 2026</div>
+<div class="scroll-x"><table>
+<thead><tr><th rowspan="2">Métrica</th><th class="grp g-hist" colspan="3">Total ambos canales (diadia + nitro)</th><th class="grp g-tpo" colspan="3">Canal diadia</th><th class="grp g-vi" colspan="3">Canal nitro</th></tr>
+<tr><th class="num th-h">Ago</th><th class="num th-h">Set</th><th class="num th-h">Var</th><th class="num th-t">Ago</th><th class="num th-t">Set</th><th class="num th-t">Var</th><th class="num th-v">Ago</th><th class="num th-v">Set</th><th class="num th-v">Var</th></tr></thead>
+<tbody>
+<tr><td>Clientes activos<span class="unidad">clientes del perfil que compran en el mes</span></td><td class="num">2,043</td><td class="num">1,902</td><td class="num"><span class="r-neg">-6.9%</span></td><td class="num">2,043</td><td class="num">1,845</td><td class="num"><span class="r-neg">-9.7%</span></td><td class="num">0</td><td class="num">673</td><td class="num"><span class="muted-v">—</span></td></tr>
+<tr><td>Retención<span class="unidad">% de los clientes del perfil que compran en el mes</span></td><td class="num">100.0%</td><td class="num">93.1%</td><td class="num"><span class="r-neg">-6.90 pp</span></td><td class="num">100.0%</td><td class="num">90.3%</td><td class="num"><span class="r-neg">-9.69 pp</span></td><td class="num">0.0%</td><td class="num">32.9%</td><td class="num"><span class="r-pos">+32.94 pp</span></td></tr>
+<tr><td>Venta neta<span class="unidad">S/ del mes</span></td><td class="num">S/ 695,547</td><td class="num">S/ 752,564</td><td class="num"><span class="r-pos">+8.2%</span></td><td class="num">S/ 695,547</td><td class="num">S/ 746,538</td><td class="num"><span class="r-pos">+7.3%</span></td><td class="num">S/ 0</td><td class="num">S/ 6,026</td><td class="num"><span class="muted-v">—</span></td></tr>
+<tr><td>Inversión<span class="unidad">S/ del mes</span></td><td class="num">S/ 20,168</td><td class="num">S/ 23,967</td><td class="num">+18.8%</td><td class="num">S/ 20,168</td><td class="num">S/ 23,091</td><td class="num">+14.5%</td><td class="num">S/ 0</td><td class="num">S/ 876</td><td class="num">—</td></tr>
+<tr><td>GTN<span class="unidad">inversión / venta neta</span></td><td class="num">2.90%</td><td class="num">3.18%</td><td class="num"><span class="r-neg">+0.29 pp</span></td><td class="num">2.90%</td><td class="num">3.09%</td><td class="num"><span class="r-neg">+0.19 pp</span></td><td class="num">—</td><td class="num">14.54%</td><td class="num"><span class="muted-v">—</span></td></tr>
+<tr><td>Ticket<span class="unidad">S/ por pedido, por cliente activo</span></td><td class="num">S/ 149</td><td class="num">S/ 141</td><td class="num"><span class="r-neg">-5.9%</span></td><td class="num">S/ 149</td><td class="num">S/ 161</td><td class="num"><span class="r-pos">+7.7%</span></td><td class="num">—</td><td class="num">S/ 6</td><td class="num"><span class="muted-v">—</span></td></tr>
+<tr><td>Mix SKU<span class="unidad">SKUs distintos por cliente activo</span></td><td class="num">15.2</td><td class="num">16.1</td><td class="num"><span class="r-pos">+6.0%</span></td><td class="num">15.2</td><td class="num">16.3</td><td class="num"><span class="r-pos">+7.4%</span></td><td class="num">—</td><td class="num">4.5</td><td class="num"><span class="muted-v">—</span></td></tr>
+<tr><td>Volumen<span class="unidad">kg del mes</span></td><td class="num">74,610</td><td class="num">80,469</td><td class="num"><span class="r-pos">+7.9%</span></td><td class="num">74,610</td><td class="num">79,573</td><td class="num"><span class="r-pos">+6.7%</span></td><td class="num">0</td><td class="num">896</td><td class="num"><span class="muted-v">—</span></td></tr>
+</tbody></table></div>
+</div>
+<div id="cmp-mixtos" data-g="cmp" class="pn">
+<div class="tbl-kicker" style="margin:10px 0 6px">Cliente mixto (nitro + diadia) · 2,883 clientes de MBA en agosto · agosto 2026 → setiembre 2026</div>
+<div class="scroll-x"><table>
+<thead><tr><th rowspan="2">Métrica</th><th class="grp g-hist" colspan="3">Total ambos canales (diadia + nitro)</th><th class="grp g-tpo" colspan="3">Canal diadia</th><th class="grp g-vi" colspan="3">Canal nitro</th></tr>
+<tr><th class="num th-h">Ago</th><th class="num th-h">Set</th><th class="num th-h">Var</th><th class="num th-t">Ago</th><th class="num th-t">Set</th><th class="num th-t">Var</th><th class="num th-v">Ago</th><th class="num th-v">Set</th><th class="num th-v">Var</th></tr></thead>
+<tbody>
+<tr><td>Clientes activos<span class="unidad">clientes del perfil que compran en el mes</span></td><td class="num">2,883</td><td class="num">2,814</td><td class="num"><span class="r-neg">-2.4%</span></td><td class="num">2,883</td><td class="num">2,703</td><td class="num"><span class="r-neg">-6.2%</span></td><td class="num">2,883</td><td class="num">1,641</td><td class="num"><span class="r-neg">-43.1%</span></td></tr>
+<tr><td>Retención<span class="unidad">% de los clientes del perfil que compran en el mes</span></td><td class="num">100.0%</td><td class="num">97.6%</td><td class="num"><span class="r-neg">-2.39 pp</span></td><td class="num">100.0%</td><td class="num">93.8%</td><td class="num"><span class="r-neg">-6.24 pp</span></td><td class="num">100.0%</td><td class="num">56.9%</td><td class="num"><span class="r-neg">-43.08 pp</span></td></tr>
+<tr><td>Venta neta<span class="unidad">S/ del mes</span></td><td class="num">S/ 1,935,970</td><td class="num">S/ 1,834,679</td><td class="num"><span class="r-neg">-5.2%</span></td><td class="num">S/ 1,279,150</td><td class="num">S/ 1,631,386</td><td class="num"><span class="r-pos">+27.5%</span></td><td class="num">S/ 656,820</td><td class="num">S/ 203,293</td><td class="num"><span class="r-neg">-69.0%</span></td></tr>
+<tr><td>Inversión<span class="unidad">S/ del mes</span></td><td class="num">S/ 58,966</td><td class="num">S/ 54,572</td><td class="num">-7.5%</td><td class="num">S/ 37,018</td><td class="num">S/ 50,141</td><td class="num">+35.4%</td><td class="num">S/ 21,948</td><td class="num">S/ 4,431</td><td class="num">-79.8%</td></tr>
+<tr><td>GTN<span class="unidad">inversión / venta neta</span></td><td class="num">3.05%</td><td class="num">2.97%</td><td class="num"><span class="r-pos">-0.07 pp</span></td><td class="num">2.89%</td><td class="num">3.07%</td><td class="num"><span class="r-neg">+0.18 pp</span></td><td class="num">3.34%</td><td class="num">2.18%</td><td class="num"><span class="r-pos">-1.16 pp</span></td></tr>
+<tr><td>Ticket<span class="unidad">S/ por pedido, por cliente activo</span></td><td class="num">S/ 149</td><td class="num">S/ 174</td><td class="num"><span class="r-pos">+16.4%</span></td><td class="num">S/ 163</td><td class="num">S/ 201</td><td class="num"><span class="r-pos">+23.6%</span></td><td class="num">S/ 111</td><td class="num">S/ 68</td><td class="num"><span class="r-neg">-38.9%</span></td></tr>
+<tr><td>Mix SKU<span class="unidad">SKUs distintos por cliente activo</span></td><td class="num">22.9</td><td class="num">22.8</td><td class="num"><span class="r-neg">-0.4%</span></td><td class="num">18.9</td><td class="num">22.3</td><td class="num"><span class="r-pos">+17.9%</span></td><td class="num">10.2</td><td class="num">8.2</td><td class="num"><span class="r-neg">-20.3%</span></td></tr>
+<tr><td>Volumen<span class="unidad">kg del mes</span></td><td class="num">210,130</td><td class="num">198,165</td><td class="num"><span class="r-neg">-5.7%</span></td><td class="num">136,671</td><td class="num">175,450</td><td class="num"><span class="r-pos">+28.4%</span></td><td class="num">73,459</td><td class="num">22,714</td><td class="num"><span class="r-neg">-69.1%</span></td></tr>
+</tbody></table></div>
+</div>
+
+    <div class="tbl-note" style="margin-top:12px">
+      Perfil = cómo compraba el cliente en agosto (solo por nitro, solo por diadia o por ambos canales; compra = al menos un registro en el canal ese mes); canal = dónde se mide la venta. Los mismos clientes se miran en setiembre. En un canal donde el cliente no compraba en agosto (p. ej. cliente solo nitro medido en el canal diadia), «Ago» queda en 0 y se lee como migración. Retención = % de los clientes del perfil que compra en el mes; venta neta, inversión y volumen son la suma del mes (S/ y kg); ticket y mix SKU son por cliente activo. Venta neta = venta lista − inversión; GTN = inversión / venta neta. Es un solo mes y sin margen ni costo: indica dirección, no rentabilidad.
+    </div>
+  </div>
   </div>
 
   <div class="footer">
-    <span>Alicorp · COE Advanced Analytics · Piloto MBA — recorte de promociones de piso · meses completos (cierre al 30-set-2026) · actualizado 05-10-2026</span>
+    <span>Alicorp · COE Advanced Analytics · Piloto MBA — recorte de promociones de piso · meses completos (cierre al 30-set-2026) · sin panetones ni papas fritas · actualizado 09-10-2026</span>
   </div>
 
 </div>
+<script>
+function sw(ev, g, id) {
+  document.querySelectorAll('.pn[data-g="' + g + '"]').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('[data-g="' + g + '"].mt, [data-g="' + g + '"].st').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  ev.currentTarget.classList.add('on');
+}
+</script>
 <script>
 function mostrarTab(ev, id) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
