@@ -76,6 +76,23 @@ border-radius:10px;padding:14px 18px;margin-bottom:10px}
 .ad span{font-size:13px;color:var(--text2);line-height:1.6}
 footer{padding:22px 0 0;border-top:1px solid var(--border);font-size:11.5px;color:var(--text3)}
 .big-p{font-size:14px;color:var(--text2);margin-top:8px;max-width:40ch}
+/* portada: el nombre del analisis y las aperturas */
+.tit{font-family:'Space Grotesk',sans-serif;font-size:clamp(34px,5.6vw,60px);font-weight:800;
+line-height:1.02;letter-spacing:-.032em;color:var(--text)}
+.tit-s{font-size:clamp(13px,1.7vw,17px);color:var(--text2);margin-top:13px}
+.apl{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;
+letter-spacing:.13em;color:var(--text3);margin:34px 0 11px}
+.ap{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.ap .pc-v{font-size:34px;color:var(--teal-d)}
+.base{font-size:12.5px;color:var(--text3);margin-top:20px}
+/* el hallazgo, destacado en su lamina */
+.vbig{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.v-n{font-family:'Space Grotesk',sans-serif;font-size:clamp(34px,4.6vw,50px);font-weight:800;
+color:#fff;line-height:1;white-space:nowrap}
+@media(max-width:700px){.vbig{grid-template-columns:1fr;gap:10px}.ap{grid-template-columns:1fr 1fr}}
+/* bloques del grafico de intervalos */
+.gh{fill:var(--teal-d);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700}
+.ghs{fill:var(--text3);font-size:11px;text-anchor:end}
 .lead{font-size:13.5px;color:var(--text2);margin:-6px 0 2px;max-width:70ch}
 .filtros{display:flex;gap:24px;flex-wrap:wrap;margin:2px 0 16px}
 .fg{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
@@ -205,12 +222,23 @@ color:var(--text3)}
 @media(max-width:700px){.eb{grid-template-columns:1fr}.ebv{text-align:left}
 .dp{grid-template-columns:1fr}.dpt{margin:6px 0}}
 </style></head><body>
-<div class="deck"><div class="slide on" data-i="0"><div class="inner"><div class="slab">Elasticidad al descuento · Canal DEX · CP1 y CP2</div>
-<div class="big">S/ 31.7M</div>
-<div class="big-s">de descuento al año que no se paga solo</div>
-<div class="big-p">Es el 49% de la inversión promocional que pudimos medir.
-Una parte no mueve volumen; la otra lo mueve, pero no lo suficiente para cubrir
-el descuento que se dio.</div></div></div><div class="slide" data-i="1"><div class="inner"><div class="slab">Cómo se calculó</div>
+<div class="deck"><div class="slide on" data-i="0"><div class="inner"><div class="slab">Análisis</div>
+<div class="tit">Elasticidad al descuento</div>
+<div class="tit-s">Cuánto volumen trae cada punto de descuento, y dónde no se puede
+probar que traiga nada.</div>
+<div class="apl">APERTURAS A LAS QUE LLEGA</div>
+<div class="ap">
+<div class="pc"><div class="pc-l">Categoría</div><div class="pc-v">31</div>
+<div class="pc-p">de Consumo Masivo</div></div>
+<div class="pc"><div class="pc-l">Región</div><div class="pc-v">7</div>
+<div class="pc-p">Lima, Norte, Norte Chico, Centro, Sur, Sur Chico y Oriente</div></div>
+<div class="pc"><div class="pc-l">Concepto</div><div class="pc-v">3</div>
+<div class="pc-p">Regulares, Combo DEX y Digitales</div></div>
+<div class="pc"><div class="pc-l">Combinaciones</div><div class="pc-v">478</div>
+<div class="pc-p">114 con estimación utilizable</div></div>
+</div>
+<div class="base">Canal DEX · bocas CP1 y CP2 · dos años de ventas ·
+S/ 115.7M de inversión promocional al año.</div></div></div><div class="slide" data-i="1"><div class="inner"><div class="slab">Cómo se calculó</div>
 <div class="stit">Se compara cada cliente consigo mismo</div>
 <p class="lead">Dos años de ventas, producto por producto. Se mira qué compró el mismo cliente
 en meses con y sin descuento.</p>
@@ -257,10 +285,15 @@ plata o variación de descuento: <b>no quiere decir que funcione ni que no</b>.<
 <span class="sw g"></span><b>S/ 33.4M se paga solo</b>,
 <span class="sw r"></span><b>S/ 21.1M se queda corto</b> y
 <span class="sw n"></span><b>S/ 10.7M no mueve nada</b>.</li>
-<li>Los <b>S/ 31.7M</b> de los dos últimos pedazos son los que hay que revisar.</li>
 <li>Las tres categorías más grandes se llevan el <b>48%</b> de lo medido
 y Lima sola el <b>38%</b>: mover pocas cosas alcanza para mover el total.</li>
-</ul></div></div><div class="slide" data-i="3"><div class="inner"><div class="slab">Responder no es lo mismo que convenir</div>
+</ul>
+<div class="verdict vbig">
+<div class="v-n">S/ 31.7M</div>
+<div><h3>al año que no se pagan solos</h3>
+<p>Los dos últimos pedazos juntos: el 49% de todo lo que se pudo medir. No es plata perdida,
+es plata que hoy no se puede justificar con el volumen que trae.</p></div>
+</div></div></div><div class="slide" data-i="3"><div class="inner"><div class="slab">Responder no es lo mismo que convenir</div>
 <div class="stit">El descuento se paga sobre todo el volumen</div>
 <p class="lead">Siete casos reales, con sus números. Si se da 2% de descuento, ese 2% también
 se paga sobre las toneladas que se iban a vender igual: el volumen extra tiene que cubrir
@@ -312,47 +345,48 @@ volumen. Ninguna categoría da eso.</li>
 con un rango: el tramo dentro del cual está el efecto real. Cuando ese rango <b>llega al
 cero</b>, uno de los valores posibles es que el descuento no haya movido nada, y entonces
 no se puede probar que mueva.</p>
-<svg viewBox="0 0 900 517" class="chart" role="img" aria-label="Las 17 combinaciones donde el rango llega al cero"><rect x="298" y="16" width="348.4" height="497" class="zona"/><line class="cero" x1="646.4" x2="646.4" y1="12" y2="513"/><text class="zonaL" x="306" y="9">el descuento mueve volumen</text><text class="ceroL" x="653.4" y="9">cero</text><g class="ivg" tabindex="0" role="listitem" aria-label="Aceites, NORTE, Regulares: elasticidad -0.29, rango -1.46 a 0.78, inversion S/ 2.3M"><rect x="298" y="18.0" width="504" height="29" class="ivh"/><title>Aceites · NORTE · Regulares
+<svg viewBox="0 0 900 511" class="chart" role="img" aria-label="Las 17 combinaciones sin efecto comprobable, agrupadas por concepto"><text class="zonaL" x="306" y="9">el descuento mueve volumen</text><text class="ceroL" x="653.4" y="9">cero</text><text class="gh" x="0" y="30.0">Regulares</text><text class="ghs" x="288" y="30.0">12 combinaciones · S/ 10.0M</text><rect x="298" y="38.0" width="348.4" height="276" class="zona"/><line class="cero" x1="646.4" x2="646.4" y1="35.0" y2="317.0"/><g class="ivg" tabindex="0" role="listitem" aria-label="Aceites, NORTE, Regulares: elasticidad -0.29, rango -1.46 a 0.78, inversion S/ 2.3M"><rect x="298" y="38.0" width="504" height="23" class="ivh"/><title>Aceites · NORTE · Regulares
 elasticidad -0.29  ·  rango -1.46 a 0.78
-inversion S/ 2.3M</title><line class="iv" x1="555.6" x2="695.0" y1="32.5" y2="32.5"/><circle class="pt" cx="628.4" cy="32.5" r="4"/><text class="ety" x="288" y="31.0" text-anchor="end">Aceites</text><text class="etr2" x="288" y="41.0" text-anchor="end">NORTE · Regulares</text><text class="eiv" x="894" y="32.5" text-anchor="end" dominant-baseline="central">S/ 2.3M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Detergentes, SUR, Regulares: elasticidad -0.36, rango -1.14 a 0.34, inversion S/ 2.2M"><rect x="298" y="47.0" width="504" height="29" class="ivh"/><title>Detergentes · SUR · Regulares
+inversion S/ 2.3M</title><line class="iv" x1="555.8" x2="695.2" y1="49.5" y2="49.5"/><circle class="pt" cx="628.2" cy="49.5" r="4"/><text class="ety" x="288" y="49.5" text-anchor="end" dominant-baseline="central">Aceites<tspan class="etr"> NORTE</tspan></text><text class="eiv" x="894" y="49.5" text-anchor="end" dominant-baseline="central">S/ 2.3M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Detergentes, SUR, Regulares: elasticidad -0.36, rango -1.14 a 0.34, inversion S/ 2.2M"><rect x="298" y="61.0" width="504" height="23" class="ivh"/><title>Detergentes · SUR · Regulares
 elasticidad -0.36  ·  rango -1.14 a 0.34
-inversion S/ 2.2M</title><line class="iv" x1="575.5" x2="667.6" y1="61.5" y2="61.5"/><circle class="pt" cx="624.0" cy="61.5" r="4"/><text class="ety" x="288" y="60.0" text-anchor="end">Detergentes</text><text class="etr2" x="288" y="70.0" text-anchor="end">SUR · Regulares</text><text class="eiv" x="894" y="61.5" text-anchor="end" dominant-baseline="central">S/ 2.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Aceites, ORIENTE, Regulares: elasticidad -1.45, rango -2.36 a 0.05, inversion S/ 1.2M"><rect x="298" y="76.0" width="504" height="29" class="ivh"/><title>Aceites · ORIENTE · Regulares
+inversion S/ 2.2M</title><line class="iv" x1="575.2" x2="667.5" y1="72.5" y2="72.5"/><circle class="pt" cx="624.0" cy="72.5" r="4"/><text class="ety" x="288" y="72.5" text-anchor="end" dominant-baseline="central">Detergentes<tspan class="etr"> SUR</tspan></text><text class="eiv" x="894" y="72.5" text-anchor="end" dominant-baseline="central">S/ 2.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Aceites, ORIENTE, Regulares: elasticidad -1.45, rango -2.36 a 0.05, inversion S/ 1.2M"><rect x="298" y="84.0" width="504" height="23" class="ivh"/><title>Aceites · ORIENTE · Regulares
 elasticidad -1.45  ·  rango -2.36 a 0.05
-inversion S/ 1.2M</title><line class="iv" x1="499.6" x2="649.6" y1="90.5" y2="90.5"/><circle class="pt" cx="556.2" cy="90.5" r="4"/><text class="ety" x="288" y="89.0" text-anchor="end">Aceites</text><text class="etr2" x="288" y="99.0" text-anchor="end">ORIENTE · Regulares</text><text class="eiv" x="894" y="90.5" text-anchor="end" dominant-baseline="central">S/ 1.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, SUR, Regulares: elasticidad -0.78, rango -3.62 a 1.73, inversion S/ 1.2M"><rect x="298" y="105.0" width="504" height="29" class="ivh"/><title>Galletas · SUR · Regulares
+inversion S/ 1.2M</title><line class="iv" x1="499.4" x2="649.5" y1="95.5" y2="95.5"/><circle class="pt" cx="556.4" cy="95.5" r="4"/><text class="ety" x="288" y="95.5" text-anchor="end" dominant-baseline="central">Aceites<tspan class="etr"> ORIENTE</tspan></text><text class="eiv" x="894" y="95.5" text-anchor="end" dominant-baseline="central">S/ 1.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, SUR, Regulares: elasticidad -0.78, rango -3.62 a 1.73, inversion S/ 1.2M"><rect x="298" y="107.0" width="504" height="23" class="ivh"/><title>Galletas · SUR · Regulares
 elasticidad -0.78  ·  rango -3.62 a 1.73
-inversion S/ 1.2M</title><line class="iv" x1="421.2" x2="754.1" y1="119.5" y2="119.5"/><circle class="pt" cx="597.9" cy="119.5" r="4"/><text class="ety" x="288" y="118.0" text-anchor="end">Galletas</text><text class="etr2" x="288" y="128.0" text-anchor="end">SUR · Regulares</text><text class="eiv" x="894" y="119.5" text-anchor="end" dominant-baseline="central">S/ 1.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, SUR CHICO, Regulares: elasticidad -0.22, rango -0.9 a 0.47, inversion S/ 0.9M"><rect x="298" y="134.0" width="504" height="29" class="ivh"/><title>Galletas · SUR CHICO · Regulares
-elasticidad -0.22  ·  rango -0.9 a 0.47
-inversion S/ 0.9M</title><line class="iv" x1="590.4" x2="675.7" y1="148.5" y2="148.5"/><circle class="pt" cx="632.8" cy="148.5" r="4"/><text class="ety" x="288" y="147.0" text-anchor="end">Galletas</text><text class="etr2" x="288" y="157.0" text-anchor="end">SUR CHICO · Regulares</text><text class="eiv" x="894" y="148.5" text-anchor="end" dominant-baseline="central">S/ 0.9M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Aceites, NORTE CHICO, Regulares: elasticidad -0.57, rango -1.32 a 0.3, inversion S/ 0.7M"><rect x="298" y="163.0" width="504" height="29" class="ivh"/><title>Aceites · NORTE CHICO · Regulares
-elasticidad -0.57  ·  rango -1.32 a 0.3
-inversion S/ 0.7M</title><line class="iv" x1="564.3" x2="665.1" y1="177.5" y2="177.5"/><circle class="pt" cx="611.0" cy="177.5" r="4"/><text class="ety" x="288" y="176.0" text-anchor="end">Aceites</text><text class="etr2" x="288" y="186.0" text-anchor="end">NORTE CHICO · Regulares</text><text class="eiv" x="894" y="177.5" text-anchor="end" dominant-baseline="central">S/ 0.7M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, NORTE CHICO, Regulares: elasticidad -0.71, rango -1.52 a 0.02, inversion S/ 0.5M"><rect x="298" y="192.0" width="504" height="29" class="ivh"/><title>Galletas · NORTE CHICO · Regulares
+inversion S/ 1.2M</title><line class="iv" x1="421.4" x2="753.8" y1="118.5" y2="118.5"/><circle class="pt" cx="598.0" cy="118.5" r="4"/><text class="ety" x="288" y="118.5" text-anchor="end" dominant-baseline="central">Galletas<tspan class="etr"> SUR</tspan></text><text class="eiv" x="894" y="118.5" text-anchor="end" dominant-baseline="central">S/ 1.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, SUR CHICO, Regulares: elasticidad -0.22, rango -0.90 a 0.47, inversion S/ 0.9M"><rect x="298" y="130.0" width="504" height="23" class="ivh"/><title>Galletas · SUR CHICO · Regulares
+elasticidad -0.22  ·  rango -0.90 a 0.47
+inversion S/ 0.9M</title><line class="iv" x1="590.4" x2="675.4" y1="141.5" y2="141.5"/><circle class="pt" cx="632.8" cy="141.5" r="4"/><text class="ety" x="288" y="141.5" text-anchor="end" dominant-baseline="central">Galletas<tspan class="etr"> SUR CHICO</tspan></text><text class="eiv" x="894" y="141.5" text-anchor="end" dominant-baseline="central">S/ 0.9M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Aceites, NORTE CHICO, Regulares: elasticidad -0.57, rango -1.32 a 0.30, inversion S/ 0.7M"><rect x="298" y="153.0" width="504" height="23" class="ivh"/><title>Aceites · NORTE CHICO · Regulares
+elasticidad -0.57  ·  rango -1.32 a 0.30
+inversion S/ 0.7M</title><line class="iv" x1="564.4" x2="665.2" y1="164.5" y2="164.5"/><circle class="pt" cx="611.1" cy="164.5" r="4"/><text class="ety" x="288" y="164.5" text-anchor="end" dominant-baseline="central">Aceites<tspan class="etr"> NORTE CHICO</tspan></text><text class="eiv" x="894" y="164.5" text-anchor="end" dominant-baseline="central">S/ 0.7M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, NORTE CHICO, Regulares: elasticidad -0.71, rango -1.52 a 0.02, inversion S/ 0.5M"><rect x="298" y="176.0" width="504" height="23" class="ivh"/><title>Galletas · NORTE CHICO · Regulares
 elasticidad -0.71  ·  rango -1.52 a 0.02
-inversion S/ 0.5M</title><line class="iv" x1="551.9" x2="647.7" y1="206.5" y2="206.5"/><circle class="pt" cx="602.3" cy="206.5" r="4"/><text class="ety" x="288" y="205.0" text-anchor="end">Galletas</text><text class="etr2" x="288" y="215.0" text-anchor="end">NORTE CHICO · Regulares</text><text class="eiv" x="894" y="206.5" text-anchor="end" dominant-baseline="central">S/ 0.5M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Pasta Dental, LIMA, Regulares: elasticidad -2.18, rango -4.5 a 0.16, inversion S/ 0.4M"><rect x="298" y="221.0" width="504" height="29" class="ivh"/><title>Pasta Dental · LIMA · Regulares
-elasticidad -2.18  ·  rango -4.5 a 0.16
-inversion S/ 0.4M</title><line class="iv" x1="366.4" x2="656.4" y1="235.5" y2="235.5"/><circle class="pt" cx="510.8" cy="235.5" r="4"/><text class="ety" x="288" y="234.0" text-anchor="end">Pasta Dental</text><text class="etr2" x="288" y="244.0" text-anchor="end">LIMA · Regulares</text><text class="eiv" x="894" y="235.5" text-anchor="end" dominant-baseline="central">S/ 0.4M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, ORIENTE, Regulares: elasticidad 0.22, rango -1.56 a 2.11, inversion S/ 0.3M"><rect x="298" y="250.0" width="504" height="29" class="ivh"/><title>Galletas · ORIENTE · Regulares
+inversion S/ 0.5M</title><line class="iv" x1="551.9" x2="647.6" y1="187.5" y2="187.5"/><circle class="pt" cx="602.4" cy="187.5" r="4"/><text class="ety" x="288" y="187.5" text-anchor="end" dominant-baseline="central">Galletas<tspan class="etr"> NORTE CHICO</tspan></text><text class="eiv" x="894" y="187.5" text-anchor="end" dominant-baseline="central">S/ 0.5M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Pasta Dental, LIMA, Regulares: elasticidad -2.18, rango -4.50 a 0.16, inversion S/ 0.4M"><rect x="298" y="199.0" width="504" height="23" class="ivh"/><title>Pasta Dental · LIMA · Regulares
+elasticidad -2.18  ·  rango -4.50 a 0.16
+inversion S/ 0.4M</title><line class="iv" x1="366.2" x2="656.2" y1="210.5" y2="210.5"/><circle class="pt" cx="510.7" cy="210.5" r="4"/><text class="ety" x="288" y="210.5" text-anchor="end" dominant-baseline="central">Pasta Dental<tspan class="etr"> LIMA</tspan></text><text class="eiv" x="894" y="210.5" text-anchor="end" dominant-baseline="central">S/ 0.4M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Galletas, ORIENTE, Regulares: elasticidad 0.22, rango -1.56 a 2.11, inversion S/ 0.3M"><rect x="298" y="222.0" width="504" height="23" class="ivh"/><title>Galletas · ORIENTE · Regulares
 elasticidad 0.22  ·  rango -1.56 a 2.11
-inversion S/ 0.3M</title><line class="iv" x1="549.4" x2="777.7" y1="264.5" y2="264.5"/><circle class="pt" cx="660.1" cy="264.5" r="4"/><text class="ety" x="288" y="263.0" text-anchor="end">Galletas</text><text class="etr2" x="288" y="273.0" text-anchor="end">ORIENTE · Regulares</text><text class="eiv" x="894" y="264.5" text-anchor="end" dominant-baseline="central">S/ 0.3M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Harinas, LIMA, Combo DEX: elasticidad -2.93, rango -5.27 a 0.78, inversion S/ 0.3M"><rect x="298" y="279.0" width="504" height="29" class="ivh"/><title>Harinas · LIMA · Combo DEX
-elasticidad -2.93  ·  rango -5.27 a 0.78
-inversion S/ 0.3M</title><line class="iv" x1="318.5" x2="695.0" y1="293.5" y2="293.5"/><circle class="pt" cx="464.1" cy="293.5" r="4"/><text class="ety" x="288" y="292.0" text-anchor="end">Harinas</text><text class="etr2" x="288" y="302.0" text-anchor="end">LIMA · Combo DEX</text><text class="eiv" x="894" y="293.5" text-anchor="end" dominant-baseline="central">S/ 0.3M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Lavavajillas, LIMA, Combo DEX: elasticidad -0.97, rango -2.0 a 0.62, inversion S/ 0.2M"><rect x="298" y="308.0" width="504" height="29" class="ivh"/><title>Lavavajillas · LIMA · Combo DEX
-elasticidad -0.97  ·  rango -2.0 a 0.62
-inversion S/ 0.2M</title><line class="iv" x1="522.0" x2="685.0" y1="322.5" y2="322.5"/><circle class="pt" cx="586.1" cy="322.5" r="4"/><text class="ety" x="288" y="321.0" text-anchor="end">Lavavajillas</text><text class="etr2" x="288" y="331.0" text-anchor="end">LIMA · Combo DEX</text><text class="eiv" x="894" y="322.5" text-anchor="end" dominant-baseline="central">S/ 0.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Harinas, LIMA, Digitales: elasticidad -2.33, rango -4.45 a 0.98, inversion S/ 0.1M"><rect x="298" y="337.0" width="504" height="29" class="ivh"/><title>Harinas · LIMA · Digitales
-elasticidad -2.33  ·  rango -4.45 a 0.98
-inversion S/ 0.1M</title><line class="iv" x1="369.6" x2="707.4" y1="351.5" y2="351.5"/><circle class="pt" cx="501.5" cy="351.5" r="4"/><text class="ety" x="288" y="350.0" text-anchor="end">Harinas</text><text class="etr2" x="288" y="360.0" text-anchor="end">LIMA · Digitales</text><text class="eiv" x="894" y="351.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Jabon Liquido, LIMA, Regulares: elasticidad -0.9, rango -2.0 a 0.21, inversion S/ 0.1M"><rect x="298" y="366.0" width="504" height="29" class="ivh"/><title>Jabon Liquido · LIMA · Regulares
-elasticidad -0.9  ·  rango -2.0 a 0.21
-inversion S/ 0.1M</title><line class="iv" x1="522.0" x2="659.5" y1="380.5" y2="380.5"/><circle class="pt" cx="590.4" cy="380.5" r="4"/><text class="ety" x="288" y="379.0" text-anchor="end">Jabon Liquido</text><text class="etr2" x="288" y="389.0" text-anchor="end">LIMA · Regulares</text><text class="eiv" x="894" y="380.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Pasta Dental, SUR CHICO, Regulares: elasticidad -0.99, rango -3.62 a 1.81, inversion S/ 0.1M"><rect x="298" y="395.0" width="504" height="29" class="ivh"/><title>Pasta Dental · SUR CHICO · Regulares
+inversion S/ 0.3M</title><line class="iv" x1="549.1" x2="777.8" y1="233.5" y2="233.5"/><circle class="pt" cx="660.3" cy="233.5" r="4"/><text class="ety" x="288" y="233.5" text-anchor="end" dominant-baseline="central">Galletas<tspan class="etr"> ORIENTE</tspan></text><text class="eiv" x="894" y="233.5" text-anchor="end" dominant-baseline="central">S/ 0.3M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Jabon Liquido, LIMA, Regulares: elasticidad -0.90, rango -2.00 a 0.21, inversion S/ 0.1M"><rect x="298" y="245.0" width="504" height="23" class="ivh"/><title>Jabon Liquido · LIMA · Regulares
+elasticidad -0.90  ·  rango -2.00 a 0.21
+inversion S/ 0.1M</title><line class="iv" x1="522.3" x2="659.6" y1="256.5" y2="256.5"/><circle class="pt" cx="590.5" cy="256.5" r="4"/><text class="ety" x="288" y="256.5" text-anchor="end" dominant-baseline="central">Jabon Liquido<tspan class="etr"> LIMA</tspan></text><text class="eiv" x="894" y="256.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Pasta Dental, SUR CHICO, Regulares: elasticidad -0.99, rango -3.62 a 1.81, inversion S/ 0.1M"><rect x="298" y="268.0" width="504" height="23" class="ivh"/><title>Pasta Dental · SUR CHICO · Regulares
 elasticidad -0.99  ·  rango -3.62 a 1.81
-inversion S/ 0.1M</title><line class="iv" x1="421.2" x2="759.1" y1="409.5" y2="409.5"/><circle class="pt" cx="584.8" cy="409.5" r="4"/><text class="ety" x="288" y="408.0" text-anchor="end">Pasta Dental</text><text class="etr2" x="288" y="418.0" text-anchor="end">SUR CHICO · Regulares</text><text class="eiv" x="894" y="409.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Refrescos, SUR, Combo DEX: elasticidad -1.04, rango -2.79 a 0.74, inversion S/ 0.1M"><rect x="298" y="424.0" width="504" height="29" class="ivh"/><title>Refrescos · SUR · Combo DEX
+inversion S/ 0.1M</title><line class="iv" x1="420.9" x2="759.3" y1="279.5" y2="279.5"/><circle class="pt" cx="584.8" cy="279.5" r="4"/><text class="ety" x="288" y="279.5" text-anchor="end" dominant-baseline="central">Pasta Dental<tspan class="etr"> SUR CHICO</tspan></text><text class="eiv" x="894" y="279.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Limpiadores Light Duty, NORTE, Regulares: elasticidad 0.70, rango -0.42 a 2.23, inversion S/ 0.1M"><rect x="298" y="291.0" width="504" height="23" class="ivh"/><title>Limpiadores Light Duty · NORTE · Regulares
+elasticidad 0.70  ·  rango -0.42 a 2.23
+inversion S/ 0.1M</title><line class="iv" x1="620.1" x2="785.0" y1="302.5" y2="302.5"/><circle class="pt" cx="689.9" cy="302.5" r="4"/><text class="ety" x="288" y="302.5" text-anchor="end" dominant-baseline="central">Limpiadores Light Duty<tspan class="etr"> NORTE</tspan></text><text class="eiv" x="894" y="302.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><text class="gh" x="0" y="344.0">Combo DEX</text><text class="ghs" x="288" y="344.0">4 combinaciones · S/ 0.6M</text><rect x="298" y="352.0" width="348.4" height="92" class="zona"/><line class="cero" x1="646.4" x2="646.4" y1="349.0" y2="447.0"/><g class="ivg" tabindex="0" role="listitem" aria-label="Harinas, LIMA, Combo DEX: elasticidad -2.93, rango -5.27 a 0.78, inversion S/ 0.3M"><rect x="298" y="352.0" width="504" height="23" class="ivh"/><title>Harinas · LIMA · Combo DEX
+elasticidad -2.93  ·  rango -5.27 a 0.78
+inversion S/ 0.3M</title><line class="iv" x1="318.3" x2="695.2" y1="363.5" y2="363.5"/><circle class="pt" cx="464.1" cy="363.5" r="4"/><text class="ety" x="288" y="363.5" text-anchor="end" dominant-baseline="central">Harinas<tspan class="etr"> LIMA</tspan></text><text class="eiv" x="894" y="363.5" text-anchor="end" dominant-baseline="central">S/ 0.3M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Lavavajillas, LIMA, Combo DEX: elasticidad -0.97, rango -2.00 a 0.62, inversion S/ 0.2M"><rect x="298" y="375.0" width="504" height="23" class="ivh"/><title>Lavavajillas · LIMA · Combo DEX
+elasticidad -0.97  ·  rango -2.00 a 0.62
+inversion S/ 0.2M</title><line class="iv" x1="522.2" x2="685.1" y1="386.5" y2="386.5"/><circle class="pt" cx="586.1" cy="386.5" r="4"/><text class="ety" x="288" y="386.5" text-anchor="end" dominant-baseline="central">Lavavajillas<tspan class="etr"> LIMA</tspan></text><text class="eiv" x="894" y="386.5" text-anchor="end" dominant-baseline="central">S/ 0.2M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Refrescos, SUR, Combo DEX: elasticidad -1.04, rango -2.79 a 0.74, inversion S/ 0.1M"><rect x="298" y="398.0" width="504" height="23" class="ivh"/><title>Refrescos · SUR · Combo DEX
 elasticidad -1.04  ·  rango -2.79 a 0.74
-inversion S/ 0.1M</title><line class="iv" x1="472.8" x2="692.5" y1="438.5" y2="438.5"/><circle class="pt" cx="581.7" cy="438.5" r="4"/><text class="ety" x="288" y="437.0" text-anchor="end">Refrescos</text><text class="etr2" x="288" y="447.0" text-anchor="end">SUR · Combo DEX</text><text class="eiv" x="894" y="438.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Lavavajillas, SUR, Combo DEX: elasticidad -0.65, rango -1.43 a 0.51, inversion S/ 0.1M"><rect x="298" y="453.0" width="504" height="29" class="ivh"/><title>Lavavajillas · SUR · Combo DEX
+inversion S/ 0.1M</title><line class="iv" x1="472.9" x2="692.7" y1="409.5" y2="409.5"/><circle class="pt" cx="581.8" cy="409.5" r="4"/><text class="ety" x="288" y="409.5" text-anchor="end" dominant-baseline="central">Refrescos<tspan class="etr"> SUR</tspan></text><text class="eiv" x="894" y="409.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Lavavajillas, SUR, Combo DEX: elasticidad -0.65, rango -1.43 a 0.51, inversion S/ 0.1M"><rect x="298" y="421.0" width="504" height="23" class="ivh"/><title>Lavavajillas · SUR · Combo DEX
 elasticidad -0.65  ·  rango -1.43 a 0.51
-inversion S/ 0.1M</title><line class="iv" x1="557.5" x2="678.2" y1="467.5" y2="467.5"/><circle class="pt" cx="606.0" cy="467.5" r="4"/><text class="ety" x="288" y="466.0" text-anchor="end">Lavavajillas</text><text class="etr2" x="288" y="476.0" text-anchor="end">SUR · Combo DEX</text><text class="eiv" x="894" y="467.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><g class="ivg" tabindex="0" role="listitem" aria-label="Limpiadores Light Duty, NORTE, Regulares: elasticidad 0.7, rango -0.42 a 2.23, inversion S/ 0.1M"><rect x="298" y="482.0" width="504" height="29" class="ivh"/><title>Limpiadores Light Duty · NORTE · Regulares
-elasticidad 0.7  ·  rango -0.42 a 2.23
-inversion S/ 0.1M</title><line class="iv" x1="620.3" x2="785.2" y1="496.5" y2="496.5"/><circle class="pt" cx="690.0" cy="496.5" r="4"/><text class="ety" x="288" y="495.0" text-anchor="end">Limpiadores Light Duty</text><text class="etr2" x="288" y="505.0" text-anchor="end">NORTE · Regulares</text><text class="eiv" x="894" y="496.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g></svg>
-<ul><li>Cada línea es un rango y el punto es el valor medido. Si la línea
-<b>cruza la raya roja del cero</b>, no alcanza para afirmar efecto.</li>
-<li>No es que el descuento no funcione: es que con estos datos <b>no se puede probar</b>
-que funcione. Son las primeras que convendría probar sin promoción.</li>
-<li><b>Aceites y Galletas</b> aparecen en cuatro regiones cada una, y las dos primeras filas
-concentran <b>S/ 4.5M</b> de los S/ 10.7M.</li></ul></div></div><div class="slide" data-i="5"><div class="inner"><div class="slab">Plata contra respuesta</div>
+inversion S/ 0.1M</title><line class="iv" x1="557.5" x2="678.0" y1="432.5" y2="432.5"/><circle class="pt" cx="606.3" cy="432.5" r="4"/><text class="ety" x="288" y="432.5" text-anchor="end" dominant-baseline="central">Lavavajillas<tspan class="etr"> SUR</tspan></text><text class="eiv" x="894" y="432.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g><text class="gh" x="0" y="474.0">Promociones Digitales</text><text class="ghs" x="288" y="474.0">1 combinación · S/ 0.1M</text><rect x="298" y="482.0" width="348.4" height="23" class="zona"/><line class="cero" x1="646.4" x2="646.4" y1="479.0" y2="508.0"/><g class="ivg" tabindex="0" role="listitem" aria-label="Harinas, LIMA, Promociones Digitales: elasticidad -2.33, rango -4.45 a 0.98, inversion S/ 0.1M"><rect x="298" y="482.0" width="504" height="23" class="ivh"/><title>Harinas · LIMA · Promociones Digitales
+elasticidad -2.33  ·  rango -4.45 a 0.98
+inversion S/ 0.1M</title><line class="iv" x1="369.5" x2="707.2" y1="493.5" y2="493.5"/><circle class="pt" cx="501.4" cy="493.5" r="4"/><text class="ety" x="288" y="493.5" text-anchor="end" dominant-baseline="central">Harinas<tspan class="etr"> LIMA</tspan></text><text class="eiv" x="894" y="493.5" text-anchor="end" dominant-baseline="central">S/ 0.1M</text></g></svg>
+<ul><li><b>Regulares concentra el problema</b>: 12 de las 17 y S/ 10.0M de los S/ 10.7M.
+En Combo DEX son S/ 0.6M y en Digitales S/ 0.1M.</li>
+<li>Cada línea es un rango y el punto es el valor medido. Si la línea <b>cruza la raya roja
+del cero</b>, no alcanza para afirmar efecto.</li>
+<li>No es que el descuento no funcione: es que con estos datos <b>no se puede probar</b> que
+funcione. <b>Aceites y Galletas</b> aparecen en cuatro regiones cada una: son las primeras
+que convendría probar sin promoción.</li></ul></div></div><div class="slide" data-i="5"><div class="inner"><div class="slab">Plata contra respuesta</div>
 <div class="stit">Regulares: más plata, menos respuesta</div>
 <p class="lead">Los tres conceptos, con cuánta plata mueven, cuánto de eso se pudo medir
 y cuánto no muestra efecto.</p>
