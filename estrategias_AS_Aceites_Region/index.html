@@ -1,0 +1,688 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aceites · Giro 9 · propuesta por región</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#2D9C9C;--teal-l:#E8F6F6;--teal-d:#1F6F6F;--gold:#D4A853;--gold-l:#FDF8EC;--gold-d:#B8862F;
+--coral:#E85D4C;--coral-l:#FEF0EE;--green:#059669;--green-l:#ECFDF5;--bg:#0E2A2A;--pa:#FDFCFA;
+--tx:#1A1A2E;--tx2:#5A6560;--tx3:#8A938E;--line:#E8E4DC;--bd:#EFEBE3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:'DM Sans',system-ui,sans-serif;color:var(--tx);
+overflow:hidden;height:100vh;width:100vw;margin:0}
+/* La diapositiva se escala con transform, pero transform NO cambia el espacio
+   que el elemento ocupa en el layout: seguía reservando 1280x720 y el centrado
+   quedaba calculado sobre el tamaño sin escalar. Se centra por posición. */
+.deck{width:1280px;height:720px;position:absolute;top:50%;left:50%;
+transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--pa);border-radius:14px;padding:30px 32px 58px;
+display:none;flex-direction:column;box-shadow:0 18px 60px rgba(0,0,0,.4);overflow:hidden}
+.slide.on{display:flex}
+.eyebrow{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.16em;
+text-transform:uppercase;color:var(--teal);margin-bottom:9px}
+h1{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:44px;font-weight:800;line-height:1.08;letter-spacing:-.025em}
+h2{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:31px;font-weight:800;line-height:1.12;letter-spacing:-.02em}
+h1 em,h2 em{font-style:normal;color:var(--coral)}
+.lead{font-size:15px;color:var(--tx2);margin-top:11px;max-width:900px;line-height:1.6}
+.kpis{display:flex;gap:34px;margin:22px 0 6px}
+.kpi b{display:block;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:38px;
+font-weight:800;line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.kpis.k6{gap:26px}.kpis.k6 .kpi b{font-size:29px}.kpis.k6 .kpi span{font-size:10px}
+.col.comp+.col .kpis,.slide:has(.col.comp) .kpis.k6 .kpi b{font-size:26px}
+.slide:has(.col.comp) .kpis.k6 .kpi span{font-size:9.5px;margin-top:4px}
+.slide:has(.col.comp) h2{font-size:27px}
+.slide:has(.col.comp) .eyebrow{margin-bottom:5px}
+.kpi span{display:block;font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.09em;margin-top:6px}
+.kpi small{display:block;font-size:11.5px;color:var(--tx2);margin-top:4px}
+.body{flex:1;display:flex;gap:24px;margin-top:18px;min-height:0}
+.col{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-start}
+.col.fill{justify-content:space-between}
+.spacer{flex:1}
+.col.comp table{font-size:12px}
+.col.comp td{padding:6px 7px}
+.col.comp th{padding:7px 7px;font-size:9.5px}
+.col.comp .chip{font-size:8.5px;padding:1px 4px}
+.col.comp .lbl2{margin-bottom:5px}
+.slide:has(.body[style*="column"]) .lbl2{margin-bottom:5px}
+.slide:has(.body[style*="column"]) .note{font-size:12px;padding:9px 12px;line-height:1.55}
+.col.comp td:first-child{font-size:11.5px;line-height:1.2;white-space:nowrap;
+overflow:hidden;text-overflow:ellipsis}
+.col.comp td:first-child b{font-size:12px}
+.col.comp td{padding:6px 7px}
+.col.comp .chip{font-size:8px;padding:1px 4px}
+.col.comp table{width:100%}
+.col.comp .note{font-size:11.5px;padding:7px 10px;line-height:1.5}
+.col.comp .kpis{margin:10px 0 2px}
+.ofinav{display:flex;align-items:center;gap:5px;margin:0 0 7px}
+.ofl{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:9px;font-weight:700;
+text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-right:3px}
+.ofb{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10.5px;font-weight:600;
+cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--tx2);padding:3px 11px;border-radius:100px}
+.ofb:hover{border-color:var(--teal)}
+.ofb.on{background:var(--teal-d);border-color:var(--teal-d);color:#fff}
+.selhint{font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:500;text-transform:none;
+letter-spacing:0;color:var(--tx3);font-style:italic}
+.alt-g{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+.col.comp .alt-g,[style*="470px"] .alt-g{grid-template-columns:1fr;gap:6px}
+.alt-c{border-left:3px solid var(--line);padding:4px 0 4px 10px}
+.alt-e{margin:1px 0 2px}
+.alt-e .chip{font-size:9px;padding:1px 5px}
+.vermas{display:inline-block;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10.5px;
+font-weight:600;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--tx2);
+padding:3px 12px;border-radius:100px;margin-top:2px}
+.vermas:hover{border-color:var(--teal);color:var(--teal-d)}
+.vermas-off{display:inline-block;font-size:10.5px;color:var(--tx3);font-style:italic;margin-top:2px}
+.mecnav{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:10px 0 2px}
+.mecb{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10px;font-weight:600;
+cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--tx2);padding:3px 10px;border-radius:100px}
+.mecb:hover{border-color:var(--teal)}
+.mecb.on{background:var(--teal-d);border-color:var(--teal-d);color:#fff}
+tr.arow.off{display:none}
+.alt-n{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:11px;font-weight:700;
+color:var(--tx);margin-bottom:2px}
+.alt-r{display:inline-block;margin-right:16px}
+.alt-r b{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13px;font-weight:800;
+color:var(--green)}
+.alt-r span{font-size:10px;color:var(--tx3);margin-left:4px}
+.alt-p{font-size:9.5px;color:var(--tx3);margin-top:2px}
+.volver{display:none;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:9.5px;
+font-weight:600;text-transform:none;letter-spacing:0;cursor:pointer;border:1px solid var(--line);
+background:#fff;color:var(--tx2);padding:2px 9px;border-radius:100px}
+.volver:hover{border-color:var(--teal);color:var(--teal-d)}
+.volver.on{display:inline-block}
+.mrow.sel td{background:#F1F8F4;box-shadow:inset 3px 0 0 currentColor}
+.mrow:hover td{background:#FAF8F4}
+table.apretada td{padding:5px 6px;font-size:12px}
+table.apretada th{padding:6px 6px;font-size:9.5px}
+table.apretada .chip{font-size:8px;padding:1px 3px;line-height:1.45}
+.gactrl{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+.gab{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10.5px;font-weight:600;
+cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--tx2);padding:3px 11px;border-radius:100px}
+.gab:hover{border-color:var(--coral)}
+.acb{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10.5px;font-weight:600;
+cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--tx2);padding:3px 11px;border-radius:100px}
+.acb:hover{border-color:var(--teal)}
+.skb{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10.5px;font-weight:600;
+cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--tx2);padding:3px 11px;border-radius:100px}
+.skb:hover{border-color:var(--green);color:var(--green)}
+.usar{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:9.5px;font-weight:700;
+cursor:pointer;border:1px solid var(--line);color:var(--tx3);padding:2px 8px;border-radius:100px;
+text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.usar:hover{border-color:var(--green);color:var(--green)}
+.usar-sim{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10.5px;
+font-weight:700;cursor:pointer;border:1px solid var(--green);color:var(--green);
+padding:3px 13px;border-radius:100px;white-space:nowrap}
+.usar-sim:hover{background:var(--green);color:#fff}
+.usar-sim.on{background:var(--green);border-color:var(--green);color:#fff}
+.usar.on{background:var(--green);border-color:var(--green);color:#fff}
+select.sop{width:100%;font-family:'DM Sans',sans-serif;font-size:11px;border:1px solid var(--line);
+border-radius:6px;padding:2px 5px;background:#fff;color:var(--tx)}
+select.sop:focus{outline:none;border-color:var(--green)}
+input.sck{width:15px;height:15px;accent-color:var(--green);cursor:pointer}
+tr.sep td{background:#F4F2EE;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+font-size:10.5px;padding:5px 8px;letter-spacing:.04em}
+tr.srow.off{opacity:.38}
+.acb.on{background:var(--teal-d);border-color:var(--teal-d);color:#fff}
+input.au,input.at{width:46px;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:12px;
+font-weight:700;text-align:right;border:1px solid var(--line);border-radius:6px;padding:2px 5px;
+color:var(--teal-d);background:#fff}
+input.au:focus,input.at:focus{outline:none;border-color:var(--teal)}
+.gab.on{background:var(--coral);border-color:var(--coral);color:#fff}
+table.apretada input.tope{padding:1px 5px;font-size:12px;width:46px}
+table.apretada td{padding:4px 6px}
+input.tope{width:52px;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13px;
+font-weight:700;text-align:right;border:1px solid var(--line);border-radius:6px;padding:3px 6px;
+color:var(--coral);background:#fff}
+input.tope:focus{outline:none;border-color:var(--coral)}
+.hoy{display:flex;align-items:center;gap:11px;flex-wrap:wrap;background:#FAF8F4;
+border:1px solid var(--line);border-radius:9px;padding:7px 13px;margin:12px 0 4px}
+.hoy>span:first-child{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:9.5px;
+font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);flex:none}
+.hoy .s{font-size:12px;color:var(--tx2)}
+.lbl2{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10.5px;font-weight:700;text-transform:uppercase;
+letter-spacing:.1em;color:var(--tx3);margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+color:var(--tx3);text-align:left;padding:9px 8px;border-bottom:1.5px solid var(--line);white-space:nowrap}
+td{padding:8px 8px;border-bottom:1px solid #F4F1EB;overflow-wrap:anywhere}
+.chip{display:inline-block;max-width:100%}
+table.fixa{table-layout:fixed;width:100%}
+table.fixa .chip{font-size:9.5px;line-height:1.5;word-break:break-word}
+.body{min-width:0}
+tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hot{color:var(--green);font-weight:700}.warn{color:var(--coral);font-weight:600}
+.gld{color:var(--gold-d);font-weight:600}.mut{color:var(--tx3)}
+tr.tot td{background:#F1F8F4;font-weight:700;border-top:1.5px solid var(--line)}
+/* láminas con poco contenido: la tabla y las notas se reparten el alto en vez
+   de amontonarse arriba y dejar medio cuadro vacío */
+.holgada .col{justify-content:space-between}
+.holgada table{height:100%}
+.holgada td{padding:14px 9px;font-size:14.5px;vertical-align:top}
+.holgada th{padding:11px 9px;font-size:11px}
+.holgada .note{font-size:14px;padding:14px 17px}
+.chip{font-family:'JetBrains Mono',ui-monospace,'Cascadia Mono',Consolas,monospace;font-size:10px;
+background:var(--teal-l);color:var(--teal-d);padding:2px 6px;border-radius:4px;white-space:nowrap}
+table.fixa .chip{white-space:normal;line-height:1.5;word-spacing:-1px}
+.col.comp table.fixa .chip{font-size:8px;padding:1px 3px;line-height:1.4}
+.col.comp td{padding:5px 6px}
+.chip.o{background:#F4F1EB;color:var(--tx3)}
+.note{font-size:13px;line-height:1.62;background:var(--gold-l);border-left:3px solid var(--gold);
+padding:11px 14px;border-radius:0 7px 7px 0;margin-top:12px}
+.note b{color:var(--gold-d)}
+.note.g{background:var(--green-l);border-left-color:var(--green)}.note.g b{color:var(--green)}
+.note.c{background:var(--coral-l);border-left-color:var(--coral)}.note.c b{color:var(--coral)}
+.foot{position:absolute;left:32px;right:32px;bottom:16px;display:flex;align-items:center;
+font-size:10.5px;color:var(--tx3);border-top:1px solid var(--line);padding-top:9px}
+.foot .n{margin-left:auto;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-weight:700}
+.badge{position:absolute;top:24px;right:32px;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 13px;
+border-radius:100px;background:var(--teal-l);color:var(--teal-d)}
+.badge.ga{background:#FDF3E8;color:#B8632F}
+#chip-paq{position:fixed;right:18px;bottom:16px;z-index:60;display:flex;align-items:center;
+gap:9px;background:#22443C;color:#fff;padding:8px 16px;border-radius:100px;cursor:pointer;
+box-shadow:0 5px 18px rgba(0,0,0,.24);transition:transform .14s}
+#chip-paq:hover{transform:translateY(-2px)}
+#chip-paq .cp-l{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:8.5px;
+font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.7}
+#chip-paq b{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:16px;
+font-weight:800;letter-spacing:-.01em}
+#chip-paq .cp-n{font-size:10.5px;opacity:.72;border-left:1px solid rgba(255,255,255,.26);
+padding-left:9px}
+.nav{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:20}
+.nav button{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:11px;font-weight:600;
+background:rgba(255,255,255,.14);color:#dff0ec;border:none;padding:6px 13px;border-radius:100px;cursor:pointer}
+.nav button:hover{background:rgba(255,255,255,.26)}
+.bar{height:7px;background:#EFEBE4;border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:4px}
+
+.ofinav .ofl{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:9px;font-weight:700;
+text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-right:3px}
+table.apretada td b{font-size:12px}.slide .note{margin-top:8px;padding:9px 14px;font-size:12px}.slide .note+.note{margin-top:6px}#ix-btn{position:fixed;left:18px;bottom:16px;z-index:60;cursor:pointer;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;background:#fff;color:#2B4A44;border:1px solid #D8D3C9;padding:9px 18px;border-radius:100px;box-shadow:0 4px 14px rgba(0,0,0,.12)}#ix-btn:hover{border-color:#2D9C9C;color:#2D9C9C}#ix-ov{position:fixed;inset:0;z-index:80;background:rgba(20,34,31,.55);display:none;align-items:center;justify-content:center}#ix-ov.on{display:flex}#ix-box{background:#FCFBF9;border-radius:16px;padding:26px 30px;max-width:720px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 18px 50px rgba(0,0,0,.3)}.ix-t{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#8A8578;margin:14px 0 7px}.ix-t:first-child{margin-top:0}.ix-i{display:flex;align-items:baseline;gap:10px;padding:7px 11px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px}.ix-i:hover{background:#EEF3F1}.ix-i b{flex:1}.ix-i span{font-size:11.5px;color:#8A8578}.sab{font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:10.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--tx2);padding:3px 11px;border-radius:100px}.sab:hover{border-color:var(--green)}.sab.on{background:var(--green);border-color:var(--green);color:#fff}input.su,input.st{width:46px;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:12px;font-weight:700;text-align:right;border:1px solid var(--line);border-radius:6px;padding:2px 5px;color:var(--green);background:#fff}input.su:focus,input.st:focus{outline:none;border-color:var(--green)}</style></head><body>
+<div class="deck"><div class="slide on" style="background:#0E2A2A;color:#FDFCFA">
+<div class="eyebrow" style="color:#2D9C9C">Aceites · Giro 9 · minimayoristas</div>
+<h1 style="color:#FDFCFA;margin-top:4px">La escalera, armada<br><em style="color:#D4A853">por región</em></h1>
+<div class="lead" style="color:#8A938E;max-width:760px">Hoy hay tres escalas, una por oficina.
+Esto propone siete, una por región, moviendo los dos peldaños de arriba y sin tocar el piso.</div>
+<div class="kpis" style="margin-top:34px">
+<div class="kpi"><b style="color:#FDFCFA">S/ 391,083</b><span style="color:#8A938E">inversión al mes</span></div>
+<div class="kpi"><b style="color:#D4A853">S/ 67,298</b><span style="color:#8A938E">ahorro al mes · 17%</span></div>
+<div class="kpi"><b style="color:#FDFCFA">7</b><span style="color:#8A938E">regiones</span></div>
+<div class="kpi"><b style="color:#FDFCFA">0</b><span style="color:#8A938E">clientes pierden el beneficio</span></div>
+</div>
+<div class="foot" style="border-color:#2B4A44;color:#5A6560"><span>enero a julio 2026 · 7 meses</span></div></div><div class="slide">
+<div class="eyebrow">Aceites · Giro 9 · por región</div>
+<h2>LIMA <span style="font-size:17px;font-weight:600;color:var(--tx3)">
+· hoy bajo la escala de LM</span></h2>
+<div class="badge" style="background:var(--teal-l);color:var(--teal-d)">S/ 19,048/mes</div>
+<div class="body" style="margin-top:12px">
+<div class="col" style="flex:1.45"><svg viewBox="0 0 620 232" style="width:100%;height:auto"><line x1="40" y1="182" x2="606" y2="182" stroke="#EFEBE4"/><text x="34" y="185" font-size="8.5" fill="#8A938E" text-anchor="end">0%</text><line x1="40" y1="138" x2="606" y2="138" stroke="#EFEBE4"/><text x="34" y="141" font-size="8.5" fill="#8A938E" text-anchor="end">10%</text><line x1="40" y1="95" x2="606" y2="95" stroke="#EFEBE4"/><text x="34" y="98" font-size="8.5" fill="#8A938E" text-anchor="end">20%</text><line x1="40" y1="51" x2="606" y2="51" stroke="#EFEBE4"/><text x="34" y="54" font-size="8.5" fill="#8A938E" text-anchor="end">30%</text><rect x="46.1" y="123" width="34.9" height="59" fill="#2D9C9C" rx="2"/><text x="64" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle"><20</text><text x="64" y="110" font-size="8.5" fill="#5A6560" text-anchor="middle">13%</text><text x="64" y="119" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="93.3" y="174" width="34.9" height="8" fill="#2D9C9C" rx="2"/><text x="111" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">20-24</text><text x="111" y="161" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="111" y="170" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">0%</text><rect x="140.5" y="180" width="34.9" height="2" fill="#2D9C9C" rx="2"/><text x="158" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">25-29</text><text x="158" y="167" font-size="8.5" fill="#5A6560" text-anchor="middle">1%</text><text x="158" y="176" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">0%</text><rect x="187.6" y="181" width="34.9" height="1" fill="#2D9C9C" rx="2"/><text x="205" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">30-34</text><text x="205" y="168" font-size="8.5" fill="#5A6560" text-anchor="middle">0%</text><text x="205" y="177" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">0%</text><rect x="234.8" y="172" width="34.9" height="10" fill="#2D9C9C" rx="2"/><rect x="244.2" y="177.0" width="16.1" height="5.0" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="252" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">35-39</text><text x="252" y="159" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="252" y="168" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="282.0" y="144" width="34.9" height="38" fill="#2D9C9C" rx="2"/><rect x="291.4" y="178.9" width="16.1" height="3.1" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="299" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">40-44</text><text x="299" y="131" font-size="8.5" fill="#5A6560" text-anchor="middle">9%</text><text x="299" y="140" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="329.1" y="178" width="34.9" height="4" fill="#2D9C9C" rx="2"/><rect x="338.6" y="180.5" width="16.1" height="1.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="347" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">45-49</text><text x="347" y="165" font-size="8.5" fill="#5A6560" text-anchor="middle">1%</text><text x="347" y="174" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">0%</text><rect x="376.3" y="83" width="34.9" height="99" fill="#2D9C9C" rx="2"/><rect x="385.7" y="135.3" width="16.1" height="46.7" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="394" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">50-54</text><text x="394" y="70" font-size="8.5" fill="#5A6560" text-anchor="middle">23%</text><text x="394" y="79" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">33%</text><rect x="423.5" y="174" width="34.9" height="8" fill="#2D9C9C" rx="2"/><rect x="432.9" y="179.8" width="16.1" height="2.2" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="441" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">55-59</text><text x="441" y="161" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="441" y="170" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="470.6" y="151" width="34.9" height="31" fill="#2D9C9C" rx="2"/><rect x="480.1" y="175.3" width="16.1" height="6.7" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="488" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">60-64</text><text x="488" y="138" font-size="8.5" fill="#5A6560" text-anchor="middle">7%</text><text x="488" y="147" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">5%</text><rect x="517.8" y="146" width="34.9" height="36" fill="#2D9C9C" rx="2"/><rect x="527.2" y="172.9" width="16.1" height="9.1" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="535" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">65-84</text><text x="535" y="133" font-size="8.5" fill="#5A6560" text-anchor="middle">8%</text><text x="535" y="142" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">6%</text><rect x="565.0" y="43" width="34.9" height="139" fill="#2D9C9C" rx="2"/><rect x="574.4" y="115.8" width="16.1" height="66.2" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="582" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">85+</text><text x="582" y="30" font-size="8.5" fill="#5A6560" text-anchor="middle">32%</text><text x="582" y="39" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">46%</text><line x1="229" y1="18" x2="229" y2="182" stroke="#8A938E" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="233" y="14" font-size="8.5" fill="#8A938E" font-weight="700">tope hoy 35u</text><line x1="276" y1="18" x2="276" y2="182" stroke="#B8632F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="280" y="25" font-size="8.5" fill="#B8632F" font-weight="700">peldaño 2: 40u</text><line x1="464" y1="18" x2="464" y2="182" stroke="#1F6F6F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="468" y="36" font-size="8.5" fill="#1F6F6F" font-weight="700">peldaño 3: 60u</text><text x="606" y="209" font-size="8" fill="#8A938E" text-anchor="end">barras = % de clientes · número = % del volumen · sombra = % de la inversión</text></svg>
+<div class="card" style="margin-top:14px"><div class="lbl2">Cómo se lee</div>
+<p class="note">Hoy la tasa máxima se gana desde <b>35u</b>, y la alcanza el <b>99% del volumen</b>: un escalón que casi todos cruzan. El tramo con más clientes es el de <b>50-54u</b>, con el 23% de ellos. Con la escala nueva, el <b>41% del volumen</b> que hoy cobra la tasa alta pasa al peldaño del medio, y el <b>58%</b> sigue llegando arriba.</p></div></div>
+<div class="col" style="flex:.85">
+<div class="card"><div class="lbl2">La escala</div>
+<table style="width:100%;font-size:12.5px;margin-top:4px">
+<tr><td style="color:var(--tx3)">hoy</td><td class="num" style="color:var(--tx2)">20u→1.00% · 35u→3.00%</td></tr>
+<tr><td style="color:var(--tx3);padding-top:5px">nueva</td>
+<td class="num" style="padding-top:5px"><b>20u→1.00% · 40u→1.90% · 60u→2.90%</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px"><div class="lbl2">Qué pasa</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>Inversión al mes</td><td class="num">S/ 105,151</td></tr>
+<tr><td>Ahorro al mes</td><td class="num hot">S/ 19,048</td></tr>
+<tr><td>Sobre la inversión</td><td class="num hot">18.1%</td></tr>
+<tr><td>Clientes</td><td class="num">586</td></tr>
+<tr><td>Bajan de peldaño</td><td class="num warn">214 · 37%</td></tr>
+<tr><td>Pierden el beneficio</td><td class="num"><b>0</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px;background:var(--teal-l)">
+<div class="lbl2">Dónde queda el volumen</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>En el peldaño 3 (60u o más)</td><td class="num"><b>58%</b></td></tr>
+<tr><td>En el del medio (40 a 59u)</td><td class="num">37%</td></tr>
+<tr><td>Debajo del peldaño 2</td><td class="num">5%</td></tr>
+</table></div>
+</div></div>
+<div class="foot"><span>457 toneladas al mes por encima del piso de 20u ·
+salto entre peldaños: 20u</span></div></div><div class="slide">
+<div class="eyebrow">Aceites · Giro 9 · por región</div>
+<h2>NORTE <span style="font-size:17px;font-weight:600;color:var(--tx3)">
+· hoy bajo la escala de NCO</span></h2>
+<div class="badge" style="background:var(--teal-l);color:var(--teal-d)">S/ 12,016/mes</div>
+<div class="body" style="margin-top:12px">
+<div class="col" style="flex:1.45"><svg viewBox="0 0 620 232" style="width:100%;height:auto"><line x1="40" y1="182" x2="606" y2="182" stroke="#EFEBE4"/><text x="34" y="185" font-size="8.5" fill="#8A938E" text-anchor="end">0%</text><line x1="40" y1="142" x2="606" y2="142" stroke="#EFEBE4"/><text x="34" y="145" font-size="8.5" fill="#8A938E" text-anchor="end">10%</text><line x1="40" y1="101" x2="606" y2="101" stroke="#EFEBE4"/><text x="34" y="104" font-size="8.5" fill="#8A938E" text-anchor="end">20%</text><line x1="40" y1="61" x2="606" y2="61" stroke="#EFEBE4"/><text x="34" y="64" font-size="8.5" fill="#8A938E" text-anchor="end">30%</text><rect x="46.1" y="135" width="34.9" height="47" fill="#2D9C9C" rx="2"/><text x="64" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle"><20</text><text x="64" y="122" font-size="8.5" fill="#5A6560" text-anchor="middle">12%</text><text x="64" y="131" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="93.3" y="171" width="34.9" height="11" fill="#2D9C9C" rx="2"/><rect x="102.7" y="180.5" width="16.1" height="1.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="111" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">20-24</text><text x="111" y="158" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="111" y="167" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="140.5" y="175" width="34.9" height="7" fill="#2D9C9C" rx="2"/><text x="158" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">25-29</text><text x="158" y="162" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="158" y="171" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">0%</text><rect x="187.6" y="177" width="34.9" height="5" fill="#2D9C9C" rx="2"/><text x="205" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">30-34</text><text x="205" y="164" font-size="8.5" fill="#5A6560" text-anchor="middle">1%</text><text x="205" y="173" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="234.8" y="158" width="34.9" height="24" fill="#2D9C9C" rx="2"/><rect x="244.2" y="161.9" width="16.1" height="20.1" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="252" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">35-39</text><text x="252" y="145" font-size="8.5" fill="#5A6560" text-anchor="middle">6%</text><text x="252" y="154" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">14%</text><rect x="282.0" y="139" width="34.9" height="43" fill="#2D9C9C" rx="2"/><rect x="291.4" y="172.4" width="16.1" height="9.6" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="299" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">40-44</text><text x="299" y="126" font-size="8.5" fill="#5A6560" text-anchor="middle">11%</text><text x="299" y="135" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">7%</text><rect x="329.1" y="175" width="34.9" height="7" fill="#2D9C9C" rx="2"/><rect x="338.6" y="180.0" width="16.1" height="2.0" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="347" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">45-49</text><text x="347" y="162" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="347" y="171" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="376.3" y="152" width="34.9" height="30" fill="#2D9C9C" rx="2"/><rect x="385.7" y="164.9" width="16.1" height="17.1" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="394" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">50-54</text><text x="394" y="139" font-size="8.5" fill="#5A6560" text-anchor="middle">8%</text><text x="394" y="148" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">12%</text><rect x="423.5" y="173" width="34.9" height="9" fill="#2D9C9C" rx="2"/><rect x="432.9" y="179.9" width="16.1" height="2.1" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="441" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">55-59</text><text x="441" y="160" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="441" y="169" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="470.6" y="153" width="34.9" height="29" fill="#2D9C9C" rx="2"/><rect x="480.1" y="177.4" width="16.1" height="4.6" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="488" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">60-64</text><text x="488" y="140" font-size="8.5" fill="#5A6560" text-anchor="middle">7%</text><text x="488" y="149" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="517.8" y="129" width="34.9" height="53" fill="#2D9C9C" rx="2"/><rect x="527.2" y="170.4" width="16.1" height="11.6" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="535" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">65-84</text><text x="535" y="116" font-size="8.5" fill="#5A6560" text-anchor="middle">13%</text><text x="535" y="125" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">8%</text><rect x="565.0" y="43" width="34.9" height="139" fill="#2D9C9C" rx="2"/><rect x="574.4" y="110.1" width="16.1" height="71.9" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="582" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">85+</text><text x="582" y="30" font-size="8.5" fill="#5A6560" text-anchor="middle">34%</text><text x="582" y="39" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">50%</text><line x1="229" y1="18" x2="229" y2="182" stroke="#8A938E" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="233" y="14" font-size="8.5" fill="#8A938E" font-weight="700">tope hoy 35u</text><line x1="276" y1="18" x2="276" y2="182" stroke="#B8632F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="280" y="25" font-size="8.5" fill="#B8632F" font-weight="700">peldaño 2: 40u</text><line x1="464" y1="18" x2="464" y2="182" stroke="#1F6F6F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="468" y="36" font-size="8.5" fill="#1F6F6F" font-weight="700">peldaño 3: 60u</text><text x="606" y="209" font-size="8" fill="#8A938E" text-anchor="end">barras = % de clientes · número = % del volumen · sombra = % de la inversión</text></svg>
+<div class="card" style="margin-top:14px"><div class="lbl2">Cómo se lee</div>
+<p class="note">Hoy la tasa máxima se gana desde <b>35u</b>, y la alcanza el <b>98% del volumen</b>: un escalón que casi todos cruzan. El tramo con más clientes es el de <b>150-154u</b>, con el 16% de ellos. Con la escala nueva, el <b>36% del volumen</b> que hoy cobra la tasa alta pasa al peldaño del medio, y el <b>62%</b> sigue llegando arriba.</p></div></div>
+<div class="col" style="flex:.85">
+<div class="card"><div class="lbl2">La escala</div>
+<table style="width:100%;font-size:12.5px;margin-top:4px">
+<tr><td style="color:var(--tx3)">hoy</td><td class="num" style="color:var(--tx2)">20u→1.00% · 35u→2.00%</td></tr>
+<tr><td style="color:var(--tx3);padding-top:5px">nueva</td>
+<td class="num" style="padding-top:5px"><b>20u→1.00% · 40u→1.40% · 60u→1.90%</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px"><div class="lbl2">Qué pasa</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>Inversión al mes</td><td class="num">S/ 71,190</td></tr>
+<tr><td>Ahorro al mes</td><td class="num hot">S/ 12,016</td></tr>
+<tr><td>Sobre la inversión</td><td class="num hot">16.9%</td></tr>
+<tr><td>Clientes</td><td class="num">785</td></tr>
+<tr><td>Bajan de peldaño</td><td class="num warn">219 · 28%</td></tr>
+<tr><td>Pierden el beneficio</td><td class="num"><b>0</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px;background:var(--teal-l)">
+<div class="lbl2">Dónde queda el volumen</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>En el peldaño 3 (60u o más)</td><td class="num"><b>62%</b></td></tr>
+<tr><td>En el del medio (40 a 59u)</td><td class="num">22%</td></tr>
+<tr><td>Debajo del peldaño 2</td><td class="num">16%</td></tr>
+</table></div>
+</div></div>
+<div class="foot"><span>447 toneladas al mes por encima del piso de 20u ·
+salto entre peldaños: 20u</span></div></div><div class="slide">
+<div class="eyebrow">Aceites · Giro 9 · por región</div>
+<h2>SUR <span style="font-size:17px;font-weight:600;color:var(--tx3)">
+· hoy bajo la escala de SR</span></h2>
+<div class="badge" style="background:var(--teal-l);color:var(--teal-d)">S/ 14,225/mes</div>
+<div class="body" style="margin-top:12px">
+<div class="col" style="flex:1.45"><svg viewBox="0 0 620 232" style="width:100%;height:auto"><line x1="40" y1="182" x2="606" y2="182" stroke="#EFEBE4"/><text x="34" y="185" font-size="8.5" fill="#8A938E" text-anchor="end">0%</text><line x1="40" y1="130" x2="606" y2="130" stroke="#EFEBE4"/><text x="34" y="133" font-size="8.5" fill="#8A938E" text-anchor="end">10%</text><line x1="40" y1="78" x2="606" y2="78" stroke="#EFEBE4"/><text x="34" y="81" font-size="8.5" fill="#8A938E" text-anchor="end">20%</text><line x1="40" y1="26" x2="606" y2="26" stroke="#EFEBE4"/><text x="34" y="29" font-size="8.5" fill="#8A938E" text-anchor="end">30%</text><rect x="45.7" y="85" width="32.2" height="97" fill="#2D9C9C" rx="2"/><text x="62" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle"><15</text><text x="62" y="72" font-size="8.5" fill="#5A6560" text-anchor="middle">19%</text><text x="62" y="81" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">4%</text><rect x="89.2" y="162" width="32.2" height="20" fill="#2D9C9C" rx="2"/><rect x="97.9" y="180.5" width="14.8" height="1.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="105" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">15-19</text><text x="105" y="149" font-size="8.5" fill="#5A6560" text-anchor="middle">4%</text><text x="105" y="158" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="132.7" y="155" width="32.2" height="27" fill="#2D9C9C" rx="2"/><rect x="141.4" y="180.3" width="14.8" height="1.7" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="149" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">20-24</text><text x="149" y="142" font-size="8.5" fill="#5A6560" text-anchor="middle">5%</text><text x="149" y="151" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="176.3" y="129" width="32.2" height="53" fill="#2D9C9C" rx="2"/><rect x="185.0" y="151.0" width="14.8" height="31.0" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="192" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">25-29</text><text x="192" y="116" font-size="8.5" fill="#5A6560" text-anchor="middle">10%</text><text x="192" y="125" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">21%</text><rect x="219.8" y="151" width="32.2" height="31" fill="#2D9C9C" rx="2"/><rect x="228.5" y="170.1" width="14.8" height="11.9" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="236" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">30-34</text><text x="236" y="138" font-size="8.5" fill="#5A6560" text-anchor="middle">6%</text><text x="236" y="147" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">8%</text><rect x="263.4" y="165" width="32.2" height="17" fill="#2D9C9C" rx="2"/><rect x="272.1" y="177.4" width="14.8" height="4.6" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="279" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">35-39</text><text x="279" y="152" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="279" y="161" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="306.9" y="140" width="32.2" height="42" fill="#2D9C9C" rx="2"/><rect x="315.6" y="173.3" width="14.8" height="8.7" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="323" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">40-44</text><text x="323" y="127" font-size="8.5" fill="#5A6560" text-anchor="middle">8%</text><text x="323" y="136" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">6%</text><rect x="350.4" y="167" width="32.2" height="15" fill="#2D9C9C" rx="2"/><rect x="359.1" y="178.4" width="14.8" height="3.6" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="367" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">45-49</text><text x="367" y="154" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="367" y="163" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="394.0" y="155" width="32.2" height="27" fill="#2D9C9C" rx="2"/><rect x="402.7" y="168.2" width="14.8" height="13.8" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="410" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">50-54</text><text x="410" y="142" font-size="8.5" fill="#5A6560" text-anchor="middle">5%</text><text x="410" y="151" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">9%</text><rect x="437.5" y="169" width="32.2" height="13" fill="#2D9C9C" rx="2"/><rect x="446.2" y="179.0" width="14.8" height="3.0" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="454" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">55-59</text><text x="454" y="156" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="454" y="165" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="481.0" y="163" width="32.2" height="19" fill="#2D9C9C" rx="2"/><rect x="489.7" y="177.5" width="14.8" height="4.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="497" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">60-64</text><text x="497" y="150" font-size="8.5" fill="#5A6560" text-anchor="middle">4%</text><text x="497" y="159" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="524.6" y="131" width="32.2" height="51" fill="#2D9C9C" rx="2"/><rect x="533.3" y="169.6" width="14.8" height="12.4" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="541" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">65-84</text><text x="541" y="118" font-size="8.5" fill="#5A6560" text-anchor="middle">10%</text><text x="541" y="127" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">8%</text><rect x="568.1" y="74" width="32.2" height="108" fill="#2D9C9C" rx="2"/><rect x="576.8" y="138.1" width="14.8" height="43.9" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="584" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">85+</text><text x="584" y="61" font-size="8.5" fill="#5A6560" text-anchor="middle">21%</text><text x="584" y="70" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">30%</text><line x1="171" y1="18" x2="171" y2="182" stroke="#8A938E" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="175" y="14" font-size="8.5" fill="#8A938E" font-weight="700">tope hoy 25u</text><line x1="258" y1="18" x2="258" y2="182" stroke="#B8632F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="262" y="25" font-size="8.5" fill="#B8632F" font-weight="700">peldaño 2: 35u</text><line x1="388" y1="18" x2="388" y2="182" stroke="#1F6F6F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="392" y="36" font-size="8.5" fill="#1F6F6F" font-weight="700">peldaño 3: 50u</text><text x="606" y="209" font-size="8" fill="#8A938E" text-anchor="end">barras = % de clientes · número = % del volumen · sombra = % de la inversión</text></svg>
+<div class="card" style="margin-top:14px"><div class="lbl2">Cómo se lee</div>
+<p class="note">Hoy la tasa máxima se gana desde <b>25u</b>, y la alcanza el <b>96% del volumen</b>: un escalón que casi todos cruzan. El tramo con más clientes es el de <b>25-29u</b>, con el 10% de ellos. Con la escala nueva, el <b>42% del volumen</b> que hoy cobra la tasa alta pasa al peldaño del medio, y el <b>55%</b> sigue llegando arriba.</p></div></div>
+<div class="col" style="flex:.85">
+<div class="card"><div class="lbl2">La escala</div>
+<table style="width:100%;font-size:12.5px;margin-top:4px">
+<tr><td style="color:var(--tx3)">hoy</td><td class="num" style="color:var(--tx2)">15u→1.00% · 25u→2.00%</td></tr>
+<tr><td style="color:var(--tx3);padding-top:5px">nueva</td>
+<td class="num" style="padding-top:5px"><b>15u→1.00% · 35u→1.40% · 50u→1.90%</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px"><div class="lbl2">Qué pasa</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>Inversión al mes</td><td class="num">S/ 65,679</td></tr>
+<tr><td>Ahorro al mes</td><td class="num hot">S/ 14,225</td></tr>
+<tr><td>Sobre la inversión</td><td class="num hot">21.7%</td></tr>
+<tr><td>Clientes</td><td class="num">1,255</td></tr>
+<tr><td>Bajan de peldaño</td><td class="num warn">381 · 30%</td></tr>
+<tr><td>Pierden el beneficio</td><td class="num"><b>0</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px;background:var(--teal-l)">
+<div class="lbl2">Dónde queda el volumen</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>En el peldaño 3 (50u o más)</td><td class="num"><b>55%</b></td></tr>
+<tr><td>En el del medio (35 a 49u)</td><td class="num">12%</td></tr>
+<tr><td>Debajo del peldaño 2</td><td class="num">34%</td></tr>
+</table></div>
+</div></div>
+<div class="foot"><span>420 toneladas al mes por encima del piso de 15u ·
+salto entre peldaños: 15u</span></div></div><div class="slide">
+<div class="eyebrow">Aceites · Giro 9 · por región</div>
+<h2>ORIENTE <span style="font-size:17px;font-weight:600;color:var(--tx3)">
+· hoy bajo la escala de NCO</span></h2>
+<div class="badge" style="background:var(--teal-l);color:var(--teal-d)">S/ 7,592/mes</div>
+<div class="body" style="margin-top:12px">
+<div class="col" style="flex:1.45"><svg viewBox="0 0 620 232" style="width:100%;height:auto"><line x1="40" y1="182" x2="606" y2="182" stroke="#EFEBE4"/><text x="34" y="185" font-size="8.5" fill="#8A938E" text-anchor="end">0%</text><line x1="40" y1="147" x2="606" y2="147" stroke="#EFEBE4"/><text x="34" y="150" font-size="8.5" fill="#8A938E" text-anchor="end">10%</text><line x1="40" y1="112" x2="606" y2="112" stroke="#EFEBE4"/><text x="34" y="115" font-size="8.5" fill="#8A938E" text-anchor="end">20%</text><line x1="40" y1="77" x2="606" y2="77" stroke="#EFEBE4"/><text x="34" y="80" font-size="8.5" fill="#8A938E" text-anchor="end">30%</text><rect x="46.1" y="116" width="34.9" height="66" fill="#2D9C9C" rx="2"/><text x="64" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle"><20</text><text x="64" y="103" font-size="8.5" fill="#5A6560" text-anchor="middle">19%</text><text x="64" y="112" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="93.3" y="166" width="34.9" height="16" fill="#2D9C9C" rx="2"/><rect x="102.7" y="180.5" width="16.1" height="1.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="111" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">20-24</text><text x="111" y="153" font-size="8.5" fill="#5A6560" text-anchor="middle">4%</text><text x="111" y="162" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="140.5" y="176" width="34.9" height="6" fill="#2D9C9C" rx="2"/><text x="158" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">25-29</text><text x="158" y="163" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="158" y="172" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">0%</text><rect x="187.6" y="180" width="34.9" height="2" fill="#2D9C9C" rx="2"/><text x="205" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">30-34</text><text x="205" y="167" font-size="8.5" fill="#5A6560" text-anchor="middle">1%</text><text x="205" y="176" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">0%</text><rect x="234.8" y="170" width="34.9" height="12" fill="#2D9C9C" rx="2"/><rect x="244.2" y="167.8" width="16.1" height="14.2" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="252" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">35-39</text><text x="252" y="157" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="252" y="166" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">9%</text><rect x="282.0" y="146" width="34.9" height="36" fill="#2D9C9C" rx="2"/><rect x="291.4" y="173.5" width="16.1" height="8.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="299" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">40-44</text><text x="299" y="133" font-size="8.5" fill="#5A6560" text-anchor="middle">10%</text><text x="299" y="142" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">6%</text><rect x="329.1" y="180" width="34.9" height="2" fill="#2D9C9C" rx="2"/><rect x="338.6" y="179.7" width="16.1" height="2.3" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="347" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">45-49</text><text x="347" y="167" font-size="8.5" fill="#5A6560" text-anchor="middle">1%</text><text x="347" y="176" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="376.3" y="173" width="34.9" height="9" fill="#2D9C9C" rx="2"/><rect x="385.7" y="168.3" width="16.1" height="13.7" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="394" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">50-54</text><text x="394" y="160" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="394" y="169" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">9%</text><rect x="423.5" y="174" width="34.9" height="8" fill="#2D9C9C" rx="2"/><rect x="432.9" y="179.2" width="16.1" height="2.8" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="441" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">55-59</text><text x="441" y="161" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="441" y="170" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="470.6" y="161" width="34.9" height="21" fill="#2D9C9C" rx="2"/><rect x="480.1" y="176.0" width="16.1" height="6.0" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="488" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">60-64</text><text x="488" y="148" font-size="8.5" fill="#5A6560" text-anchor="middle">6%</text><text x="488" y="157" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">4%</text><rect x="517.8" y="150" width="34.9" height="32" fill="#2D9C9C" rx="2"/><rect x="527.2" y="169.1" width="16.1" height="12.9" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="535" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">65-84</text><text x="535" y="137" font-size="8.5" fill="#5A6560" text-anchor="middle">9%</text><text x="535" y="146" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">9%</text><rect x="565.0" y="43" width="34.9" height="139" fill="#2D9C9C" rx="2"/><rect x="574.4" y="103.8" width="16.1" height="78.2" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="582" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">85+</text><text x="582" y="30" font-size="8.5" fill="#5A6560" text-anchor="middle">40%</text><text x="582" y="39" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">54%</text><line x1="229" y1="18" x2="229" y2="182" stroke="#8A938E" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="233" y="14" font-size="8.5" fill="#8A938E" font-weight="700">tope hoy 35u</text><line x1="276" y1="18" x2="276" y2="182" stroke="#B8632F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="280" y="25" font-size="8.5" fill="#B8632F" font-weight="700">peldaño 2: 40u</text><line x1="464" y1="18" x2="464" y2="182" stroke="#1F6F6F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="468" y="36" font-size="8.5" fill="#1F6F6F" font-weight="700">peldaño 3: 60u</text><text x="606" y="209" font-size="8" fill="#8A938E" text-anchor="end">barras = % de clientes · número = % del volumen · sombra = % de la inversión</text></svg>
+<div class="card" style="margin-top:14px"><div class="lbl2">Cómo se lee</div>
+<p class="note">Hoy la tasa máxima se gana desde <b>35u</b>, y la alcanza el <b>98% del volumen</b>: un escalón que casi todos cruzan. El tramo con más clientes es el de <b>150-154u</b>, con el 21% de ellos. Con la escala nueva, el <b>29% del volumen</b> que hoy cobra la tasa alta pasa al peldaño del medio, y el <b>69%</b> sigue llegando arriba.</p></div></div>
+<div class="col" style="flex:.85">
+<div class="card"><div class="lbl2">La escala</div>
+<table style="width:100%;font-size:12.5px;margin-top:4px">
+<tr><td style="color:var(--tx3)">hoy</td><td class="num" style="color:var(--tx2)">20u→1.00% · 35u→2.00%</td></tr>
+<tr><td style="color:var(--tx3);padding-top:5px">nueva</td>
+<td class="num" style="padding-top:5px"><b>20u→1.00% · 40u→1.40% · 60u→1.90%</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px"><div class="lbl2">Qué pasa</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>Inversión al mes</td><td class="num">S/ 53,200</td></tr>
+<tr><td>Ahorro al mes</td><td class="num hot">S/ 7,592</td></tr>
+<tr><td>Sobre la inversión</td><td class="num hot">14.3%</td></tr>
+<tr><td>Clientes</td><td class="num">693</td></tr>
+<tr><td>Bajan de peldaño</td><td class="num warn">132 · 19%</td></tr>
+<tr><td>Pierden el beneficio</td><td class="num"><b>0</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px;background:var(--teal-l)">
+<div class="lbl2">Dónde queda el volumen</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>En el peldaño 3 (60u o más)</td><td class="num"><b>69%</b></td></tr>
+<tr><td>En el del medio (40 a 59u)</td><td class="num">19%</td></tr>
+<tr><td>Debajo del peldaño 2</td><td class="num">12%</td></tr>
+</table></div>
+</div></div>
+<div class="foot"><span>296 toneladas al mes por encima del piso de 20u ·
+salto entre peldaños: 20u</span></div></div><div class="slide">
+<div class="eyebrow">Aceites · Giro 9 · por región</div>
+<h2>SUR CHICO <span style="font-size:17px;font-weight:600;color:var(--tx3)">
+· hoy bajo la escala de LM</span></h2>
+<div class="badge" style="background:var(--teal-l);color:var(--teal-d)">S/ 7,468/mes</div>
+<div class="body" style="margin-top:12px">
+<div class="col" style="flex:1.45"><svg viewBox="0 0 620 232" style="width:100%;height:auto"><line x1="40" y1="182" x2="606" y2="182" stroke="#EFEBE4"/><text x="34" y="185" font-size="8.5" fill="#8A938E" text-anchor="end">0%</text><line x1="40" y1="135" x2="606" y2="135" stroke="#EFEBE4"/><text x="34" y="138" font-size="8.5" fill="#8A938E" text-anchor="end">10%</text><line x1="40" y1="87" x2="606" y2="87" stroke="#EFEBE4"/><text x="34" y="90" font-size="8.5" fill="#8A938E" text-anchor="end">20%</text><line x1="40" y1="40" x2="606" y2="40" stroke="#EFEBE4"/><text x="34" y="43" font-size="8.5" fill="#8A938E" text-anchor="end">30%</text><rect x="46.1" y="86" width="34.9" height="96" fill="#2D9C9C" rx="2"/><text x="64" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle"><20</text><text x="64" y="73" font-size="8.5" fill="#5A6560" text-anchor="middle">20%</text><text x="64" y="82" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">5%</text><rect x="93.3" y="149" width="34.9" height="33" fill="#2D9C9C" rx="2"/><rect x="102.7" y="180.5" width="16.1" height="1.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="111" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">20-24</text><text x="111" y="136" font-size="8.5" fill="#5A6560" text-anchor="middle">7%</text><text x="111" y="145" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="140.5" y="168" width="34.9" height="14" fill="#2D9C9C" rx="2"/><rect x="149.9" y="180.5" width="16.1" height="1.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="158" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">25-29</text><text x="158" y="155" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="158" y="164" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="187.6" y="169" width="34.9" height="13" fill="#2D9C9C" rx="2"/><text x="205" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">30-34</text><text x="205" y="156" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="205" y="165" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="234.8" y="173" width="34.9" height="9" fill="#2D9C9C" rx="2"/><rect x="244.2" y="176.5" width="16.1" height="5.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="252" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">35-39</text><text x="252" y="160" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="252" y="169" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="282.0" y="165" width="34.9" height="17" fill="#2D9C9C" rx="2"/><rect x="291.4" y="177.5" width="16.1" height="4.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="299" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">40-44</text><text x="299" y="152" font-size="8.5" fill="#5A6560" text-anchor="middle">4%</text><text x="299" y="161" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="329.1" y="176" width="34.9" height="6" fill="#2D9C9C" rx="2"/><rect x="338.6" y="180.3" width="16.1" height="1.7" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="347" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">45-49</text><text x="347" y="163" font-size="8.5" fill="#5A6560" text-anchor="middle">1%</text><text x="347" y="172" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="376.3" y="132" width="34.9" height="50" fill="#2D9C9C" rx="2"/><rect x="385.7" y="150.6" width="16.1" height="31.4" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="394" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">50-54</text><text x="394" y="119" font-size="8.5" fill="#5A6560" text-anchor="middle">11%</text><text x="394" y="128" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">21%</text><rect x="423.5" y="170" width="34.9" height="12" fill="#2D9C9C" rx="2"/><rect x="432.9" y="179.2" width="16.1" height="2.8" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="441" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">55-59</text><text x="441" y="157" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="441" y="166" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="470.6" y="148" width="34.9" height="34" fill="#2D9C9C" rx="2"/><rect x="480.1" y="173.7" width="16.1" height="8.3" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="488" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">60-64</text><text x="488" y="135" font-size="8.5" fill="#5A6560" text-anchor="middle">7%</text><text x="488" y="144" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">5%</text><rect x="517.8" y="132" width="34.9" height="50" fill="#2D9C9C" rx="2"/><rect x="527.2" y="165.2" width="16.1" height="16.8" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="535" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">65-84</text><text x="535" y="119" font-size="8.5" fill="#5A6560" text-anchor="middle">10%</text><text x="535" y="128" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">11%</text><rect x="565.0" y="43" width="34.9" height="139" fill="#2D9C9C" rx="2"/><rect x="574.4" y="115.1" width="16.1" height="66.9" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="582" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">85+</text><text x="582" y="30" font-size="8.5" fill="#5A6560" text-anchor="middle">29%</text><text x="582" y="39" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">44%</text><line x1="229" y1="18" x2="229" y2="182" stroke="#8A938E" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="233" y="14" font-size="8.5" fill="#8A938E" font-weight="700">tope hoy 35u</text><line x1="276" y1="18" x2="276" y2="182" stroke="#B8632F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="280" y="25" font-size="8.5" fill="#B8632F" font-weight="700">peldaño 2: 40u</text><line x1="464" y1="18" x2="464" y2="182" stroke="#1F6F6F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="468" y="36" font-size="8.5" fill="#1F6F6F" font-weight="700">peldaño 3: 60u</text><text x="606" y="209" font-size="8" fill="#8A938E" text-anchor="end">barras = % de clientes · número = % del volumen · sombra = % de la inversión</text></svg>
+<div class="card" style="margin-top:14px"><div class="lbl2">Cómo se lee</div>
+<p class="note">Hoy la tasa máxima se gana desde <b>35u</b>, y la alcanza el <b>95% del volumen</b>: un escalón que casi todos cruzan. El tramo con más clientes es el de <b>50-54u</b>, con el 11% de ellos. Con la escala nueva, el <b>32% del volumen</b> que hoy cobra la tasa alta pasa al peldaño del medio, y el <b>63%</b> sigue llegando arriba.</p></div></div>
+<div class="col" style="flex:.85">
+<div class="card"><div class="lbl2">La escala</div>
+<table style="width:100%;font-size:12.5px;margin-top:4px">
+<tr><td style="color:var(--tx3)">hoy</td><td class="num" style="color:var(--tx2)">20u→1.00% · 35u→3.00%</td></tr>
+<tr><td style="color:var(--tx3);padding-top:5px">nueva</td>
+<td class="num" style="padding-top:5px"><b>20u→1.00% · 40u→1.90% · 60u→2.90%</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px"><div class="lbl2">Qué pasa</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>Inversión al mes</td><td class="num">S/ 48,622</td></tr>
+<tr><td>Ahorro al mes</td><td class="num hot">S/ 7,468</td></tr>
+<tr><td>Sobre la inversión</td><td class="num hot">15.4%</td></tr>
+<tr><td>Clientes</td><td class="num">554</td></tr>
+<tr><td>Bajan de peldaño</td><td class="num warn">111 · 20%</td></tr>
+<tr><td>Pierden el beneficio</td><td class="num"><b>0</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px;background:var(--teal-l)">
+<div class="lbl2">Dónde queda el volumen</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>En el peldaño 3 (60u o más)</td><td class="num"><b>63%</b></td></tr>
+<tr><td>En el del medio (40 a 59u)</td><td class="num">28%</td></tr>
+<tr><td>Debajo del peldaño 2</td><td class="num">9%</td></tr>
+</table></div>
+</div></div>
+<div class="foot"><span>217 toneladas al mes por encima del piso de 20u ·
+salto entre peldaños: 20u</span></div></div><div class="slide">
+<div class="eyebrow">Aceites · Giro 9 · por región</div>
+<h2>CENTRO <span style="font-size:17px;font-weight:600;color:var(--tx3)">
+· hoy bajo la escala de NCO</span></h2>
+<div class="badge" style="background:var(--teal-l);color:var(--teal-d)">S/ 4,891/mes</div>
+<div class="body" style="margin-top:12px">
+<div class="col" style="flex:1.45"><svg viewBox="0 0 620 232" style="width:100%;height:auto"><line x1="40" y1="182" x2="606" y2="182" stroke="#EFEBE4"/><text x="34" y="185" font-size="8.5" fill="#8A938E" text-anchor="end">0%</text><line x1="40" y1="130" x2="606" y2="130" stroke="#EFEBE4"/><text x="34" y="133" font-size="8.5" fill="#8A938E" text-anchor="end">10%</text><line x1="40" y1="78" x2="606" y2="78" stroke="#EFEBE4"/><text x="34" y="81" font-size="8.5" fill="#8A938E" text-anchor="end">20%</text><line x1="40" y1="26" x2="606" y2="26" stroke="#EFEBE4"/><text x="34" y="29" font-size="8.5" fill="#8A938E" text-anchor="end">30%</text><rect x="46.1" y="64" width="34.9" height="118" fill="#2D9C9C" rx="2"/><text x="64" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle"><20</text><text x="64" y="51" font-size="8.5" fill="#5A6560" text-anchor="middle">23%</text><text x="64" y="60" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">5%</text><rect x="93.3" y="140" width="34.9" height="42" fill="#2D9C9C" rx="2"/><rect x="102.7" y="179.8" width="16.1" height="2.2" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="111" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">20-24</text><text x="111" y="127" font-size="8.5" fill="#5A6560" text-anchor="middle">8%</text><text x="111" y="136" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="140.5" y="171" width="34.9" height="11" fill="#2D9C9C" rx="2"/><rect x="149.9" y="180.5" width="16.1" height="1.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="158" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">25-29</text><text x="158" y="158" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="158" y="167" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="187.6" y="175" width="34.9" height="7" fill="#2D9C9C" rx="2"/><text x="205" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">30-34</text><text x="205" y="162" font-size="8.5" fill="#5A6560" text-anchor="middle">1%</text><text x="205" y="171" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="234.8" y="134" width="34.9" height="48" fill="#2D9C9C" rx="2"/><rect x="244.2" y="147.9" width="16.1" height="34.1" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="252" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">35-39</text><text x="252" y="121" font-size="8.5" fill="#5A6560" text-anchor="middle">9%</text><text x="252" y="130" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">22%</text><rect x="282.0" y="122" width="34.9" height="60" fill="#2D9C9C" rx="2"/><rect x="291.4" y="168.3" width="16.1" height="13.7" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="299" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">40-44</text><text x="299" y="109" font-size="8.5" fill="#5A6560" text-anchor="middle">12%</text><text x="299" y="118" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">9%</text><rect x="329.1" y="164" width="34.9" height="18" fill="#2D9C9C" rx="2"/><rect x="338.6" y="177.1" width="16.1" height="4.9" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="347" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">45-49</text><text x="347" y="151" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="347" y="160" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="376.3" y="152" width="34.9" height="30" fill="#2D9C9C" rx="2"/><rect x="385.7" y="168.3" width="16.1" height="13.7" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="394" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">50-54</text><text x="394" y="139" font-size="8.5" fill="#5A6560" text-anchor="middle">6%</text><text x="394" y="148" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">9%</text><rect x="423.5" y="167" width="34.9" height="15" fill="#2D9C9C" rx="2"/><rect x="432.9" y="176.3" width="16.1" height="5.7" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="441" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">55-59</text><text x="441" y="154" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="441" y="163" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">4%</text><rect x="470.6" y="155" width="34.9" height="27" fill="#2D9C9C" rx="2"/><rect x="480.1" y="174.4" width="16.1" height="7.6" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="488" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">60-64</text><text x="488" y="142" font-size="8.5" fill="#5A6560" text-anchor="middle">5%</text><text x="488" y="151" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">5%</text><rect x="517.8" y="137" width="34.9" height="45" fill="#2D9C9C" rx="2"/><rect x="527.2" y="164.6" width="16.1" height="17.4" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="535" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">65-84</text><text x="535" y="124" font-size="8.5" fill="#5A6560" text-anchor="middle">9%</text><text x="535" y="133" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">11%</text><rect x="565.0" y="83" width="34.9" height="99" fill="#2D9C9C" rx="2"/><rect x="574.4" y="142.2" width="16.1" height="39.8" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="582" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">85+</text><text x="582" y="70" font-size="8.5" fill="#5A6560" text-anchor="middle">19%</text><text x="582" y="79" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">26%</text><line x1="229" y1="18" x2="229" y2="182" stroke="#8A938E" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="233" y="14" font-size="8.5" fill="#8A938E" font-weight="700">tope hoy 35u</text><line x1="276" y1="18" x2="276" y2="182" stroke="#B8632F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="280" y="25" font-size="8.5" fill="#B8632F" font-weight="700">peldaño 2: 40u</text><line x1="370" y1="18" x2="370" y2="182" stroke="#1F6F6F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="374" y="36" font-size="8.5" fill="#1F6F6F" font-weight="700">peldaño 3: 50u</text><text x="606" y="209" font-size="8" fill="#8A938E" text-anchor="end">barras = % de clientes · número = % del volumen · sombra = % de la inversión</text></svg>
+<div class="card" style="margin-top:14px"><div class="lbl2">Cómo se lee</div>
+<p class="note">Hoy la tasa máxima se gana desde <b>35u</b>, y la alcanza el <b>95% del volumen</b>: un escalón que casi todos cruzan. El tramo con más clientes es el de <b>40-44u</b>, con el 12% de ellos. Con la escala nueva, el <b>37% del volumen</b> que hoy cobra la tasa alta pasa al peldaño del medio, y el <b>58%</b> sigue llegando arriba.</p></div></div>
+<div class="col" style="flex:.85">
+<div class="card"><div class="lbl2">La escala</div>
+<table style="width:100%;font-size:12.5px;margin-top:4px">
+<tr><td style="color:var(--tx3)">hoy</td><td class="num" style="color:var(--tx2)">20u→1.00% · 35u→2.00%</td></tr>
+<tr><td style="color:var(--tx3);padding-top:5px">nueva</td>
+<td class="num" style="padding-top:5px"><b>20u→1.00% · 40u→1.40% · 50u→1.90%</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px"><div class="lbl2">Qué pasa</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>Inversión al mes</td><td class="num">S/ 25,789</td></tr>
+<tr><td>Ahorro al mes</td><td class="num hot">S/ 4,891</td></tr>
+<tr><td>Sobre la inversión</td><td class="num hot">19.0%</td></tr>
+<tr><td>Clientes</td><td class="num">630</td></tr>
+<tr><td>Bajan de peldaño</td><td class="num warn">153 · 24%</td></tr>
+<tr><td>Pierden el beneficio</td><td class="num"><b>0</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px;background:var(--teal-l)">
+<div class="lbl2">Dónde queda el volumen</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>En el peldaño 3 (50u o más)</td><td class="num"><b>58%</b></td></tr>
+<tr><td>En el del medio (40 a 49u)</td><td class="num">13%</td></tr>
+<tr><td>Debajo del peldaño 2</td><td class="num">29%</td></tr>
+</table></div>
+</div></div>
+<div class="foot"><span>148 toneladas al mes por encima del piso de 20u ·
+salto entre peldaños: 10u</span></div></div><div class="slide">
+<div class="eyebrow">Aceites · Giro 9 · por región</div>
+<h2>NORTE CHICO <span style="font-size:17px;font-weight:600;color:var(--tx3)">
+· hoy bajo la escala de LM</span></h2>
+<div class="badge" style="background:var(--teal-l);color:var(--teal-d)">S/ 2,059/mes</div>
+<div class="body" style="margin-top:12px">
+<div class="col" style="flex:1.45"><svg viewBox="0 0 620 232" style="width:100%;height:auto"><line x1="40" y1="182" x2="606" y2="182" stroke="#EFEBE4"/><text x="34" y="185" font-size="8.5" fill="#8A938E" text-anchor="end">0%</text><line x1="40" y1="137" x2="606" y2="137" stroke="#EFEBE4"/><text x="34" y="140" font-size="8.5" fill="#8A938E" text-anchor="end">10%</text><line x1="40" y1="93" x2="606" y2="93" stroke="#EFEBE4"/><text x="34" y="96" font-size="8.5" fill="#8A938E" text-anchor="end">20%</text><line x1="40" y1="48" x2="606" y2="48" stroke="#EFEBE4"/><text x="34" y="51" font-size="8.5" fill="#8A938E" text-anchor="end">30%</text><rect x="46.1" y="43" width="34.9" height="139" fill="#2D9C9C" rx="2"/><text x="64" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle"><20</text><text x="64" y="30" font-size="8.5" fill="#5A6560" text-anchor="middle">31%</text><text x="64" y="39" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">6%</text><rect x="93.3" y="164" width="34.9" height="18" fill="#2D9C9C" rx="2"/><rect x="102.7" y="180.5" width="16.1" height="1.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="111" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">20-24</text><text x="111" y="151" font-size="8.5" fill="#5A6560" text-anchor="middle">4%</text><text x="111" y="160" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="140.5" y="170" width="34.9" height="12" fill="#2D9C9C" rx="2"/><rect x="149.9" y="180.5" width="16.1" height="1.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="158" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">25-29</text><text x="158" y="157" font-size="8.5" fill="#5A6560" text-anchor="middle">3%</text><text x="158" y="166" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">2%</text><rect x="187.6" y="177" width="34.9" height="5" fill="#2D9C9C" rx="2"/><text x="205" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">30-34</text><text x="205" y="164" font-size="8.5" fill="#5A6560" text-anchor="middle">1%</text><text x="205" y="173" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="234.8" y="164" width="34.9" height="18" fill="#2D9C9C" rx="2"/><rect x="244.2" y="165.6" width="16.1" height="16.4" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="252" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">35-39</text><text x="252" y="151" font-size="8.5" fill="#5A6560" text-anchor="middle">4%</text><text x="252" y="160" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">13%</text><rect x="282.0" y="162" width="34.9" height="20" fill="#2D9C9C" rx="2"/><rect x="291.4" y="178.4" width="16.1" height="3.6" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="299" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">40-44</text><text x="299" y="149" font-size="8.5" fill="#5A6560" text-anchor="middle">4%</text><text x="299" y="158" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="329.1" y="174" width="34.9" height="8" fill="#2D9C9C" rx="2"/><rect x="338.6" y="180.4" width="16.1" height="1.6" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="347" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">45-49</text><text x="347" y="161" font-size="8.5" fill="#5A6560" text-anchor="middle">2%</text><text x="347" y="170" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">1%</text><rect x="376.3" y="112" width="34.9" height="70" fill="#2D9C9C" rx="2"/><rect x="385.7" y="134.5" width="16.1" height="47.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="394" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">50-54</text><text x="394" y="99" font-size="8.5" fill="#5A6560" text-anchor="middle">16%</text><text x="394" y="108" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">29%</text><rect x="423.5" y="165" width="34.9" height="17" fill="#2D9C9C" rx="2"/><rect x="432.9" y="176.9" width="16.1" height="5.1" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="441" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">55-59</text><text x="441" y="152" font-size="8.5" fill="#5A6560" text-anchor="middle">4%</text><text x="441" y="161" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="470.6" y="162" width="34.9" height="20" fill="#2D9C9C" rx="2"/><rect x="480.1" y="176.7" width="16.1" height="5.3" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="488" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">60-64</text><text x="488" y="149" font-size="8.5" fill="#5A6560" text-anchor="middle">4%</text><text x="488" y="158" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">3%</text><rect x="517.8" y="143" width="34.9" height="39" fill="#2D9C9C" rx="2"/><rect x="527.2" y="169.5" width="16.1" height="12.5" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="535" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">65-84</text><text x="535" y="130" font-size="8.5" fill="#5A6560" text-anchor="middle">9%</text><text x="535" y="139" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">8%</text><rect x="565.0" y="102" width="34.9" height="80" fill="#2D9C9C" rx="2"/><rect x="574.4" y="136.2" width="16.1" height="45.8" fill="#1A1A2E" fill-opacity=".24" rx="1.5"/><text x="582" y="196" font-size="8.5" fill="#5A6560" text-anchor="middle">85+</text><text x="582" y="89" font-size="8.5" fill="#5A6560" text-anchor="middle">18%</text><text x="582" y="98" font-size="8" fill="#2D9C9C" font-weight="700" text-anchor="middle">30%</text><line x1="229" y1="18" x2="229" y2="182" stroke="#8A938E" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="233" y="14" font-size="8.5" fill="#8A938E" font-weight="700">tope hoy 35u</text><line x1="229" y1="18" x2="229" y2="182" stroke="#B8632F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="233" y="25" font-size="8.5" fill="#B8632F" font-weight="700">peldaño 2: 35u</text><line x1="370" y1="18" x2="370" y2="182" stroke="#1F6F6F" stroke-width="1.4" stroke-dasharray="4 3" opacity=".85"/><text x="374" y="36" font-size="8.5" fill="#1F6F6F" font-weight="700">peldaño 3: 50u</text><text x="606" y="209" font-size="8" fill="#8A938E" text-anchor="end">barras = % de clientes · número = % del volumen · sombra = % de la inversión</text></svg>
+<div class="card" style="margin-top:14px"><div class="lbl2">Cómo se lee</div>
+<p class="note">Hoy la tasa máxima se gana desde <b>35u</b>, y la alcanza el <b>96% del volumen</b>: un escalón que casi todos cruzan. El tramo con más clientes es el de <b>50-54u</b>, con el 16% de ellos. Con la escala nueva, el <b>18% del volumen</b> que hoy cobra la tasa alta pasa al peldaño del medio, y el <b>78%</b> sigue llegando arriba.</p></div></div>
+<div class="col" style="flex:.85">
+<div class="card"><div class="lbl2">La escala</div>
+<table style="width:100%;font-size:12.5px;margin-top:4px">
+<tr><td style="color:var(--tx3)">hoy</td><td class="num" style="color:var(--tx2)">20u→1.00% · 35u→3.00%</td></tr>
+<tr><td style="color:var(--tx3);padding-top:5px">nueva</td>
+<td class="num" style="padding-top:5px"><b>20u→1.00% · 35u→1.90% · 50u→2.90%</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px"><div class="lbl2">Qué pasa</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>Inversión al mes</td><td class="num">S/ 21,452</td></tr>
+<tr><td>Ahorro al mes</td><td class="num hot">S/ 2,059</td></tr>
+<tr><td>Sobre la inversión</td><td class="num hot">9.6%</td></tr>
+<tr><td>Clientes</td><td class="num">294</td></tr>
+<tr><td>Bajan de peldaño</td><td class="num warn">30 · 10%</td></tr>
+<tr><td>Pierden el beneficio</td><td class="num"><b>0</b></td></tr>
+</table></div>
+<div class="card" style="margin-top:10px;background:var(--teal-l)">
+<div class="lbl2">Dónde queda el volumen</div>
+<table style="width:100%;font-size:12.5px">
+<tr><td>En el peldaño 3 (50u o más)</td><td class="num"><b>78%</b></td></tr>
+<tr><td>En el del medio (35 a 49u)</td><td class="num">18%</td></tr>
+<tr><td>Debajo del peldaño 2</td><td class="num">4%</td></tr>
+</table></div>
+</div></div>
+<div class="foot"><span>92 toneladas al mes por encima del piso de 20u ·
+salto entre peldaños: 15u</span></div></div><div class="slide">
+<div class="eyebrow">Las siete juntas</div>
+<h2>S/ 67,298 al mes · S/ 201,895 al trimestre</h2>
+<div class="body" style="margin-top:14px"><div class="col">
+<table style="width:100%;font-size:12px">
+<tr style="border-bottom:1px solid var(--line)">
+<th style="text-align:left">Región</th><th style="text-align:left">Oficina</th>
+<th style="text-align:left">Hoy</th><th style="text-align:left">Propuesta</th>
+<th class="num">Inversión</th><th class="num">Ahorro</th><th class="num">%</th>
+<th class="num">Bajan</th><th class="num">Vol. P3</th></tr>
+<tr><td><b>LIMA</b></td><td style="color:var(--tx3)">LM</td><td style="color:var(--tx2)">20u→1.00% · 35u→3.00%</td><td><b>20u→1.00% · 40u→1.90% · 60u→2.90%</b></td><td class="num">S/ 105,151</td><td class="num hot">S/ 19,048</td><td class="num hot">18.1%</td><td class="num warn">214</td><td class="num">58%</td></tr><tr><td><b>NORTE</b></td><td style="color:var(--tx3)">NCO</td><td style="color:var(--tx2)">20u→1.00% · 35u→2.00%</td><td><b>20u→1.00% · 40u→1.40% · 60u→1.90%</b></td><td class="num">S/ 71,190</td><td class="num hot">S/ 12,016</td><td class="num hot">16.9%</td><td class="num warn">219</td><td class="num">62%</td></tr><tr><td><b>SUR</b></td><td style="color:var(--tx3)">SR</td><td style="color:var(--tx2)">15u→1.00% · 25u→2.00%</td><td><b>15u→1.00% · 35u→1.40% · 50u→1.90%</b></td><td class="num">S/ 65,679</td><td class="num hot">S/ 14,225</td><td class="num hot">21.7%</td><td class="num warn">381</td><td class="num">55%</td></tr><tr><td><b>ORIENTE</b></td><td style="color:var(--tx3)">NCO</td><td style="color:var(--tx2)">20u→1.00% · 35u→2.00%</td><td><b>20u→1.00% · 40u→1.40% · 60u→1.90%</b></td><td class="num">S/ 53,200</td><td class="num hot">S/ 7,592</td><td class="num hot">14.3%</td><td class="num warn">132</td><td class="num">69%</td></tr><tr><td><b>SUR CHICO</b></td><td style="color:var(--tx3)">LM</td><td style="color:var(--tx2)">20u→1.00% · 35u→3.00%</td><td><b>20u→1.00% · 40u→1.90% · 60u→2.90%</b></td><td class="num">S/ 48,622</td><td class="num hot">S/ 7,468</td><td class="num hot">15.4%</td><td class="num warn">111</td><td class="num">63%</td></tr><tr><td><b>CENTRO</b></td><td style="color:var(--tx3)">NCO</td><td style="color:var(--tx2)">20u→1.00% · 35u→2.00%</td><td><b>20u→1.00% · 40u→1.40% · 50u→1.90%</b></td><td class="num">S/ 25,789</td><td class="num hot">S/ 4,891</td><td class="num hot">19.0%</td><td class="num warn">153</td><td class="num">58%</td></tr><tr><td><b>NORTE CHICO</b></td><td style="color:var(--tx3)">LM</td><td style="color:var(--tx2)">20u→1.00% · 35u→3.00%</td><td><b>20u→1.00% · 35u→1.90% · 50u→2.90%</b></td><td class="num">S/ 21,452</td><td class="num hot">S/ 2,059</td><td class="num hot">9.6%</td><td class="num warn">30</td><td class="num">78%</td></tr>
+<tr style="border-top:2px solid var(--tx)"><td><b>TOTAL</b></td><td></td><td></td><td></td>
+<td class="num"><b>S/ 391,083</b></td><td class="num hot"><b>S/ 67,298</b></td>
+<td class="num hot"><b>17.2%</b></td><td class="num warn"><b>1,240</b></td>
+<td class="num"><b>61%</b></td></tr>
+</table>
+<p class="note" style="margin-top:14px">Ninguna región deja clientes fuera del beneficio, porque
+el piso no se mueve en ninguna. Lo que cambia es desde dónde se gana cada tasa.</p>
+<p class="note" style="margin-top:6px"><b>El ahorro es un techo:</b> parte de los clientes va a
+comprar más para alcanzar el peldaño nuevo, que es justamente lo que se busca.</p>
+</div></div>
+<div class="foot"><span>enero a julio 2026 · la inversión modelada reproduce la real sin desvío</span></div></div><div class="slide"><div class="badge">Giro 9 · Minimayoristas</div>
+<div class="eyebrow" style="color:var(--teal)">Por región · escenario a medida</div>
+<h2>Aceites por región · <em>mover los peldaños</em></h2>
+<div class="lead" style="font-size:13.5px;margin-top:8px">Los umbrales y las tasas se editan acá y
+el ahorro se recalcula con el universo completo de pedidos. Si una fila rompe la regla de las
+20 unidades, se marca y no suma al total.</div>
+<div class="kpis k6" style="margin:9px 0 2px">
+<div class="kpi"><b style="color:var(--green)" id="r-ah">&mdash;</b><span>Ahorro/mes</span>
+<small id="r-pct">&mdash;</small></div>
+<div class="kpi"><b id="r-ah3">&mdash;</b><span>En el trimestre</span></div>
+<div class="kpi"><b class="warn" id="r-baj">&mdash;</b><span>Bajan de peldaño</span>
+<small id="r-bajp">&mdash;</small></div>
+<div class="kpi"><b id="r-fuera">0</b><span>Pierden el beneficio</span>
+<small>el piso no se toca</small></div>
+<div class="kpi"><b id="r-alto">&mdash;</b><span>Llegan al techo</span>
+<small>del volumen</small></div>
+<div class="kpi"><b id="r-mal">&mdash;</b><span>Fuera de regla</span>
+<small>más de 20u entre peldaños</small></div></div>
+<div class="body"><div class="col fill">
+<div class="gactrl" style="margin:0 0 7px">
+<span class="ofl">Escenarios</span>
+<span class="acb" data-p="cons">Conservadora</span>
+<span class="acb on" data-p="prop">La propuesta</span>
+<span class="acb" data-p="agr">Agresiva</span>
+<span class="ofl" style="margin-left:14px">Bajar la tasa de los peldaños 2 y 3</span>
+<span class="acb baja" data-b="0">nada</span>
+<span class="acb baja on" data-b="0.1">&minus;0.1 pt</span>
+<span class="acb baja" data-b="0.2">&minus;0.2 pt</span>
+<span class="acb baja" data-b="0.3">&minus;0.3 pt</span>
+</div>
+<table class="fixa apretada"><colgroup><col style="width:19%">
+<col style="width:7%"><col style="width:8%"><col style="width:9%"><col style="width:10%">
+<col style="width:9%"><col style="width:10%"><col style="width:14%"><col style="width:14%"></colgroup>
+<thead><tr><th>Región</th>
+<th class="num">Piso</th><th class="num">Tasa</th>
+<th class="num">2º peldaño</th><th class="num">Tasa<br><span style="font-weight:400;
+text-transform:none;letter-spacing:0">y la nueva</span></th>
+<th class="num">3er peldaño</th><th class="num">Tasa<br><span style="font-weight:400;
+text-transform:none;letter-spacing:0">y la nueva</span></th>
+<th class="num">Ahorro/mes</th><th class="num">% del volumen<br>en el 3er peldaño</th></tr></thead>
+<tbody><tr data-r="LIMA">
+<td><b>LIMA</b><br><span style="font-size:9.5px;color:var(--tx3)">hoy 20u→1.00% · 35u→3.00%</span></td>
+<td class="num"><input class="au" type="number" value="20" data-r="LIMA" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="at" type="number" step="0.5" value="1.0" data-r="LIMA" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="40" data-r="LIMA" data-j="1"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="2.0" data-r="LIMA" data-j="1"><br>
+<span class="tnew" id="tn1-LIMA" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="60" data-r="LIMA" data-j="2"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="3.0" data-r="LIMA" data-j="2"><br>
+<span class="tnew" id="tn2-LIMA" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num hot" id="ai-LIMA">&mdash;</td>
+<td class="num" id="av-LIMA">&mdash;</td></tr><tr data-r="NORTE">
+<td><b>NORTE</b><br><span style="font-size:9.5px;color:var(--tx3)">hoy 20u→1.00% · 35u→2.00%</span></td>
+<td class="num"><input class="au" type="number" value="20" data-r="NORTE" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="at" type="number" step="0.5" value="1.0" data-r="NORTE" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="40" data-r="NORTE" data-j="1"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="1.5" data-r="NORTE" data-j="1"><br>
+<span class="tnew" id="tn1-NORTE" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="60" data-r="NORTE" data-j="2"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="2.0" data-r="NORTE" data-j="2"><br>
+<span class="tnew" id="tn2-NORTE" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num hot" id="ai-NORTE">&mdash;</td>
+<td class="num" id="av-NORTE">&mdash;</td></tr><tr data-r="SUR">
+<td><b>SUR</b><br><span style="font-size:9.5px;color:var(--tx3)">hoy 15u→1.00% · 25u→2.00%</span></td>
+<td class="num"><input class="au" type="number" value="15" data-r="SUR" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="at" type="number" step="0.5" value="1.0" data-r="SUR" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="35" data-r="SUR" data-j="1"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="1.5" data-r="SUR" data-j="1"><br>
+<span class="tnew" id="tn1-SUR" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="50" data-r="SUR" data-j="2"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="2.0" data-r="SUR" data-j="2"><br>
+<span class="tnew" id="tn2-SUR" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num hot" id="ai-SUR">&mdash;</td>
+<td class="num" id="av-SUR">&mdash;</td></tr><tr data-r="ORIENTE">
+<td><b>ORIENTE</b><br><span style="font-size:9.5px;color:var(--tx3)">hoy 20u→1.00% · 35u→2.00%</span></td>
+<td class="num"><input class="au" type="number" value="20" data-r="ORIENTE" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="at" type="number" step="0.5" value="1.0" data-r="ORIENTE" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="40" data-r="ORIENTE" data-j="1"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="1.5" data-r="ORIENTE" data-j="1"><br>
+<span class="tnew" id="tn1-ORIENTE" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="60" data-r="ORIENTE" data-j="2"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="2.0" data-r="ORIENTE" data-j="2"><br>
+<span class="tnew" id="tn2-ORIENTE" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num hot" id="ai-ORIENTE">&mdash;</td>
+<td class="num" id="av-ORIENTE">&mdash;</td></tr><tr data-r="SUR CHICO">
+<td><b>SUR CHICO</b><br><span style="font-size:9.5px;color:var(--tx3)">hoy 20u→1.00% · 35u→3.00%</span></td>
+<td class="num"><input class="au" type="number" value="20" data-r="SUR CHICO" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="at" type="number" step="0.5" value="1.0" data-r="SUR CHICO" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="40" data-r="SUR CHICO" data-j="1"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="2.0" data-r="SUR CHICO" data-j="1"><br>
+<span class="tnew" id="tn1-SUR_CHICO" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="60" data-r="SUR CHICO" data-j="2"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="3.0" data-r="SUR CHICO" data-j="2"><br>
+<span class="tnew" id="tn2-SUR_CHICO" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num hot" id="ai-SUR_CHICO">&mdash;</td>
+<td class="num" id="av-SUR_CHICO">&mdash;</td></tr><tr data-r="CENTRO">
+<td><b>CENTRO</b><br><span style="font-size:9.5px;color:var(--tx3)">hoy 20u→1.00% · 35u→2.00%</span></td>
+<td class="num"><input class="au" type="number" value="20" data-r="CENTRO" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="at" type="number" step="0.5" value="1.0" data-r="CENTRO" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="40" data-r="CENTRO" data-j="1"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="1.5" data-r="CENTRO" data-j="1"><br>
+<span class="tnew" id="tn1-CENTRO" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="50" data-r="CENTRO" data-j="2"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="2.0" data-r="CENTRO" data-j="2"><br>
+<span class="tnew" id="tn2-CENTRO" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num hot" id="ai-CENTRO">&mdash;</td>
+<td class="num" id="av-CENTRO">&mdash;</td></tr><tr data-r="NORTE CHICO">
+<td><b>NORTE CHICO</b><br><span style="font-size:9.5px;color:var(--tx3)">hoy 20u→1.00% · 35u→3.00%</span></td>
+<td class="num"><input class="au" type="number" value="20" data-r="NORTE CHICO" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="at" type="number" step="0.5" value="1.0" data-r="NORTE CHICO" data-j="0" disabled style="opacity:.45"></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="35" data-r="NORTE CHICO" data-j="1"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="2.0" data-r="NORTE CHICO" data-j="1"><br>
+<span class="tnew" id="tn1-NORTE_CHICO" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num"><input class="au" type="number" min="1" max="200" value="50" data-r="NORTE CHICO" data-j="2"></td>
+<td class="num"><input class="at" type="number" min="0.5" max="12" step="0.5" value="3.0" data-r="NORTE CHICO" data-j="2"><br>
+<span class="tnew" id="tn2-NORTE_CHICO" style="font-size:10px;font-weight:700;color:var(--coral)"></span></td>
+<td class="num hot" id="ai-NORTE_CHICO">&mdash;</td>
+<td class="num" id="av-NORTE_CHICO">&mdash;</td></tr></tbody>
+<tfoot><tr style="border-top:2px solid var(--tx)"><td><b>TOTAL</b></td>
+<td colspan="6"></td><td class="num hot" id="ai-TOT">&mdash;</td>
+<td class="num" id="av-TOT">&mdash;</td></tr></tfoot></table>
+<div id="r-aviso" style="margin-top:7px;font-size:11.5px;color:var(--tx3)"></div>
+</div></div>
+<div class="foot"><span>calibrado sobre enero a julio 2026 · la inversión modelada reproduce la real</span></div></div></div>
+<div class="nav"><button id="pv">‹ Anterior</button><button id="nx">Siguiente ›</button></div>
+<script>
+let i=0;const S=document.querySelectorAll('.slide');
+function go(n){i=Math.max(0,Math.min(S.length-1,n));
+ S.forEach((s,k)=>s.classList.toggle('on',k===i));}
+function fit(){const d=document.querySelector('.deck');
+ const k=Math.min((window.innerWidth-26)/1280,(window.innerHeight-74)/720);
+ d.style.transform='translate(-50%,-50%) scale('+k+')';}
+document.addEventListener('keydown',e=>{
+ if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1);}
+ if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1);}
+ if(e.key==='Home')go(0); if(e.key==='End')go(S.length-1);});
+document.getElementById('pv').onclick=()=>go(i-1);
+document.getElementById('nx').onclick=()=>go(i+1);
+window.addEventListener('resize',fit);window.addEventListener('load',fit);fit();
+
+const SIM = {"LIMA": {"oficina": "LM", "piso": 20, "piso_t": 1.0, "tope": 35, "tope_t": 3.0, "medio_t": 2.0, "esc": {"cons": [35, 55], "prop": [40, 60], "agr": [40, 60]}, "clientes": 586, "tramos": [[0, 57462.73, 7.638, 30], [5, 82075.74, 10.47, 24], [10, 94538.38, 12.787, 17], [15, 80289.02, 11.135, 8], [20, 95308.52, 12.851, 11], [25, 89249.48, 12.174, 3], [30, 90141.06, 12.795, 2], [35, 776682.51, 112.435, 14], [40, 481833.09, 61.05, 51], [45, 106595.71, 14.987, 5], [50, 7178774.13, 1071.668, 133], [55, 339480.28, 49.026, 11], [60, 1030948.64, 146.395, 41], [65, 271922.08, 39.985, 11], [70, 464062.36, 68.036, 9], [75, 266136.75, 38.84, 12], [80, 397443.7, 57.288, 17], [85, 132058.66, 18.993, 5], [90, 371756.71, 53.656, 9], [95, 71438.84, 10.415, 3], [100, 4041099.68, 604.022, 61], [105, 144158.57, 20.906, 7], [110, 295650.94, 42.288, 10], [115, 106952.51, 15.611, 3], [120, 315016.33, 46.768, 8], [125, 87671.22, 13.347, 2], [130, 247086.07, 35.22, 7], [135, 25004.72, 3.453, 0], [140, 150029.3, 21.295, 5], [145, 33710.7, 4.287, 0], [150, 4161255.67, 611.548, 67]]}, "NORTE": {"oficina": "NCO", "piso": 20, "piso_t": 1.0, "tope": 35, "tope_t": 2.0, "medio_t": 1.5, "esc": {"cons": [35, 55], "prop": [40, 60], "agr": [40, 60]}, "clientes": 785, "tramos": [[0, 63181.76, 8.356, 32], [5, 132010.52, 17.391, 26], [10, 154894.51, 20.855, 23], [15, 92580.45, 12.516, 11], [20, 221175.78, 30.257, 22], [25, 77994.92, 10.809, 14], [30, 129234.37, 17.949, 9], [35, 3137516.94, 439.585, 46], [40, 1503945.46, 209.646, 84], [45, 320916.78, 44.123, 13], [50, 2666142.5, 376.638, 59], [55, 320897.21, 44.262, 17], [60, 722787.53, 99.169, 56], [65, 314043.34, 43.484, 16], [70, 554140.41, 77.98, 23], [75, 375248.4, 52.336, 16], [80, 571169.41, 79.67, 48], [85, 258452.76, 36.053, 9], [90, 248739.91, 34.918, 15], [95, 189466.94, 26.556, 11], [100, 2454049.5, 352.435, 50], [105, 115757.83, 16.141, 8], [110, 220346.47, 30.646, 13], [115, 122287.86, 17.139, 3], [120, 334832.87, 48.447, 12], [125, 62781.85, 8.872, 1], [130, 183397.89, 25.813, 8], [135, 172686.72, 24.329, 5], [140, 321652.68, 45.602, 7], [145, 10127.55, 1.465, 0], [150, 6528254.01, 931.25, 128]]}, "SUR": {"oficina": "SR", "piso": 15, "piso_t": 1.0, "tope": 25, "tope_t": 2.0, "medio_t": 1.5, "esc": {"cons": [25, 45], "prop": [35, 50], "agr": [35, 55]}, "clientes": 1255, "tramos": [[0, 170919.71, 23.362, 91], [5, 301969.74, 41.344, 73], [10, 343377.05, 47.266, 69], [15, 327198.92, 45.1, 49], [20, 471485.69, 65.167, 64], [25, 4460552.09, 635.476, 127], [30, 1708228.33, 243.494, 76], [35, 662696.63, 93.539, 42], [40, 1262059.27, 178.841, 101], [45, 529306.86, 74.727, 35], [50, 1997928.61, 285.453, 66], [55, 432275.65, 61.02, 31], [60, 666606.87, 94.652, 47], [65, 389088.89, 54.5, 33], [70, 493462.19, 69.862, 24], [75, 296930.92, 41.661, 9], [80, 630344.47, 89.191, 57], [85, 216861.57, 31.07, 14], [90, 363019.8, 51.344, 19], [95, 119375.16, 16.601, 7], [100, 1504554.31, 219.057, 40], [105, 199058.34, 27.937, 8], [110, 247326.97, 35.031, 9], [115, 81777.24, 11.971, 3], [120, 332964.95, 47.65, 28], [125, 138116.68, 19.176, 7], [130, 193991.88, 27.896, 7], [135, 76342.48, 11.141, 5], [140, 134084.0, 19.649, 8], [145, 6994.55, 0.972, 1], [150, 2683148.01, 385.352, 105]]}, "ORIENTE": {"oficina": "NCO", "piso": 20, "piso_t": 1.0, "tope": 35, "tope_t": 2.0, "medio_t": 1.5, "esc": {"cons": [35, 55], "prop": [40, 60], "agr": [40, 60]}, "clientes": 693, "tramos": [[0, 66056.71, 7.553, 45], [5, 155145.65, 17.726, 49], [10, 137993.22, 16.751, 24], [15, 82603.84, 9.577, 14], [20, 275943.55, 32.79, 31], [25, 73354.63, 8.796, 12], [30, 49729.24, 5.947, 4], [35, 1619226.01, 201.733, 23], [40, 1001469.52, 124.247, 71], [45, 262593.93, 33.413, 4], [50, 1604152.76, 197.214, 18], [55, 332815.87, 41.41, 16], [60, 704821.14, 87.375, 41], [65, 206118.42, 25.797, 12], [70, 345627.18, 44.325, 13], [75, 210612.94, 26.134, 7], [80, 739201.04, 92.413, 32], [85, 210833.01, 26.701, 5], [90, 325297.7, 39.974, 12], [95, 196730.59, 24.499, 7], [100, 1082486.53, 135.643, 27], [105, 139718.91, 17.458, 6], [110, 238577.63, 30.145, 9], [115, 173569.15, 21.544, 5], [120, 579731.6, 71.652, 28], [125, 97227.74, 12.147, 4], [130, 173368.04, 21.645, 5], [135, 125143.1, 15.325, 4], [140, 311311.97, 38.794, 11], [145, 66001.72, 7.947, 6], [150, 5437363.74, 688.941, 148]]}, "SUR CHICO": {"oficina": "LM", "piso": 20, "piso_t": 1.0, "tope": 35, "tope_t": 3.0, "medio_t": 2.0, "esc": {"cons": [35, 55], "prop": [40, 60], "agr": [40, 60]}, "clientes": 554, "tramos": [[0, 90644.51, 12.556, 34], [5, 164514.7, 23.127, 37], [10, 212617.37, 30.2, 22], [15, 140788.52, 19.475, 19], [20, 258766.95, 36.156, 39], [25, 170600.43, 23.867, 16], [30, 114329.12, 16.028, 15], [35, 390043.55, 55.969, 11], [40, 322706.84, 46.121, 20], [45, 120985.3, 17.201, 7], [50, 2238502.08, 335.01, 59], [55, 196175.86, 27.921, 14], [60, 591751.26, 86.767, 40], [65, 172374.94, 25.011, 11], [70, 452848.54, 66.094, 21], [75, 149030.63, 21.742, 4], [80, 415861.9, 60.073, 22], [85, 111713.35, 16.122, 7], [90, 156516.08, 22.886, 5], [95, 87122.12, 12.483, 3], [100, 1618271.14, 243.846, 43], [105, 99933.32, 14.553, 6], [110, 158201.67, 22.54, 8], [115, 77077.82, 11.197, 4], [120, 179479.99, 26.369, 5], [125, 37686.99, 5.502, 5], [130, 164801.53, 23.833, 4], [135, 125814.65, 18.609, 6], [140, 128852.08, 18.562, 7], [145, 17977.68, 2.445, 2], [150, 1787519.9, 263.977, 58]]}, "CENTRO": {"oficina": "NCO", "piso": 20, "piso_t": 1.0, "tope": 35, "tope_t": 2.0, "medio_t": 1.5, "esc": {"cons": [35, 55], "prop": [40, 50], "agr": [40, 60]}, "clientes": 630, "tramos": [[0, 59922.62, 7.193, 45], [5, 133526.6, 16.303, 42], [10, 172687.37, 21.035, 34], [15, 128080.35, 15.446, 22], [20, 271215.45, 32.593, 51], [25, 88909.42, 10.946, 13], [30, 66041.31, 8.159, 8], [35, 1898715.88, 243.802, 58], [40, 780891.49, 99.081, 73], [45, 280719.35, 35.428, 22], [50, 775124.78, 98.238, 36], [55, 318482.94, 40.538, 18], [60, 432324.87, 54.86, 33], [65, 175222.81, 22.491, 11], [70, 265462.35, 33.618, 15], [75, 168922.61, 22.196, 8], [80, 367202.96, 47.221, 21], [85, 63752.39, 8.327, 4], [90, 176673.79, 21.524, 9], [95, 119763.44, 15.335, 7], [100, 280104.0, 33.765, 13], [105, 70879.65, 9.274, 8], [110, 85635.27, 10.58, 8], [115, 98825.75, 12.446, 5], [120, 188362.82, 23.558, 17], [125, 9823.09, 1.245, 0], [130, 88773.95, 11.595, 7], [140, 78207.72, 10.098, 4], [145, 13665.82, 1.776, 1], [150, 991258.24, 126.093, 37]]}, "NORTE CHICO": {"oficina": "LM", "piso": 20, "piso_t": 1.0, "tope": 35, "tope_t": 3.0, "medio_t": 2.0, "esc": {"cons": [35, 55], "prop": [35, 50], "agr": [40, 60]}, "clientes": 294, "tramos": [[0, 53769.41, 7.09, 27], [5, 99396.62, 13.459, 31], [10, 105850.74, 14.427, 24], [15, 41044.39, 5.487, 10], [20, 73565.76, 10.188, 12], [25, 84001.5, 11.906, 8], [30, 32275.1, 4.612, 3], [35, 639299.52, 89.142, 12], [40, 139191.47, 19.424, 13], [45, 55324.32, 7.553, 5], [50, 1369209.14, 197.838, 46], [55, 158649.1, 21.949, 11], [60, 151296.88, 21.521, 13], [65, 70017.64, 10.23, 6], [70, 193866.6, 27.236, 10], [75, 46762.11, 6.592, 3], [80, 80564.7, 10.923, 7], [85, 33816.26, 4.843, 1], [90, 108715.93, 15.765, 4], [95, 43139.93, 6.158, 2], [100, 238814.05, 35.613, 5], [105, 4098.7, 0.54, 0], [110, 75234.85, 10.593, 5], [115, 47225.24, 6.903, 2], [120, 60654.24, 8.752, 4], [125, 31134.39, 4.147, 1], [130, 10869.6, 1.428, 2], [135, 34359.88, 4.27, 1], [140, 37261.8, 5.493, 3], [145, 6599.35, 0.961, 0], [150, 704827.35, 101.734, 23]]}}, CB = 0.9631, MESES = 7, IGV = 1.18;
+const q = id => document.getElementById(id);
+const key = r => r.replace(/ /g, '_');
+let BAJA = 0.1;
+const tasaDe = (u, esc) => { let v = 0; for (const [x, r] of esc) if (u >= x) v = r; return v; };
+const pl = v => 'S/ ' + Math.round(v).toLocaleString('es-PE');
+
+function leer(tr){
+  const g = j => +tr.querySelector('input[data-j="' + j + '"].au').value;
+  const t = j => +tr.querySelector('input[data-j="' + j + '"].at').value;
+  return {u1: g(0), t1: t(0), u2: g(1), t2: t(1), u3: g(2), t3: t(2)};
+}
+function calc(reg, v){
+  const s = SIM[reg];
+  const hoy = [[s.piso, s.piso_t / 100], [s.tope, s.tope_t / 100]];
+  const esc = [[v.u1, v.t1 / 100],
+               [v.u2, Math.max(.001, (v.t2 - BAJA) / 100)],
+               [v.u3, Math.max(.001, (v.t3 - BAJA) / 100)]];
+  let base = 0, nuevo = 0, volBase = 0, v3 = 0, bajan = 0;
+  for (const [ini, venta, ton, cli] of s.tramos){
+    base  += venta * IGV * tasaDe(ini, hoy);
+    nuevo += venta * IGV * tasaDe(ini, esc);
+    if (ini >= s.piso) volBase += ton;
+    if (ini >= v.u3) v3 += ton;
+    if (ini >= s.tope && ini < v.u3) bajan += cli;
+  }
+  base *= CB; nuevo *= CB;
+  const ok = v.u2 >= s.tope && v.u2 - s.piso <= 20 && v.u3 > v.u2 && v.u3 - v.u2 <= 20;
+  return {base: base / MESES, ahorro: (base - nuevo) / MESES, bajan: bajan,
+          v3: volBase ? v3 / volBase : 0, ok: ok};
+}
+function refresca(){
+  let aho = 0, base = 0, baj = 0, v3n = 0, cli = 0, malas = [];
+  document.querySelectorAll('table.fixa tbody tr[data-r]').forEach(tr => {
+    const reg = tr.dataset.r, k = key(reg), v = leer(tr), c = calc(reg, v);
+    q('tn1-' + k).textContent = BAJA ? (v.t2 - BAJA).toFixed(2) + '%' : '';
+    q('tn2-' + k).textContent = BAJA ? (v.t3 - BAJA).toFixed(2) + '%' : '';
+    q('ai-' + k).textContent = pl(c.ahorro);
+    q('av-' + k).textContent = (100 * c.v3).toFixed(0) + '%';
+    q('ai-' + k).className = 'num ' + (c.ok ? 'hot' : 'warn');
+    tr.style.background = c.ok ? '' : 'var(--coral-l)';
+    if (!c.ok){ malas.push(reg); return; }
+    aho += c.ahorro; base += c.base; baj += c.bajan; v3n += c.v3 * c.base;
+    cli += SIM[reg].clientes;
+  });
+  q('ai-TOT').textContent = pl(aho);
+  q('av-TOT').textContent = base ? (100 * v3n / base).toFixed(0) + '%' : '—';
+  q('r-ah').textContent = pl(aho);
+  q('r-pct').textContent = base ? (100 * aho / base).toFixed(1) + '% de la inversión' : '—';
+  q('r-ah3').textContent = pl(aho * 3);
+  q('r-baj').textContent = baj.toLocaleString('es-PE');
+  q('r-bajp').textContent = cli ? (100 * baj / cli).toFixed(0) + '% de los clientes' : '—';
+  q('r-alto').textContent = base ? (100 * v3n / base).toFixed(0) + '%' : '—';
+  q('r-mal').textContent = malas.length;
+  q('r-aviso').textContent = malas.length
+    ? 'Estas regiones rompen la regla de las 20 unidades y no suman al total: ' + malas.join(', ')
+    : 'Todas las filas respetan la regla de las 20 unidades.';
+}
+function preset(p){
+  document.querySelectorAll('table.fixa tbody tr[data-r]').forEach(tr => {
+    const s = SIM[tr.dataset.r], e = s.esc[p];
+    tr.querySelector('input[data-j="1"].au').value = e[0];
+    tr.querySelector('input[data-j="2"].au').value = e[1];
+    tr.querySelector('input[data-j="1"].at').value = s.medio_t.toFixed(1);
+    tr.querySelector('input[data-j="2"].at').value = s.tope_t.toFixed(1);});
+  refresca();
+}
+document.querySelectorAll('.acb[data-p]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.acb[data-p]').forEach(o => o.classList.remove('on'));
+  b.classList.add('on'); preset(b.dataset.p);});
+document.querySelectorAll('.acb.baja').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.acb.baja').forEach(o => o.classList.remove('on'));
+  b.classList.add('on'); BAJA = +b.dataset.b; refresca();});
+document.querySelectorAll('table.fixa input').forEach(i => i.oninput = refresca);
+refresca();
+
+</script></body></html>
