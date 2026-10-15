@@ -256,7 +256,7 @@ footer { font-size: 0.8rem; color: var(--ink-3); border-top: 1px solid var(--lin
   </div>
 
   <div class="chart" id="g1">
-    <div class="titulo"><span class="chart-title">B5 con promoción creció más que los clientes sin promoción en frecuencia, venta, volumen y variedad, y su UB cayó menos</span><span class="sub">Variación % entre jun–sep 2025 y jun–sep 2026, por grupo</span></div>
+    <div class="titulo"><span class="chart-title">B5 con promoción creció más que los clientes sin promoción en frecuencia, venta, volumen y variedad</span><span class="sub">Variación % entre jun–sep 2025 y jun–sep 2026, por grupo</span></div>
     <div class="legend" id="leg-g1"></div>
     <p class="takeaway" id="tk-g1"></p>
   </div>
@@ -557,7 +557,7 @@ function varGrupo(g, ind) {
 
 function grafico1() {
   const chart = clearChart("g1");
-  const inds = ["ticket", "pedidos", "venta", "kg", "utilidad", "n_productos"];
+  const inds = ["ticket", "pedidos", "venta", "kg", "n_productos"];
   const etiquetas = { ticket: "Ticket", pedidos: "Frecuencia", venta: "Venta", kg: "Volumen", utilidad: "UB", n_productos: "Productos" };
   const vals = inds.flatMap(i => GRUPOS.map(g => varGrupo(g, i)));
   const lo = Math.min(0, Math.floor(Math.min(...vals) / 5) * 5), hi = Math.ceil(Math.max(...vals) / 5) * 5;
