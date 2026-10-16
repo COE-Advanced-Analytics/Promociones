@@ -2141,7 +2141,8 @@ td .sub-celda { display: block; font-size: 12px; color: var(--muted); font-weigh
     de.textContent = "";
     for (let g = 1; g <= 4; g++) {
       const v = k["pct_valor_a_" + g] || 0;
-      const fila = document.createElement("div"); fila.className = "fila";
+      if (!(bodegasSeg(g) > 0)) continue;   // el segmento no existe con esta combinación
+      const fila = document.createElement("div"); fila.className = "fila"; fila.dataset.seg = String(g);
       const nom = document.createElement("span"); nom.textContent = P.SEGMENTOS[g - 1];
       const pista = document.createElement("div"); pista.className = "pista";
       const rel = document.createElement("div"); rel.className = "relleno " + (g === 4 ? "fuga" : "blanco"); rel.style.width = Math.max(0, Math.min(100, v)) + "%";
@@ -2578,6 +2579,13 @@ td .sub-celda { display: block; font-size: 12px; color: var(--muted); font-weigh
 
   // ── contexto ──────────────────────────────────────────────────────────────
   const colorVar = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  // bodegas de cada segmento con esta combinación: un segmento sin bodegas (p. ej. «sin pasta corta» cuando el gatillo
+  // ya es pasta corta) no va en los desgloses, porque una fila en cero confunde
+  function bodegasSeg(g) {
+    if (!D) return 0;
+    if (!D._bodegasSeg) { const n = [0, 0, 0, 0, 0]; for (let c = 0; c < D.nc; c++) n[D.segCli[c]]++; D._bodegasSeg = n; }
+    return D._bodegasSeg[g];
+  }
 
   function pintarContexto() {
     if (!D) return;
@@ -2592,13 +2600,15 @@ td .sub-celda { display: block; font-size: 12px; color: var(--muted); font-weigh
       kpi("Bodegas con compra", ent(D.nc), "en la ventana"),
       kpi(`Compran ${N.gatillo}`, ent(nG), `${pct1((100 * nG) / D.nc)} de las bodegas`),
       kpi(`Con ${N.gatillo} y ${N.regalo}`, ent(nR), `${pct1(comp[1].pct_de_compradores_gatillo)} de las que compran ${N.gatillo}`),
-      kpi(`${cap(N.gatillo)} sin ${N.regalo}`, ent(nSin), `${pct1(nG ? (100 * nSin) / nG : NaN)}: sin ${N.categoria} o con ${N.otra}`, "", true),
     );
+    // el grupo al que apunta la promo (compran el gatillo y no el regalo), destacado; si no hay ninguna bodega, no va
+    if (nSin > 0) cf.append(kpi(`${cap(N.gatillo)} sin ${N.regalo}`, ent(nSin), `${pct1(nG ? (100 * nSin) / nG : NaN)}: sin ${N.categoria} o con ${N.otra}`, "", true));
     const ap = $("apilada"), ley = $("leyenda-seg");
     ap.textContent = ""; ley.textContent = "";
     ap.setAttribute("aria-label", `Compradores de ${N.gatillo} por segmento`);
     for (let g = 1; g <= 4; g++) {
       const v = des.segmentos[g].clientes;
+      if (!(v > 0)) continue;
       const d = document.createElement("div"); d.style.flex = String(Math.max(v, 0)); d.style.background = `var(--s${g})`;
       d.title = `${P.SEGMENTOS[g - 1]}: ${ent(v)} bodegas`;
       ap.append(d);
@@ -2614,6 +2624,7 @@ td .sub-celda { display: block; font-size: 12px; color: var(--muted); font-weigh
     const thc = document.createElement("thead"); thc.append(h);
     const tbc = document.createElement("tbody");
     comp.forEach((f) => {
+      if (!(f.clientes > 0)) return;     // los grupos sin bodegas no se muestran
       const tr = document.createElement("tr");
       tr.append(td(f.grupo.replace(/^· · /, "  ").replace(/^· /, " ")), td(ent(f.clientes)), td(pct1(f.pct_de_compradores_gatillo)),
         td(soles(f.venta_gatillo_mes)), td(soles(f.venta_regalo_mes)), td(soles(f.venta_otra_mes)));
@@ -2748,6 +2759,7 @@ td .sub-celda { display: block; font-size: 12px; color: var(--muted); font-weigh
     const P = D.P, N = P.NOMBRES, ley = $("leyenda-disp");
     ley.textContent = "";
     for (const g of [1, 2, 3, 4]) {
+      if (!(bodegasSeg(g) > 0)) continue;
       const l = document.createElement("span"); const i = document.createElement("i"); i.style.background = `var(--s${g})`; i.style.borderRadius = "50%";
       l.append(i, document.createTextNode(P.SEGMENTOS[g - 1])); ley.append(l);
     }
