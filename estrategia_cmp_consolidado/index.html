@@ -326,7 +326,7 @@ function laminaMetodo() {
      <div class="lbl2">El monto mínimo del pedido para cobrar el descuento · piso S/ 30</div>
      <div style="display:flex;gap:14px;margin-top:6px">${pedido(29, false)}${pedido(30, true)}</div>
      <div class="lbl2" style="margin-top:22px">Cómo elegimos el piso</div>
-     <div style="display:flex;gap:10px;margin-top:6px">${paso(1, 'Ticket', 'de cada pedido, ene–ago 2026')}${flecha}${paso(2, 'Grupos', 'boca · zona · segmento')}${flecha}${paso(3, 'Piso', 'el más alto que respeta el tope de clientes')}</div>
+     <div style="display:flex;gap:10px;margin-top:6px">${paso(1, 'Ticket', 'de cada pedido, ene–sep 2026')}${flecha}${paso(2, 'Grupos', 'boca · zona · segmento')}${flecha}${paso(3, 'Piso', 'el más alto que respeta el tope de clientes')}</div>
      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;font-size:12px">
       <span style="background:#FFF6E5;border-radius:100px;padding:5px 12px"><b>tope</b> 10 · 15 · 20% de clientes</span>
       <span style="background:#FFF6E5;border-radius:100px;padding:5px 12px">nunca baja del <b>piso de hoy</b></span>
@@ -342,7 +342,7 @@ function laminaMetodo() {
 }
 
 function portadaGeneral() {
-  sl('portada', '', `<div class="badge">Consolidado de 6 categorías</div><div class="eyebrow">DEX · CP1 + CP2 · bodegas y puestos de mercado · ene–ago 2026</div>
+  sl('portada', '', `<div class="badge">Consolidado de 6 categorías</div><div class="eyebrow">DEX · CP1 + CP2 · bodegas y puestos de mercado · ene–sep 2026</div>
    <h1>Pisos por ticket<br><em>Consolidado de 6 categorías</em></h1>
    <div class="lead">Para cada categoría: cuánto se invierte hoy y en qué tipo de promoción, cómo compran los clientes frente al piso y qué piso conviene por boca, oficina y segmento, con las mismas tasas de hoy.</div>
    <div class="kpis" id="pg-k" style="margin-top:34px"></div>` + FOOT('Consolidado de 6 categorías · pisos por ticket'), true);
@@ -375,7 +375,7 @@ function lamina1(ci) {
    <div class="note" style="margin-top:14px">${c.texto.mecanica}</div></div>
    <div class="col" style="flex:1.2"><div class="lbl2">Inversión mes a mes por tipo de promoción · % dentro de cada barra = peso en el mes</div>${s}
    <div style="font-size:11.5px;color:var(--tx2);margin-top:4px">${leyenda}<span class="mut"> · % del total ene–ago</span></div>${c.texto.nota1 ? `<div class="note c" style="margin-top:8px;font-size:11px">${c.texto.nota1}</div>` : ''}</div></div>
-   <div class="note g" style="margin-top:12px"><b>Lo que se puede tocar:</b> ${c.sinPiso ? 'la propuesta pone un piso nuevo al descuento simple de ' + c.linea : 'la propuesta solo cambia el piso de las promociones con piso por ticket de ' + c.linea}: ${fK(toc)} al mes${c.ya ? ` (ya descontado lo que cambió la parrilla de septiembre)` : ''}. El resto de la inversión no se toca.</div>` + FOOT(c.cat + ' · pisos por ticket · ene–ago 2026'));
+   <div class="note g" style="margin-top:12px"><b>Lo que se puede tocar:</b> ${c.sinPiso ? 'la propuesta pone un piso nuevo al descuento simple de ' + c.linea : 'la propuesta solo cambia el piso de las promociones con piso por ticket de ' + c.linea}: ${fK(toc)} al mes${c.ya ? ` (ya descontado lo que cambió la parrilla de septiembre)` : ''}. El resto de la inversión no se toca.</div>` + FOOT(c.cat + ' · pisos por ticket · ene–sep 2026'));
 }
 
 const ST = {};
