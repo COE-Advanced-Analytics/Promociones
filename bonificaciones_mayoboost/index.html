@@ -294,7 +294,7 @@ table.lista td.no { color: var(--muted); }
         <select id="sel-item" aria-label="Gatillo"></select>
       </fieldset>
       <fieldset class="grupo">
-        <legend>El regalo: Alacena Mayonesa Sabores Regular</legend>
+        <legend>El regalo</legend>
         <select id="sel-regalo" aria-label="Regalo"></select>
         <p class="nota" id="nota-regalo"></p>
       </fieldset>
@@ -533,6 +533,39 @@ table.lista td.no { color: var(--muted); }
     return cargar(cab, S);
   }
 
+  // agrupaciones de celdas que se pueden usar de gatillo y cuyos SKU también se pueden regalar (pedido de Camila, v1.4).
+  // Si el archivo no las trae (antes de v1.4), van estas, con las celdas que existan en su catálogo.
+  const AGRUPACIONES = { Picantes: ["Huancaina", "Uchucuta", "Salsas Picantes", "Tari"] };
+  const normal = (x) => String(x || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
+  function agrupacionesDe(cab, K) {
+    const pedidas = cab.agrupaciones || AGRUPACIONES, out = {};
+    for (const [nombre, celdas] of Object.entries(pedidas)) {
+      const buscadas = new Set(celdas.map(normal)), hay = [];
+      for (const c of new Set(K.celda)) if (buscadas.has(normal(c))) hay.push(c);
+      if (hay.length) out[nombre] = hay.sort((a, b) => celdas.map(normal).indexOf(normal(a)) - celdas.map(normal).indexOf(normal(b)));
+    }
+    return out;
+  }
+
+  // cada SKU de una agrupación que siga vendiéndose y tenga precio entra como regalo (si el archivo no lo trae ya): precio,
+  // costo y unidades por caja del catálogo; el peso, de los gramos del nombre
+  function completarRegalos(B) {
+    const K = B.cat, regalos = Object.assign({}, B.regalos);
+    for (const [nombre, celdas] of Object.entries(B.agrupaciones)) {
+      const idx = [];
+      for (let i = 0; i < K.n; i++) if (celdas.includes(K.celda[i]) && K.vigente[i] && K.precio[i] != null) idx.push(i);
+      idx.sort((a, b) => (K.undMes[b] || 0) - (K.undMes[a] || 0));
+      for (const i of idx) {
+        const k = "S" + K.cod[i];
+        if (regalos[k]) { if (!regalos[k].grupo) regalos[k] = Object.assign({}, regalos[k], { grupo: nombre }); continue; }
+        regalos[k] = { cod: K.cod[i], des: K.des[i], precio: K.precio[i], costo: K.costo[i] == null ? null : K.costo[i], peso_kg: null,
+          und_caja: K.undCaja[i] == null ? null : K.undCaja[i], und_mes: K.undMes[i], grupo: nombre, del_catalogo: true };
+      }
+    }
+    return regalos;
+  }
+
   function cargar(cab, S) {
     const k = cab.catalogo, N = cab.meses.length, nc = cab.clientes.n;
     const faltan = ["cli_dex", "cli_ofi", "cli_zona", "cli_boca", "cli_decil", "cli_atipico", "cli_g_cent", "cli_g_mil", "cli_cat_cent",
@@ -554,6 +587,8 @@ table.lista td.no { color: var(--muted); }
       referencias: cab.referencias || [], chequeos: cab.chequeos || [],
     };
     B.idx = new Map(B.cat.cod.map((c, i) => [c, i]));
+    B.agrupaciones = agrupacionesDe(cab, B.cat);
+    B.regalos = completarRegalos(B);
     B.peso = Object.fromEntries(Object.keys(B.regalos).map((k) => [k, pesoRegalo(B, k)]));
     // compras de la familia del regalo y de su celda al mes, y lo típico de cada tamaño de bodega (mediana de quienes compran)
     B.gMes = Float64Array.from(B.cli.gCent, (x) => x / (100 * N));
@@ -604,6 +639,7 @@ table.lista td.no { color: var(--muted); }
       else if (nivel === "familia") si = K.familia[i] === valor;
       else if (nivel === "celda") si = K.celda[i] === valor;
       else if (nivel === "sku") si = K.cod[i] === String(valor);
+      else if (nivel === "agrupacion") si = (B.agrupaciones[valor] || []).includes(K.celda[i]);
       else throw new Error(`gatillo desconocido: ${nivel}`);
       out[i] = si ? 1 : 0;
       hay = hay || si;
@@ -891,8 +927,9 @@ table.lista td.no { color: var(--muted); }
     if (Number.isFinite(r.peso_kg) && r.peso_kg > 0) return r.peso_kg;
     if (k !== "SURTIDO") return gramosDelNombre(r.des) / 1000;
     let sw = 0, sp = 0;
+    const comp = r.skus ? new Set(r.skus.map((c) => "S" + c)) : null;
     for (const [x, o] of Object.entries(B.regalos)) {
-      if (x === "SURTIDO") continue;
+      if (x === "SURTIDO" || (comp ? !comp.has(x) : o.grupo)) continue;
       const p = pesoRegalo(B, x), w = Math.max(0, o.und_mes || 0);
       if (!Number.isFinite(p)) return NaN;
       sw += w; sp += w * p;
@@ -1532,35 +1569,68 @@ table.lista td.no { color: var(--muted); }
     sr.textContent = "";
     const igv = 1 + B.P0.IGV;
     const orden = Object.keys(B.regalos).sort((a, b) => (a === "SURTIDO" ? -1 : b === "SURTIDO" ? 1 : (B.regalos[b].und_mes || 0) - (B.regalos[a].und_mes || 0)));
+    const grupos = new Map([["", []]]);
     for (const k of orden) {
-      const r = B.regalos[k], o = document.createElement("option");
-      o.value = k;
-      o.textContent = `${k === "SURTIDO" ? "Surtido: cualquiera de la familia" : r.des} · el cliente lo paga S/ ${dec2(r.precio * igv)} con IGV · ${r.costo == null ? "sin costo en el KPI" : `a Alicorp le cuesta S/ ${dec2(r.costo)}`}`;
-      sr.append(o);
+      const g = B.regalos[k].grupo || "";
+      if (!grupos.has(g)) grupos.set(g, []);
+      grupos.get(g).push(k);
+    }
+    for (const [g, ks] of grupos) {
+      if (!ks.length) continue;
+      const og = document.createElement("optgroup");
+      og.label = g ? `${g} (${(B.agrupaciones[g] || []).join(", ")})` : "Mayonesa Sabores";
+      for (const k of ks) {
+        const r = B.regalos[k], o = document.createElement("option");
+        o.value = k;
+        o.textContent = `${k === "SURTIDO" ? "Surtido: cualquiera de la familia" : r.des} · el cliente lo paga S/ ${dec2(r.precio * igv)} con IGV · ${r.costo == null ? "sin costo en el KPI" : `a Alicorp le cuesta S/ ${dec2(r.costo)}`}`;
+        og.append(o);
+      }
+      sr.append(og);
     }
     sr.value = sel.regalo;
-    const n = Object.keys(B.regalos).filter((k) => k !== "SURTIDO").length;
-    $("nota-regalo").textContent = `${n} SKU de la familia que siguen vendiéndose y tienen precio. Surtido: precio y costo ponderados por lo que se vende de cada uno.`;
+    const n = (grupos.get("") || []).filter((k) => k !== "SURTIDO").length;
+    const extra = [...grupos].filter(([g, ks]) => g && ks.length).map(([g, ks]) => `${ks.length} de ${g}`);
+    $("nota-regalo").textContent = `${n} SKU de ${B.P0.FAMILIA_REGALO || "Mayonesa Sabores"}${extra.length ? " y " + extra.join(" y ") : ""} que siguen vendiéndose y tienen precio. Surtido (de Mayonesa Sabores): precio y costo ponderados por lo que se vende de cada uno.`;
+  }
+  // gatillo elegido: con «Toda la celda» la lista también trae las agrupaciones de celdas («agrupacion:Picantes»)
+  const PREF_AGR = "agrupacion:";
+  function gatilloSel() { return sel.item && sel.item.startsWith(PREF_AGR) ? ["agrupacion", sel.item.slice(PREF_AGR.length)] : [sel.nivel, sel.item]; }
+  function itemsAgrupacion() {
+    if (sel.nivel !== "celda") return [];
+    const K = B.cat;
+    return Object.entries(B.agrupaciones || {}).map(([nombre, celdas]) => {
+      let skus = 0;
+      for (let i = 0; i < K.n; i++) if (celdas.includes(K.celda[i])) skus++;
+      return { id: PREF_AGR + nombre, texto: `${nombre}: ${celdas.join(" + ")}`, skus };
+    });
   }
   function pintarItems() {
-    const si = $("sel-item"), items = itemsNivel(sel.nivel);
+    const si = $("sel-item"), items = itemsNivel(sel.nivel), agr = itemsAgrupacion();
     si.textContent = "";
-    for (const x of items) {
+    const opcion = (x) => {
       const o = document.createElement("option");
       o.value = x.id; o.textContent = sel.nivel === "sku" || sel.nivel === "grupo" ? x.texto : `${x.texto} · ${x.skus} SKU`;
-      si.append(o);
-    }
-    if (!sel.item || !items.some((x) => x.id === sel.item)) sel.item = (items[0] || { id: null }).id;
+      return o;
+    };
+    if (agr.length) {
+      const g1 = document.createElement("optgroup"), g2 = document.createElement("optgroup");
+      g1.label = "Agrupaciones"; g2.label = "Celdas";
+      agr.forEach((x) => g1.append(opcion(x)));
+      items.forEach((x) => g2.append(opcion(x)));
+      si.append(g1, g2);
+    } else items.forEach((x) => si.append(opcion(x)));
+    const todos = agr.concat(items);
+    if (!sel.item || !todos.some((x) => x.id === sel.item)) sel.item = (items[0] || { id: null }).id;
     si.value = sel.item;
   }
 
   // ── reconstruir y pintar ──────────────────────────────────────────────────
   function reconstruir(nuevoPiso) {
     if (!B || !sel.item) return;
-    const clave = JSON.stringify([sel.nivel, sel.item, filtroMotor(), topePct()]);
+    const clave = JSON.stringify([gatilloSel(), filtroMotor(), topePct()]);
     D = cacheD.get(clave);
     if (!D) {
-      D = M.construir(B, [sel.nivel, sel.item], filtroMotor(), { tope: topePct() });
+      D = M.construir(B, gatilloSel(), filtroMotor(), { tope: topePct() });
       cacheD.set(clave, D);
       if (cacheD.size > 2) cacheD.delete(cacheD.keys().next().value);      // con todas las DEX cada uno pesa
     }
@@ -1744,7 +1814,7 @@ table.lista td.no { color: var(--muted); }
     const bs = f.querySelectorAll("b");
     let j = 0;
     bs[j++].textContent = describir(estado);
-    bs[j++].textContent = `${ent(und)} unidades de Mayonesa Sabores`;
+    bs[j++].textContent = `${ent(und)} unidades de ${(B.regalos[sel.regalo] || {}).grupo ? nombreRegaloCorto(sel.regalo) : "Mayonesa Sabores"}`;
     if (isFinite(cajas)) bs[j++].textContent = `${dec1(cajas)} cajas de ${ent(caja)}`;
     bs[j++].textContent = `${ent(r.bodegas_mes)} clientes`;
     bs[j++].textContent = `${ent(r.pedidos_mes)} pedidos`;
