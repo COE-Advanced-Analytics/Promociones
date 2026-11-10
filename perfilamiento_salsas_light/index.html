@@ -244,7 +244,7 @@ body.presentando .marco.actual { display: block; }
   // un texto con partes en negrita: [["texto", negrita?], …]
   const rico = (e, partes) => { for (const [t, b] of partes) { if (b) e.append(el("b", null, t)); else e.append(t); } return e; };
 
-  document.title = `Perfil de ${CAT} para gerencia`;
+  document.title = `Perfil de ${CAT} - Presentacion`;
   document.querySelectorAll(".cat").forEach((e) => { e.textContent = CAT; });
   document.querySelectorAll(".ejemplo").forEach((e) => { e.hidden = !G.ejemplo; });
   $("l1-ventana").textContent = ventana; $("l2-ventana").textContent = ventana;
