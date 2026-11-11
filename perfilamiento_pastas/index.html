@@ -57,7 +57,8 @@ button, input, select { font: inherit; color: inherit; }
 .banda { position: relative; overflow: hidden; isolation: isolate; background: var(--marca); color: #fff; border-radius: 14px;
   padding: 22px 24px 20px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
 .banda .ilustracion { position: absolute; z-index: -1; right: 12px; top: 50%; transform: translateY(-50%); height: 124%; width: auto; max-width: 62%; pointer-events: none; }
-.banda-titulo { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.banda-titulo { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; flex: 1 1 520px; min-width: 0; }
+.banda-titulo > div { flex: 1 1 320px; min-width: 0; }
 .sello { display: inline-flex; background: #fff; border-radius: 12px; padding: 7px 12px; transform: rotate(-2.5deg); box-shadow: 0 3px 0 rgba(90, 0, 0, 0.25); }
 .sello img { display: block; height: 48px; width: auto; }
 .banda h1 { color: #fff; }
@@ -104,7 +105,7 @@ button, input, select { font: inherit; color: inherit; }
 .frase { font-size: 19px; line-height: 1.45; max-width: 80ch; }
 .frase b { font-weight: 700; }
 .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
-#kpis-perdidos { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+#kpis-perdidos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 980px) { .kpis, #kpis-perdidos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .kpi { background: var(--surface-2); border-radius: 9px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .kpi .et { font-size: 13px; color: var(--ink-2); font-weight: 500; }
@@ -243,6 +244,15 @@ table.perfil tr.bloque .abre-bloque .n { font-family: var(--font-body); font-siz
 .flotante:hover .flotante-ir { filter: brightness(1.08); }
 @media (max-width: 640px) { .flotante { left: 10px; bottom: 10px; max-width: calc(100vw - 20px); } }
 @media print { .flotante { display: none !important; } }
+/* el logo del área (RGM - Promociones · Advanced Analytics) va DENTRO de la banda: arriba a la derecha, en una placa blanca
+   (se lee igual sobre el rojo, el verde o el negro de cada marca, también en modo oscuro), con los meses debajo. En pantallas
+   angostas baja a una fila propia al pie de la banda: los meses a la izquierda y el logo a la derecha */
+.banda-der { flex: 0 0 auto; align-self: stretch; margin-left: auto; display: flex; flex-direction: column; align-items: flex-end;
+  justify-content: space-between; gap: 10px; }
+.area-placa { display: inline-flex; background: #fff; border-radius: 10px; padding: 5px 10px; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18); }
+.area-placa img { display: block; height: 42px; width: auto; }
+@media (max-width: 820px) { .banda-der { flex-basis: 100%; flex-direction: row-reverse; align-items: center; } }
+@media (max-width: 640px) { .area-placa img { height: 34px; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 <style id="marca">/* Don Vittorio (Pastas): el negro y el dorado del logo. La banda va en negro con el logo dorado encima (sin placa) y los
@@ -316,7 +326,10 @@ dialog.clientes::backdrop { background: rgba(16, 12, 6, 0.6); }
         <p class="sub">Quién compra <span class="cat">Pastas</span> en las DEX, cada cuánto, cuánto, qué tipos y quién se está yendo. Solo CMP (CP1 y CP2), todas las oficinas.</p>
       </div>
     </div>
-    <div class="ventana" id="ventana"></div>
+    <div class="banda-der">
+      <span class="area-placa"><img src="data:image/png;base64,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" alt="RGM - Promociones · Advanced Analytics" width="269" height="96"></span>
+      <div class="ventana" id="ventana"></div>
+    </div>
   </header>
 
   <section class="franja" id="franja" aria-live="polite" hidden>
@@ -903,6 +916,32 @@ dialog.clientes::backdrop { background: rgba(16, 12, 6, 0.6); }
     return { total: fila(total), por_dex };
   }
 
+  // ── vuelven cada mes: de los que iban justo X meses seguidos sin comprar (su última compra, en la ventana, fue X + 1 meses
+  //    antes), cuántos compraron ese mes. Justo X y no «X o más»: con «X o más» la base se llena de los que llevan mucho
+  //    sin comprar y la tasa baja sola mes a mes; con justo X cada mes se mide igual y el primero contra el último dice si
+  //    va mejor o peor. Se puede medir desde el mes X + 1 (contando desde 0) ──────────
+  function reactivacionMes(B, mask, X) {
+    const { M, nc } = B, desde = X + 1, n = Math.max(0, M - desde), grupos = new Map();
+    const nueva = () => Array.from({ length: n }, () => ({ dormidos: 0, volvieron: 0 }));
+    const total = nueva();
+    for (let c = 0; c < nc; c++) {
+      if (!mask[c]) continue;
+      let ult = -1, g = null;
+      for (let m = 0; m < M; m++) {
+        const compra = B.pedSal[m * nc + c] > 0;
+        if (ult >= 0 && m - ult - 1 === X) {
+          if (!g) { const d = B.cli.dex[c]; if (!grupos.has(d)) grupos.set(d, nueva()); g = grupos.get(d); }
+          const k = m - desde;
+          total[k].dormidos++; g[k].dormidos++;
+          if (compra) { total[k].volvieron++; g[k].volvieron++; }
+        }
+        if (compra) ult = m;
+      }
+    }
+    const fila = (arr) => arr.map((x, k) => ({ mes: B.meses[desde + k], dormidos: x.dormidos, volvieron: x.volvieron, tasa: x.dormidos ? x.volvieron / x.dormidos : null }));
+    return { meses: fila(total), por_dex: Array.from(grupos, ([d, arr]) => ({ dex: d, meses: fila(arr) })).sort((a, b) => a.dex - b.dex) };
+  }
+
   // ── gap: no compraron la categoría (de la vista) y al menos «umbral» de su compra CMP es Food ─────────
   function enGap(B, c, umbral) {
     const v = B.vcTot[c];
@@ -1031,6 +1070,8 @@ dialog.clientes::backdrop { background: rgba(16, 12, 6, 0.6); }
       r.atipicos = pesoAtipicos(Bv, mascara(B, Object.assign({}, f, { atipicos: true })));
       r.gap = gap(Bv, m, u.gap_food);
       r.perdidos_que_siguen = perdidosQueSiguen(Bv, m, u.meses_sin_compra, u.caida, e);
+      // los archivos de antes del 10-nov (noche) no traen «vuelven cada mes»: con ellos no se compara
+      if (ref.resultado && "reactivacion_mes" in ref.resultado) r.reactivacion_mes = reactivacionMes(Bv, m, u.meses_sin_compra);
       cmp(ref.nombre, "resultado", r, ref.resultado);
       out.referencias++;
     }
@@ -1041,7 +1082,7 @@ dialog.clientes::backdrop { background: rgba(16, 12, 6, 0.6); }
   function serieKg(B, c) { return Array.from({ length: B.M }, (_, m) => B.kgSal[m * B.nc + c] / 1000); }
 
   const API = { serieKg, kgTipos, leer, cargar, descomprimir, base64aBytes, vista, seleccion, hayProducto, mascara, estados, reactivado,
-    ultimoMes, resumen, pesoAtipicos, tiposDe, porSku, perdidosQueSiguen, gap, enGap, porGrupo, nombreGrupo, clientes, cuadrar, igual,
+    ultimoMes, resumen, pesoAtipicos, tiposDe, porSku, perdidosQueSiguen, reactivacionMes, gap, enGap, porGrupo, nombreGrupo, clientes, cuadrar, igual,
     DIAS_MES, ESTADOS, PERDIDO, VERSION, CLAVES_PRODUCTO };
   raiz.MotorPS = API;
   if (typeof module !== "undefined" && module.exports) module.exports = API;
@@ -1661,7 +1702,11 @@ dialog.clientes::backdrop { background: rgba(16, 12, 6, 0.6); }
     vu.textContent = "";
     const pv = [[`${ent(r.reactivados)} ${r.reactivados === 1 ? "cliente volvió" : "clientes volvieron"}`, 1],
       [`: estuvieron ${umbrales.X} meses o más seguidos sin comprar ${CAT} y volvieron a comprar en la ventana. De los ${ent(quedaron)} que se quedaron ${umbrales.X} meses o más sin comprar, volvió el `, null],
-      [pct1(quedaron ? r.reactivados / quedaron : NaN), 1], [". Por DEX, en «Ver a fondo».", null]];
+      [pct1(quedaron ? r.reactivados / quedaron : NaN), 1], [".", null]];
+    const vmc = M.reactivacionMes(BV, mask, umbrales.X).meses;
+    if (vmc.length) pv.push([` Cada mes vuelve el `, null], [pct1(vmc[vmc.length - 1].tasa), 1],
+      [` de los que van ${umbrales.X} meses sin comprar (${nombreMes(vmc[vmc.length - 1].mes)})${vmc.length > 1 ? `; en ${nombreMes(vmc[0].mes)} era el ${pct1(vmc[0].tasa)}` : ""}.`, null]);
+    pv.push([" Por DEX, en «Ver a fondo».", null]);
     for (const [t, b] of pv) { if (b) { const x = document.createElement("b"); x.textContent = t; vu.append(x); } else vu.append(t); }
     $("nota-churn").textContent = `Lo que compraban los perdidos: sus kilos de los ${B.M - umbrales.X} meses antes de dejar de comprar, al mes (cuentan los meses sin compra). Los estados van en este orden: perdido, nuevo, en caída, activo (un cliente es uno solo). En caída: si subes el %, entran menos clientes (tienen que caer más).`;
     const t = $("tabla-retencion");
@@ -1762,7 +1807,18 @@ dialog.clientes::backdrop { background: rgba(16, 12, 6, 0.6); }
   }
 
   // ── perdidos que siguen en la DEX: a fondo, por DEX, con las reactivaciones ───
-  let Z = null;
+  let Z = null, VU = null;
+  // vuelven cada mes: el primer mes que se puede medir (antes) contra el último (ahora)
+  function tendenciaVuelven(vm) {
+    if (!vm.length) return `no se puede medir: con ${umbrales.X} meses sin comprar no hay meses para ver quién vuelve`;
+    const a = vm[0], z = vm[vm.length - 1];
+    if (!z.dormidos) return `en ${nombreMes(z.mes)} nadie iba justo ${umbrales.X} meses sin comprar`;
+    if (vm.length === 1 || !a.dormidos) return `en ${nombreMes(z.mes)}: ${ent(z.volvieron)} de ${ent(z.dormidos)} que iban ${umbrales.X} meses sin comprar`;
+    const d = Math.round((z.tasa - a.tasa) * 1000) / 10;
+    return `en ${nombreMes(z.mes)}; en ${nombreMes(a.mes)} era ${pct1(a.tasa)}: ${d > 0 ? `subió ${fDec1.format(d)} puntos` : d < 0 ? `bajó ${fDec1.format(-d)} puntos` : "igual"}`;
+  }
+  const antesAhora = (vm) => (!vm || !vm.length ? "—" : vm.length === 1 ? pct1(vm[0].tasa) : `${pct1(vm[0].tasa)} → ${pct1(vm[vm.length - 1].tasa)}`);
+  const mesesVuelven = (vm) => vm.map((x) => `${nombreMes(x.mes)} ${pct1(x.tasa)}`).join(", ").replace(/, ([^,]*)$/, " y $1");
   function abrirPerdidos() {
     if (!B || !R) return;
     pintarPerdidos();
@@ -1771,28 +1827,34 @@ dialog.clientes::backdrop { background: rgba(16, 12, 6, 0.6); }
   }
   function pintarPerdidos() {
     Z = M.perdidosQueSiguen(BV, mask, umbrales.X, umbrales.Y, est);
-    const z = Z.total, k = $("kpis-perdidos"), fr = $("frase-perdidos");
+    VU = M.reactivacionMes(BV, mask, umbrales.X);
+    const z = Z.total, k = $("kpis-perdidos"), fr = $("frase-perdidos"), vm = VU.meses, vuDex = new Map(VU.por_dex.map((x) => [x.dex, x.meses]));
     k.textContent = ""; fr.textContent = "";
     const partes = [[`${ent(z.perdidos_sigue)} clientes`, 1], [` dejaron de comprar ${CAT} hace ${umbrales.X} meses o más, pero le siguen comprando otras cosas a la DEX: `, null],
       [`${soles(z.venta_cmp_sigue_mes)} al mes`, 1], [". Cuando compraban, se llevaban ", null], [`${soles(z.venta_dejaron_mes)} de ${CAT} al mes`, 1],
       [` (${dec2(z.kg_dejaron_mes / 1000)} t). Son los primeros a reactivar: la DEX ya los visita.`, null]];
+    if (vm.length) partes.push([` De los que iban ${umbrales.X} meses sin comprar, volvió al mes siguiente: ${mesesVuelven(vm)}.`, null]);
     for (const [t, b] of partes) { if (b) { const e = document.createElement("b"); e.textContent = t; fr.append(e); } else fr.append(t); }
     kpi(k, "Perdidos que siguen en la DEX", ent(z.perdidos_sigue), `de ${ent(z.perdidos)} perdidos · ${pct1(R.compradores ? z.perdidos_sigue / R.compradores : NaN)} de los que compran ${CAT}`, true);
     kpi(k, `Compraban de ${CAT} al mes`, soles(z.venta_dejaron_mes), `${dec2(z.kg_dejaron_mes / 1000)} t al mes · ${solesDec(z.perdidos_sigue ? z.venta_dejaron_mes / z.perdidos_sigue : NaN)} por cliente`);
     kpi(k, "Le siguen comprando a la DEX al mes", soles(z.venta_cmp_sigue_mes), `todo CMP, sin IGV, en los últimos ${umbrales.X} meses`);
     kpi(k, "Meses sin comprar (promedio)", dec1(z.meses_sin_comprar), `desde su último mes con ${CAT}`);
     kpi(k, "Volvieron", ent(z.reactivados), `estuvieron ${umbrales.X} meses o más sin comprar y volvieron · ${pct1(z.pct_volvieron)} de los que se quedaron sin comprar`, true);
+    const kv = kpi(k, "Vuelven cada mes", vm.length ? pct1(vm[vm.length - 1].tasa) : "—", tendenciaVuelven(vm), true);
+    kv.id = "kpi-vuelven";
     const t = $("tabla-perdidos");
     t.textContent = "";
     const th = document.createElement("thead"), tr = document.createElement("tr"), tb = document.createElement("tbody");
-    ["DEX", "Perdidos que siguen", `Compraban de ${CAT} al mes (S/)`, "Toneladas al mes", "Le siguen comprando a la DEX al mes (S/)", "Meses sin comprar", "Perdidos (todos)", "Volvieron", "% que volvió", ""]
+    ["DEX", "Perdidos que siguen", `Compraban de ${CAT} al mes (S/)`, "Toneladas al mes", "Le siguen comprando a la DEX al mes (S/)", "Meses sin comprar", "Perdidos (todos)", "Volvieron", "% que volvió",
+      vm.length > 1 ? `Vuelven cada mes (${mesCorto(vm[0].mes)} → ${mesCorto(vm[vm.length - 1].mes)})` : "Vuelven cada mes", ""]
       .forEach((x, i) => { const e = document.createElement("th"); e.textContent = x; if (!i) e.className = "izq"; tr.append(e); });
     th.append(tr);
     const fila = (titulo, x, d) => {
       const f = document.createElement("tr"); if (d == null) f.className = "total";
       const a = document.createElement("td"); a.textContent = titulo; f.append(a);
-      [ent(x.perdidos_sigue), ent(x.venta_dejaron_mes), dec2(x.kg_dejaron_mes / 1000), ent(x.venta_cmp_sigue_mes), dec1(x.meses_sin_comprar), ent(x.perdidos), ent(x.reactivados), pct1(x.pct_volvieron)]
-        .forEach((v) => { const c = document.createElement("td"); c.textContent = v; f.append(c); });
+      [ent(x.perdidos_sigue), ent(x.venta_dejaron_mes), dec2(x.kg_dejaron_mes / 1000), ent(x.venta_cmp_sigue_mes), dec1(x.meses_sin_comprar), ent(x.perdidos), ent(x.reactivados), pct1(x.pct_volvieron),
+        antesAhora(d == null ? vm : vuDex.get(d))]
+        .forEach((v, i) => { const c = document.createElement("td"); c.textContent = v; if (i === 8) c.className = "vuelven"; f.append(c); });
       const c = document.createElement("td"), b = document.createElement("button"); b.type = "button"; b.className = "ver"; b.textContent = "Ver clientes";
       b.disabled = !x.perdidos_sigue; b.dataset.zDex = d == null ? "" : String(d); c.append(b); f.append(c);
       tb.append(f);
@@ -1801,7 +1863,7 @@ dialog.clientes::backdrop { background: rgba(16, 12, 6, 0.6); }
     fila("Total", z, null);
     t.append(th, tb);
     $("resumen-perdidos").textContent = `${textoFiltro()} · perdido = ${umbrales.X} meses o más sin ${CAT}; «sigue en la DEX» si en esos meses le compró otra cosa`;
-    $("nota-perdidos").textContent = `Compraban: su compra de ${CAT} de los ${B.M - umbrales.X} meses antes de dejar de comprar, al mes (cuentan los meses sin compra). Le siguen comprando: todo lo CMP de los últimos ${umbrales.X} meses, al mes. Volvieron (reactivados): estuvieron ${umbrales.X} meses o más seguidos sin comprar ${CAT} y volvieron a comprar en la ventana (y no están perdidos ahora); % que volvió = volvieron ÷ (volvieron + perdidos).`;
+    $("nota-perdidos").textContent = `Compraban: su compra de ${CAT} de los ${B.M - umbrales.X} meses antes de dejar de comprar, al mes (cuentan los meses sin compra). Le siguen comprando: todo lo CMP de los últimos ${umbrales.X} meses, al mes. Volvieron (reactivados): estuvieron ${umbrales.X} meses o más seguidos sin comprar ${CAT} y volvieron a comprar en la ventana (y no están perdidos ahora); % que volvió = volvieron ÷ (volvieron + perdidos). Vuelven cada mes: de los que iban justo ${umbrales.X} meses seguidos sin comprar (su última compra fue ${umbrales.X + 1} meses antes), qué % volvió a comprar ese mes. Justo ${umbrales.X}, para que cada mes se mida igual (con «${umbrales.X} o más» la base se llena de los que llevan mucho sin comprar y el % baja solo); se puede medir desde ${vm.length ? nombreMes(vm[0].mes) : "—"}: el primer mes contra el último dice si va mejor o peor.`;
     $("perdidos-lista").disabled = !z.perdidos_sigue; $("bajar-perdidos").disabled = !Z.por_dex.length;
   }
   async function bajarPerdidos() {
@@ -1809,12 +1871,17 @@ dialog.clientes::backdrop { background: rgba(16, 12, 6, 0.6); }
     const b = $("bajar-perdidos");
     b.disabled = true; b.textContent = "Armando el Excel…";
     try {
-      const fila = (n, x) => [n, x.perdidos_sigue, x.venta_dejaron_mes, x.kg_dejaron_mes / 1000, x.venta_cmp_sigue_mes, x.meses_sin_comprar, x.perdidos, x.reactivados, x.pct_volvieron];
-      const filas = Z.por_dex.map((x) => fila(B.dims.dex[x.dex].nom, x)).concat([fila("Total", Z.total)]);
+      const vm = VU.meses, vuDex = new Map(VU.por_dex.map((x) => [x.dex, x.meses])), extremos = vm.length ? [vm[0], vm[vm.length - 1]] : [];
+      const vuelven = (arr) => extremos.flatMap((_, j) => { const x = arr && arr.length ? arr[j === 0 ? 0 : arr.length - 1] : null; return [x ? x.dormidos : 0, x ? x.tasa : null]; });
+      const fila = (n, x, d) => [n, x.perdidos_sigue, x.venta_dejaron_mes, x.kg_dejaron_mes / 1000, x.venta_cmp_sigue_mes, x.meses_sin_comprar, x.perdidos, x.reactivados, x.pct_volvieron,
+        ...vuelven(d == null ? vm : vuDex.get(d))];
+      const filas = Z.por_dex.map((x) => fila(B.dims.dex[x.dex].nom, x, x.dex)).concat([fila("Total", Z.total, null)]);
       const cols = [{ t: "DEX", ancho: 40 }, { t: "Perdidos que siguen en la DEX", f: 2 }, { t: `Compraban de ${CAT} al mes (S/ sin IGV)`, f: 1 }, { t: "Toneladas al mes", f: 1 },
-        { t: "Le siguen comprando a la DEX al mes (S/ sin IGV)", f: 1 }, { t: "Meses sin comprar (promedio)", f: 1 }, { t: "Perdidos (todos)", f: 2 }, { t: "Volvieron (reactivados)", f: 2 }, { t: "% que volvió", f: 3 }];
+        { t: "Le siguen comprando a la DEX al mes (S/ sin IGV)", f: 1 }, { t: "Meses sin comprar (promedio)", f: 1 }, { t: "Perdidos (todos)", f: 2 }, { t: "Volvieron (reactivados)", f: 2 }, { t: "% que volvió", f: 3 },
+        ...extremos.flatMap((x, j) => [{ t: `Iban justo ${umbrales.X} meses sin comprar en ${nombreMes(x.mes)} (${j ? "ahora" : "antes"})`, f: 2 }, { t: `% que volvió en ${nombreMes(x.mes)}`, f: 3 }])];
       const notas = [["filtros", textoFiltro()], ["perdido", `${umbrales.X} meses o más sin ${CAT}; «sigue en la DEX» si en esos meses le compró otra cosa`],
         ["volvieron", `estuvieron ${umbrales.X} meses o más seguidos sin comprar ${CAT} y volvieron a comprar en la ventana; % = volvieron ÷ (volvieron + perdidos)`],
+        ["vuelven cada mes", `de los que iban justo ${umbrales.X} meses seguidos sin comprar (su última compra fue ${umbrales.X + 1} meses antes), qué % volvió a comprar ese mes: ${vm.length ? mesesVuelven(vm) : "no se puede medir"}; antes = el primer mes que se puede medir, ahora = el último`],
         ["generado", B.generado], ["bajado", new Date().toISOString().replace("T", " ").slice(0, 19)]];
       const blob = await libroExcel([{ nombre: "por_dex", columnas: cols, filas }, { nombre: "notas", columnas: [{ t: "qué", ancho: 18 }, { t: "detalle", ancho: 110 }], filas: notas }]);
       descargar(blob, `${slug()}_perdidos_que_siguen.xlsx`);
