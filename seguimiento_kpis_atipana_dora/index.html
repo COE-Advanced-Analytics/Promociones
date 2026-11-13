@@ -86,6 +86,8 @@ td{padding:9px 11px;border-bottom:1px solid var(--border);color:var(--text-secon
 tr:last-child td{border-bottom:none}
 .n{text-align:right;font-variant-numeric:tabular-nums}
 th.n{text-align:right}
+.srt{display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle}.srt button{border:1px solid var(--border);background:#fff;color:var(--text-muted);border-radius:5px;font:600 10px 'Space Grotesk',sans-serif;padding:1px 5px;cursor:pointer;line-height:14px}.srt button:hover{border-color:var(--text-muted)}.srt button.on{background:var(--text-primary);border-color:var(--text-primary);color:#fff}
+td.dc{white-space:nowrap}td.dc .pc{opacity:.85;font-weight:600;margin-left:4px}
 td.b,td:first-child{font-weight:700;color:var(--text-primary);font-family:'Space Grotesk',sans-serif}
 tr.tot td{background:var(--bg-warm);font-weight:700;color:var(--text-primary)}
 .tblwrap{overflow-x:auto}
@@ -690,26 +692,46 @@ function renderVentanas(){
     av.classList.add('cor'); av.hidden = false;
   }
 }
+const TS = {col:null, by:'pct', dir:-1};       // orden elegido por el usuario: columna de variación (prev / prom), por % o por variación absoluta, dir -1 = de mayor a menor
+const dcomb = (m,a,b) => {                         // variación absoluta y % en una sola celda
+  if(a == null || b == null) return h('span',{text:'–'});
+  const d = a-b, cls = d > 0 ? 'up' : d < 0 ? 'dn' : '', sg = d > 0 ? '▲ +' : d < 0 ? '▼ −' : '';
+  if(m.k === 'ip') return h('span',{class:cls, text:sg+fmtN(Math.abs(d),1)+' pp'});
+  return h('span',{class:cls}, sg+fmtOf(m)(Math.abs(d)), b === 0 ? '' : h('span',{class:'pc',text:'('+(d > 0 ? '+' : d < 0 ? '−' : '')+fmtN(Math.abs(d/b)*100,1)+'%)'}));
+};
+const dkey = (m,a,b,by) => { if(a == null || b == null) return null; if(by === 'abs' || m.k === 'ip') return a-b; return b === 0 ? null : a/b-1; };
 function renderTabla(){
   const m = metSel();
   $('#t_titulo').textContent = mt(m)+' · abierto por '+(st.dim < 0 ? 'total' : DIMX[st.dim].label.toLowerCase())+(st.cat < 0 ? '' : ' · '+D.cats[st.cat])+(st.marca < 0 ? '' : ' · '+D.marcas[st.marca]);
   const t = $('#tabla'); t.replaceChildren();
-  const head = ['', ...W.map(w=>w.etiqueta)];
-  if(NMESES) head.push(lbProm(), 'Δ abs. vs '+lbProm(), 'Δ % vs '+lbProm());
-  if(LY >= 0) head.push('Δ vs '+W[LY].etiqueta);
-  t.append(h('thead',{}, h('tr',{}, head.map((x,i)=>h('th',{class: i ? 'n' : '', text:x})))));
+  const cols = [];                                  // columnas de variación: [id, título]
+  if(IPREV >= 0) cols.push(['prev', 'Δ vs '+W[IPREV].etiqueta+' (mes anterior)']);
+  if(NMESES) cols.push(['prom', 'Δ vs '+lbProm()]);
+  const refOf = (id, v) => id === 'prev' ? v[IPREV] : prom3(m,v);
+  const sortBtn = (id, by, txt, tip) => h('button',{type:'button', class: TS.col === id && TS.by === by ? 'on' : '', title:tip+' · clic: mayor a menor; otro clic: menor a mayor',
+    text: txt + (TS.col === id && TS.by === by ? (TS.dir < 0 ? ' ▼' : ' ▲') : ' ⇅'),
+    onclick:()=>{ if(TS.col === id && TS.by === by) TS.dir = -TS.dir; else { TS.col = id; TS.by = by; TS.dir = -1; } renderTabla(); }});
+  const hr = h('tr',{}, h('th',{text:''}), W.map(w=>h('th',{class:'n',text:w.etiqueta})));
+  if(NMESES) hr.append(h('th',{class:'n',text:lbProm()}));
+  cols.forEach(([id,tt])=> hr.append(h('th',{class:'n'}, tt, h('span',{class:'srt'}, sortBtn(id,'abs','Δ','Ordenar por variación absoluta'), m.k === 'ip' ? null : sortBtn(id,'pct','%','Ordenar por variación %')))));
+  if(LY >= 0) hr.append(h('th',{class:'n',text:'Δ vs '+W[LY].etiqueta}));
+  t.append(h('thead',{}, hr));
   const rows = [];
   if(st.dim >= 0) GRP.forEach((recs,vi)=>{ if(recs.some(r=>r)) rows.push({name:nombreVal(st.dim,vi), vi, recs}); });
-  if(st.dim >= 0 && ordenFijo(st.dim,0) != null) rows.sort((a,b)=> ordenFijo(st.dim,a.vi) - ordenFijo(st.dim,b.vi));
+  if(TS.col && cols.some(c=>c[0] === TS.col)){          // orden elegido: los vacíos quedan al final
+    const ky = r => { const v = r.recs.map(x=>mv(m,x)); return dkey(m, v[NW-1], refOf(TS.col, v), TS.by); };
+    rows.sort((a,b)=>{ const x = ky(a), y = ky(b); if(x == null && y == null) return 0; if(x == null) return 1; if(y == null) return -1; return TS.dir * (y - x) * -1; });
+  } else if(st.dim >= 0 && ordenFijo(st.dim,0) != null) rows.sort((a,b)=> ordenFijo(st.dim,a.vi) - ordenFijo(st.dim,b.vi));
   else rows.sort((a,b)=> { const x = dnum(m,a.recs.map(r=>mv(m,r))), y = dnum(m,b.recs.map(r=>mv(m,r)));   // de menor a mayor variación vs prom.
     return (x === y) ? 0 : x - y; });
   const all = [{name:'Total', recs:TOT, tot:true}, ...rows];
   const tb = h('tbody');
   for(const r of all){
-    const v = r.recs.map(x=>mv(m,x)), cur = v[NW-1], pr = prom3(m,v);
+    const v = r.recs.map(x=>mv(m,x)), cur = v[NW-1];
     const tr = h('tr',{class:r.tot?'tot':''}, h('td',{text:r.name}));
     v.forEach(x=> tr.append(h('td',{class:'n',text: x == null ? '–' : fmtOf(m)(x)})));
-    if(NMESES){ tr.append(h('td',{class:'n',text: pr == null ? '–' : fmtOf(m)(pr)})); tr.append(h('td',{class:'n'}, dabs(m,cur,pr))); tr.append(h('td',{class:'n'}, dl(m,cur,pr))); }
+    if(NMESES){ const pr = prom3(m,v); tr.append(h('td',{class:'n',text: pr == null ? '–' : fmtOf(m)(pr)})); }
+    cols.forEach(([id])=> tr.append(h('td',{class:'n dc'}, dcomb(m,cur,refOf(id,v)))));
     if(LY >= 0) tr.append(h('td',{class:'n'}, dl(m,cur,v[LY])));
     tb.append(tr);
   }
