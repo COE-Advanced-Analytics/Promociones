@@ -23,6 +23,7 @@ body{--hero1:#C8000B;--hero2:#FD000D;--hero3:#D4A853}      /* rojo del logo de A
 .tb-sep{width:1px;align-self:stretch;background:var(--border);margin:6px 0;flex:none}
 .tb-kicker{font-size:11px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;color:var(--text-muted);line-height:1.2;margin-bottom:3px}
 .tb-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.h1-oculto{opacity:0;transition:opacity .25s}.tb-row h1:hover .h1-oculto{opacity:1}
 .tb-row h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:700;line-height:1.1;color:var(--text-primary);margin:0}
 .tb-pill{background:var(--coral-light);color:#D6000F;font-size:14px;font-weight:500;padding:7px 16px;border-radius:100px;white-space:nowrap}
 .tb-right{margin-left:auto;display:flex;align-items:center;flex:none}
@@ -610,7 +611,7 @@ const dnum = (m,v) => { const c = v[NW-1], r = prom3(m,v); if(c == null || r == 
 const lbProm = () => 'prom. '+NMESES+' meses';
 function renderHero(){
   const [a,b] = D.meta.titulo.split(' · ');
-  $('#h1').textContent = D0.meta.subtitulo; $('#sub').textContent = a;      // título grande: «Seguimiento DEX Dora»; arriba, en pequeño: «Evolución acumulada»
+  $('#h1').innerHTML = ''; $('#h1').append(D0.meta.subtitulo, Object.assign(document.createElement('span'), {className:'h1-oculto', textContent:' La Exploradora'})); $('#sub').textContent = a;      // título grande: «Seguimiento DEX Dora»; arriba, en pequeño: «Evolución acumulada»
    $('#corte_pill').textContent = b ? 'Corte '+b : ''; $('#corte_pill').hidden = !b;
 }
 function renderKpis(){
