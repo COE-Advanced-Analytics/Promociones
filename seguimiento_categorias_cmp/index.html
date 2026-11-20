@@ -387,7 +387,7 @@ function cargarDatos(Dn){            // (re)arma todo lo que depende de los dato
   IMES = []; W.forEach((w,i)=>{ if(w.tipo === 'mes') IMES.push(i); });          // meses anteriores: su promedio es la referencia «vs prom.»
   NMESES = IMES.length;
   xs = W.map((w,i)=> i + ((LY >= 0 && i > LY) ? .7 : 0));
-  W.forEach(w=>{ w.inc = w.tipo === 'actual' && !!(w.fecha_max && w.fecha_max < w.fin); });   // solo el corte actual: en otros meses un día final sin venta es normal
+  W.forEach(w=>{ w.inc = w.tipo === 'actual' && !!(w.fecha_max && (Date.parse(w.fin) - Date.parse(w.fecha_max)) / 864e5 > 1); });   // solo el corte actual; la data llega siempre hasta el día anterior (hoy - 1), así que un día de atraso es lo normal
   NDIM = D.dims.length; CANAL = D.dims.findIndex(d => d.key === 'canal');
   FAM = D.dims.findIndex(d => d.key === 'familia'); MAT = D.dims.findIndex(d => d.key === 'material'); GRU = D.dims.findIndex(d => d.key === 'grupo');
   MULTI = new Set([CANAL, FAM, MAT, GRU].filter(k => k >= 0));      // dimensiones con filas «todos» (-1) que no se suman entre valores (distintos exactos)
