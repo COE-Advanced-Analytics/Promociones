@@ -775,22 +775,6 @@ function semanal(m, mi){               // promedio de la métrica por semana, si
     return n ? sum/n : null;
   });
 }
-/* días con descuento: máximo % de las promociones B1 de la categoría que COINCIDEN con cada filtro elegido (familia por cod_familia -o la de su grupo / material-,
-   boca, oficina y compañía por cod_compania); un filtro sin elegir no restringe. Sin dato de familia / oficina / compañía la promoción solo cuenta sin ese filtro; B2B y sin boca nunca pintan (los datos sí los suman). */
-function descuentoDia(){
-  const DS = D.desc || [], dm = key => D.dims.findIndex(d => d.key === key), OFI = dm('oficina'), COM = dm('compania');
-  let fam = null;
-  if(FAM >= 0 && st.f[FAM] >= 0) fam = new Set([st.f[FAM]]);
-  else if(MAT >= 0 && st.f[MAT] >= 0) fam = MF.get(st.f[MAT]) || new Set();
-  else if(GRU >= 0 && st.f[GRU] >= 0) fam = GM.get(st.f[GRU]) || new Set();
-  const bm = st.f[BOCA], b2b = D.dims[BOCA].valores.indexOf('B2B');      // solo cuentan las bocas que se pueden elegir (BO, PM, MM, MA): B2B y las promociones sin boca no pintan
-  const fo = OFI >= 0 ? st.f[OFI] : -1, fc = COM >= 0 ? st.f[COM] : -1;
-  const rows = DS.filter(r => (fam === null || (r[2] >= 0 && fam.has(r[2]))) && (r[3] >= 0 && r[3] !== b2b && (bm < 0 || ((bm >> r[3]) & 1) === 1))
-    && (fo < 0 || r[4] === fo) && (fc < 0 || r[5] === fc));
-  return (anio, mes, d) => { const x = Math.round(Date.UTC(anio, mes-1, d) / 864e5); let m = 0;
-    for(const r of rows) if(r[0] <= x && x <= r[1] && r[6] > m) m = r[6];
-    return m; };
-}
 function renderCalendario(){
   const m = metSel(), t = $('#cal'); t.replaceChildren(); t.classList.toggle('sm', m.k === 'vl');
   $('#cal_titulo').textContent = mt(m)+(m.k === 'vl' && st.modo === 'total' ? ' (S/ miles)' : m.k === 'cli' ? ' (miles)' : '')+' por día · '+D.cats[st.cat];
@@ -801,13 +785,13 @@ function renderCalendario(){
   const hd = h('tr',{}, h('th',{class:'m',text:''}));
   for(let d=1; d<=31; d++) hd.append(h('th',{text:d}));
   t.append(h('thead',{}, hd));
-  const b = h('tbody'), dsc = descuentoDia();
+  const b = h('tbody'), marca = ms => (ms.marca || {})[D.cats[st.cat]] || {d3:[], d6:[]};
   MS.map((ms,mi)=>[ms,mi]).sort((a,b)=> (b[0].tipo === 'anio') - (a[0].tipo === 'anio')).forEach(([ms,mi])=>{      // año anterior primero
     const tr = h('tr',{}, h('td',{class:'m',text:ms.etiqueta}));
     for(let d=1; d<=31; d++){
       if(d > ms.ndias){ tr.append(h('td',{class:'na'})); continue; }
       const fecha = new Date(ms.anio, ms.mes-1, d), dom = fecha.getDay() === 0;
-      const pc = dsc(ms.anio, ms.mes, d), cls = pc > 0 && pc <= 3 ? 'd3' : pc > 3 && pc <= 6 ? 'd6' : dom ? 'dom' : '';
+      const mc = marca(ms), cls = mc.d3.includes(d) ? 'd3' : mc.d6.includes(d) ? 'd6' : dom ? 'dom' : '';
       const r = DIAS[mi][d], v = (m.sinDia || !r) ? null : mv(m,r);
       const tx = v == null ? '' : cf(v), td = h('td',{class:cls, text: (/^-?0([.,]0*)?$/.test(tx) || (dom && D.meta.fechaBase !== 'pedido' && (v <= 0 || (m.k === 'vol' && v < 1)))) ? '' : tx});   // sin «-0» ni ceros de domingos (por fecha de pedido sí hay pedidos en domingo y se muestran)
       td.title = DOW[fecha.getDay()]+' '+d+'-'+String(ms.mes).padStart(2,'0')+'-'+ms.anio+(v == null ? '' : ' · '+fmt(v))+(cls === 'd3' ? ' · 3% dscto.' : cls === 'd6' ? ' · 6% dscto.' : '');
