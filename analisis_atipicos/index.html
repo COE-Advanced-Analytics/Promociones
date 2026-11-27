@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Análisis de clientes atípicos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@400;600&display=swap">
+<style>
+:root {
+  --ink: #14213D;
+  --paper: #F7F6F2;
+  --paper2: #ECEAE3;
+  --muted: #4A5568;
+  --blue: #2F6DB5;
+  --orange: #D9711C;
+  --gray: #A7AEB8;
+  --line: #CDD1D8;
+  --soft: #BFD8D5;
+}
+section {
+  padding: 128px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 30px;
+  counter-increment: page;
+  box-sizing: border-box;
+}
+section.alt { background: var(--paper2); }
+section.dark { background: var(--ink); color: var(--paper); }
+section.foot { padding: 128px 128px 160px; }
+h1, h2, h3 { font-family: 'Space Grotesk', Arial, sans-serif; margin: 0; }
+h1 { font-size: 120px; font-weight: 700; line-height: 1.0; }
+h2 { font-size: 64px; font-weight: 600; line-height: 1.1; }
+h3 { font-size: 40px; font-weight: 600; line-height: 1.15; }
+p { margin: 0; font-size: 30px; line-height: 1.35; }
+.eyebrow { font-size: 24px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); margin-bottom: 20px; }
+.dark .eyebrow { color: #F0A35E; }
+.lead { font-size: 30px; color: var(--muted); margin-top: 24px; max-width: 1500px; }
+.dark .lead { color: var(--soft); }
+.src { position: absolute; left: 128px; bottom: 64px; width: 1664px; font-size: 24px; color: var(--muted); }
+.dark .src { color: var(--soft); }
+
+/* big numbers */
+.stats { display: flex; gap: 48px; margin-top: 64px; }
+.stat { flex: 1; border-top: 4px solid var(--ink); padding-top: 24px; }
+.stat .num { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 120px; font-weight: 700; line-height: 1.0; color: var(--ink); }
+.stat .num.hi { color: var(--orange); }
+.stat .lab { font-size: 30px; color: var(--muted); margin-top: 12px; }
+.dark .stat { border-top-color: var(--soft); }
+.dark .stat .num { color: var(--paper); }
+.dark .stat .lab { color: var(--soft); }
+
+/* horizontal bars */
+.hbars { display: flex; flex-direction: column; gap: 16px; margin-top: 56px; }
+.hrow { display: flex; align-items: center; gap: 24px; }
+.hrow .lab { width: 420px; font-size: 30px; color: var(--ink); }
+.hrow .track { flex: 1; display: flex; align-items: center; gap: 20px; }
+.bar { height: 44px; border-radius: 0 4px 4px 0; background: var(--blue); }
+.bar.hi { background: var(--orange); }
+.bar.ctx { background: var(--gray); }
+.hrow .val { font-size: 30px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+
+.hbars.wide .hrow .lab { width: 600px; }
+
+/* data flow */
+.flow { display: flex; flex-direction: column; margin-top: 40px; }
+.fstep { display: flex; align-items: flex-start; gap: 32px; padding: 22px 0; border-top: 2px solid var(--line); }
+.fstep .n { width: 72px; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 48px; font-weight: 700; color: var(--blue); line-height: 1; }
+.fstep h3 { width: 380px; font-size: 36px; }
+.fstep p { flex: 1; font-size: 28px; color: var(--muted); }
+
+/* two-column layout */
+.cols { display: flex; gap: 80px; margin-top: 48px; align-items: flex-start; }
+.col { flex: 1; }
+.note { background: var(--paper2); border-left: 6px solid var(--orange); padding: 28px 32px; }
+.alt .note { background: var(--paper); }
+.note p { font-size: 30px; }
+.note .big { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 64px; font-weight: 700; color: var(--orange); line-height: 1.05; margin-bottom: 8px; }
+
+/* cards */
+.cards { display: flex; gap: 32px; margin-top: 56px; }
+.card { flex: 1; background: var(--paper2); padding: 36px; border-radius: 8px; }
+.alt .card { background: var(--paper); }
+.card h3 { font-size: 40px; margin-bottom: 16px; }
+.card p { font-size: 26px; color: var(--muted); }
+.card .tag { font-size: 24px; font-weight: 600; color: var(--orange); margin-bottom: 12px; }
+.card .step { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 64px; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 16px; }
+
+/* tables */
+table { font-size: 28px; color: var(--ink); margin-top: 40px; width: 100%; }
+th { text-align: left; font-weight: 600; color: var(--muted); }
+tr.hi { background: #F6E3D1; }
+
+/* legend */
+.legend { display: flex; gap: 40px; margin-top: 32px; align-items: center; }
+.key { display: flex; align-items: center; gap: 12px; }
+.sw { width: 28px; height: 28px; border-radius: 4px; background: var(--blue); }
+.sw.hi { background: var(--orange); }
+.sw.ctx { background: var(--gray); }
+.key p { font-size: 26px; color: var(--muted); }
+
+/* vertical bars */
+.vchart { display: flex; align-items: flex-end; gap: 18px; height: 360px; margin-top: 40px; border-bottom: 2px solid var(--line); }
+.vcol { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; }
+.vcol .vval { font-size: 24px; font-weight: 600; color: var(--ink); }
+.vbar { width: 88px; border-radius: 4px 4px 0 0; background: var(--blue); }
+.vbar.hi { background: var(--orange); }
+.vlabels { display: flex; gap: 18px; margin-top: 12px; }
+.vlabels p { flex: 1; text-align: center; font-size: 24px; color: var(--muted); }
+
+/* grouped vertical bars */
+.gchart { display: flex; align-items: flex-end; gap: 64px; height: 380px; margin-top: 40px; border-bottom: 2px solid var(--line); padding: 0 24px; }
+.grp { flex: 1; display: flex; align-items: flex-end; justify-content: center; gap: 6px; }
+.gcol { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.gcol .vval { font-size: 26px; font-weight: 600; color: var(--ink); }
+.gbar { width: 96px; border-radius: 4px 4px 0 0; }
+.gbar.ctx { background: var(--gray); }
+.gbar.blue { background: var(--blue); }
+.glabels { display: flex; gap: 64px; margin-top: 12px; padding: 0 24px; }
+.glabels p { flex: 1; text-align: center; font-size: 26px; color: var(--muted); }
+
+/* case cards */
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
+.case { background: var(--paper2); padding: 28px 32px; border-radius: 8px; }
+.case .tag { font-size: 24px; font-weight: 600; color: var(--orange); }
+.case h3 { font-size: 32px; margin: 8px 0 10px; }
+.case p { font-size: 24px; color: var(--muted); line-height: 1.35; }
+.case .dec { color: var(--ink); font-weight: 600; margin-top: 10px; }
+
+/* motion */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.stat, .hrow, .card, .case, .note { animation: rise 500ms ease-out both; }
+.stat:nth-child(2), .hrow:nth-child(2), .card:nth-child(2), .case:nth-child(2) { animation-delay: 120ms; }
+.stat:nth-child(3), .hrow:nth-child(3), .card:nth-child(3), .case:nth-child(3) { animation-delay: 240ms; }
+.hrow:nth-child(4), .card:nth-child(4), .case:nth-child(4) { animation-delay: 360ms; }
+.hrow:nth-child(5) { animation-delay: 480ms; }
+
+
+html, body { margin: 0; height: 100%; background: #0E1628; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; }
+#stage > section { position: absolute; inset: 0; width: 1920px; height: 1080px; display: none; overflow: hidden; }
+#stage > section.on { display: block; }
+section > aside { display: none; }
+body.notas section.on > aside { display: block; position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 128px; background: rgba(14,22,40,.92); color: #F7F6F2; font-size: 24px; line-height: 1.4; z-index: 5; }
+#hud { position: fixed; right: 16px; bottom: 12px; font: 14px Inter, Arial, sans-serif; color: #BFD8D5; opacity: .75; user-select: none; }
+#hud button { background: none; border: 1px solid #4A5568; color: #BFD8D5; border-radius: 4px; padding: 2px 10px; margin-left: 6px; cursor: pointer; font: inherit; }
+@media print {
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body { background: none; overflow: visible; height: auto; }
+  #stage { position: static; transform: none !important; width: auto; height: auto; }
+  #stage > section { display: block !important; position: relative; page-break-after: always; break-after: page; }
+  section > aside, #hud { display: none !important; }
+  * { animation: none !important; }
+}
+
+</style>
+</head>
+<body>
+<div id="stage">
+<section id="cover" class="dark">
+<h1>Análisis de clientes atípicos</h1>
+<p class="lead" style="margin-top:48px; font-size:44px;">Clientes que observamos que no compran como su boca de salida</p>
+<p class="src" style="bottom:128px;">Se consideran Bodega, Puesto de mercado y Mayorista, por trimestre · Venta CMP sin Panetones ni la marca Amaras · 2026</p>
+<aside>Presentamos el análisis de los clientes atípicos: de dónde partimos, el flujo de datos que seguimos y lo que encontramos. Llamamos atípico a un cliente que no compra como su boca de salida.</aside>
+</section>
+<section id="partida" class="foot">
+<p class="eyebrow">Punto de partida · criterio anterior</p>
+<h2>El criterio anterior marcaba como atípico al 1% de bodegas y puestos que más compra</h2>
+<div class="stats" style="margin-top:48px;">
+<div class="stat"><p class="num" style="font-size:96px;">S/ 4,716</p><p class="lab">límite de compra mensual promedio (enero a octubre); mes a mes va de S/ 4,500 a S/ 5,400</p></div>
+<div class="stat"><p class="num" style="font-size:96px;">1,727</p><p class="lab">clientes sobre el límite</p></div>
+<div class="stat"><p class="num" style="font-size:96px;">14%</p><p class="lab">de la venta mensual de bodegas y puestos: S/ 12.7 M de S/ 89.8 M al mes</p></div>
+</div>
+<p style="margin-top:48px;">Con un solo límite para las dos bocas, la proporción de puestos marcados es siete veces la de bodegas:</p>
+<div class="hbars wide" style="margin-top:24px;">
+<div class="hrow"><p class="lab">Bodegas</p><div class="track"><div class="bar ctx" style="width:110px;"></div><p class="val">0.46% · 651 de 140,482</p></div></div>
+<div class="hrow"><p class="lab">Puestos de mercado</p><div class="track"><div class="bar hi" style="width:800px;"></div><p class="val">3.34% · 1,076 de 32,204</p></div></div>
+</div>
+<p class="src">El criterio anterior cuenta toda bodega con al menos una compra entre enero y octubre (140,482). El análisis trimestral cuenta solo las que compraron en el trimestre: 122,179 en el tercero.</p>
+<aside>Como contexto: el criterio anterior toma la compra de enero a octubre y marca como atípico a toda bodega o puesto sobre el 1% que más compra. Usa un solo límite para ambas bocas de salida y, como un puesto típico compra 2.4 veces lo que una bodega, marca al 3.34% de los puestos y solo al 0.46% de las bodegas. Las cifras de clientes no coinciden con las del análisis trimestral porque el criterio anterior suma diez meses: incluye unas 18 mil bodegas que compraron en la primera mitad del año pero no en el tercer trimestre.</aside>
+</section>
+<section id="flujo" class="alt" data-transition="fade">
+<p class="eyebrow">Flujo de datos</p>
+<h2>Cómo construimos el análisis</h2>
+<div class="flow">
+<div class="fstep" style="padding:16px 0;"><p class="n">1</p><h3>Fuente</h3><p>Ventas de las DEX, enero a septiembre 2026, CMP sin Panetones ni Amaras.</p></div>
+<div class="fstep" style="padding:16px 0;"><p class="n">2</p><h3>Boca de salida</h3><p>La de la segmentación al cierre de cada trimestre.</p></div>
+<div class="fstep" style="padding:16px 0;"><p class="n">3</p><h3>Cómo compra</h3><p>Compra, monto por pedido, frecuencia, surtido y mix de categorías.</p></div>
+<div class="fstep" style="padding:16px 0;"><p class="n">4</p><h3>Comparación</h3><p>Contra clientes de su mismo tamaño: ¿a qué boca se parece?</p></div>
+<div class="fstep" style="padding:16px 0; border-bottom:2px solid #CDD1D8;"><p class="n">5</p><h3>Tres señales</h3><p>Compra como otra boca · tamaño extremo en su boca · cambio brusco.</p></div>
+</div>
+<div class="note" style="margin-top:36px;"><p><b>¿Funciona?</b> La forma de compra acierta en 81 de cada 100 comparaciones entre bodega y puesto, y en 98 de cada 100 para reconocer a un mayorista. Al comparar a igual tamaño, una bodega grande que compra como bodega sigue siendo bodega.</p></div>
+<aside>Partimos de las ventas de las DEX con la definición de compra del criterio anterior, sin Panetones ni Amaras. A cada cliente le asignamos su boca de salida, describimos cómo compra y lo comparamos con clientes de su mismo tamaño. Verificamos con clientes que el cálculo no había visto: acierta en 81 de cada 100 pares bodega–puesto y reconoce al mayorista en 98 de cada 100.</aside>
+</section>
+<section id="panorama" class="dark foot">
+<p class="eyebrow">Lo que encontramos · tercer trimestre 2026</p>
+<h2>2,186 clientes son atípicos (1.4%) y otros 9,654 están marcados</h2>
+<table style="color:#F7F6F2; font-size:24px;">
+<tr><th style="width:36%; color:#BFD8D5;">Grupo</th><th style="width:11%; text-align:right; color:#BFD8D5;">Bodega</th><th style="width:11%; text-align:right; color:#BFD8D5;">Puesto de mercado</th><th style="width:10%; text-align:right; color:#BFD8D5;">Mayorista</th><th style="width:10%; text-align:right; color:#BFD8D5;">Total</th><th style="width:8%; text-align:right; color:#BFD8D5;">%</th><th style="width:14%; text-align:right; color:#BFD8D5;">Venta al mes</th></tr>
+<tr><td style="color:#F0A35E;">Atípico · compra como otra boca 3 trimestres consecutivos</td><td style="text-align:right;">344</td><td style="text-align:right;">306</td><td style="text-align:right;">10</td><td style="text-align:right; color:#F0A35E;">660</td><td style="text-align:right;">0.4%</td><td style="text-align:right;">S/ 1.2 M</td></tr>
+<tr><td style="color:#F0A35E;">Atípico · tamaño extremo</td><td style="text-align:right;">1,188</td><td style="text-align:right;">277</td><td style="text-align:right;">61</td><td style="text-align:right; color:#F0A35E;">1,526</td><td style="text-align:right;">1.0%</td><td style="text-align:right;">S/ 16.3 M</td></tr>
+<tr><td>Marcado · compra como otra boca 2 de 3 trimestres</td><td style="text-align:right;">6,920</td><td style="text-align:right;">2,567</td><td style="text-align:right;">167</td><td style="text-align:right;">9,654</td><td style="text-align:right;">6.2%</td><td style="text-align:right;">S/ 6.4 M</td></tr>
+<tr><td>Sin señal</td><td style="text-align:right;">113,727</td><td style="text-align:right;">25,560</td><td style="text-align:right;">5,789</td><td style="text-align:right;">145,076</td><td style="text-align:right;">92.5%</td><td style="text-align:right;">S/ 109.2 M</td></tr>
+<tr><td>Total</td><td style="text-align:right;">122,179</td><td style="text-align:right;">28,710</td><td style="text-align:right;">6,027</td><td style="text-align:right;">156,916</td><td style="text-align:right;">100%</td><td style="text-align:right;">S/ 133.1 M</td></tr>
+</table>
+<div class="note" style="margin-top:32px; background:#22304F;"><p style="color:#F7F6F2;"><b>Atípico</b> es quien compra como otra boca de salida tres trimestres consecutivos, o quien compra extremadamente más que su boca. <b>Marcado</b> es quien compra como otra boca este trimestre y al menos uno de los dos anteriores.</p></div>
+<p class="src">Otra boca, 3 trimestres: 80% o más de parecido a la misma otra boca. Marcado: 60% o más. Extremo: 1% que más compra de su boca. Venta: promedio mensual.</p>
+<aside>Definimos atípico con dos universos claros: quien compra como otra boca de salida tres trimestres seguidos y quien compra extremadamente más que el resto de su boca. Son 2,186 clientes, el 1.4%, pero los extremos compran más de 16 millones de soles al mes. Aparte, marcamos a 9,654 clientes que compraron como otra boca en este trimestre y al menos en uno de los dos anteriores: no son atípicos todavía, pero hay que seguirlos.</aside>
+</section>
+<section id="impacto" class="foot">
+<p class="eyebrow">Lo que encontramos · tercer trimestre 2026</p>
+<h2>Impacto en venta e inversión promocional</h2>
+<table style="font-size:24px;">
+<tr><th style="width:32%;">Grupo</th><th style="width:10%; text-align:right;">Clientes</th><th style="width:13%; text-align:right;">Venta al mes</th><th style="width:9%; text-align:right;">% venta</th><th style="width:13%; text-align:right;">Inversión al mes</th><th style="width:10%; text-align:right;">% inversión</th><th style="width:13%; text-align:right;">Inversión por sol vendido</th></tr>
+<tr class="hi"><td>Atípico · otra boca 3 trimestres</td><td style="text-align:right;">660</td><td style="text-align:right;">S/ 1.2 M</td><td style="text-align:right;">1%</td><td style="text-align:right;">S/ 41 mil</td><td style="text-align:right;">1%</td><td style="text-align:right;">3.4%</td></tr>
+<tr class="hi"><td>Atípico · tamaño extremo</td><td style="text-align:right;">1,526</td><td style="text-align:right;">S/ 16.3 M</td><td style="text-align:right;">12%</td><td style="text-align:right;">S/ 668 mil</td><td style="text-align:right;">16%</td><td style="text-align:right;">4.1%</td></tr>
+<tr><td>Marcado · otra boca 2 de 3 trimestres</td><td style="text-align:right;">9,654</td><td style="text-align:right;">S/ 6.4 M</td><td style="text-align:right;">5%</td><td style="text-align:right;">S/ 204 mil</td><td style="text-align:right;">5%</td><td style="text-align:right;">3.2%</td></tr>
+<tr><td>Sin señal</td><td style="text-align:right;">145,076</td><td style="text-align:right;">S/ 109.2 M</td><td style="text-align:right;">82%</td><td style="text-align:right;">S/ 3.28 M</td><td style="text-align:right;">78%</td><td style="text-align:right;">3.0%</td></tr>
+</table>
+<div class="stats" style="margin-top:36px;">
+<div class="stat"><p class="num hi" style="font-size:72px;">S/ 5.6 mil al mes</p><p class="lab">de ahorro si los 660 atípicos que compran como otra boca tuvieran la boca correcta (13% de lo que reciben)</p></div>
+<div class="stat"><p class="num" style="font-size:72px;">S/ 296 → S/ 444</p><p class="lab">inversión al mes por cliente extremo, de enero a septiembre; el total de clientes recibe S/ 29</p></div>
+</div>
+<p class="src">Promedios mensuales. Inversión: descuentos promocionales netos de reversiones (sin bonificaciones ni descuento por plazo de pago); total S/ 4.19 M al mes. La venta no cambia con la boca asignada.</p>
+<aside>La venta no depende de la boca asignada: el cliente compra igual; lo que cambia es cuánto se invierte en él. Dos mensajes. Primero, si los 660 atípicos que compran como otra boca tuvieran la boca correcta, se invertirían unos 5.6 mil soles menos al mes, el 13% de lo que reciben hoy; en los marcados la diferencia es casi nula. Segundo, los extremos concentran el 16% de la inversión con el 12% de la venta, y lo que recibe cada uno sube de 296 a 444 soles al mes entre enero y septiembre. Las dos diapositivas siguientes muestran el detalle.</aside>
+</section>
+<section id="inv-mal" class="foot">
+<p class="eyebrow">Inversión promocional · boca mal asignada</p>
+<h2>Con la boca correcta, los 660 atípicos recibirían S/ 5.6 mil menos al mes</h2>
+<table style="font-size:24px;">
+<tr><th style="width:36%;">Boca asignada → se parece a</th><th style="width:11%; text-align:right;">Clientes</th><th style="width:17%; text-align:right;">Hoy, al mes</th><th style="width:19%; text-align:right;">Con boca correcta</th><th style="width:17%; text-align:right;">Diferencia</th></tr>
+<tr class="hi"><td>Puesto de mercado → Mayorista</td><td style="text-align:right;">210</td><td style="text-align:right;">S/ 18,358</td><td style="text-align:right;">S/ 13,235</td><td style="text-align:right;">−S/ 5,123</td></tr>
+<tr class="hi"><td>Bodega → Mayorista</td><td style="text-align:right;">234</td><td style="text-align:right;">S/ 14,487</td><td style="text-align:right;">S/ 13,056</td><td style="text-align:right;">−S/ 1,431</td></tr>
+<tr><td>Bodega → Puesto de mercado</td><td style="text-align:right;">110</td><td style="text-align:right;">S/ 6,803</td><td style="text-align:right;">S/ 5,736</td><td style="text-align:right;">−S/ 1,067</td></tr>
+<tr><td>Puesto de mercado → Bodega</td><td style="text-align:right;">96</td><td style="text-align:right;">S/ 1,092</td><td style="text-align:right;">S/ 1,385</td><td style="text-align:right;">+S/ 292</td></tr>
+<tr><td>Mayorista → Bodega o Puesto</td><td style="text-align:right;">10</td><td style="text-align:right;">S/ 705</td><td style="text-align:right;">S/ 2,441</td><td style="text-align:right;">+S/ 1,737</td></tr>
+<tr><td><b>Total atípicos</b></td><td style="text-align:right;">660</td><td style="text-align:right;">S/ 41,445</td><td style="text-align:right;">S/ 35,854</td><td style="text-align:right;">−S/ 5,592</td></tr>
+<tr><td>Marcados · otra boca 2 de 3</td><td style="text-align:right;">9,654</td><td style="text-align:right;">S/ 203,613</td><td style="text-align:right;">S/ 204,537</td><td style="text-align:right;">+S/ 924</td></tr>
+</table>
+<div class="note" style="margin-top:28px;"><p style="font-size:26px;">El ahorro sale de bodegas y puestos que compran como mayorista: hoy reciben más por sol que un mayorista de su tamaño.</p></div>
+<p class="src">Tercer trimestre 2026, promedio mensual. Con la boca correcta: su venta por la inversión por sol típica de la boca a la que se parecen, en clientes sin señal de su mismo tamaño. La venta no cambia con la boca.</p>
+<aside>Detalle por cambio de boca. Si los 660 atípicos que compran como otra boca tuvieran la boca correcta, se invertirían 35.9 mil soles al mes en lugar de 41.4 mil: un ahorro de 5.6 mil al mes. Casi todo viene de puestos y bodegas que compran como mayoristas, que hoy reciben más inversión por sol que un mayorista de su tamaño. En sentido contrario, los pocos mayoristas que compran como bodega o puesto recibirían más, y lo mismo ocurre con los marcados, donde el efecto neto es casi cero. De enero a septiembre, los 660 recibieron entre 27 mil y 48 mil soles al mes. Es una estimación del orden de magnitud: supone que, con la boca correcta, el cliente recibiría la inversión típica de esa boca.</aside>
+</section>
+<section id="inv-extremos" class="alt foot">
+<p class="eyebrow">Inversión promocional · tamaño extremo</p>
+<h2>La inversión en extremos sube de S/ 469 mil a S/ 676 mil al mes</h2>
+<table style="font-size:24px;">
+<tr><th style="width:34%;">2026</th><th style="width:7.3%; text-align:right;">Ene</th><th style="width:7.3%; text-align:right;">Feb</th><th style="width:7.3%; text-align:right;">Mar</th><th style="width:7.3%; text-align:right;">Abr</th><th style="width:7.3%; text-align:right;">May</th><th style="width:7.3%; text-align:right;">Jun</th><th style="width:7.3%; text-align:right;">Jul</th><th style="width:7.3%; text-align:right;">Ago</th><th style="width:7.3%; text-align:right;">Sep</th></tr>
+<tr class="hi"><td>Inversión en extremos (S/ mil)</td><td style="text-align:right;">469</td><td style="text-align:right;">548</td><td style="text-align:right;">596</td><td style="text-align:right;">543</td><td style="text-align:right;">589</td><td style="text-align:right;">590</td><td style="text-align:right;">681</td><td style="text-align:right;">647</td><td style="text-align:right;">676</td></tr>
+<tr><td>Por cliente extremo (S/)</td><td style="text-align:right;">296</td><td style="text-align:right;">340</td><td style="text-align:right;">370</td><td style="text-align:right;">351</td><td style="text-align:right;">379</td><td style="text-align:right;">381</td><td style="text-align:right;">449</td><td style="text-align:right;">425</td><td style="text-align:right;">444</td></tr>
+<tr><td>Por cliente, total (S/)</td><td style="text-align:right;">19</td><td style="text-align:right;">21</td><td style="text-align:right;">24</td><td style="text-align:right;">24</td><td style="text-align:right;">25</td><td style="text-align:right;">26</td><td style="text-align:right;">28</td><td style="text-align:right;">28</td><td style="text-align:right;">29</td></tr>
+<tr><td>Por sol vendido, extremos</td><td style="text-align:right;">3.2%</td><td style="text-align:right;">3.7%</td><td style="text-align:right;">3.6%</td><td style="text-align:right;">3.5%</td><td style="text-align:right;">3.6%</td><td style="text-align:right;">3.8%</td><td style="text-align:right;">4.3%</td><td style="text-align:right;">4.0%</td><td style="text-align:right;">4.0%</td></tr>
+<tr><td>Por sol vendido, total</td><td style="text-align:right;">2.4%</td><td style="text-align:right;">2.7%</td><td style="text-align:right;">2.7%</td><td style="text-align:right;">2.8%</td><td style="text-align:right;">2.8%</td><td style="text-align:right;">3.0%</td><td style="text-align:right;">3.2%</td><td style="text-align:right;">3.1%</td><td style="text-align:right;">3.1%</td></tr>
+<tr><td>% de la inversión total</td><td style="text-align:right;">17%</td><td style="text-align:right;">18%</td><td style="text-align:right;">17%</td><td style="text-align:right;">16%</td><td style="text-align:right;">16%</td><td style="text-align:right;">16%</td><td style="text-align:right;">16%</td><td style="text-align:right;">16%</td><td style="text-align:right;">16%</td></tr>
+</table>
+<div class="note" style="margin-top:32px;"><p style="font-size:26px;">Unos 1,550 clientes extremos reciben cada mes entre 16% y 18% de toda la inversión promocional. El pico fue julio, con S/ 681 mil. En septiembre, un extremo recibió S/ 444 frente a S/ 29 del cliente promedio.</p></div>
+<p class="src">Extremos: 1% que más compra de su boca en cada trimestre (entre 1,518 y 1,613 clientes por mes). Inversión: descuentos promocionales netos, sin bonificaciones ni descuento por plazo de pago.</p>
+<aside>Mes a mes, la inversión en los clientes extremos crece: de 469 mil soles en enero a 676 mil en septiembre, con un pico de 681 mil en julio. Por cliente, pasa de 296 a 444 soles al mes. La inversión total también crece, pero en los extremos lo hace con una inversión por sol vendido más alta: alrededor de 4% frente a 3% del total. Con apenas el 1% de los clientes, los extremos se llevan cada mes entre el 16% y el 18% de la inversión promocional.</aside>
+</section>
+<section id="hacia" class="foot">
+<p class="eyebrow">Lo que encontramos · a qué boca se parecen</p>
+<h2>Los atípicos compran sobre todo como mayoristas; los marcados, como puesto de mercado</h2>
+<table style="font-size:26px;">
+<tr><th style="width:52%;">Boca asignada → boca a la que se parece</th><th style="width:24%; text-align:right;">Atípicos (3 trimestres)</th><th style="width:24%; text-align:right;">Marcados (2 de 3 trimestres)</th></tr>
+<tr class="hi"><td>Bodega → Mayorista</td><td style="text-align:right;">234</td><td style="text-align:right;">933</td></tr>
+<tr class="hi"><td>Puesto de mercado → Mayorista</td><td style="text-align:right;">210</td><td style="text-align:right;">558</td></tr>
+<tr><td>Bodega → Puesto de mercado</td><td style="text-align:right;">110</td><td style="text-align:right;">5,987</td></tr>
+<tr><td>Puesto de mercado → Bodega</td><td style="text-align:right;">96</td><td style="text-align:right;">2,009</td></tr>
+<tr><td>Mayorista → Bodega o Puesto</td><td style="text-align:right;">10</td><td style="text-align:right;">167</td></tr>
+<tr><td>Total</td><td style="text-align:right;">660</td><td style="text-align:right;">9,654</td></tr>
+</table>
+<div class="cols" style="margin-top:36px;">
+<div class="col note"><p style="font-size:26px;"><b>Atípicos:</b> 444 de 660 (dos de cada tres) son bodegas y puestos que compran como mayoristas: pedidos grandes, espaciados y de pocas categorías.</p></div>
+<div class="col note"><p style="font-size:26px;"><b>Marcados:</b> 5,987 de 9,654 (62%) son bodegas que compran como puesto de mercado.</p></div>
+</div>
+<p class="src">Tercer trimestre 2026. Atípico: 80% o más de parecido a la misma otra boca tres trimestres consecutivos. Marcado: 60% o más en el trimestre y en al menos uno de los dos anteriores.</p>
+<aside>Los dos grupos cuentan historias distintas. Entre los 660 atípicos, dos de cada tres son bodegas y puestos que compran como mayoristas. Entre los 9,654 marcados domina la bodega que compra como puesto de mercado: más días de compra y surtido más concentrado. Por eso no conviene generalizar el mensaje de los atípicos a todos los que compran como otra boca.</aside>
+</section>
+<section id="donde" class="alt foot">
+<p class="eyebrow">Lo que encontramos · dónde están</p>
+<h2>Los que compran como otra boca pesan más en el sur; los extremos, en la Amazonía y el norte</h2>
+<div class="cols" style="margin-top:36px;">
+<div class="col">
+<h3 style="font-size:32px;">Compran como otra boca</h3>
+<p style="font-size:24px; color:#4A5568;">660 clientes · 0.4% de los clientes</p>
+<table style="font-size:24px; margin-top:12px;">
+<tr><th style="width:44%;">Zona</th><th style="width:28%; text-align:right;">Clientes</th><th style="width:28%; text-align:right;">% de la zona</th></tr>
+<tr><td>Lima</td><td style="text-align:right;">178</td><td style="text-align:right;">0.3%</td></tr>
+<tr class="hi"><td>Tacna</td><td style="text-align:right;">87</td><td style="text-align:right;">1.7%</td></tr>
+<tr class="hi"><td>Juliaca</td><td style="text-align:right;">67</td><td style="text-align:right;">1.2%</td></tr>
+<tr><td>Amazonas</td><td style="text-align:right;">20</td><td style="text-align:right;">1.3%</td></tr>
+<tr><td>Cusco</td><td style="text-align:right;">45</td><td style="text-align:right;">0.5%</td></tr>
+</table>
+</div>
+<div class="col">
+<h3 style="font-size:32px;">Tamaño extremo</h3>
+<p style="font-size:24px; color:#4A5568;">1,526 clientes · 1.0% de los clientes</p>
+<table style="font-size:24px; margin-top:12px;">
+<tr><th style="width:44%;">Zona</th><th style="width:28%; text-align:right;">Clientes</th><th style="width:28%; text-align:right;">% de la zona</th></tr>
+<tr><td>Lima</td><td style="text-align:right;">469</td><td style="text-align:right;">0.8%</td></tr>
+<tr class="hi"><td>Madre de Dios</td><td style="text-align:right;">87</td><td style="text-align:right;">5.0%</td></tr>
+<tr class="hi"><td>Amazonas</td><td style="text-align:right;">47</td><td style="text-align:right;">3.1%</td></tr>
+<tr><td>Huánuco</td><td style="text-align:right;">39</td><td style="text-align:right;">2.0%</td></tr>
+<tr><td>Piura</td><td style="text-align:right;">107</td><td style="text-align:right;">1.8%</td></tr>
+</table>
+</div>
+</div>
+<div class="note" style="margin-top:32px;"><p style="font-size:26px;"><b>Extremos y tiendas de conveniencia:</b> dentro de cada zona, el <b>56%</b> de los extremos tiene una tienda de conveniencia a menos de 300 m, frente al <b>40%</b> de los clientes de su misma boca, zona y densidad urbana.</p></div>
+<p class="src">Tercer trimestre 2026. Tiendas: Tambo, Mass, Listo y Oxxo (relevamiento externo). Comparación con clientes de la misma boca, zona y densidad urbana. Es una asociación, no una causa.</p>
+<aside>Separamos los dos universos de atípicos. Los que compran como otra boca están en Lima en número, pero donde más pesan es en el sur: en Tacna son el 1.7% de los clientes y en Juliaca el 1.2%, frente a 0.4% en promedio. Los extremos también están en Lima en número, pero pesan mucho más en la Amazonía y el norte: en Madre de Dios son el 5% de los clientes, y en Amazonas el 3%, frente a 1% en promedio. Solo para los extremos comparamos con las tiendas de conveniencia: dentro de la misma zona y densidad urbana, el 56% tiene una tienda a menos de 300 metros, frente a 40% de clientes comparables. Operan en zonas de alta competencia.</aside>
+</section>
+<section id="segmentos" class="foot">
+<p class="eyebrow">Lo que encontramos · quiénes son</p>
+<h2>Los extremos son Oro+ y Estrella; los que compran como otra boca, de confitería</h2>
+<div class="cards" style="margin-top:44px;">
+<div class="card"><p class="tag">Atípico · tamaño extremo</p>
+<p style="font-size:24px; margin-top:8px;">Segmento de valor</p><p style="font-size:30px; color:#14213D;"><b>Oro+ 76%</b> · total de clientes 3%</p>
+<p style="font-size:24px; margin-top:14px;">Tipo de negocio</p><p style="font-size:30px; color:#14213D;"><b>Estrella 55%</b> · total de clientes 26%</p>
+<p style="font-size:26px; margin-top:16px; color:#14213D;"><b>Compra típica: S/ 6,047 al mes</b></p></div>
+<div class="card"><p class="tag">Atípico · otra boca 3 trimestres</p>
+<p style="font-size:24px; margin-top:8px;">Segmento de valor</p><p style="font-size:30px; color:#14213D;"><b>Bronce 44%</b> · total de clientes 63%</p>
+<p style="font-size:24px; margin-top:14px;">Tipo de negocio</p><p style="font-size:30px; color:#14213D;"><b>Confitero 28%</b> · total de clientes 0.8%</p>
+<p style="font-size:26px; margin-top:16px; color:#14213D;"><b>Compra típica: S/ 693 al mes</b></p></div>
+<div class="card"><p class="tag">Marcado · otra boca 2 de 3</p>
+<p style="font-size:24px; margin-top:8px;">Segmento de valor</p><p style="font-size:30px; color:#14213D;"><b>Bronce 68%</b> · total de clientes 63%</p>
+<p style="font-size:24px; margin-top:14px;">Tipo de negocio</p><p style="font-size:30px; color:#14213D;"><b>Clásica 39%</b> · total de clientes 31%</p>
+<p style="font-size:26px; margin-top:16px; color:#14213D;"><b>Compra típica: S/ 286 al mes</b></p></div>
+</div>
+<div class="note" style="margin-top:36px;"><p>De <b>1,210 puestos Confitero</b>, más de la mitad tiene señal: 184 son atípicos y 453 están marcados. Solo el 20% compra como puesto de mercado. La segmentación podría no reflejar a los distribuidores de confitería.</p></div>
+<p class="src">Segmento de valor: segmento transaccional (Oro+, Oro, Plata, Bronce). Tipo de negocio: segmento estratégico. Compra típica: mediana de la compra mensual; total de clientes S/ 293. Tercer trimestre 2026.</p>
+<aside>Cada tarjeta muestra el segmento de valor y el tipo de negocio principal del grupo, frente al total de clientes, y su compra mensual típica. Los extremos son los clientes de mayor valor: 76% son Oro+, cuando en el total es el 3%, y compran unos 6 mil soles al mes. Los atípicos que compran como otra boca se concentran en confitería: 28% son Confitero, frente a menos del 1% en el total. Los marcados se parecen al total de clientes: sobre todo Bronce y Clásica, con una compra típica casi igual a la del total.</aside>
+</section>
+<section id="plus" class="alt foot">
+<p class="eyebrow">Lo que encontramos · los más grandes</p>
+<h2>¿Bodega Plus y Puesto Plus?</h2>
+<table style="font-size:24px;">
+<tr><th style="width:34%;">Perfil</th><th style="width:13%; text-align:right;">Clientes</th><th style="width:14%; text-align:right;">Compra al mes</th><th style="width:13%; text-align:right;">Pedidos al mes</th><th style="width:14%; text-align:right;">Productos distintos</th><th style="width:12%; text-align:right;">Categorías</th></tr>
+<tr><td>Bodega normal</td><td style="text-align:right;">109,961</td><td style="text-align:right;">S/ 206</td><td style="text-align:right;">2.7</td><td style="text-align:right;">13</td><td style="text-align:right;">6</td></tr>
+<tr><td>Bodega grande</td><td style="text-align:right;">10,996</td><td style="text-align:right;">S/ 1,628</td><td style="text-align:right;">7.0</td><td style="text-align:right;">48</td><td style="text-align:right;">14</td></tr>
+<tr class="hi"><td>Bodega Plus (candidata)</td><td style="text-align:right;">518</td><td style="text-align:right;">S/ 6,029</td><td style="text-align:right;">9.0</td><td style="text-align:right;">92</td><td style="text-align:right;">19</td></tr>
+<tr><td>Puesto normal</td><td style="text-align:right;">25,839</td><td style="text-align:right;">S/ 469</td><td style="text-align:right;">4.3</td><td style="text-align:right;">14</td><td style="text-align:right;">7</td></tr>
+<tr><td>Puesto grande</td><td style="text-align:right;">2,583</td><td style="text-align:right;">S/ 4,262</td><td style="text-align:right;">10.0</td><td style="text-align:right;">56</td><td style="text-align:right;">15</td></tr>
+<tr class="hi"><td>Puesto Plus (candidato)</td><td style="text-align:right;">136</td><td style="text-align:right;">S/ 10,760</td><td style="text-align:right;">12.0</td><td style="text-align:right;">71</td><td style="text-align:right;">17</td></tr>
+</table>
+<div class="note" style="margin-top:32px;"><p><b>654 de los 1,526 extremos</b> lo son los tres trimestres y siempre compran como su boca: el 92% es Oro+ y compran S/ 5.5 M al mes. No hay un quiebre natural: la compra crece de forma continua, así que "Plus" sería un corte de negocio que hay que validar.</p></div>
+<p class="src">Candidato Plus: tamaño extremo (1% más grande de su boca) los 3 trimestres y siempre compra como su boca. Grande: del 90% al 99%. Valores típicos (medianas) de compra mensual, tercer trimestre 2026.</p>
+<aside>De los 1,526 atípicos por tamaño extremo, 654 lo son los tres trimestres y siempre compran como su boca de salida: 518 bodegas y 136 puestos. Compran como una bodega o un puesto, pero en otra escala: una Bodega Plus compra unos 6 mil soles al mes, frente a 206 de una bodega normal, con 92 productos distintos frente a 13. Antes de crear una categoría nueva hay que validarlo en campo, porque la compra crece de forma continua y no hay un punto natural donde empiece el "Plus".</aside>
+</section>
+<section id="abordaje" class="dark">
+<p class="eyebrow">Cómo abordamos cada caso</p>
+<h2>Nadie sale de los totales: cambia cómo se analiza</h2>
+<table style="font-size:24px; color:#F7F6F2;">
+<tr><th style="width:30%; color:#BFD8D5;">Caso</th><th style="width:9%; text-align:right; color:#BFD8D5;">Clientes</th><th style="width:11%; text-align:right; color:#BFD8D5;">Venta al mes</th><th style="width:50%; color:#BFD8D5;">Cómo se aborda</th></tr>
+<tr><td>Atípico · mayorista encubierto</td><td style="text-align:right;">444</td><td style="text-align:right;">S/ 1.0 M</td><td><span style="color:#F0A35E;">Reclasificar a Mayorista</span>, si en campo se confirma que vende a otros negocios</td></tr>
+<tr><td>Atípico · bodega ↔ puesto de mercado</td><td style="text-align:right;">206</td><td style="text-align:right;">S/ 0.2 M</td><td><span style="color:#F0A35E;">Reclasificar la boca de salida</span>, previa visita</td></tr>
+<tr><td>Atípico · mayorista que compra como bodega o puesto</td><td style="text-align:right;">10</td><td style="text-align:right;">S/ 0.06 M</td><td><span style="color:#F0A35E;">Revisar caso por caso</span></td></tr>
+<tr><td>Atípico · tamaño extremo</td><td style="text-align:right;">1,526</td><td style="text-align:right;">S/ 16.3 M</td><td><span style="color:#F0A35E;">Analizar aparte</span>, fuera de los promedios de su boca; 654 son candidatos a Bodega Plus o Puesto Plus</td></tr>
+<tr><td>Marcado · otra boca 2 de 3</td><td style="text-align:right;">9,654</td><td style="text-align:right;">S/ 6.4 M</td><td><span style="color:#F0A35E;">Mantener la boca y seguir</span>; si llega a 3 trimestres consecutivos, pasa a atípico</td></tr>
+</table>
+<p class="lead" style="margin-top:36px;">Siguiente paso: <b style="color:#F7F6F2;">revisar casos reales de cada grupo</b> y, después, validarlos en campo con visitas ciegas.</p>
+<aside>Proponemos un tratamiento por caso, sin sacar a nadie de los totales. Los atípicos que compran como otra boca se reclasifican solo si la visita en campo lo confirma: los mayoristas encubiertos pasan a Mayorista si venden a otros negocios, y los cambios entre bodega y puesto se ajustan a la boca observada. Los diez mayoristas que compran como bodega o puesto se revisan uno a uno. Los extremos no se reclasifican: se analizan aparte para que no inflen los promedios de su boca, y entre ellos hay 654 candidatos a Bodega Plus o Puesto Plus. Los marcados mantienen su boca y se siguen cada trimestre; si la señal se repite tres trimestres seguidos, pasan a ser atípicos. El siguiente paso es revisar casos reales y luego validarlos en campo.</aside>
+</section>
+</div>
+<div id="hud"><span id="pos"></span><button id="prev" aria-label="Anterior">‹</button><button id="next" aria-label="Siguiente">›</button><button id="notes">Notas (N)</button></div>
+<script>
+(function () {
+  var s = Array.prototype.slice.call(document.querySelectorAll('#stage > section'));
+  var stage = document.getElementById('stage'), pos = document.getElementById('pos');
+  var i = Math.max(0, Math.min(s.length - 1, (parseInt((location.hash.match(/\d+/) || [1])[0], 10) || 1) - 1));
+  function fit() {
+    var k = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.transform = 'scale(' + k + ') translate(-50%, -50%)';
+  }
+  function show(n) {
+    i = Math.max(0, Math.min(s.length - 1, n));
+    s.forEach(function (el, j) { el.classList.toggle('on', j === i); });
+    pos.textContent = (i + 1) + ' / ' + s.length;
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+  document.addEventListener('keydown', function (e) {
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].indexOf(e.key) >= 0) { show(i + 1); e.preventDefault(); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].indexOf(e.key) >= 0) { show(i - 1); e.preventDefault(); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(s.length - 1);
+    else if (e.key === 'n' || e.key === 'N') document.body.classList.toggle('notas');
+    else if (e.key === 'f' || e.key === 'F') { if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+  });
+  document.getElementById('prev').onclick = function () { show(i - 1); };
+  document.getElementById('next').onclick = function () { show(i + 1); };
+  document.getElementById('notes').onclick = function () { document.body.classList.toggle('notas'); };
+  stage.addEventListener('click', function (e) { show(e.clientX > window.innerWidth / 2 ? i + 1 : i - 1); });
+  window.addEventListener('resize', fit);
+  fit(); show(i);
+})();
+</script>
+</body>
+</html>
